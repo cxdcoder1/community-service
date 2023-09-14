@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.community.dao.SysRoleDeptDao">
+
+    <resultMap type="com.example.community.entity.SysRoleDept" id="SysRoleDeptMap">
+        <result property="roleId" column="role_id" jdbcType="INTEGER"/>
+        <result property="deptId" column="dept_id" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!-- 批量插入 -->
+    <insert id="insertBatch" keyProperty="roleId" useGeneratedKeys="true">
+        insert into zy-community.sys_role_dept()
+        values
+        <foreach collection="entities" item="entity" separator=",">
+        ()
+        </foreach>
+    </insert>
+    <!-- 批量插入或按主键更新 -->
+    <insert id="insertOrUpdateBatch" keyProperty="roleId" useGeneratedKeys="true">
+        insert into zy-community.sys_role_dept()
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            ()
+        </foreach>
+        on duplicate key update
+             </insert>
+
+</mapper>
+

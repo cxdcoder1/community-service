@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.community.dao.SysLogininforDao">
+
+    <resultMap type="com.example.community.entity.SysLogininfor" id="SysLogininforMap">
+        <result property="infoId" column="info_id" jdbcType="INTEGER"/>
+        <result property="userName" column="user_name" jdbcType="VARCHAR"/>
+        <result property="ipaddr" column="ipaddr" jdbcType="VARCHAR"/>
+        <result property="loginLocation" column="login_location" jdbcType="VARCHAR"/>
+        <result property="browser" column="browser" jdbcType="VARCHAR"/>
+        <result property="os" column="os" jdbcType="VARCHAR"/>
+        <result property="status" column="status" jdbcType="VARCHAR"/>
+        <result property="msg" column="msg" jdbcType="VARCHAR"/>
+        <result property="loginTime" column="login_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <!-- 批量插入 -->
+    <insert id="insertBatch" keyProperty="infoId" useGeneratedKeys="true">
+        insert into zy-community.sys_logininfor(user_name, ipaddr, login_location, browser, os, status, msg, login_time)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+        (#{entity.userName}, #{entity.ipaddr}, #{entity.loginLocation}, #{entity.browser}, #{entity.os}, #{entity.status}, #{entity.msg}, #{entity.loginTime})
+        </foreach>
+    </insert>
+    <!-- 批量插入或按主键更新 -->
+    <insert id="insertOrUpdateBatch" keyProperty="infoId" useGeneratedKeys="true">
+        insert into zy-community.sys_logininfor(user_name, ipaddr, login_location, browser, os, status, msg, login_time)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.userName}, #{entity.ipaddr}, #{entity.loginLocation}, #{entity.browser}, #{entity.os}, #{entity.status}, #{entity.msg}, #{entity.loginTime})
+        </foreach>
+        on duplicate key update
+         user_name = values(user_name) , ipaddr = values(ipaddr) , login_location = values(login_location) , browser = values(browser) , os = values(os) , status = values(status) , msg = values(msg) , login_time = values(login_time)     </insert>
+
+</mapper>
+

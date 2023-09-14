@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.community.dao.ZyOwnerDao">
+
+    <resultMap type="com.example.community.entity.ZyOwner" id="ZyOwnerMap">
+        <result property="ownerId" column="owner_id" jdbcType="INTEGER"/>
+        <result property="ownerNickname" column="owner_nickname" jdbcType="VARCHAR"/>
+        <result property="ownerRealName" column="owner_real_name" jdbcType="VARCHAR"/>
+        <result property="ownerGender" column="owner_gender" jdbcType="VARCHAR"/>
+        <result property="ownerAge" column="owner_age" jdbcType="INTEGER"/>
+        <result property="ownerIdCard" column="owner_id_card" jdbcType="VARCHAR"/>
+        <result property="ownerPhoneNumber" column="owner_phone_number" jdbcType="VARCHAR"/>
+        <result property="ownerOpenId" column="owner_open_id" jdbcType="VARCHAR"/>
+        <result property="ownerWechatId" column="owner_wechat_id" jdbcType="VARCHAR"/>
+        <result property="ownerQqNumber" column="owner_qq_number" jdbcType="VARCHAR"/>
+        <result property="ownerBirthday" column="owner_birthday" jdbcType="TIMESTAMP"/>
+        <result property="ownerPortrait" column="owner_portrait" jdbcType="VARCHAR"/>
+        <result property="ownerSignature" column="owner_signature" jdbcType="VARCHAR"/>
+        <result property="ownerStatus" column="owner_status" jdbcType="VARCHAR"/>
+        <result property="ownerLogonMode" column="owner_logon_mode" jdbcType="VARCHAR"/>
+        <result property="ownerType" column="owner_type" jdbcType="VARCHAR"/>
+        <result property="ownerPassword" column="owner_password" jdbcType="VARCHAR"/>
+        <result property="createBy" column="create_by" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="updateBy" column="update_by" jdbcType="VARCHAR"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <result property="remark" column="remark" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!-- 批量插入 -->
+    <insert id="insertBatch" keyProperty="ownerId" useGeneratedKeys="true">
+        insert into zy-community.zy_owner(owner_nickname, owner_real_name, owner_gender, owner_age, owner_id_card, owner_phone_number, owner_open_id, owner_wechat_id, owner_qq_number, owner_birthday, owner_portrait, owner_signature, owner_status, owner_logon_mode, owner_type, owner_password, create_by, create_time, update_by, update_time, remark)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+        (#{entity.ownerNickname}, #{entity.ownerRealName}, #{entity.ownerGender}, #{entity.ownerAge}, #{entity.ownerIdCard}, #{entity.ownerPhoneNumber}, #{entity.ownerOpenId}, #{entity.ownerWechatId}, #{entity.ownerQqNumber}, #{entity.ownerBirthday}, #{entity.ownerPortrait}, #{entity.ownerSignature}, #{entity.ownerStatus}, #{entity.ownerLogonMode}, #{entity.ownerType}, #{entity.ownerPassword}, #{entity.createBy}, #{entity.createTime}, #{entity.updateBy}, #{entity.updateTime}, #{entity.remark})
+        </foreach>
+    </insert>
+    <!-- 批量插入或按主键更新 -->
+    <insert id="insertOrUpdateBatch" keyProperty="ownerId" useGeneratedKeys="true">
+        insert into zy-community.zy_owner(owner_nickname, owner_real_name, owner_gender, owner_age, owner_id_card, owner_phone_number, owner_open_id, owner_wechat_id, owner_qq_number, owner_birthday, owner_portrait, owner_signature, owner_status, owner_logon_mode, owner_type, owner_password, create_by, create_time, update_by, update_time, remark)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.ownerNickname}, #{entity.ownerRealName}, #{entity.ownerGender}, #{entity.ownerAge}, #{entity.ownerIdCard}, #{entity.ownerPhoneNumber}, #{entity.ownerOpenId}, #{entity.ownerWechatId}, #{entity.ownerQqNumber}, #{entity.ownerBirthday}, #{entity.ownerPortrait}, #{entity.ownerSignature}, #{entity.ownerStatus}, #{entity.ownerLogonMode}, #{entity.ownerType}, #{entity.ownerPassword}, #{entity.createBy}, #{entity.createTime}, #{entity.updateBy}, #{entity.updateTime}, #{entity.remark})
+        </foreach>
+        on duplicate key update
+         owner_nickname = values(owner_nickname) , owner_real_name = values(owner_real_name) , owner_gender = values(owner_gender) , owner_age = values(owner_age) , owner_id_card = values(owner_id_card) , owner_phone_number = values(owner_phone_number) , owner_open_id = values(owner_open_id) , owner_wechat_id = values(owner_wechat_id) , owner_qq_number = values(owner_qq_number) , owner_birthday = values(owner_birthday) , owner_portrait = values(owner_portrait) , owner_signature = values(owner_signature) , owner_status = values(owner_status) , owner_logon_mode = values(owner_logon_mode) , owner_type = values(owner_type) , owner_password = values(owner_password) , create_by = values(create_by) , create_time = values(create_time) , update_by = values(update_by) , update_time = values(update_time) , remark = values(remark)     </insert>
+
+</mapper>
+

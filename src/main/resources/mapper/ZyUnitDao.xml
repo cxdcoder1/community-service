@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.community.dao.ZyUnitDao">
+
+    <resultMap type="com.example.community.entity.ZyUnit" id="ZyUnitMap">
+        <result property="unitId" column="unit_id" jdbcType="INTEGER"/>
+        <result property="communityId" column="community_id" jdbcType="INTEGER"/>
+        <result property="buildingId" column="building_id" jdbcType="INTEGER"/>
+        <result property="unitName" column="unit_name" jdbcType="VARCHAR"/>
+        <result property="unitCode" column="unit_code" jdbcType="VARCHAR"/>
+        <result property="unitLevel" column="unit_level" jdbcType="INTEGER"/>
+        <result property="unitAcreage" column="unit_acreage" jdbcType="NUMERIC"/>
+        <result property="unitHaveElevator" column="unit_have_elevator" jdbcType="VARCHAR"/>
+        <result property="createBy" column="create_by" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="updateBy" column="update_by" jdbcType="VARCHAR"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <result property="remark" column="remark" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!-- 批量插入 -->
+    <insert id="insertBatch" keyProperty="" useGeneratedKeys="true">
+        insert into zy-community.zy_unit(unit_id, community_id, building_id, unit_name, unit_code, unit_level, unit_acreage, unit_have_elevator, create_by, create_time, update_by, update_time, remark)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+        (#{entity.unitId}, #{entity.communityId}, #{entity.buildingId}, #{entity.unitName}, #{entity.unitCode}, #{entity.unitLevel}, #{entity.unitAcreage}, #{entity.unitHaveElevator}, #{entity.createBy}, #{entity.createTime}, #{entity.updateBy}, #{entity.updateTime}, #{entity.remark})
+        </foreach>
+    </insert>
+    <!-- 批量插入或按主键更新 -->
+    <insert id="insertOrUpdateBatch" keyProperty="" useGeneratedKeys="true">
+        insert into zy-community.zy_unit(unit_id, community_id, building_id, unit_name, unit_code, unit_level, unit_acreage, unit_have_elevator, create_by, create_time, update_by, update_time, remark)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.unitId}, #{entity.communityId}, #{entity.buildingId}, #{entity.unitName}, #{entity.unitCode}, #{entity.unitLevel}, #{entity.unitAcreage}, #{entity.unitHaveElevator}, #{entity.createBy}, #{entity.createTime}, #{entity.updateBy}, #{entity.updateTime}, #{entity.remark})
+        </foreach>
+        on duplicate key update
+         unit_id = values(unit_id) , community_id = values(community_id) , building_id = values(building_id) , unit_name = values(unit_name) , unit_code = values(unit_code) , unit_level = values(unit_level) , unit_acreage = values(unit_acreage) , unit_have_elevator = values(unit_have_elevator) , create_by = values(create_by) , create_time = values(create_time) , update_by = values(update_by) , update_time = values(update_time) , remark = values(remark)     </insert>
+
+</mapper>
+

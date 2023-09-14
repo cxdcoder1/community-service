@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.community.dao.ZyBuildingDao">
+
+    <resultMap type="com.example.community.entity.ZyBuilding" id="ZyBuildingMap">
+        <result property="buildingId" column="building_id" jdbcType="INTEGER"/>
+        <result property="buildingName" column="building_name" jdbcType="VARCHAR"/>
+        <result property="buildingCode" column="building_code" jdbcType="VARCHAR"/>
+        <result property="buildingAcreage" column="building_acreage" jdbcType="NUMERIC"/>
+        <result property="communityId" column="community_id" jdbcType="INTEGER"/>
+        <result property="createBy" column="create_by" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="updateBy" column="update_by" jdbcType="VARCHAR"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <result property="remark" column="remark" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!-- 批量插入 -->
+    <insert id="insertBatch" keyProperty="" useGeneratedKeys="true">
+        insert into zy-community.zy_building(building_id, building_name, building_code, building_acreage, community_id, create_by, create_time, update_by, update_time, remark)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+        (#{entity.buildingId}, #{entity.buildingName}, #{entity.buildingCode}, #{entity.buildingAcreage}, #{entity.communityId}, #{entity.createBy}, #{entity.createTime}, #{entity.updateBy}, #{entity.updateTime}, #{entity.remark})
+        </foreach>
+    </insert>
+    <!-- 批量插入或按主键更新 -->
+    <insert id="insertOrUpdateBatch" keyProperty="" useGeneratedKeys="true">
+        insert into zy-community.zy_building(building_id, building_name, building_code, building_acreage, community_id, create_by, create_time, update_by, update_time, remark)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.buildingId}, #{entity.buildingName}, #{entity.buildingCode}, #{entity.buildingAcreage}, #{entity.communityId}, #{entity.createBy}, #{entity.createTime}, #{entity.updateBy}, #{entity.updateTime}, #{entity.remark})
+        </foreach>
+        on duplicate key update
+         building_id = values(building_id) , building_name = values(building_name) , building_code = values(building_code) , building_acreage = values(building_acreage) , community_id = values(community_id) , create_by = values(create_by) , create_time = values(create_time) , update_by = values(update_by) , update_time = values(update_time) , remark = values(remark)     </insert>
+
+</mapper>
+

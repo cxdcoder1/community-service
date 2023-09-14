@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.community.dao.ZyOwnerRoomDao">
+
+    <resultMap type="com.example.community.entity.ZyOwnerRoom" id="ZyOwnerRoomMap">
+        <result property="ownerRoomId" column="owner_room_id" jdbcType="INTEGER"/>
+        <result property="communityId" column="community_id" jdbcType="INTEGER"/>
+        <result property="buildingId" column="building_id" jdbcType="INTEGER"/>
+        <result property="unitId" column="unit_id" jdbcType="INTEGER"/>
+        <result property="roomId" column="room_id" jdbcType="INTEGER"/>
+        <result property="ownerId" column="owner_id" jdbcType="INTEGER"/>
+        <result property="ownerType" column="owner_type" jdbcType="VARCHAR"/>
+        <result property="roomStatus" column="room_status" jdbcType="VARCHAR"/>
+        <result property="createBy" column="create_by" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="updateBy" column="update_by" jdbcType="VARCHAR"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <result property="remark" column="remark" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!-- 批量插入 -->
+    <insert id="insertBatch" keyProperty="ownerRoomId" useGeneratedKeys="true">
+        insert into zy-community.zy_owner_room(community_id, building_id, unit_id, room_id, owner_id, owner_type, room_status, create_by, create_time, update_by, update_time, remark)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+        (#{entity.communityId}, #{entity.buildingId}, #{entity.unitId}, #{entity.roomId}, #{entity.ownerId}, #{entity.ownerType}, #{entity.roomStatus}, #{entity.createBy}, #{entity.createTime}, #{entity.updateBy}, #{entity.updateTime}, #{entity.remark})
+        </foreach>
+    </insert>
+    <!-- 批量插入或按主键更新 -->
+    <insert id="insertOrUpdateBatch" keyProperty="ownerRoomId" useGeneratedKeys="true">
+        insert into zy-community.zy_owner_room(community_id, building_id, unit_id, room_id, owner_id, owner_type, room_status, create_by, create_time, update_by, update_time, remark)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.communityId}, #{entity.buildingId}, #{entity.unitId}, #{entity.roomId}, #{entity.ownerId}, #{entity.ownerType}, #{entity.roomStatus}, #{entity.createBy}, #{entity.createTime}, #{entity.updateBy}, #{entity.updateTime}, #{entity.remark})
+        </foreach>
+        on duplicate key update
+         community_id = values(community_id) , building_id = values(building_id) , unit_id = values(unit_id) , room_id = values(room_id) , owner_id = values(owner_id) , owner_type = values(owner_type) , room_status = values(room_status) , create_by = values(create_by) , create_time = values(create_time) , update_by = values(update_by) , update_time = values(update_time) , remark = values(remark)     </insert>
+
+</mapper>
+

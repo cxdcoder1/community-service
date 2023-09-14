@@ -1,0 +1,26 @@
+server:
+  port: 8080
+  tomcat:
+    uri-encoding: utf-8
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/zy-community?serverTimezone=UTC&characterEncoding=UTF-8
+    username: root
+    password: root
+
+mybatis-plus:
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.example.Community.entity
+  #
+  configuration:
+    #驼峰命名
+    map-underscore-to-camel-case: true
+    #开启mybatis自带日志
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+
+
+
+

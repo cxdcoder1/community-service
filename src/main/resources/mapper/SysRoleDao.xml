@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.community.dao.SysRoleDao">
+
+    <resultMap type="com.example.community.entity.SysRole" id="SysRoleMap">
+        <result property="roleId" column="role_id" jdbcType="INTEGER"/>
+        <result property="roleName" column="role_name" jdbcType="VARCHAR"/>
+        <result property="roleKey" column="role_key" jdbcType="VARCHAR"/>
+        <result property="roleSort" column="role_sort" jdbcType="INTEGER"/>
+        <result property="dataScope" column="data_scope" jdbcType="VARCHAR"/>
+        <result property="menuCheckStrictly" column="menu_check_strictly" jdbcType="INTEGER"/>
+        <result property="deptCheckStrictly" column="dept_check_strictly" jdbcType="INTEGER"/>
+        <result property="status" column="status" jdbcType="VARCHAR"/>
+        <result property="delFlag" column="del_flag" jdbcType="VARCHAR"/>
+        <result property="createBy" column="create_by" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="updateBy" column="update_by" jdbcType="VARCHAR"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <result property="remark" column="remark" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!-- 批量插入 -->
+    <insert id="insertBatch" keyProperty="roleId" useGeneratedKeys="true">
+        insert into zy-community.sys_role(role_name, role_key, role_sort, data_scope, menu_check_strictly, dept_check_strictly, status, del_flag, create_by, create_time, update_by, update_time, remark)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+        (#{entity.roleName}, #{entity.roleKey}, #{entity.roleSort}, #{entity.dataScope}, #{entity.menuCheckStrictly}, #{entity.deptCheckStrictly}, #{entity.status}, #{entity.delFlag}, #{entity.createBy}, #{entity.createTime}, #{entity.updateBy}, #{entity.updateTime}, #{entity.remark})
+        </foreach>
+    </insert>
+    <!-- 批量插入或按主键更新 -->
+    <insert id="insertOrUpdateBatch" keyProperty="roleId" useGeneratedKeys="true">
+        insert into zy-community.sys_role(role_name, role_key, role_sort, data_scope, menu_check_strictly, dept_check_strictly, status, del_flag, create_by, create_time, update_by, update_time, remark)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.roleName}, #{entity.roleKey}, #{entity.roleSort}, #{entity.dataScope}, #{entity.menuCheckStrictly}, #{entity.deptCheckStrictly}, #{entity.status}, #{entity.delFlag}, #{entity.createBy}, #{entity.createTime}, #{entity.updateBy}, #{entity.updateTime}, #{entity.remark})
+        </foreach>
+        on duplicate key update
+         role_name = values(role_name) , role_key = values(role_key) , role_sort = values(role_sort) , data_scope = values(data_scope) , menu_check_strictly = values(menu_check_strictly) , dept_check_strictly = values(dept_check_strictly) , status = values(status) , del_flag = values(del_flag) , create_by = values(create_by) , create_time = values(create_time) , update_by = values(update_by) , update_time = values(update_time) , remark = values(remark)     </insert>
+
+</mapper>
+

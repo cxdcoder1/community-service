@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.community.dao.SysJobLogDao">
+
+    <resultMap type="com.example.community.entity.SysJobLog" id="SysJobLogMap">
+        <result property="jobLogId" column="job_log_id" jdbcType="INTEGER"/>
+        <result property="jobName" column="job_name" jdbcType="VARCHAR"/>
+        <result property="jobGroup" column="job_group" jdbcType="VARCHAR"/>
+        <result property="invokeTarget" column="invoke_target" jdbcType="VARCHAR"/>
+        <result property="jobMessage" column="job_message" jdbcType="VARCHAR"/>
+        <result property="status" column="status" jdbcType="VARCHAR"/>
+        <result property="exceptionInfo" column="exception_info" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <!-- 批量插入 -->
+    <insert id="insertBatch" keyProperty="jobLogId" useGeneratedKeys="true">
+        insert into zy-community.sys_job_log(job_name, job_group, invoke_target, job_message, status, exception_info, create_time)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+        (#{entity.jobName}, #{entity.jobGroup}, #{entity.invokeTarget}, #{entity.jobMessage}, #{entity.status}, #{entity.exceptionInfo}, #{entity.createTime})
+        </foreach>
+    </insert>
+    <!-- 批量插入或按主键更新 -->
+    <insert id="insertOrUpdateBatch" keyProperty="jobLogId" useGeneratedKeys="true">
+        insert into zy-community.sys_job_log(job_name, job_group, invoke_target, job_message, status, exception_info, create_time)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.jobName}, #{entity.jobGroup}, #{entity.invokeTarget}, #{entity.jobMessage}, #{entity.status}, #{entity.exceptionInfo}, #{entity.createTime})
+        </foreach>
+        on duplicate key update
+         job_name = values(job_name) , job_group = values(job_group) , invoke_target = values(invoke_target) , job_message = values(job_message) , status = values(status) , exception_info = values(exception_info) , create_time = values(create_time)     </insert>
+
+</mapper>
+

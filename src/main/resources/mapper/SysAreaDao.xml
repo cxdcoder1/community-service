@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.community.dao.SysAreaDao">
+
+    <resultMap type="com.example.community.entity.SysArea" id="SysAreaMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="code" column="code" jdbcType="INTEGER"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
+        <result property="parentid" column="parentId" jdbcType="INTEGER"/>
+        <result property="level" column="level" jdbcType="INTEGER"/>
+        <result property="type" column="type" jdbcType="INTEGER"/>
+        <result property="servicestate" column="servicestate" jdbcType="INTEGER"/>
+        <result property="deleteFlag" column="delete_flag" jdbcType="INTEGER"/>
+        <result property="region" column="region" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!-- 批量插入 -->
+    <insert id="insertBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into zy-community.sys_area(code, name, parentId, level, type, servicestate, delete_flag, region)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+        (#{entity.code}, #{entity.name}, #{entity.parentid}, #{entity.level}, #{entity.type}, #{entity.servicestate}, #{entity.deleteFlag}, #{entity.region})
+        </foreach>
+    </insert>
+    <!-- 批量插入或按主键更新 -->
+    <insert id="insertOrUpdateBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into zy-community.sys_area(code, name, parentId, level, type, servicestate, delete_flag, region)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.code}, #{entity.name}, #{entity.parentid}, #{entity.level}, #{entity.type}, #{entity.servicestate}, #{entity.deleteFlag}, #{entity.region})
+        </foreach>
+        on duplicate key update
+         code = values(code) , name = values(name) , parentId = values(parentId) , level = values(level) , type = values(type) , servicestate = values(servicestate) , delete_flag = values(delete_flag) , region = values(region)     </insert>
+
+</mapper>
+

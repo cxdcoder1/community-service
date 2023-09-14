@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.community.dao.ZyOwnerRoomRecordDao">
+
+    <resultMap type="com.example.community.entity.ZyOwnerRoomRecord" id="ZyOwnerRoomRecordMap">
+        <result property="recordId" column="record_id" jdbcType="INTEGER"/>
+        <result property="ownerRoomId" column="owner_room_id" jdbcType="VARCHAR"/>
+        <result property="communityId" column="community_id" jdbcType="INTEGER"/>
+        <result property="buildingId" column="building_id" jdbcType="INTEGER"/>
+        <result property="unitId" column="unit_id" jdbcType="INTEGER"/>
+        <result property="roomId" column="room_id" jdbcType="INTEGER"/>
+        <result property="ownerId" column="owner_id" jdbcType="INTEGER"/>
+        <result property="ownerType" column="owner_type" jdbcType="VARCHAR"/>
+        <result property="roomStatus" column="room_status" jdbcType="VARCHAR"/>
+        <result property="recordAuditOpinion" column="record_audit_opinion" jdbcType="VARCHAR"/>
+        <result property="recordAuditType" column="record_audit_type" jdbcType="VARCHAR"/>
+        <result property="createById" column="create_by_id" jdbcType="INTEGER"/>
+        <result property="createBy" column="create_by" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="updateBy" column="update_by" jdbcType="VARCHAR"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <result property="remark" column="remark" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!-- 批量插入 -->
+    <insert id="insertBatch" keyProperty="recordId" useGeneratedKeys="true">
+        insert into zy-community.zy_owner_room_record(owner_room_id, community_id, building_id, unit_id, room_id, owner_id, owner_type, room_status, record_audit_opinion, record_audit_type, create_by_id, create_by, create_time, update_by, update_time, remark)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+        (#{entity.ownerRoomId}, #{entity.communityId}, #{entity.buildingId}, #{entity.unitId}, #{entity.roomId}, #{entity.ownerId}, #{entity.ownerType}, #{entity.roomStatus}, #{entity.recordAuditOpinion}, #{entity.recordAuditType}, #{entity.createById}, #{entity.createBy}, #{entity.createTime}, #{entity.updateBy}, #{entity.updateTime}, #{entity.remark})
+        </foreach>
+    </insert>
+    <!-- 批量插入或按主键更新 -->
+    <insert id="insertOrUpdateBatch" keyProperty="recordId" useGeneratedKeys="true">
+        insert into zy-community.zy_owner_room_record(owner_room_id, community_id, building_id, unit_id, room_id, owner_id, owner_type, room_status, record_audit_opinion, record_audit_type, create_by_id, create_by, create_time, update_by, update_time, remark)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.ownerRoomId}, #{entity.communityId}, #{entity.buildingId}, #{entity.unitId}, #{entity.roomId}, #{entity.ownerId}, #{entity.ownerType}, #{entity.roomStatus}, #{entity.recordAuditOpinion}, #{entity.recordAuditType}, #{entity.createById}, #{entity.createBy}, #{entity.createTime}, #{entity.updateBy}, #{entity.updateTime}, #{entity.remark})
+        </foreach>
+        on duplicate key update
+         owner_room_id = values(owner_room_id) , community_id = values(community_id) , building_id = values(building_id) , unit_id = values(unit_id) , room_id = values(room_id) , owner_id = values(owner_id) , owner_type = values(owner_type) , room_status = values(room_status) , record_audit_opinion = values(record_audit_opinion) , record_audit_type = values(record_audit_type) , create_by_id = values(create_by_id) , create_by = values(create_by) , create_time = values(create_time) , update_by = values(update_by) , update_time = values(update_time) , remark = values(remark)     </insert>
+
+</mapper>
+

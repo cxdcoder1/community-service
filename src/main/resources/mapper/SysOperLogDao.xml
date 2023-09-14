@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.community.dao.SysOperLogDao">
+
+    <resultMap type="com.example.community.entity.SysOperLog" id="SysOperLogMap">
+        <result property="operId" column="oper_id" jdbcType="INTEGER"/>
+        <result property="title" column="title" jdbcType="VARCHAR"/>
+        <result property="businessType" column="business_type" jdbcType="INTEGER"/>
+        <result property="method" column="method" jdbcType="VARCHAR"/>
+        <result property="requestMethod" column="request_method" jdbcType="VARCHAR"/>
+        <result property="operatorType" column="operator_type" jdbcType="INTEGER"/>
+        <result property="operName" column="oper_name" jdbcType="VARCHAR"/>
+        <result property="deptName" column="dept_name" jdbcType="VARCHAR"/>
+        <result property="operUrl" column="oper_url" jdbcType="VARCHAR"/>
+        <result property="operIp" column="oper_ip" jdbcType="VARCHAR"/>
+        <result property="operLocation" column="oper_location" jdbcType="VARCHAR"/>
+        <result property="operParam" column="oper_param" jdbcType="VARCHAR"/>
+        <result property="jsonResult" column="json_result" jdbcType="VARCHAR"/>
+        <result property="status" column="status" jdbcType="INTEGER"/>
+        <result property="errorMsg" column="error_msg" jdbcType="VARCHAR"/>
+        <result property="operTime" column="oper_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <!-- 批量插入 -->
+    <insert id="insertBatch" keyProperty="operId" useGeneratedKeys="true">
+        insert into zy-community.sys_oper_log(title, business_type, method, request_method, operator_type, oper_name, dept_name, oper_url, oper_ip, oper_location, oper_param, json_result, status, error_msg, oper_time)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+        (#{entity.title}, #{entity.businessType}, #{entity.method}, #{entity.requestMethod}, #{entity.operatorType}, #{entity.operName}, #{entity.deptName}, #{entity.operUrl}, #{entity.operIp}, #{entity.operLocation}, #{entity.operParam}, #{entity.jsonResult}, #{entity.status}, #{entity.errorMsg}, #{entity.operTime})
+        </foreach>
+    </insert>
+    <!-- 批量插入或按主键更新 -->
+    <insert id="insertOrUpdateBatch" keyProperty="operId" useGeneratedKeys="true">
+        insert into zy-community.sys_oper_log(title, business_type, method, request_method, operator_type, oper_name, dept_name, oper_url, oper_ip, oper_location, oper_param, json_result, status, error_msg, oper_time)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.title}, #{entity.businessType}, #{entity.method}, #{entity.requestMethod}, #{entity.operatorType}, #{entity.operName}, #{entity.deptName}, #{entity.operUrl}, #{entity.operIp}, #{entity.operLocation}, #{entity.operParam}, #{entity.jsonResult}, #{entity.status}, #{entity.errorMsg}, #{entity.operTime})
+        </foreach>
+        on duplicate key update
+         title = values(title) , business_type = values(business_type) , method = values(method) , request_method = values(request_method) , operator_type = values(operator_type) , oper_name = values(oper_name) , dept_name = values(dept_name) , oper_url = values(oper_url) , oper_ip = values(oper_ip) , oper_location = values(oper_location) , oper_param = values(oper_param) , json_result = values(json_result) , status = values(status) , error_msg = values(error_msg) , oper_time = values(oper_time)     </insert>
+
+</mapper>
+

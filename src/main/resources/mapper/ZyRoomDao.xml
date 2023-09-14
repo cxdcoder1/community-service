@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.community.dao.ZyRoomDao">
+
+    <resultMap type="com.example.community.entity.ZyRoom" id="ZyRoomMap">
+        <result property="roomId" column="room_id" jdbcType="INTEGER"/>
+        <result property="communityId" column="community_id" jdbcType="INTEGER"/>
+        <result property="buildingId" column="building_id" jdbcType="INTEGER"/>
+        <result property="unitId" column="unit_id" jdbcType="INTEGER"/>
+        <result property="roomLevel" column="room_level" jdbcType="INTEGER"/>
+        <result property="roomCode" column="room_code" jdbcType="VARCHAR"/>
+        <result property="roomName" column="room_name" jdbcType="VARCHAR"/>
+        <result property="roomAcreage" column="room_acreage" jdbcType="NUMERIC"/>
+        <result property="roomCost" column="room_cost" jdbcType="NUMERIC"/>
+        <result property="roomStatus" column="room_status" jdbcType="VARCHAR"/>
+        <result property="roomIsShop" column="room_is_shop" jdbcType="VARCHAR"/>
+        <result property="roomSCommercialHouse" column="room_s_commercial_house" jdbcType="VARCHAR"/>
+        <result property="roomHouseType" column="room_house_type" jdbcType="VARCHAR"/>
+        <result property="createBy" column="create_by" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="updateBy" column="update_by" jdbcType="VARCHAR"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <result property="remark" column="remark" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!-- 批量插入 -->
+    <insert id="insertBatch" keyProperty="" useGeneratedKeys="true">
+        insert into zy-community.zy_room(room_id, community_id, building_id, unit_id, room_level, room_code, room_name, room_acreage, room_cost, room_status, room_is_shop, room_s_commercial_house, room_house_type, create_by, create_time, update_by, update_time, remark)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+        (#{entity.roomId}, #{entity.communityId}, #{entity.buildingId}, #{entity.unitId}, #{entity.roomLevel}, #{entity.roomCode}, #{entity.roomName}, #{entity.roomAcreage}, #{entity.roomCost}, #{entity.roomStatus}, #{entity.roomIsShop}, #{entity.roomSCommercialHouse}, #{entity.roomHouseType}, #{entity.createBy}, #{entity.createTime}, #{entity.updateBy}, #{entity.updateTime}, #{entity.remark})
+        </foreach>
+    </insert>
+    <!-- 批量插入或按主键更新 -->
+    <insert id="insertOrUpdateBatch" keyProperty="" useGeneratedKeys="true">
+        insert into zy-community.zy_room(room_id, community_id, building_id, unit_id, room_level, room_code, room_name, room_acreage, room_cost, room_status, room_is_shop, room_s_commercial_house, room_house_type, create_by, create_time, update_by, update_time, remark)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.roomId}, #{entity.communityId}, #{entity.buildingId}, #{entity.unitId}, #{entity.roomLevel}, #{entity.roomCode}, #{entity.roomName}, #{entity.roomAcreage}, #{entity.roomCost}, #{entity.roomStatus}, #{entity.roomIsShop}, #{entity.roomSCommercialHouse}, #{entity.roomHouseType}, #{entity.createBy}, #{entity.createTime}, #{entity.updateBy}, #{entity.updateTime}, #{entity.remark})
+        </foreach>
+        on duplicate key update
+         room_id = values(room_id) , community_id = values(community_id) , building_id = values(building_id) , unit_id = values(unit_id) , room_level = values(room_level) , room_code = values(room_code) , room_name = values(room_name) , room_acreage = values(room_acreage) , room_cost = values(room_cost) , room_status = values(room_status) , room_is_shop = values(room_is_shop) , room_s_commercial_house = values(room_s_commercial_house) , room_house_type = values(room_house_type) , create_by = values(create_by) , create_time = values(create_time) , update_by = values(update_by) , update_time = values(update_time) , remark = values(remark)     </insert>
+
+</mapper>
+

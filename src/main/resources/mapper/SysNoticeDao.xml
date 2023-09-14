@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.community.dao.SysNoticeDao">
+
+    <resultMap type="com.example.community.entity.SysNotice" id="SysNoticeMap">
+        <result property="noticeId" column="notice_id" jdbcType="INTEGER"/>
+        <result property="noticeTitle" column="notice_title" jdbcType="VARCHAR"/>
+        <result property="noticeType" column="notice_type" jdbcType="VARCHAR"/>
+        <result property="noticeContent" column="notice_content" jdbcType="VARCHAR"/>
+        <result property="status" column="status" jdbcType="VARCHAR"/>
+        <result property="createBy" column="create_by" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="updateBy" column="update_by" jdbcType="VARCHAR"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <result property="remark" column="remark" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!-- 批量插入 -->
+    <insert id="insertBatch" keyProperty="noticeId" useGeneratedKeys="true">
+        insert into zy-community.sys_notice(notice_title, notice_type, notice_content, status, create_by, create_time, update_by, update_time, remark)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+        (#{entity.noticeTitle}, #{entity.noticeType}, #{entity.noticeContent}, #{entity.status}, #{entity.createBy}, #{entity.createTime}, #{entity.updateBy}, #{entity.updateTime}, #{entity.remark})
+        </foreach>
+    </insert>
+    <!-- 批量插入或按主键更新 -->
+    <insert id="insertOrUpdateBatch" keyProperty="noticeId" useGeneratedKeys="true">
+        insert into zy-community.sys_notice(notice_title, notice_type, notice_content, status, create_by, create_time, update_by, update_time, remark)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.noticeTitle}, #{entity.noticeType}, #{entity.noticeContent}, #{entity.status}, #{entity.createBy}, #{entity.createTime}, #{entity.updateBy}, #{entity.updateTime}, #{entity.remark})
+        </foreach>
+        on duplicate key update
+         notice_title = values(notice_title) , notice_type = values(notice_type) , notice_content = values(notice_content) , status = values(status) , create_by = values(create_by) , create_time = values(create_time) , update_by = values(update_by) , update_time = values(update_time) , remark = values(remark)     </insert>
+
+</mapper>
+

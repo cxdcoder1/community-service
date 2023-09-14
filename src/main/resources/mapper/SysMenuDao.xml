@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.community.dao.SysMenuDao">
+
+    <resultMap type="com.example.community.entity.SysMenu" id="SysMenuMap">
+        <result property="menuId" column="menu_id" jdbcType="INTEGER"/>
+        <result property="menuName" column="menu_name" jdbcType="VARCHAR"/>
+        <result property="parentId" column="parent_id" jdbcType="INTEGER"/>
+        <result property="orderNum" column="order_num" jdbcType="INTEGER"/>
+        <result property="path" column="path" jdbcType="VARCHAR"/>
+        <result property="component" column="component" jdbcType="VARCHAR"/>
+        <result property="isFrame" column="is_frame" jdbcType="INTEGER"/>
+        <result property="isCache" column="is_cache" jdbcType="INTEGER"/>
+        <result property="menuType" column="menu_type" jdbcType="VARCHAR"/>
+        <result property="visible" column="visible" jdbcType="VARCHAR"/>
+        <result property="status" column="status" jdbcType="VARCHAR"/>
+        <result property="perms" column="perms" jdbcType="VARCHAR"/>
+        <result property="icon" column="icon" jdbcType="VARCHAR"/>
+        <result property="createBy" column="create_by" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="updateBy" column="update_by" jdbcType="VARCHAR"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <result property="remark" column="remark" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!-- 批量插入 -->
+    <insert id="insertBatch" keyProperty="menuId" useGeneratedKeys="true">
+        insert into zy-community.sys_menu(menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible, status, perms, icon, create_by, create_time, update_by, update_time, remark)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+        (#{entity.menuName}, #{entity.parentId}, #{entity.orderNum}, #{entity.path}, #{entity.component}, #{entity.isFrame}, #{entity.isCache}, #{entity.menuType}, #{entity.visible}, #{entity.status}, #{entity.perms}, #{entity.icon}, #{entity.createBy}, #{entity.createTime}, #{entity.updateBy}, #{entity.updateTime}, #{entity.remark})
+        </foreach>
+    </insert>
+    <!-- 批量插入或按主键更新 -->
+    <insert id="insertOrUpdateBatch" keyProperty="menuId" useGeneratedKeys="true">
+        insert into zy-community.sys_menu(menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible, status, perms, icon, create_by, create_time, update_by, update_time, remark)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.menuName}, #{entity.parentId}, #{entity.orderNum}, #{entity.path}, #{entity.component}, #{entity.isFrame}, #{entity.isCache}, #{entity.menuType}, #{entity.visible}, #{entity.status}, #{entity.perms}, #{entity.icon}, #{entity.createBy}, #{entity.createTime}, #{entity.updateBy}, #{entity.updateTime}, #{entity.remark})
+        </foreach>
+        on duplicate key update
+         menu_name = values(menu_name) , parent_id = values(parent_id) , order_num = values(order_num) , path = values(path) , component = values(component) , is_frame = values(is_frame) , is_cache = values(is_cache) , menu_type = values(menu_type) , visible = values(visible) , status = values(status) , perms = values(perms) , icon = values(icon) , create_by = values(create_by) , create_time = values(create_time) , update_by = values(update_by) , update_time = values(update_time) , remark = values(remark)     </insert>
+
+</mapper>
+

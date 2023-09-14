@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.community.dao.ZyVisitorDao">
+
+    <resultMap type="com.example.community.entity.ZyVisitor" id="ZyVisitorMap">
+        <result property="visitorId" column="visitor_id" jdbcType="INTEGER"/>
+        <result property="communityId" column="community_id" jdbcType="INTEGER"/>
+        <result property="visitorName" column="visitor_name" jdbcType="VARCHAR"/>
+        <result property="visitorPhoneNumber" column="visitor_phone_number" jdbcType="VARCHAR"/>
+        <result property="visitorDate" column="visitor_date" jdbcType="TIMESTAMP"/>
+        <result property="createById" column="create_by_id" jdbcType="INTEGER"/>
+        <result property="createByOpenId" column="create_by_open_id" jdbcType="VARCHAR"/>
+        <result property="createBy" column="create_by" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="updateBy" column="update_by" jdbcType="VARCHAR"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <result property="remark" column="remark" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!-- 批量插入 -->
+    <insert id="insertBatch" keyProperty="visitorId" useGeneratedKeys="true">
+        insert into zy-community.zy_visitor(community_id, visitor_name, visitor_phone_number, visitor_date, create_by_id, create_by_open_id, create_by, create_time, update_by, update_time, remark)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+        (#{entity.communityId}, #{entity.visitorName}, #{entity.visitorPhoneNumber}, #{entity.visitorDate}, #{entity.createById}, #{entity.createByOpenId}, #{entity.createBy}, #{entity.createTime}, #{entity.updateBy}, #{entity.updateTime}, #{entity.remark})
+        </foreach>
+    </insert>
+    <!-- 批量插入或按主键更新 -->
+    <insert id="insertOrUpdateBatch" keyProperty="visitorId" useGeneratedKeys="true">
+        insert into zy-community.zy_visitor(community_id, visitor_name, visitor_phone_number, visitor_date, create_by_id, create_by_open_id, create_by, create_time, update_by, update_time, remark)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.communityId}, #{entity.visitorName}, #{entity.visitorPhoneNumber}, #{entity.visitorDate}, #{entity.createById}, #{entity.createByOpenId}, #{entity.createBy}, #{entity.createTime}, #{entity.updateBy}, #{entity.updateTime}, #{entity.remark})
+        </foreach>
+        on duplicate key update
+         community_id = values(community_id) , visitor_name = values(visitor_name) , visitor_phone_number = values(visitor_phone_number) , visitor_date = values(visitor_date) , create_by_id = values(create_by_id) , create_by_open_id = values(create_by_open_id) , create_by = values(create_by) , create_time = values(create_time) , update_by = values(update_by) , update_time = values(update_time) , remark = values(remark)     </insert>
+
+</mapper>
+

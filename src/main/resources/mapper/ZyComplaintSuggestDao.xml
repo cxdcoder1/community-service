@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.community.dao.ZyComplaintSuggestDao">
+
+    <resultMap type="com.example.community.entity.ZyComplaintSuggest" id="ZyComplaintSuggestMap">
+        <result property="complaintSuggestId" column="complaint_suggest_id" jdbcType="INTEGER"/>
+        <result property="communityId" column="community_id" jdbcType="INTEGER"/>
+        <result property="complaintSuggestType" column="complaint_suggest_type" jdbcType="VARCHAR"/>
+        <result property="complaintSuggestContent" column="complaint_suggest_content" jdbcType="VARCHAR"/>
+        <result property="createBy" column="create_by" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="updateBy" column="update_by" jdbcType="VARCHAR"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <result property="remark" column="remark" jdbcType="VARCHAR"/>
+        <result property="userId" column="user_id" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!-- 批量插入 -->
+    <insert id="insertBatch" keyProperty="complaintSuggestId" useGeneratedKeys="true">
+        insert into zy-community.zy_complaint_suggest(community_id, complaint_suggest_type, complaint_suggest_content, create_by, create_time, update_by, update_time, remark, user_id)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+        (#{entity.communityId}, #{entity.complaintSuggestType}, #{entity.complaintSuggestContent}, #{entity.createBy}, #{entity.createTime}, #{entity.updateBy}, #{entity.updateTime}, #{entity.remark}, #{entity.userId})
+        </foreach>
+    </insert>
+    <!-- 批量插入或按主键更新 -->
+    <insert id="insertOrUpdateBatch" keyProperty="complaintSuggestId" useGeneratedKeys="true">
+        insert into zy-community.zy_complaint_suggest(community_id, complaint_suggest_type, complaint_suggest_content, create_by, create_time, update_by, update_time, remark, user_id)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.communityId}, #{entity.complaintSuggestType}, #{entity.complaintSuggestContent}, #{entity.createBy}, #{entity.createTime}, #{entity.updateBy}, #{entity.updateTime}, #{entity.remark}, #{entity.userId})
+        </foreach>
+        on duplicate key update
+         community_id = values(community_id) , complaint_suggest_type = values(complaint_suggest_type) , complaint_suggest_content = values(complaint_suggest_content) , create_by = values(create_by) , create_time = values(create_time) , update_by = values(update_by) , update_time = values(update_time) , remark = values(remark) , user_id = values(user_id)     </insert>
+
+</mapper>
+
