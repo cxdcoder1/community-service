@@ -36,7 +36,7 @@ public class SysAreaController extends ApiController {
      * @param sysArea 查询实体
      * @return 所有数据
      */
-    @GetMapping("selectAll")
+    @GetMapping("selectAlla")
     public R selectAll(Page<SysArea> page, SysArea sysArea) {
         return success(this.sysAreaService.page(page, new QueryWrapper<>(sysArea)));
     }
