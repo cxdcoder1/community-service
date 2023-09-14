@@ -30,6 +30,7 @@ import java.util.Map;
  */
 @RestController
 @RequestMapping("sysUser")
+@CrossOrigin
 public class SysUserController extends ApiController {
     /**
      * 服务对象
@@ -73,7 +74,7 @@ public class SysUserController extends ApiController {
      * @return
      */
     @RequestMapping("login")
-    public Map<String,Object> login(SysUser user, HttpServletRequest request) throws Exception {
+    public Map<String,Object> login(@RequestBody SysUser user, HttpServletRequest request) throws Exception {
         Map<String,Object> result = new HashMap<>();
         //校验用户名和密码
         QueryWrapper queryWrapper = new QueryWrapper<SysUser>();
@@ -91,6 +92,7 @@ public class SysUserController extends ApiController {
                 String JWT = JwtUtil.createJWT("1", JSON.toJSONString(user1), SystemConstant.JWT_TTL);
 //                log.info(JWT);
                 result.put("JWT",JWT);
+                result.put("status","200");
                 return result;
             }
             //登录失败 ，密码错误
@@ -101,6 +103,7 @@ public class SysUserController extends ApiController {
         //登录失败，用户名错误或不存在
         result. put("success", false);
         result. put("msg", "用户名错误或不存在!");
+        result.put("status","201");
         return result;
     }
 

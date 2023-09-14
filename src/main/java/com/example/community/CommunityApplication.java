@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 @MapperScan("com.example.community.dao")
 @CrossOrigin
 public class CommunityApplication {
-
     public static void main(String[] args) {
         SpringApplication.run(CommunityApplication.class, args);
     }
