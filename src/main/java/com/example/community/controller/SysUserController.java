@@ -42,6 +42,12 @@ public class SysUserController extends ApiController {
         return success(this.sysUserService.page(page, new QueryWrapper<>(sysUser)));
     }
 
+    @GetMapping("/selectAll2")
+    public R selectAll2(Page<SysUser> page, SysUser sysUser) {
+
+        return success(this.sysUserService.page(page, new QueryWrapper<>(sysUser)));
+    }
+
     /**
      * 通过主键查询单条数据
      *
