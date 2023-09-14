@@ -95,14 +95,14 @@ public class SysUserController extends ApiController {
                 result.put("status","200");
                 return result;
             }
-            //登录失败 ，密码错误
-            result. put("success", false);
-            result. put("msg", "密码错误!");
-            return result;
+//            //登录失败 ，密码错误
+//            result. put("success", false);
+//            result. put("msg", "密码错误!");
+//            return result;
         }
         //登录失败，用户名错误或不存在
         result. put("success", false);
-        result. put("msg", "用户名错误或不存在!");
+        result. put("msg", "用户名或密码错误!");
         result.put("status","201");
         return result;
     }

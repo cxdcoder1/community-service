@@ -1,8 +1,12 @@
-package com.example.community.entity;
+package com.example.community.utils;
 
+
+import com.alibaba.fastjson.JSON;
 import com.example.community.constant.SystemConstant;
+import com.example.community.entity.SysUser;
+import com.example.community.entity.CheckResult;
+import com.sun.org.apache.xerces.internal.impl.dv.util.Base64;
 import io.jsonwebtoken.*;
-import org.bouncycastle.util.encoders.Base64;
 
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
@@ -83,6 +87,5 @@ public class JwtUtil {
                   .parseClaimsJws(jwt)
                   .getBody();
       }
-
 
  }
