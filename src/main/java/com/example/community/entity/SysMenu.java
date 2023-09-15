@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.extension.activerecord.Model;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  * 菜单权限表(SysMenu)表实体类
@@ -51,6 +52,15 @@ public class SysMenu extends Model<SysMenu> {
     //备注
     private String remark;
 
+    private List<SysMenu> Children;
+
+    public List<SysMenu> getChildren() {
+        return Children;
+    }
+
+    public void setChildren(List<SysMenu> children) {
+        Children = children;
+    }
 
     public Long getMenuId() {
         return menuId;

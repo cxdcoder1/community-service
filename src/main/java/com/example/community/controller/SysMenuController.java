@@ -22,13 +22,21 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("sysMenu")
+@CrossOrigin
 public class SysMenuController extends ApiController {
+
     /**
      * 服务对象
      */
     @Resource
     private SysMenuService sysMenuService;
 
+
+    @GetMapping("getTreeMenu/{id}")
+    public R MenuTreeList(@PathVariable int id){
+        return success(this.sysMenuService.MenuTree(id));
+
+    }
     /**
      * 分页查询所有数据
      *

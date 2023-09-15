@@ -31,5 +31,12 @@ int insertBatch(@Param("entities") List<SysMenu> entities);
 */
 int insertOrUpdateBatch(@Param("entities") List<SysMenu> entities);
 
+        /**
+         * 系统菜单
+         * @return
+         */
+     List<SysMenu>selectMenuTreeByUserId(int id);
+
+
 }
 
