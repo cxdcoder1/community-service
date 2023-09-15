@@ -8,7 +8,7 @@ import com.baomidou.mybatisplus.extension.api.ApiController;
 import com.baomidou.mybatisplus.extension.api.R;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.community.constant.SystemConstant;
-import com.example.community.entity.JwtUtil;
+import com.example.community.utils.JwtUtil;
 import com.example.community.entity.SysUser;
 import com.example.community.service.SysUserService;
 import org.springframework.web.bind.annotation.*;
@@ -86,7 +86,7 @@ public class SysUserController extends ApiController {
                 //将用户信息存储到Session  //登入成功
                 HttpSession session = request. getSession();
                 session. setAttribute("userInfo", user1);  //1.用于拦截器的判断  2.界面显示用户信息
-                result. put("Id", user1.getUserId());
+                result. put("user", user1);
                 //把token返回给客户端-->客户端保存至localStorage-->客户端每次请求附带localStorage参数
                 //SystemConstant.JWT_TTL：token有效时间
                 String JWT = JwtUtil.createJWT("1", JSON.toJSONString(user1), SystemConstant.JWT_TTL);
