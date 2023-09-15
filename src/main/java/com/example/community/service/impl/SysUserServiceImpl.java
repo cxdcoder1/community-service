@@ -1,9 +1,7 @@
 package com.example.community.service.impl;
 
-import com.baomidou.mybatisplus.extension.api.R;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.community.dao.SysUserDao;
-import com.example.community.dto.UserAndDeptAndRole;
 import com.example.community.entity.SysUser;
 import com.example.community.service.SysUserService;
 import org.springframework.stereotype.Service;
