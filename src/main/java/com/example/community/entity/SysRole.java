@@ -2,6 +2,8 @@ package com.example.community.entity;
 
 
 import com.baomidou.mybatisplus.extension.activerecord.Model;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -13,6 +15,8 @@ import java.util.Date;
  * @since 2023-09-14 09:53:02
  */
 @SuppressWarnings("serial")
+@Getter
+@Setter
 public class SysRole extends Model<SysRole> {
     //角色ID
     private Long roleId;

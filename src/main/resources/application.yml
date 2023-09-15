@@ -1,5 +1,5 @@
 server:
-  port: 8081
+  port: 8080
   tomcat:
     uri-encoding: utf-8
 
@@ -9,6 +9,10 @@ spring:
     url: jdbc:mysql://localhost:3306/zy-community?serverTimezone=UTC&characterEncoding=UTF-8
     username: root
     password: root
+  servlet:
+    multipart:
+      max-file-size: 200MB
+      max-request-size: 200MB
 
 mybatis-plus:
   mapper-locations: classpath:mapper/*.xml
@@ -19,6 +23,12 @@ mybatis-plus:
     map-underscore-to-camel-case: true
     #开启mybatis自带日志
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+minio:
+  endpoint: http://127.0.0.1:9000
+  accessKey: minioadmin
+  secretKey: minioadmin
+  bucketName: test
 
 
 

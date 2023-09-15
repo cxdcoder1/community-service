@@ -1,10 +1,11 @@
 package com.example.community.dao;
 
-import java.util.List;
-
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import org.apache.ibatis.annotations.Param;
+import com.example.community.dto.UserAndDeptAndRole;
 import com.example.community.entity.SysUser;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
  * 用户信息表(SysUser)表数据库访问层
@@ -30,6 +31,10 @@ int insertBatch(@Param("entities") List<SysUser> entities);
 * @throws org.springframework.jdbc.BadSqlGrammarException 入参是空List的时候会抛SQL语句错误的异常，请自行校验入参
 */
 int insertOrUpdateBatch(@Param("entities") List<SysUser> entities);
+
+    UserAndDeptAndRole getUserInfo(int id);
+
+    int updataUser(@Param("sysUser") SysUser sysUser);
 
 }
 

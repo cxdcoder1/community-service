@@ -3,21 +3,21 @@ package com.example.community.controller;
 
 
 
+import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.api.ApiController;
 import com.baomidou.mybatisplus.extension.api.R;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.community.constant.SystemConstant;
-import com.example.community.utils.JwtUtil;
+import com.example.community.dto.UserAndDeptAndRole;
 import com.example.community.entity.SysUser;
 import com.example.community.service.SysUserService;
+import com.example.community.utils.JwtUtil;
 import org.springframework.web.bind.annotation.*;
-import com.alibaba.fastjson.JSON;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -63,9 +63,9 @@ public class SysUserController extends ApiController {
      * @param id 主键
      * @return 单条数据
      */
-    @GetMapping("{id}")
-    public R selectOne(@PathVariable Serializable id) {
-        return success(this.sysUserService.getById(id));
+    @GetMapping("/{id}")
+    public UserAndDeptAndRole selectOne(@PathVariable int id) {
+        return sysUserService.getUserInfo(id);
     }
 
     /**
@@ -124,9 +124,14 @@ public class SysUserController extends ApiController {
      * @param sysUser 实体对象
      * @return 修改结果
      */
-    @PutMapping
+//    @PutMapping("/updataUser")
+//    public R update(SysUser sysUser) {
+//        return success(this.sysUserService.updateById(sysUser));
+//    }
+    @PutMapping("updataUser")
     public R update(@RequestBody SysUser sysUser) {
-        return success(this.sysUserService.updateById(sysUser));
+        System.err.println(sysUser);
+       return success(this.sysUserService.updateUser(sysUser));
     }
 
     /**

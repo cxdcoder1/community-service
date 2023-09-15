@@ -1,6 +1,7 @@
 package com.example.community.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.example.community.dto.UserAndDeptAndRole;
 import com.example.community.entity.SysUser;
 
 /**
@@ -11,5 +12,8 @@ import com.example.community.entity.SysUser;
  */
 public interface SysUserService extends IService<SysUser> {
 
+    UserAndDeptAndRole getUserInfo(int id);
+
+    int updateUser(SysUser sysUser);
 }
 

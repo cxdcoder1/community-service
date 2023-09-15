@@ -26,21 +26,76 @@
 
     <!-- 批量插入 -->
     <insert id="insertBatch" keyProperty="userId" useGeneratedKeys="true">
-        insert into zy-community.sys_user(dept_id, user_name, nick_name, user_type, email, phonenumber, sex, avatar, password, status, del_flag, login_ip, login_date, create_by, create_time, update_by, update_time, remark)
+        insert into zy-community.sys_user(dept_id, user_name, nick_name, user_type, email, phonenumber, sex, avatar,
+        password, status, del_flag, login_ip, login_date, create_by, create_time, update_by, update_time, remark)
         values
         <foreach collection="entities" item="entity" separator=",">
-        (#{entity.deptId}, #{entity.userName}, #{entity.nickName}, #{entity.userType}, #{entity.email}, #{entity.phonenumber}, #{entity.sex}, #{entity.avatar}, #{entity.password}, #{entity.status}, #{entity.delFlag}, #{entity.loginIp}, #{entity.loginDate}, #{entity.createBy}, #{entity.createTime}, #{entity.updateBy}, #{entity.updateTime}, #{entity.remark})
+            (#{entity.deptId}, #{entity.userName}, #{entity.nickName}, #{entity.userType}, #{entity.email},
+            #{entity.phonenumber}, #{entity.sex}, #{entity.avatar}, #{entity.password}, #{entity.status},
+            #{entity.delFlag}, #{entity.loginIp}, #{entity.loginDate}, #{entity.createBy}, #{entity.createTime},
+            #{entity.updateBy}, #{entity.updateTime}, #{entity.remark})
         </foreach>
     </insert>
     <!-- 批量插入或按主键更新 -->
     <insert id="insertOrUpdateBatch" keyProperty="userId" useGeneratedKeys="true">
-        insert into zy-community.sys_user(dept_id, user_name, nick_name, user_type, email, phonenumber, sex, avatar, password, status, del_flag, login_ip, login_date, create_by, create_time, update_by, update_time, remark)
+        insert into zy-community.sys_user(dept_id, user_name, nick_name, user_type, email, phonenumber, sex, avatar,
+        password, status, del_flag, login_ip, login_date, create_by, create_time, update_by, update_time, remark)
         values
         <foreach collection="entities" item="entity" separator=",">
-            (#{entity.deptId}, #{entity.userName}, #{entity.nickName}, #{entity.userType}, #{entity.email}, #{entity.phonenumber}, #{entity.sex}, #{entity.avatar}, #{entity.password}, #{entity.status}, #{entity.delFlag}, #{entity.loginIp}, #{entity.loginDate}, #{entity.createBy}, #{entity.createTime}, #{entity.updateBy}, #{entity.updateTime}, #{entity.remark})
+            (#{entity.deptId}, #{entity.userName}, #{entity.nickName}, #{entity.userType}, #{entity.email},
+            #{entity.phonenumber}, #{entity.sex}, #{entity.avatar}, #{entity.password}, #{entity.status},
+            #{entity.delFlag}, #{entity.loginIp}, #{entity.loginDate}, #{entity.createBy}, #{entity.createTime},
+            #{entity.updateBy}, #{entity.updateTime}, #{entity.remark})
         </foreach>
         on duplicate key update
-         dept_id = values(dept_id) , user_name = values(user_name) , nick_name = values(nick_name) , user_type = values(user_type) , email = values(email) , phonenumber = values(phonenumber) , sex = values(sex) , avatar = values(avatar) , password = values(password) , status = values(status) , del_flag = values(del_flag) , login_ip = values(login_ip) , login_date = values(login_date) , create_by = values(create_by) , create_time = values(create_time) , update_by = values(update_by) , update_time = values(update_time) , remark = values(remark)     </insert>
+        dept_id = values(dept_id) , user_name = values(user_name) , nick_name = values(nick_name) , user_type =
+        values(user_type) , email = values(email) , phonenumber = values(phonenumber) , sex = values(sex) , avatar =
+        values(avatar) , password = values(password) , status = values(status) , del_flag = values(del_flag) , login_ip
+        = values(login_ip) , login_date = values(login_date) , create_by = values(create_by) , create_time =
+        values(create_time) , update_by = values(update_by) , update_time = values(update_time) , remark =
+        values(remark)
+    </insert>
+    <update id="updataUser">
+        update sys_user
+        <set>
+            <if test="sysUser.nickName!=null">
+                 nick_name = #{sysUser.nickName},
+            </if>
+            <if test="sysUser.phonenumber!=null">
+                 phonenumber = #{sysUser.phonenumber},
+            </if>
+            <if test="sysUser.email!=null">
+                 email = #{sysUser.email},
+            </if>
+            <if test="sysUser.sex!=null">
+                 sex = #{sysUser.sex},
+            </if>
+            <if test="sysUser.password!=null">
+                 password = #{sysUser.password}
+            </if>
+        </set>
+        <if test="sysUser.userId!=null">
+            where user_id=#{sysUser.userId}
+        </if>
+    </update>
+
+    <resultMap id="UserInfo" type="com.example.community.dto.UserAndDeptAndRole" autoMapping="true">
+        <id property="userId" column="userId"></id>
+        <association property="sysRole" javaType="com.example.community.entity.SysRole" autoMapping="true">
+            <id property="roleId" column="roleId"></id>
+        </association>
+        <collection property="sysDept" ofType="com.example.community.entity.SysDept" autoMapping="true">
+            <id property="deptId" column="deptId"></id>
+        </collection>
+    </resultMap>
+    <select id="getUserInfo" resultMap="UserInfo">
+        SELECT u.*,r.role_name,d.dept_name,u.user_id userId,r.role_id roleId,d.dept_id deptId from sys_user u
+            LEFT JOIN sys_user_role ur on u.user_id = ur.user_id
+            LEFT JOIN sys_role r on ur.role_id = r.role_id
+            LEFT JOIN sys_role_dept rd  on rd.role_id = r.role_id
+            LEFT JOIN sys_dept d  on d.dept_id = rd.dept_id
+        where u.user_id=#{id}
+    </select>
 
 </mapper>
 
