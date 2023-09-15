@@ -1,14 +1,13 @@
 package com.example.community.controller;
 
 
-
-
 import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.api.ApiController;
 import com.baomidou.mybatisplus.extension.api.R;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.community.constant.SystemConstant;
+import com.example.community.dto.UserAndDeptAndRole;
 import com.example.community.entity.SysUser;
 import com.example.community.service.SysUserService;
 import com.example.community.utils.JwtUtil;

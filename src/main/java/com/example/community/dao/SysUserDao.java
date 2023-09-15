@@ -1,6 +1,7 @@
 package com.example.community.dao;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.example.community.dto.UserAndDeptAndRole;
 import com.example.community.entity.SysUser;
 import org.apache.ibatis.annotations.Param;
 

@@ -1,6 +1,7 @@
 package com.example.community.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.example.community.dto.UserAndDeptAndRole;
 import com.example.community.entity.SysUser;
 
 /**
