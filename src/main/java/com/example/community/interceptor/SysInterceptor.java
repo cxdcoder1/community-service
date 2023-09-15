@@ -32,7 +32,7 @@ public class SysInterceptor implements HandlerInterceptor {
           //判断请求对象中有没有请求方法
           if (handler instanceof HandlerMethod){
               //从请求中取到token令牌
-              String authHeader = request.getHeader("token");
+              String authHeader = request.getHeader("Authorization");
               logger.info(authHeader);
               //先判断token令牌是否为空,
               if (StringUtils.isEmpty(authHeader)) {
