@@ -81,7 +81,6 @@ public class SysMenuController extends ApiController {
         map.put("data",s);
         System.out.println(map);
         return map;
-
     }
 
     /**
