@@ -1,7 +1,6 @@
 package com.example.community.controller;
 
 
-
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.api.ApiController;
 import com.baomidou.mybatisplus.extension.api.R;
@@ -57,13 +56,14 @@ public class SysMenuController extends ApiController {
 
 
     @GetMapping("getTreeMenu/{id}")
-    public R MenuTreeList(@PathVariable int id){
+    public R MenuTreeList(@PathVariable int id) {
         return success(this.sysMenuService.MenuTree(id));
     }
+
     /**
      * 分页查询所有数据
      *
-     * @param page 分页对象
+     * @param page    分页对象
      * @param sysMenu 查询实体
      * @return 所有数据
      */
