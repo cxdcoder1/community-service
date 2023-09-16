@@ -8,9 +8,13 @@ import com.baomidou.mybatisplus.extension.api.R;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.community.entity.SysMenu;
 import com.example.community.service.SysMenuService;
+import com.example.community.utils.MenuTree;
+import lombok.extern.java.Log;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.xml.transform.Result;
 import java.io.Serializable;
 import java.util.List;
 
@@ -24,7 +28,6 @@ import java.util.List;
 @RequestMapping("sysMenu")
 @CrossOrigin
 public class SysMenuController extends ApiController {
-
     /**
      * 服务对象
      */
@@ -32,10 +35,31 @@ public class SysMenuController extends ApiController {
     private SysMenuService sysMenuService;
 
 
+    @PostMapping("/menuList")
+    public R menuList(@RequestBody SysMenu sysMenu) {
+        List<SysMenu> menus = sysMenuService.getMenuList(sysMenu.getMenuName(),sysMenu.getStatus());
+        List<SysMenu> menuList = new MenuTree(menus).builTree();
+
+        if (menuList != null && !menuList.isEmpty()) {
+            return R.ok(menuList);
+        }
+
+        System.err.println(R.ok(menus));
+
+        return R.ok(menus);
+    }
+
+
+//    @PostMapping("/menuList")
+//    public R menuList(@RequestBody SysMenu sysMenu) {
+//        return success(this.sysMenuService.getMenuList(sysMenu.getMenuName(),sysMenu.getStatus()));
+//    }
+
+
+
     @GetMapping("getTreeMenu/{id}")
     public R MenuTreeList(@PathVariable int id){
         return success(this.sysMenuService.MenuTree(id));
-
     }
     /**
      * 分页查询所有数据

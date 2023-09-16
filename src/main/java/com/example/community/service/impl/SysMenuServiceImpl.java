@@ -9,6 +9,7 @@ import com.example.community.utils.MenuTree;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -30,5 +31,26 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuDao, SysMenu> impleme
         return sysMenuList1;
 
     }
+
+    @Override
+    public List<SysMenu> getMenuList(String menuName, String status) {
+        List<SysMenu> menuList = sysMenuDao.getMenuList(menuName, status);
+        menuList.sort(new Comparator<SysMenu>() {
+            @Override
+            public int compare(SysMenu o1, SysMenu o2) {
+                return o1.getOrderNum() - o2.getOrderNum();
+            }
+        });
+        return menuList;
+    }
+
+
+//    @Override
+//    public List<SysMenu> getMenuList(String menuName, String status) {
+//        List<SysMenu> sysMenuList = sysMenuDao.getMenuList(menuName,status);
+//        MenuTree menuTree = new MenuTree(sysMenuList);
+//        List<SysMenu> sysMenuList1 = menuTree.builTree();
+//        return sysMenuList1;
+//    }
 }
 

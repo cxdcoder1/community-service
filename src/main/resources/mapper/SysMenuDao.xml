@@ -74,5 +74,35 @@
         order by m.parent_id, m.order_num
     </select>
 
+    <select id="getMenuList" resultType="com.example.community.entity.SysMenu">
+        select * from sys_menu where 1=1
+        <if test="menuName != null and menuName != ''">
+            and menu_name like concat("%",#{menuName},"%")
+        </if>
+        <if test="status != null and status != ''">
+            and status = #{status}
+        </if>
+        <if test="menuName != null and menuName != ''">
+            UNION
+            select * from sys_menu sm1 where sm1.parent_id in
+            (select sm2.menu_id from sys_menu sm2 where menu_name LIKE concat("%",#{menuName},"%"))
+            <if test="status != null and status != ''">
+                and status = #{status}
+            </if>
+            UNION
+            select * from sys_menu sm1 where sm1.menu_id in
+            (select sm2.parent_id from sys_menu sm2 where menu_name LIKE concat("%",#{menuName},"%"))
+            <if test="status != null and status != ''">
+                and status = #{status}
+            </if>
+        </if>
+        <if test="status != null and status != '' and menuName == null || menuName == ''">
+            UNION
+            select * from sys_menu sm1
+            where sm1.menu_id in
+            (select sm2.parent_id from sys_menu sm2 where status = #{status})
+        </if>
+    </select>
+
 </mapper>
 

@@ -2,6 +2,7 @@ package com.example.community.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.example.community.entity.SysMenu;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -14,5 +15,7 @@ import java.util.List;
 public interface SysMenuService extends IService<SysMenu> {
 
     List<SysMenu> MenuTree(int id);
+
+    List<SysMenu> getMenuList(@Param("menuName") String menuName, @Param("status") String status);
 }
 
