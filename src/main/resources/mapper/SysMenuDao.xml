@@ -51,12 +51,7 @@
     <delete id="deleteByMenuId">
         delete from sys_menu where menu_id=#{id}
     </delete>
-        menu_name = values(menu_name) , parent_id = values(parent_id) , order_num = values(order_num) , path =
-        values(path) , component = values(component) , is_frame = values(is_frame) , is_cache = values(is_cache) ,
-        menu_type = values(menu_type) , visible = values(visible) , status = values(status) , perms = values(perms) ,
-        icon = values(icon) , create_by = values(create_by) , create_time = values(create_time) , update_by =
-        values(update_by) , update_time = values(update_time) , remark = values(remark)
-    </insert>
+
     <insert id="addMenu">
         insert into sys_menu
         <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -198,6 +193,7 @@
     <select id="checkName" resultType="java.lang.Long">
         select menu_id from sys_menu where menu_name = #{menuName} and parent_id = #{parentId}
     </select>
+
     <select id="checkPath" resultType="java.lang.Long">
         select menu_id from sys_menu where path = #{menuName} and menu_id = #{menuId}
     </select>
