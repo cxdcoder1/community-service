@@ -71,7 +71,10 @@
                  sex = #{sysUser.sex},
             </if>
             <if test="sysUser.password!=null">
-                 password = #{sysUser.password}
+                 password = #{sysUser.password},
+            </if>
+            <if test="sysUser.avatar!=null">
+                avatar = #{sysUser.avatar}
             </if>
         </set>
         <if test="sysUser.userId!=null">

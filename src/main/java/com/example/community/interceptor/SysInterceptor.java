@@ -1,6 +1,5 @@
 package com.example.community.interceptor;
 
-
 import com.example.community.constant.SystemConstant;
 import com.example.community.entity.CheckResult;
 import com.example.community.entity.R;
