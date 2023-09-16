@@ -30,7 +30,6 @@ public interface SysMenuDao extends BaseMapper<SysMenu> {
      * @throws org.springframework.jdbc.BadSqlGrammarException 入参是空List的时候会抛SQL语句错误的异常，请自行校验入参
      */
     int insertOrUpdateBatch(@Param("entities") List<SysMenu> entities);
-
     /**
      * 系统菜单
      *
@@ -41,6 +40,27 @@ public interface SysMenuDao extends BaseMapper<SysMenu> {
     List<SysMenu> getMenuList(@Param("menuName") String menuName, @Param("status") String status);
 
     List<SysMenu> getMenuByParentId(Long id);
+    /**
+     * 验证同级别下菜单名
+     * @param menuName
+     * @param parentId
+     * @return
+     */
+    Long checkName(String menuName,String parentId);
+
+    /**
+     * 验证菜单路径
+     * @param menuName
+     * @param menuId
+     * @return
+     */
+    Long checkPath(String menuName,String menuId);
+
+    Integer updateMenu(SysMenu sysMenu);
+
+    Integer addMenu(SysMenu sysMenu);
+
+
 
     int deleteByMenuId(Long id);
 

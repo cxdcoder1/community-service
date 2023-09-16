@@ -12,6 +12,7 @@ import com.example.community.utils.MenuTree;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -41,6 +42,7 @@ public class SysMenuController extends ApiController {
         if (menuList != null && !menuList.isEmpty()) {
             return R.ok(menuList);
         }
+
         System.err.println(R.ok(menus));
 
         return R.ok(menus);
@@ -82,17 +84,44 @@ public class SysMenuController extends ApiController {
 
     }
 
-
-
     /**
      * 新增数据
      *
      * @param sysMenu 实体对象
      * @return 新增结果
      */
-    @PostMapping
-    public R insert(@RequestBody SysMenu sysMenu) {
-        return success(this.sysMenuService.save(sysMenu));
+    @PostMapping("addMenu")
+    public Map<String, Object> insert(@RequestBody SysMenu sysMenu) {
+        Map<String, Object> result = new HashMap<>();
+        Boolean cName = sysMenuService.checkName(sysMenu.getMenuName(), sysMenu.getMenuId() + "", sysMenu.getParentId() + "");
+        Boolean cPath = sysMenuService.checkPath(sysMenu.getMenuName(), sysMenu.getMenuId() + "");
+        //判断是否重复
+        if (cName == false) {
+            result.put("status", 201);
+            result.put("success", false);
+            result.put("msg", "菜单名重复");
+            return result;
+        }
+        if (cPath == false) {
+            result.put("status", 201);
+            result.put("success", false);
+            result.put("msg", "路径名重复");
+            return result;
+        }
+        //新增
+        sysMenu.setChildren(null);
+        sysMenu.setCreateTime(new Date());
+        Integer i = sysMenuService.addMenu(sysMenu);
+        if (i==1) {
+            result.put("status", 200);
+            result.put("success", true);
+            result.put("msg", "成功");
+            return result;
+        }
+        result.put("status", 201);
+        result.put("success", false);
+        result.put("msg", "失败");
+        return result;
     }
 
     /**
@@ -101,9 +130,35 @@ public class SysMenuController extends ApiController {
      * @param sysMenu 实体对象
      * @return 修改结果
      */
-    @PutMapping
-    public R update(@RequestBody SysMenu sysMenu) {
-        return success(this.sysMenuService.updateById(sysMenu));
+    @PutMapping("updateMenu")
+    public Map<String,Object> update(@RequestBody SysMenu sysMenu) {
+        Map<String, Object> result = new HashMap<>();
+        Boolean cName = sysMenuService.checkName(sysMenu.getMenuName(), sysMenu.getMenuId() + "", sysMenu.getParentId() + "");
+        Boolean cPath = sysMenuService.checkPath(sysMenu.getMenuName(), sysMenu.getMenuId() + "");
+        //判断是否重复
+        if (cName == false) {
+            result.put("status", 201);
+            result.put("success", false);
+            result.put("msg", "菜单名重复");
+            return result;
+        }
+        if (cPath == false) {
+            result.put("status", 201);
+            result.put("success", false);
+            result.put("msg", "路径名重复");
+            return result;
+        }
+        Integer i = sysMenuService.updateMenu(sysMenu);
+        if (i==1){
+            result.put("status",200);
+            result.put("success",true);
+            result.put("msg","成功");
+            return result;
+        }
+        result.put("status", 201);
+        result.put("success", false);
+        result.put("msg", "失败");
+        return result;
     }
 
     /**
