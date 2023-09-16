@@ -44,6 +44,43 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuDao, SysMenu> impleme
         return menuList;
     }
 
+    @Override
+    public Boolean checkName(String menuName, String menuId, String parentId) {
+        Long id = sysMenuDao.checkName(menuName, parentId);
+        if (id==null){
+            return true;
+        }else {
+            if (String.valueOf(id).equals(menuId)){
+                return true;
+            }
+            return false;
+        }
+    }
+
+    @Override
+    public Boolean checkPath(String menuName, String menuId) {
+        Long id = sysMenuDao.checkPath(menuName, menuId);
+        if (id==null){
+            return true;
+        }else {
+            if (String.valueOf(id).equals(menuId)){
+                return true;
+            }
+            return false;
+        }
+    }
+
+    @Override
+    public Integer updateMenu(SysMenu sysMenu) {
+        return sysMenuDao.updateMenu(sysMenu);
+
+    }
+
+    @Override
+    public Integer addMenu(SysMenu sysMenu) {
+        return sysMenuDao.addMenu(sysMenu);
+    }
+
 
 //    @Override
 //    public List<SysMenu> getMenuList(String menuName, String status) {

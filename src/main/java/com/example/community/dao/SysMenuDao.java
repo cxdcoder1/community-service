@@ -14,30 +14,52 @@ import com.example.community.entity.SysMenu;
  */
 public interface SysMenuDao extends BaseMapper<SysMenu> {
 
-/**
-* 批量新增数据（MyBatis原生foreach方法）
-*
-* @param entities List<SysMenu> 实例对象列表
-* @return 影响行数
-*/
-int insertBatch(@Param("entities") List<SysMenu> entities);
+    /**
+     * 批量新增数据（MyBatis原生foreach方法）
+     *
+     * @param entities List<SysMenu> 实例对象列表
+     * @return 影响行数
+     */
+    int insertBatch(@Param("entities") List<SysMenu> entities);
 
-/**
-* 批量新增或按主键更新数据（MyBatis原生foreach方法）
-*
-* @param entities List<SysMenu> 实例对象列表
-* @return 影响行数
-* @throws org.springframework.jdbc.BadSqlGrammarException 入参是空List的时候会抛SQL语句错误的异常，请自行校验入参
-*/
-int insertOrUpdateBatch(@Param("entities") List<SysMenu> entities);
+    /**
+     * 批量新增或按主键更新数据（MyBatis原生foreach方法）
+     *
+     * @param entities List<SysMenu> 实例对象列表
+     * @return 影响行数
+     * @throws org.springframework.jdbc.BadSqlGrammarException 入参是空List的时候会抛SQL语句错误的异常，请自行校验入参
+     */
+    int insertOrUpdateBatch(@Param("entities") List<SysMenu> entities);
 
-        /**
-         * 系统菜单
-         * @return
-         */
-     List<SysMenu>selectMenuTreeByUserId(int id);
+    /**
+     * 左侧系统菜单
+     *
+     * @return
+     */
+    List<SysMenu> selectMenuTreeByUserId(int id);
 
     List<SysMenu> getMenuList(@Param("menuName") String menuName,@Param("status") String status);
+
+    /**
+     * 验证同级别下菜单名
+     * @param menuName
+     * @param parentId
+     * @return
+     */
+    Long checkName(String menuName,String parentId);
+
+    /**
+     * 验证菜单路径
+     * @param menuName
+     * @param menuId
+     * @return
+     */
+    Long checkPath(String menuName,String menuId);
+
+    Integer updateMenu(SysMenu sysMenu);
+
+    Integer addMenu(SysMenu sysMenu);
+
 
 
 }
