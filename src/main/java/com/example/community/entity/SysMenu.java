@@ -206,6 +206,31 @@ public class SysMenu extends Model<SysMenu> {
         this.remark = remark;
     }
 
+    @Override
+    public String toString() {
+        return "SysMenu{" +
+                "menuId=" + menuId +
+                ", menuName='" + menuName + '\'' +
+                ", parentId=" + parentId +
+                ", orderNum=" + orderNum +
+                ", path='" + path + '\'' +
+                ", component='" + component + '\'' +
+                ", isFrame=" + isFrame +
+                ", isCache=" + isCache +
+                ", menuType='" + menuType + '\'' +
+                ", visible='" + visible + '\'' +
+                ", status='" + status + '\'' +
+                ", perms='" + perms + '\'' +
+                ", icon='" + icon + '\'' +
+                ", createBy='" + createBy + '\'' +
+                ", createTime=" + createTime +
+                ", updateBy='" + updateBy + '\'' +
+                ", updateTime=" + updateTime +
+                ", remark='" + remark + '\'' +
+                ", Children=" + Children +
+                '}';
+    }
+
     /**
      * 获取主键值
      *

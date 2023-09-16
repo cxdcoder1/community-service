@@ -17,5 +17,7 @@ public interface SysMenuService extends IService<SysMenu> {
     List<SysMenu> MenuTree(int id);
 
     List<SysMenu> getMenuList(@Param("menuName") String menuName, @Param("status") String status);
+
+    String deleteMenu(Long menuId,Long parentId);
 }
 

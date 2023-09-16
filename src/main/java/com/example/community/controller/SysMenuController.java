@@ -9,14 +9,12 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.community.entity.SysMenu;
 import com.example.community.service.SysMenuService;
 import com.example.community.utils.MenuTree;
-import lombok.extern.java.Log;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import javax.xml.transform.Result;
-import java.io.Serializable;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 菜单权限表(SysMenu)表控制层
@@ -43,7 +41,6 @@ public class SysMenuController extends ApiController {
         if (menuList != null && !menuList.isEmpty()) {
             return R.ok(menuList);
         }
-
         System.err.println(R.ok(menus));
 
         return R.ok(menus);
@@ -73,16 +70,19 @@ public class SysMenuController extends ApiController {
         return success(this.sysMenuService.page(page, new QueryWrapper<>(sysMenu)));
     }
 
-    /**
-     * 通过主键查询单条数据
-     *
-     * @param id 主键
-     * @return 单条数据
-     */
-    @GetMapping("{id}")
-    public R selectOne(@PathVariable Serializable id) {
-        return success(this.sysMenuService.getById(id));
+
+    @RequestMapping("deleteMenu")
+    public Map<String, Object> deleteMenu(@RequestBody SysMenu sysMenu){
+        Map<String, Object> map = new HashMap<>();
+        System.err.println(sysMenu.toString());
+        String s = sysMenuService.deleteMenu(sysMenu.getMenuId(), null);
+        map.put("data",s);
+        System.out.println(map);
+        return map;
+
     }
+
+
 
     /**
      * 新增数据
@@ -112,9 +112,10 @@ public class SysMenuController extends ApiController {
      * @param idList 主键结合
      * @return 删除结果
      */
-    @DeleteMapping
-    public R delete(@RequestParam("idList") List<Long> idList) {
-        return success(this.sysMenuService.removeByIds(idList));
-    }
+//    @DeleteMapping
+//    public R delete(@RequestParam("idList") List<Long> idList) {
+//        return success(this.sysMenuService.removeByIds(idList));
+//    }
+
 }
 

@@ -40,7 +40,9 @@
         </foreach>
         on duplicate key update
          menu_name = values(menu_name) , parent_id = values(parent_id) , order_num = values(order_num) , path = values(path) , component = values(component) , is_frame = values(is_frame) , is_cache = values(is_cache) , menu_type = values(menu_type) , visible = values(visible) , status = values(status) , perms = values(perms) , icon = values(icon) , create_by = values(create_by) , create_time = values(create_time) , update_by = values(update_by) , update_time = values(update_time) , remark = values(remark)     </insert>
-
+    <delete id="deleteByMenuId">
+        delete from sys_menu where menu_id=#{id}
+    </delete>
 
 
     <resultMap type="com.example.community.entity.SysMenu" id="SysMenuResult">
@@ -102,6 +104,10 @@
             where sm1.menu_id in
             (select sm2.parent_id from sys_menu sm2 where status = #{status})
         </if>
+    </select>
+
+    <select id="getMenuByParentId" resultType="com.example.community.entity.SysMenu">
+        select * from sys_menu where parent_id=#{id}
     </select>
 
 </mapper>

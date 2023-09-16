@@ -23,6 +23,7 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuDao, SysMenu> impleme
 
     @Resource
     private SysMenuDao sysMenuDao;
+
     @Override
     public List<SysMenu> MenuTree(int id) {
         List<SysMenu> sysMenuList = sysMenuDao.selectMenuTreeByUserId(id);
@@ -42,6 +43,22 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuDao, SysMenu> impleme
             }
         });
         return menuList;
+    }
+
+
+    @Override
+    public String deleteMenu(Long menuId, Long parentId) {
+        List<SysMenu> menu = sysMenuDao.getMenuByParentId(menuId);
+//        System.err.println(menu);
+        if (menu.size()!=0){
+            return "该菜单有子菜单,不能删除!";
+        }else {
+            int i = sysMenuDao.deleteByMenuId(menuId);
+            if (i==1) {
+                return "删除成功!";
+            }
+            return "删除失败！";
+        }
     }
 
 
