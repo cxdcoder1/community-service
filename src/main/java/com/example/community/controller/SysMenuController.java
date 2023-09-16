@@ -75,6 +75,7 @@ public class SysMenuController extends ApiController {
         return success(this.sysMenuService.page(page, new QueryWrapper<>(sysMenu)));
     }
 
+
     /**
      * 通过主键查询单条数据
      *
