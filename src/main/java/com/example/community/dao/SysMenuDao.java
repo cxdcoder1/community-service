@@ -40,5 +40,7 @@ int insertOrUpdateBatch(@Param("entities") List<SysMenu> entities);
     List<SysMenu> getMenuList(@Param("menuName") String menuName,@Param("status") String status);
 
 
+
+
 }
 
