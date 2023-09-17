@@ -34,16 +34,18 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuDao, SysMenu> impleme
     }
 
     @Override
-    public List<SysMenu> getMenuList(String menuName, String status) {
+    public List<SysMenu> getMenuList(String menuName,String status) {
         List<SysMenu> menuList = sysMenuDao.getMenuList(menuName, status);
-        menuList.sort(new Comparator<SysMenu>() {
-            @Override
-            public int compare(SysMenu o1, SysMenu o2) {
-                return o1.getOrderNum() - o2.getOrderNum();
-            }
-        });
+//        System.err.println(menuList+"2222222222");
+//        menuList.sort(new Comparator<SysMenu>() {
+//            @Override
+//            public int compare(SysMenu o1, SysMenu o2) {
+//                return o1.getOrderNum() - o2.getOrderNum();
+//            }
+//        });
         return menuList;
     }
+
 
     @Override
     public Boolean checkName(String menuName, String menuId, String parentId) {

@@ -35,7 +35,9 @@ public class SysMenuController extends ApiController {
 
     @PostMapping("/menuList")
     public R menuList(@RequestBody SysMenu sysMenu) {
+//        System.err.println(sysMenu.toString());
         List<SysMenu> menus = sysMenuService.getMenuList(sysMenu.getMenuName(),sysMenu.getStatus());
+//        System.err.println(menus);
         List<SysMenu> menuList = new MenuTree(menus).builTree();
 
         if (menuList != null && !menuList.isEmpty()) {
@@ -54,6 +56,11 @@ public class SysMenuController extends ApiController {
 //    }
 
 
+    /**
+     * 通过当前登录的用户id来查询菜单
+     * @param id
+     * @return
+     */
 
     @GetMapping("getTreeMenu/{id}")
     public R MenuTreeList(@PathVariable int id) {
