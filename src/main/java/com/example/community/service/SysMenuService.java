@@ -21,6 +21,11 @@ public interface SysMenuService extends IService<SysMenu> {
     String deleteMenu(Long menuId,Long parentId);
 
     /**
+     * 管理员查询所有
+     * @return
+     */
+    List<SysMenu>MenuList();
+    /**
      * 验证同级别下菜单名
      *
      * @param menuName
