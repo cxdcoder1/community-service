@@ -33,7 +33,6 @@ public class SysRoleController extends ApiController {
     private SysRoleService sysRoleService;
 
 
-
     @GetMapping("/list")
     public List<SysRole> list(SysRole role) {
 
