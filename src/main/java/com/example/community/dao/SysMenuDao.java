@@ -60,9 +60,13 @@ public interface SysMenuDao extends BaseMapper<SysMenu> {
 
     Integer addMenu(SysMenu sysMenu);
 
-
+    SysMenu getParent(SysMenu sysMenu);
 
     int deleteByMenuId(Long id);
+
+    List<SysMenu> getMenuChildren(SysMenu sysMenu);
+
+    Integer upTypeToM(SysMenu sysMenu);
 
 
 }

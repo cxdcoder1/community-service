@@ -84,6 +84,24 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuDao, SysMenu> impleme
         return sysMenuDao.addMenu(sysMenu);
     }
 
+    @Override
+    public SysMenu getParent(SysMenu sysMenu) {
+        return sysMenuDao.getParent(sysMenu);
+    }
+
+    @Override
+    public List<SysMenu> getMenuChildren(SysMenu sysMenu) {
+
+
+        return sysMenuDao.getMenuChildren(sysMenu);
+    }
+
+    @Override
+    public Integer upTypeToM(SysMenu sysMenu) {
+
+        return sysMenuDao.upTypeToM(sysMenu);
+    }
+
 
     @Override
     public String deleteMenu(Long menuId, Long parentId) {
