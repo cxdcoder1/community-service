@@ -22,6 +22,7 @@ public  class MenuTree {
     //递归，建立子树形结构
      private SysMenu buildChilTree(SysMenu pNode){
          List<SysMenu> chilMenus =new  ArrayList<SysMenu>();
+//         System.err.println(menuList+"aaaa");
          for(SysMenu menuNode : menuList) {
              if(menuNode.getParentId().equals(pNode.getMenuId())) {
                  chilMenus.add(buildChilTree(menuNode));
@@ -35,7 +36,9 @@ public  class MenuTree {
      private List<SysMenu> getRootNode() {
          List<SysMenu> rootMenuLists =new  ArrayList<SysMenu>();
 
+//         System.err.println(menuList+"11111111111111111111111111112222222222");
          for(SysMenu menuNode : menuList) {
+
              if(menuNode.getParentId() == 0) {
                  rootMenuLists.add(menuNode);
              }

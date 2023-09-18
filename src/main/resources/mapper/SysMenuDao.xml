@@ -47,9 +47,17 @@
             #{entity.updateTime}, #{entity.remark})
         </foreach>
         on duplicate key update
-         menu_name = values(menu_name) , parent_id = values(parent_id) , order_num = values(order_num) , path = values(path) , component = values(component) , is_frame = values(is_frame) , is_cache = values(is_cache) , menu_type = values(menu_type) , visible = values(visible) , status = values(status) , perms = values(perms) , icon = values(icon) , create_by = values(create_by) , create_time = values(create_time) , update_by = values(update_by) , update_time = values(update_time) , remark = values(remark)     </insert>
+        menu_name = values(menu_name) , parent_id = values(parent_id) , order_num = values(order_num) , path =
+        values(path) , component = values(component) , is_frame = values(is_frame) , is_cache = values(is_cache) ,
+        menu_type = values(menu_type) , visible = values(visible) , status = values(status) , perms = values(perms) ,
+        icon = values(icon) , create_by = values(create_by) , create_time = values(create_time) , update_by =
+        values(update_by) , update_time = values(update_time) , remark = values(remark)
+    </insert>
+
     <delete id="deleteByMenuId">
-        delete from sys_menu where menu_id=#{id}
+        delete
+        from sys_menu
+        where menu_id = #{id}
     </delete>
 
     <insert id="addMenu">
@@ -82,6 +90,7 @@
             <if test="visible!=null ||visible!=''">#{visible},</if>
             <if test="status!=null ||status!=''">#{status},</if>
         </trim>
+
     </insert>
 
     <update id="updateMenu">
@@ -126,6 +135,9 @@
         </set>
         where menu_id = #{menuId}
     </update>
+    <update id="upTypeToM">
+        update sys_menu SET menu_type = 'M' WHERE menu_id = #{sysMenu.menuId}
+    </update>
 
 
     <resultMap type="com.example.community.entity.SysMenu" id="SysMenuResult">
@@ -149,13 +161,30 @@
         <result property="remark" column="remark"/>
     </resultMap>
     <select id="selectMenuTreeByUserId" parameterType="Integer" resultMap="SysMenuResult">
-        select distinct m.menu_id, m.parent_id, m.menu_name, m.path, m.component, m.visible, m.status, ifnull(m.perms,'') as perms, m.is_frame, m.is_cache, m.menu_type, m.icon, m.order_num, m.create_time
+        select distinct m.menu_id,
+                        m.parent_id,
+                        m.menu_name,
+                        m.path,
+                        m.component,
+                        m.visible,
+                        m.status,
+                        ifnull(m.perms, '') as perms,
+                        m.is_frame,
+                        m.is_cache,
+                        m.menu_type,
+                        m.icon,
+                        m.order_num,
+                        m.create_time
         from sys_menu m
                  left join sys_role_menu rm on m.menu_id = rm.menu_id
                  left join sys_user_role ur on rm.role_id = ur.role_id
                  left join sys_role ro on ur.role_id = ro.role_id
                  left join sys_user u on ur.user_id = u.user_id
-        where u.user_id = #{id} and m.menu_type in ('M', 'C') and m.status = 0  AND ro.status = 0
+        where u.user_id = #{id}
+          and m.visible=0
+          and m.menu_type in ('M', 'C')
+          and m.status = 0
+          AND ro.status = 0
         order by m.parent_id, m.order_num
     </select>
 
@@ -188,18 +217,43 @@
 <!--            where sm1.menu_id in-->
 <!--            (select sm2.parent_id from sys_menu sm2 where status = #{status})-->
 <!--        </if>-->
+        order by order_num asc
     </select>
 
     <select id="checkName" resultType="java.lang.Long">
-        select menu_id from sys_menu where menu_name = #{menuName} and parent_id = #{parentId}
+        select menu_id
+        from sys_menu
+        where menu_name = #{menuName}
+          and parent_id = #{parentId}
     </select>
 
     <select id="checkPath" resultType="java.lang.Long">
-        select menu_id from sys_menu where path = #{menuName} and menu_id = #{menuId}
+        select menu_id
+        from sys_menu
+        where path = #{menuName}
+
     </select>
 
     <select id="getMenuByParentId" resultType="com.example.community.entity.SysMenu">
-        select * from sys_menu where parent_id=#{id}
+        select *
+        from sys_menu
+        where parent_id = #{id}
+    </select>
+
+<!--    管理员查询所有菜单-->
+    <select id="MenuList" resultType="com.example.community.entity.SysMenu">
+        select * from sys_menu
+        where visible=0
+          and menu_type in ('M', 'C')
+          and status = 0
+        order by parent_id, order_num ASC
+    </select>
+
+    <select id="getParent" resultType="com.example.community.entity.SysMenu">
+        SELECT * FROM sys_menu where menu_id = #{sysMenu.parentId}
+    </select>
+    <select id="getMenuChildren" resultType="com.example.community.entity.SysMenu">
+        SELECT * from sys_menu WHERE parent_id = #{sysMenu.parentId}
     </select>
 
 </mapper>

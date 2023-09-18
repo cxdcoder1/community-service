@@ -21,6 +21,11 @@ public interface SysMenuService extends IService<SysMenu> {
     String deleteMenu(Long menuId,Long parentId);
 
     /**
+     * 管理员查询所有
+     * @return
+     */
+    List<SysMenu>MenuList();
+    /**
      * 验证同级别下菜单名
      *
      * @param menuName
@@ -51,5 +56,25 @@ public interface SysMenuService extends IService<SysMenu> {
      */
     Integer addMenu(SysMenu sysMenu);
 
+    /**
+     * 查询上级菜单对象
+     * @param sysMenu
+     * @return
+     */
+    SysMenu getParent(SysMenu sysMenu);
+
+    /**
+     * 查询菜单子集
+     * @param sysMenu
+     * @return
+     */
+    List<SysMenu> getMenuChildren(SysMenu sysMenu);
+
+    /**
+     * 提升菜单为目录
+     * @param sysMenu
+     * @return
+     */
+    Integer upTypeToM(SysMenu sysMenu);
 }
 

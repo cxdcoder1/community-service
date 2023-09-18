@@ -34,16 +34,18 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuDao, SysMenu> impleme
     }
 
     @Override
-    public List<SysMenu> getMenuList(String menuName, String status) {
+    public List<SysMenu> getMenuList(String menuName,String status) {
         List<SysMenu> menuList = sysMenuDao.getMenuList(menuName, status);
-        menuList.sort(new Comparator<SysMenu>() {
-            @Override
-            public int compare(SysMenu o1, SysMenu o2) {
-                return o1.getOrderNum() - o2.getOrderNum();
-            }
-        });
+//        System.err.println(menuList+"2222222222");
+//        menuList.sort(new Comparator<SysMenu>() {
+//            @Override
+//            public int compare(SysMenu o1, SysMenu o2) {
+//                return o1.getOrderNum() - o2.getOrderNum();
+//            }
+//        });
         return menuList;
     }
+
 
     @Override
     public Boolean checkName(String menuName, String menuId, String parentId) {
@@ -82,6 +84,24 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuDao, SysMenu> impleme
         return sysMenuDao.addMenu(sysMenu);
     }
 
+    @Override
+    public SysMenu getParent(SysMenu sysMenu) {
+        return sysMenuDao.getParent(sysMenu);
+    }
+
+    @Override
+    public List<SysMenu> getMenuChildren(SysMenu sysMenu) {
+
+
+        return sysMenuDao.getMenuChildren(sysMenu);
+    }
+
+    @Override
+    public Integer upTypeToM(SysMenu sysMenu) {
+
+        return sysMenuDao.upTypeToM(sysMenu);
+    }
+
 
     @Override
     public String deleteMenu(Long menuId, Long parentId) {
@@ -96,6 +116,14 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuDao, SysMenu> impleme
             }
             return "删除失败！";
         }
+    }
+
+    @Override
+    public List<SysMenu> MenuList() {
+        List<SysMenu> sysMenuList = sysMenuDao.MenuList();
+        MenuTree menuTree = new MenuTree(sysMenuList);
+        List<SysMenu> sysMenuList1 = menuTree.builTree();
+        return sysMenuList1;
     }
 
 
