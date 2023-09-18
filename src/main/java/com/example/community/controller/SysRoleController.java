@@ -1,7 +1,6 @@
 package com.example.community.controller;
 
 
-
 import com.baomidou.mybatisplus.extension.api.ApiController;
 import com.baomidou.mybatisplus.extension.api.R;
 import com.example.community.entity.SysMenu;
@@ -30,14 +29,6 @@ public class SysRoleController extends ApiController {
     @Resource
     private SysRoleService roleService;
 
-
-
-    @GetMapping("/list")
-    public List<SysRole> list(SysRole role) {
-        List<SysRole> list = roleService.selectRoleList(role);
-        return list;
-    }
-
     /**
      * 修改保存角色
      */
@@ -60,7 +51,7 @@ public class SysRoleController extends ApiController {
 //    }
 
     @RequestMapping("getRoleMenuTreeselect")
-    public R getRoleMenuTreeselect(int roleId) {
+    public R getRoleMenuTreeselect(int roleId){
         List<SysMenu> menus = roleService.getRoleMenuTreeselect(roleId);
         List<SysMenu> menuList = new MenuTree(menus).builTree();
 
@@ -69,11 +60,10 @@ public class SysRoleController extends ApiController {
             return R.ok(menuList);
         }
 
-
-
         System.err.println(R.ok(menus));
 
         return R.ok(menus);
+
     }
 }
 
