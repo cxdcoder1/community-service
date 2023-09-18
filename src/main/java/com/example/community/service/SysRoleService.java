@@ -1,5 +1,6 @@
 package com.example.community.service;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.example.community.entity.SysMenu;
 import com.example.community.entity.SysRole;
@@ -24,7 +25,7 @@ public interface SysRoleService extends IService<SysRole> {
      */
     public int insertRole(SysRole role);
 
-    public List<SysRole> selectRoleList(SysRole role);
+    Page<SysRole> roleList(Page<SysRole> page, SysRole sysRole);
 
 
     /**

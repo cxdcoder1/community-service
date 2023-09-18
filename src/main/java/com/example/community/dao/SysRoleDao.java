@@ -35,10 +35,11 @@ public interface SysRoleDao extends BaseMapper<SysRole> {
     /**
      * 根据条件分页查询角色数据
      *
-     * @param role 角色信息
+     *  role 角色信息
      * @return 角色数据集合信息
      */
-    public List<SysRole> selectRoleList(SysRole role);
+    List<SysRole> selectRoleList(@Param("index") Long index, @Param("size") Long size , @Param("sysRole") SysRole sysRole);
+
 
     public int updateRole(SysRole role);
 

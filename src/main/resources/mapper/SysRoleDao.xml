@@ -19,6 +19,36 @@
         <result property="remark" column="remark" jdbcType="VARCHAR"/>
     </resultMap>
 
+    <!-- 批量插入 -->
+    <insert id="insertBatch" keyProperty="roleId" useGeneratedKeys="true">
+        insert into zy-community.sys_role(role_name, role_key, role_sort, data_scope, menu_check_strictly,
+        dept_check_strictly, status, del_flag, create_by, create_time, update_by, update_time, remark)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.roleName}, #{entity.roleKey}, #{entity.roleSort}, #{entity.dataScope},
+            #{entity.menuCheckStrictly}, #{entity.deptCheckStrictly}, #{entity.status}, #{entity.delFlag},
+            #{entity.createBy}, #{entity.createTime}, #{entity.updateBy}, #{entity.updateTime}, #{entity.remark})
+        </foreach>
+    </insert>
+    <!-- 批量插入或按主键更新 -->
+    <insert id="insertOrUpdateBatch" keyProperty="roleId" useGeneratedKeys="true">
+        insert into zy-community.sys_role(role_name, role_key, role_sort, data_scope, menu_check_strictly,
+        dept_check_strictly, status, del_flag, create_by, create_time, update_by, update_time, remark)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.roleName}, #{entity.roleKey}, #{entity.roleSort}, #{entity.dataScope},
+            #{entity.menuCheckStrictly}, #{entity.deptCheckStrictly}, #{entity.status}, #{entity.delFlag},
+            #{entity.createBy}, #{entity.createTime}, #{entity.updateBy}, #{entity.updateTime}, #{entity.remark})
+        </foreach>
+        on duplicate key update
+        role_name = values(role_name) , role_key = values(role_key) , role_sort = values(role_sort) , data_scope =
+        values(data_scope) , menu_check_strictly = values(menu_check_strictly) , dept_check_strictly =
+        values(dept_check_strictly) , status = values(status) , del_flag = values(del_flag) , create_by =
+        values(create_by) , create_time = values(create_time) , update_by = values(update_by) , update_time =
+        values(update_time) , remark = values(remark)
+    </insert>
+
+
     <resultMap type="com.example.community.entity.SysRole" id="sysRoleResult">
         <id property="roleId" column="role_id"/>
         <result property="roleName" column="role_name"/>
@@ -36,31 +66,33 @@
         <result property="remark" column="remark"/>
     </resultMap>
 
-    <sql id="selectRoleVo">
-        select *
-        from sys_role as r
-    </sql>
-
     <select id="selectRoleList" parameterType="com.example.community.entity.SysRole"
             resultMap="sysRoleResult">
-        SELECT * FROM sys_role r WHERE r.del_flag = '0' and role_id != 1
-        <if test="roleName != null and roleName != ''">
-            AND r.role_name LIKE CONCAT('%', #{roleName},'%')
+        select * from sys_role
+        <where>
+            role_id != 1 and  del_flag = '0'
+            <if test="sysRole.roleName != null and sysRole.roleName !=''">
+                and role_name like concat('%',#{sysRole.roleName},'%')
+            </if>
+            <if test="sysRole.roleKey != null and sysRole.roleKey !=''">
+                and role_key like concat('%', #{sysRole.roleKey}, '%')
+            </if>
+            <if test="sysRole.status != null and sysRole.status !=''">
+                and status = #{sysRole.status}
+            </if>
+            <if test="sysRole.createTime != null and sysRole.createTime !=''">
+                and date_format(create_time,'%y%m%d') &gt;= date_format(#{sysRole.createTime},'%y%m%d')
+            </if>
+            <if test="sysRole.updateTime != null and sysRole.updateTime !=''">
+                and date_format(create_time,'%y%m%d') &lt;= date_format(#{sysRole.updateTime},'%y%m%d')
+            </if>
+        </where>
+        <if test='size != 0'>
+            limit #{index},#{size}
         </if>
-        <if test="status != null and status != ''">
-            AND r.status = #{status}
-        </if>
-        <if test="roleKey != null and roleKey != ''">
-            AND r.role_key LIKE CONCAT('%', #{roleKey},'%')
-        </if>
-        <!--        <if test="beginTime != null and beginTime != ''">-->
-        <!--            AND-->
-        <!--        </if>-->
-        <!--        <if test="endTime != null and endTime != ''">-->
-        <!--            AND-->
-        <!--        </if>-->
-        ORDER BY r.role_sort
+
     </select>
+    <select id="RoleList" resultType="com.example.community.entity.SysRole"></select>
 
     <insert id="insertRole" parameterType="com.example.community.entity.SysRole" useGeneratedKeys="true"
             keyProperty="roleId">

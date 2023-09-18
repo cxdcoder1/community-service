@@ -59,10 +59,13 @@ public class SysRoleController extends ApiController {
            return map;
     }
 
-    @GetMapping("/list")
-    public List<SysRole> list(SysRole role) {
-        List<SysRole> list = sysRoleService.selectRoleList(role);
-        return list;
+    @GetMapping("list")
+    public R selectPageAll(Page<SysRole> page, SysRole sysRole) {
+        System.err.println("角色类"+sysRole);
+        System.err.println(page.getCurrent());
+        System.err.println(page.getSize());
+
+        return success(this.sysRoleService.roleList(page, sysRole));
     }
 
     /**
