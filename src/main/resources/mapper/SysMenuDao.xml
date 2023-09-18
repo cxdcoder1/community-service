@@ -225,7 +225,7 @@
         select menu_id
         from sys_menu
         where path = #{menuName}
-          and menu_id = #{menuId}
+
     </select>
 
     <select id="getMenuByParentId" resultType="com.example.community.entity.SysMenu">

@@ -100,7 +100,7 @@ public class SysMenuController extends ApiController {
     public Map<String, Object> insert(@RequestBody SysMenu sysMenu) {
         Map<String, Object> result = new HashMap<>();
         Boolean cName = sysMenuService.checkName(sysMenu.getMenuName(), sysMenu.getMenuId() + "", sysMenu.getParentId() + "");
-        Boolean cPath = sysMenuService.checkPath(sysMenu.getMenuName(), sysMenu.getMenuId() + "");
+        Boolean cPath = sysMenuService.checkPath(sysMenu.getPath(), sysMenu.getMenuId() + "");
         //判断是否重复
         if (cName == false) {
             result.put("status", 201);
