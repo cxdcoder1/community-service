@@ -14,6 +14,7 @@ import java.util.List;
  * @author makejava
  * @since 2023-09-14 09:53:02
  */
+ 
 public interface SysRoleService extends IService<SysRole> {
 
     public List<SysRole> selectRoleList(SysRole role);
