@@ -3,12 +3,15 @@ package com.example.community.service.impl;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.community.dao.SysRoleDao;
+import com.example.community.entity.SysMenu;
 import com.example.community.entity.SysRole;
 import com.example.community.service.SysRoleService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.List;
+
+import javax.annotation.Resource;
 
 /**
  * 角色信息表(SysRole)表服务实现类
@@ -36,5 +39,39 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleDao, SysRole> impleme
         page.setRecords(roleMapper.selectRoleList((page.getCurrent()-1)*page.getSize(),page.getSize(),sysRole));
         return page;
     }
+
+    @Resource
+    private SysRoleDao sysRoleDao;
+
+    /**
+     * 新增角色
+     * @param role 角色信息
+     * @return
+     */
+    @Override
+    public int insertRole(SysRole role) {
+        return sysRoleDao.insertRole(role);
+    }
+
+    /**
+     * 验重角色名
+     * @param roleName
+     * @return
+     */
+    @Override
+    public Integer selectRoleName(String roleName) {
+        return sysRoleDao.selectRoleName(roleName);
+    }
+
+    @Override
+    public int updateRole(SysRole role) {
+        return sysRoleDao.updateRole(role);
+    }
+
+    @Override
+    public List<SysMenu> getRoleMenuTreeselect(int roleId) {
+        return sysRoleDao.getRoleMenuTreeselect(roleId);
+    }
+
 }
 
