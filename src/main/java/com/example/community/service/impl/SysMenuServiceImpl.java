@@ -100,6 +100,14 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuDao, SysMenu> impleme
         }
     }
 
+    @Override
+    public List<SysMenu> MenuList() {
+        List<SysMenu> sysMenuList = sysMenuDao.MenuList();
+        MenuTree menuTree = new MenuTree(sysMenuList);
+        List<SysMenu> sysMenuList1 = menuTree.builTree();
+        return sysMenuList1;
+    }
+
 
 //    @Override
 //    public List<SysMenu> getMenuList(String menuName, String status) {
