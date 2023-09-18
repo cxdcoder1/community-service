@@ -16,9 +16,26 @@ import java.util.List;
  */
  
 public interface SysRoleService extends IService<SysRole> {
+    /**
+     * 新增保存角色信息
+     *
+     * @param role 角色信息
+     * @return 结果
+     */
+    public int insertRole(SysRole role);
 
     public List<SysRole> selectRoleList(SysRole role);
 
 
+    /**
+     * 新增验重角色名
+     * @param roleName
+     * @return
+     */
+    public Integer selectRoleName(String roleName);
+
+    public int updateRole(SysRole role);
+
+    public List<SysMenu> getRoleMenuTreeselect(int roleId);
 }
 

@@ -54,11 +54,8 @@ public class SysMenuController extends ApiController {
 //    }
 
 
-    /**
-     * 通过当前登录的用户id来查询菜单
-     * @param id
-     * @return
-     */
+
+
 
     @GetMapping("getTreeMenu/{id}")
     public R MenuTreeList(@PathVariable int id) {
