@@ -1,10 +1,11 @@
 package com.example.community.dao;
 
-import java.util.List;
-
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import org.apache.ibatis.annotations.Param;
+import com.example.community.entity.SysMenu;
 import com.example.community.entity.SysRole;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
  * 角色信息表(SysRole)表数据库访问层
@@ -39,6 +40,50 @@ int insertOrUpdateBatch(@Param("entities") List<SysRole> entities);
      * @return 角色数据集合信息
      */
     public List<SysRole> selectRoleList(SysRole role);
+
+    /**
+     * 通过角色ID查询角色
+     *
+     * @param roleId 角色ID
+     * @return 角色对象信息
+     */
+    public SysRole selectRoleById(Long roleId);
+
+
+    /**
+     * 校验角色名称是否唯一
+     *
+     * @param roleName 角色名称
+     * @return 角色信息
+     */
+    public SysRole checkRoleNameUnique(String roleName);
+
+    /**
+     * 校验角色权限是否唯一
+     *
+     * @param roleKey 角色权限
+     * @return 角色信息
+     */
+    public SysRole checkRoleKeyUnique(String roleKey);
+
+    /**
+     * 修改角色信息
+     *
+     * @param role 角色信息
+     * @return 结果
+     */
+    public int updateRole(SysRole role);
+
+    /**
+     * 新增角色信息
+     *
+     * @param role 角色信息
+     * @return 结果
+     */
+    public int insertRole(SysRole role);
+
+    public List<SysMenu> getRoleMenuTreeselect(int roleId);
+
 
 }
 
