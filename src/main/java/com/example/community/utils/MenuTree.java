@@ -23,7 +23,7 @@ public  class MenuTree {
      private SysMenu buildChilTree(SysMenu pNode){
          List<SysMenu> chilMenus =new  ArrayList<SysMenu>();
 //         System.err.println(menuList+"aaaa");
-         for(SysMenu menuNode : menuList) {
+              for(SysMenu menuNode : menuList) {
              if(menuNode.getParentId().equals(pNode.getMenuId())) {
                  chilMenus.add(buildChilTree(menuNode));
              }

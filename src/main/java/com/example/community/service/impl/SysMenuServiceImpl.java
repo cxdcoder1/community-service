@@ -102,7 +102,6 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuDao, SysMenu> impleme
         return sysMenuDao.upTypeToM(sysMenu);
     }
 
-
     @Override
     public String deleteMenu(Long menuId, Long parentId) {
         List<SysMenu> menu = sysMenuDao.getMenuByParentId(menuId);

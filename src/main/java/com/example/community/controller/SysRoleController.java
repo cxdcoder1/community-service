@@ -6,15 +6,20 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.api.ApiController;
 import com.baomidou.mybatisplus.extension.api.R;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.example.community.entity.SysMenu;
 import com.example.community.entity.SysRole;
 import com.example.community.service.SysRoleService;
+import com.example.community.utils.MenuTree;
 import org.apache.ibatis.session.RowBounds;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 
 import javax.annotation.Resource;
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 角色信息表(SysRole)表控制层
@@ -32,6 +37,27 @@ public class SysRoleController extends ApiController {
     @Resource
     private SysRoleService sysRoleService;
 
+    /**
+     * 新增角色
+     * @param role
+     * @return
+     */
+    @GetMapping("insertRole")
+    public Map<String, Object> insertRole(SysRole role){
+        Map<String, Object> map = new HashMap<>();
+        Integer integer = sysRoleService.selectRoleName(role.getRoleName());
+        if (integer==0){
+            int i = sysRoleService.insertRole(role);
+            map.put("msg","新增成功");
+            map.put("status", 200);
+            map.put("success", true);
+            return map;
+        }
+           map.put("msg","角色名重复");
+           map.put("status", 201);
+           map.put("success", false);
+           return map;
+    }
 
 
     @GetMapping("/list")
@@ -94,6 +120,40 @@ public class SysRoleController extends ApiController {
     @DeleteMapping
     public R delete(@RequestParam("idList") List<Long> idList) {
         return success(this.sysRoleService.removeByIds(idList));
+    }
+
+    /**
+     * 修改保存角色
+     */
+    @PutMapping("edit")
+    public String edit(@Validated @RequestBody SysRole role) {
+        int i = sysRoleService.updateRole(role);
+        if (i!=0){
+            return "修改成功";
+        }else {
+            return "修改失败";
+        }
+    }
+
+    /**
+     * 修改保存数据权限
+     */
+//    @PutMapping("/dataScope")
+//    public String dataScope(@RequestBody SysRole role) {
+//        roleService.
+//    }
+
+    @RequestMapping("getRoleMenuTreeselect")
+    public R getRoleMenuTreeselect(int roleId) {
+        List<SysMenu> menus = sysRoleService.getRoleMenuTreeselect(roleId);
+        List<SysMenu> menuList = new MenuTree(menus).builTree();
+        if (menuList != null && !menuList.isEmpty()) {
+            System.out.println(menuList);
+            return R.ok(menuList);
+        }
+        System.err.println(R.ok(menus));
+
+        return R.ok(menus);
     }
 }
 
