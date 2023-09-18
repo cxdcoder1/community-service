@@ -2,6 +2,7 @@ package com.example.community.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.community.dao.SysRoleDao;
+import com.example.community.entity.SysMenu;
 import com.example.community.entity.SysRole;
 import com.example.community.service.SysRoleService;
 import org.springframework.stereotype.Service;
