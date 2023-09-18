@@ -37,9 +37,16 @@ public interface SysMenuDao extends BaseMapper<SysMenu> {
      */
     List<SysMenu> selectMenuTreeByUserId(int id);
 
+
     List<SysMenu> getMenuList(@Param("menuName") String menuName, @Param("status") String status);
 
     List<SysMenu> getMenuByParentId(Long id);
+
+    /**
+     * 管理员查询所有
+     * @return
+     */
+    List<SysMenu>MenuList();
     /**
      * 验证同级别下菜单名
      * @param menuName
