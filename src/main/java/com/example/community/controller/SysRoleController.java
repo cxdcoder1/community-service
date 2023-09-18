@@ -59,7 +59,6 @@ public class SysRoleController extends ApiController {
            return map;
     }
 
-
     @GetMapping("/list")
     public List<SysRole> list(SysRole role) {
         List<SysRole> list = sysRoleService.selectRoleList(role);
