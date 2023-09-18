@@ -32,15 +32,13 @@ public class SysMenuController extends ApiController {
     @Resource
     private SysMenuService sysMenuService;
 
-
     @PostMapping("/menuList")
     public R menuList(@RequestBody SysMenu sysMenu) {
-//        System.err.println(sysMenu.toString());
         List<SysMenu> menus = sysMenuService.getMenuList(sysMenu.getMenuName(),sysMenu.getStatus());
-//        System.err.println(menus);
         List<SysMenu> menuList = new MenuTree(menus).builTree();
 
         if (menuList != null && !menuList.isEmpty()) {
+            System.out.println(menuList);
             return R.ok(menuList);
         }
 

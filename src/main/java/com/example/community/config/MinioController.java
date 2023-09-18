@@ -28,8 +28,6 @@ public class MinioController {
        
         List<String> upload = minioUtilS.upload(new MultipartFile[]{file});
 
-
-
         return address+"/"+bucketName+"/"+upload.get(0);
     }
 
