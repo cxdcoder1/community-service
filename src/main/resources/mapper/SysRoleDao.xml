@@ -2,6 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.community.dao.SysRoleDao">
 
+
     <resultMap type="com.example.community.entity.SysRole" id="SysRoleMap">
         <result property="roleId" column="role_id" jdbcType="INTEGER"/>
         <result property="roleName" column="role_name" jdbcType="VARCHAR"/>
@@ -41,84 +42,6 @@
             #{entity.createBy}, #{entity.createTime}, #{entity.updateBy}, #{entity.updateTime}, #{entity.remark})
         </foreach>
         on duplicate key update
-        role_name = values(role_name) , role_key = values(role_key) , role_sort = values(role_sort) , data_scope =
-        values(data_scope) , menu_check_strictly = values(menu_check_strictly) , dept_check_strictly =
-        values(dept_check_strictly) , status = values(status) , del_flag = values(del_flag) , create_by =
-        values(create_by) , create_time = values(create_time) , update_by = values(update_by) , update_time =
-        values(update_time) , remark = values(remark)
-    </insert>
-
-    <sql id="selectRoleVo">
-        select * from sys_role as r
-    </sql>
-
-    <select id="selectRoleById" parameterType="Long" resultMap="SysRoleMap">
-        <include refid="selectRoleVo"/>
-        where r.role_id = #{roleId}
-    </select>
-
-    <select id="checkRoleNameUnique" parameterType="String" resultMap="SysRoleMap">
-        <include refid="selectRoleVo"/>
-        where r.role_name=#{roleName} limit 1
-    </select>
-
-    <select id="checkRoleKeyUnique" parameterType="String" resultMap="SysRoleMap">
-        <include refid="selectRoleVo"/>
-        where r.role_key=#{roleKey} limit 1
-    </select>
-    <select id="getRoleMenuTreeselect" resultType="com.example.community.entity.SysMenu">
-        select m.* from sys_role r
-        LEFT JOIN sys_role_menu rm on r.role_id =rm.role_id
-        LEFT JOIN sys_menu m on rm.menu_id=m.menu_id
-        WHERE r.role_id=#{roleId}
-        order by order_num asc
-    </select>
-
-    <insert id="insertRole" parameterType="com.example.community.entity.SysRole" useGeneratedKeys="true"
-            keyProperty="roleId">
-        insert into sys_role(
-        <if test="roleId != null and roleId != 0">role_id,</if>
-        <if test="roleName != null and roleName != ''">role_name,</if>
-        <if test="roleKey != null and roleKey != ''">role_key,</if>
-        <if test="roleSort != null and roleSort != ''">role_sort,</if>
-        <if test="dataScope != null and dataScope != ''">data_scope,</if>
-        <if test="menuCheckStrictly != null">menu_check_strictly,</if>
-        <if test="deptCheckStrictly != null">dept_check_strictly,</if>
-        <if test="status != null and status != ''">status,</if>
-        <if test="remark != null and remark != ''">remark,</if>
-        <if test="createBy != null and createBy != ''">create_by,</if>
-        create_time
-        )values(
-        <if test="roleId != null and roleId != 0">#{roleId},</if>
-        <if test="roleName != null and roleName != ''">#{roleName},</if>
-        <if test="roleKey != null and roleKey != ''">#{roleKey},</if>
-        <if test="roleSort != null and roleSort != ''">#{roleSort},</if>
-        <if test="dataScope != null and dataScope != ''">#{dataScope},</if>
-        <if test="menuCheckStrictly != null">#{menuCheckStrictly},</if>
-        <if test="deptCheckStrictly != null">#{deptCheckStrictly},</if>
-        <if test="status != null and status != ''">#{status},</if>
-        <if test="remark != null and remark != ''">#{remark},</if>
-        <if test="createBy != null and createBy != ''">#{createBy},</if>
-        sysdate()
-        )
-    </insert>
-
-    <update id="updateRole" parameterType="com.example.community.entity.SysRole">
-        update sys_role
-        <set>
-            <if test="roleName != null and roleName != ''">role_name = #{roleName},</if>
-            <if test="roleKey != null and roleKey != ''">role_key = #{roleKey},</if>
-            <if test="roleSort != null and roleSort != ''">role_sort = #{roleSort},</if>
-            <if test="dataScope != null and dataScope != ''">data_scope = #{dataScope},</if>
-            <if test="menuCheckStrictly != null">menu_check_strictly = #{menuCheckStrictly},</if>
-            <if test="deptCheckStrictly != null">dept_check_strictly = #{deptCheckStrictly},</if>
-            <if test="status != null and status != ''">status = #{status},</if>
-            <if test="remark != null">remark = #{remark},</if>
-            <if test="updateBy != null and updateBy != ''">update_by = #{updateBy},</if>
-            update_time = sysdate()
-        </set>
-        where role_id = #{roleId}
-    </update>
         role_name = values(role_name) , role_key = values(role_key) , role_sort = values(role_sort) , data_scope =
         values(data_scope) , menu_check_strictly = values(menu_check_strictly) , dept_check_strictly =
         values(dept_check_strictly) , status = values(status) , del_flag = values(del_flag) , create_by =
