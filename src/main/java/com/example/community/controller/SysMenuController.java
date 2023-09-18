@@ -116,6 +116,100 @@ public class SysMenuController extends ApiController {
             result.put("msg", "路径名重复");
             return result;
         }
+        //没有重复可以新增
+        //获取即将添加的菜单的父类
+        SysMenu parent = sysMenuService.getParent(sysMenu);
+        if (parent.getMenuType().equals("F")) {
+            //父类是按钮 不能添加
+            result.put("status", 201);
+            result.put("success", false);
+            result.put("msg", "不能在按钮下添加菜单");
+            return result;
+        }
+
+        //判断父为目录 子为按钮时 不能添加
+        if (parent.getMenuType().equals("M") && sysMenu.getParentId().equals("F")) {
+            result.put("status", 201);
+            result.put("success", false);
+            result.put("msg", "不能在目录下面添加按钮");
+            return result;
+        } else if (parent.getMenuType().equals("M")) {
+            return add(sysMenu, result);
+        }
+
+        //判断父为菜单时
+        if (parent.getMenuType().equals("C")) {
+            //首先查询父类菜单是否有按钮
+            Boolean t = hasF(parent);
+            if (sysMenu.getMenuType().equals("M")) {
+                //子为目录
+                if (t) {
+                    //含有按钮
+                    result.put("status", 201);
+                    result.put("success", false);
+                    result.put("msg", "不能在有按钮的菜单下面添加目录");
+                    return result;
+                } else {
+                    //没有按钮
+                    //把父集提升为目录
+                    sysMenuService.updateMenu(sysMenu);
+                    return add(sysMenu, result);
+                }
+            }
+            if (sysMenu.getMenuType().equals("C")) {
+                //子为菜单
+                if (t) {
+                    //含有按钮
+                    result.put("status", 201);
+                    result.put("success", false);
+                    result.put("msg", "不能在有按钮的菜单下面添加菜单");
+                    return result;
+                } else {
+                    //没有按钮
+                    //把父集提升为目录
+                    sysMenuService.updateMenu(sysMenu);
+                    return add(sysMenu, result);
+                }
+            }
+            if (sysMenu.getMenuType().equals("F")) {
+                //子为按钮时
+                return add(sysMenu, result);
+            }
+        }
+        //父为按钮
+        if (parent.getMenuType().equals("F")) {
+            result.put("status", 201);
+            result.put("success", false);
+            result.put("msg", "不能在按钮下添加");
+            return result;
+        }
+        result.put("msg","其他");
+        result.put("status","202");
+        return result;
+    }
+
+    /**
+     * 是否子集是否含有按钮
+     * @param sysMenu
+     * @return
+     */
+    public Boolean hasF(SysMenu sysMenu){
+        List<SysMenu> list = sysMenuService.getMenuChildren(sysMenu);
+        for (SysMenu menu : list) {
+            if (menu.getMenuType().equals("F")){
+                //查询到按钮
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * 条件成立 新增
+     * @param sysMenu
+     * @return
+     */
+    public Map<String, Object> add(SysMenu sysMenu , Map<String,Object> result){
         //新增
         sysMenu.setChildren(null);
         sysMenu.setCreateTime(new Date());
@@ -131,6 +225,7 @@ public class SysMenuController extends ApiController {
         result.put("msg", "失败");
         return result;
     }
+
 
     /**
      * 修改数据
@@ -156,6 +251,10 @@ public class SysMenuController extends ApiController {
             result.put("msg", "路径名重复");
             return result;
         }
+        //没有重复可以修改
+
+
+        //修改当前菜单
         Integer i = sysMenuService.updateMenu(sysMenu);
         if (i==1){
             result.put("status",200);
