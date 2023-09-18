@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Map;
 
 /**
  * 角色信息表(SysRole)表实体类
@@ -18,6 +19,8 @@ import java.util.Date;
 @Getter
 @Setter
 public class SysRole extends Model<SysRole> {
+
+
     //角色ID
     private Long roleId;
     //角色名称
@@ -46,6 +49,26 @@ public class SysRole extends Model<SysRole> {
     private Date updateTime;
     //备注
     private String remark;
+
+    public SysRole() {
+    }
+
+    public SysRole(Long roleId, String roleName, String roleKey, Integer roleSort, String dataScope, Integer menuCheckStrictly, Integer deptCheckStrictly, String status, String delFlag, String createBy, Date createTime, String updateBy, Date updateTime, String remark) {
+        this.roleId = roleId;
+        this.roleName = roleName;
+        this.roleKey = roleKey;
+        this.roleSort = roleSort;
+        this.dataScope = dataScope;
+        this.menuCheckStrictly = menuCheckStrictly;
+        this.deptCheckStrictly = deptCheckStrictly;
+        this.status = status;
+        this.delFlag = delFlag;
+        this.createBy = createBy;
+        this.createTime = createTime;
+        this.updateBy = updateBy;
+        this.updateTime = updateTime;
+        this.remark = remark;
+    }
 
 
     public Long getRoleId() {
@@ -169,5 +192,9 @@ public class SysRole extends Model<SysRole> {
     protected Serializable pkVal() {
         return this.roleId;
     }
+
+    public String toString() {
+        return "SysRole{roleId = " + roleId + ", roleName = " + roleName + ", roleKey = " + roleKey + ", roleSort = " + roleSort + ", dataScope = " + dataScope + ", menuCheckStrictly = " + menuCheckStrictly + ", deptCheckStrictly = " + deptCheckStrictly + ", status = " + status + ", delFlag = " + delFlag + ", createBy = " + createBy + ", createTime = " + createTime + ", updateBy = " + updateBy + ", updateTime = " + updateTime + ", remark = " + remark + "}";
     }
+}
 
