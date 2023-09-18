@@ -8,7 +8,9 @@ import com.baomidou.mybatisplus.extension.api.R;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.community.entity.SysRole;
 import com.example.community.service.SysRoleService;
+import org.apache.ibatis.session.RowBounds;
 import org.springframework.web.bind.annotation.*;
+
 
 import javax.annotation.Resource;
 import java.io.Serializable;
@@ -22,12 +24,21 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("sysRole")
+@CrossOrigin
 public class SysRoleController extends ApiController {
     /**
      * 服务对象
      */
     @Resource
     private SysRoleService sysRoleService;
+
+
+
+    @GetMapping("/list")
+    public List<SysRole> list(SysRole role) {
+        List<SysRole> list = sysRoleService.selectRoleList(role);
+        return list;
+    }
 
     /**
      * 分页查询所有数据

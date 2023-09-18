@@ -17,12 +17,13 @@ spring:
 mybatis-plus:
   mapper-locations: classpath:mapper/*.xml
   type-aliases-package: com.example.Community.entity
-  #
   configuration:
-    #驼峰命名
+    # 驼峰命名
     map-underscore-to-camel-case: true
+  plugins:
+    - com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor
     #开启mybatis自带日志
-    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 
 minio:
   endpoint: http://127.0.0.1:9000

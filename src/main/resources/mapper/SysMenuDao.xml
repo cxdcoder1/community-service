@@ -168,26 +168,26 @@
         <if test="status != null and status != ''">
             and status = #{status}
         </if>
-        <if test="menuName != null and menuName != ''">
-            UNION
-            select * from sys_menu sm1 where sm1.parent_id in
-            (select sm2.menu_id from sys_menu sm2 where menu_name LIKE concat("%",#{menuName},"%"))
-            <if test="status != null and status != ''">
-                and status = #{status}
-            </if>
-            UNION
-            select * from sys_menu sm1 where sm1.menu_id in
-            (select sm2.parent_id from sys_menu sm2 where menu_name LIKE concat("%",#{menuName},"%"))
-            <if test="status != null and status != ''">
-                and status = #{status}
-            </if>
-        </if>
-        <if test="status != null and status != '' and menuName == null || menuName == ''">
-            UNION
-            select * from sys_menu sm1
-            where sm1.menu_id in
-            (select sm2.parent_id from sys_menu sm2 where status = #{status})
-        </if>
+<!--        <if test="menuName != null and menuName != ''">-->
+<!--            UNION-->
+<!--            select * from sys_menu sm1 where sm1.parent_id in-->
+<!--            (select sm2.menu_id from sys_menu sm2 where menu_name LIKE concat("%",#{menuName},"%"))-->
+<!--            <if test="status != null and status != ''">-->
+<!--                and status = #{status}-->
+<!--            </if>-->
+<!--            UNION-->
+<!--            select * from sys_menu sm1 where sm1.menu_id in-->
+<!--            (select sm2.parent_id from sys_menu sm2 where menu_name LIKE concat("%",#{menuName},"%"))-->
+<!--            <if test="status != null and status != ''">-->
+<!--                and status = #{status}-->
+<!--            </if>-->
+<!--        </if>-->
+<!--        <if test="status != null and status != '' and menuName == null || menuName == ''">-->
+<!--            UNION-->
+<!--            select * from sys_menu sm1-->
+<!--            where sm1.menu_id in-->
+<!--            (select sm2.parent_id from sys_menu sm2 where status = #{status})-->
+<!--        </if>-->
     </select>
 
     <select id="checkName" resultType="java.lang.Long">

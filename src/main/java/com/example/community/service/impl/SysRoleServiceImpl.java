@@ -6,6 +6,9 @@ import com.example.community.entity.SysRole;
 import com.example.community.service.SysRoleService;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
+import java.util.List;
+
 /**
  * 角色信息表(SysRole)表服务实现类
  *
@@ -14,6 +17,16 @@ import org.springframework.stereotype.Service;
  */
 @Service("sysRoleService")
 public class SysRoleServiceImpl extends ServiceImpl<SysRoleDao, SysRole> implements SysRoleService {
+
+
+    @Resource
+    private SysRoleDao roleMapper;
+
+    @Override
+    public List<SysRole> selectRoleList(SysRole role)
+    {
+        return roleMapper.selectRoleList(role);
+    }
 
 }
 
