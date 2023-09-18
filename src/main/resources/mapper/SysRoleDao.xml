@@ -69,24 +69,31 @@
 
     <select id="selectRoleList" parameterType="com.example.community.entity.SysRole"
             resultMap="sysRoleResult">
-        SELECT * FROM sys_role r WHERE r.del_flag = '0' and role_id != 1
-        <if test="roleName != null and roleName != ''">
-            AND r.role_name LIKE CONCAT('%', #{roleName},'%')
+        select * from sys_role
+        <where>
+            role_id != 1 and  del_flag = '0'
+            <if test="sysRole.roleName != null and sysRole.roleName !=''">
+                and role_name like concat('%',#{sysRole.roleName},'%')
+            </if>
+            <if test="sysRole.roleKey != null and sysRole.roleKey !=''">
+                and role_key like concat('%', #{sysRole.roleKey}, '%')
+            </if>
+            <if test="sysRole.status != null and sysRole.status !=''">
+                and status = #{sysRole.status}
+            </if>
+            <if test="sysRole.createTime != null and sysRole.createTime !=''">
+                and date_format(create_time,'%y%m%d') &gt;= date_format(#{sysRole.createTime},'%y%m%d')
+            </if>
+            <if test="sysRole.updateTime != null and sysRole.updateTime !=''">
+                and date_format(create_time,'%y%m%d') &lt;= date_format(#{sysRole.updateTime},'%y%m%d')
+            </if>
+        </where>
+        <if test='size != 0'>
+            limit #{index},#{size}
         </if>
-        <if test="status != null and status != ''">
-            AND r.status = #{status}
-        </if>
-        <if test="roleKey != null and roleKey != ''">
-            AND r.role_key LIKE CONCAT('%', #{roleKey},'%')
-        </if>
-<!--        <if test="beginTime != null and beginTime != ''">-->
-<!--            AND-->
-<!--        </if>-->
-<!--        <if test="endTime != null and endTime != ''">-->
-<!--            AND-->
-<!--        </if>-->
-        ORDER BY r.role_sort
+
     </select>
+    <select id="RoleList" resultType="com.example.community.entity.SysRole"></select>
 
 
 </mapper>

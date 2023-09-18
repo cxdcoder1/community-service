@@ -1,5 +1,6 @@
 package com.example.community.service.impl;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.community.dao.SysRoleDao;
 import com.example.community.entity.SysRole;
@@ -22,11 +23,18 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleDao, SysRole> impleme
     @Resource
     private SysRoleDao roleMapper;
 
-    @Override
-    public List<SysRole> selectRoleList(SysRole role)
-    {
-        return roleMapper.selectRoleList(role);
-    }
 
+
+    @Override
+    public Page<SysRole> roleList(Page<SysRole> page, SysRole sysRole) {
+
+        page.setSize(page.getSize());
+        page.setCurrent(page.getCurrent());
+
+        int total = roleMapper.selectRoleList(0L,0L,sysRole).size();
+        page.setTotal(total);
+        page.setRecords(roleMapper.selectRoleList((page.getCurrent()-1)*page.getSize(),page.getSize(),sysRole));
+        return page;
+    }
 }
 
