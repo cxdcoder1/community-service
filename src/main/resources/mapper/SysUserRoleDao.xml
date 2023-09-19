@@ -24,6 +24,10 @@
         </foreach>
         on duplicate key update
              </insert>
+    <select id="roleIsUsed" resultType="com.example.community.entity.SysUserRole">
+        SELECT * from sys_user_role WHERE role_id = #{roleId}
+    </select>
+
 
 </mapper>
 

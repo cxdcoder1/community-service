@@ -67,7 +67,7 @@ public interface SysMenuDao extends BaseMapper<SysMenu> {
 
     Integer addMenu(SysMenu sysMenu);
 
-    SysMenu getParent(SysMenu sysMenu);
+    SysMenu getParent(String parentId);
 
     int deleteByMenuId(Long id);
 

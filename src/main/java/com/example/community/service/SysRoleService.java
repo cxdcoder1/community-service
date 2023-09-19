@@ -13,7 +13,7 @@ import java.util.List;
  * @author makejava
  * @since 2023-09-14 09:53:02
  */
- 
+
 public interface SysRoleService extends IService<SysRole> {
     /**
      * 新增保存角色信息
@@ -21,12 +21,11 @@ public interface SysRoleService extends IService<SysRole> {
      * @param role 角色信息
      * @return 结果
      */
-    public int insertRole(SysRole role);
+    public Integer insertRole(SysRole role);
 
     Page<SysRole> roleList(Page<SysRole> page, SysRole sysRole);
 
-    public SysRole getRoleById(Long id);
-
+    public List<SysRole> selectRoleList(SysRole role);
 
     /**
      * 新增验重角色名
@@ -37,6 +36,25 @@ public interface SysRoleService extends IService<SysRole> {
 
     public int updateRole(SysRole role);
 
-    public List<SysMenu> getRoleMenuTreeselect(Long roleId);
+    public List<SysMenu> getRoleMenuTreeselect(Integer roleId);
+
+    public SysRole getRoleById(Long id);
+
+    /**
+     * 获取要导出的角色信息
+     * @return
+     */
+    List<SysRole> getDeriveList(List<String> list);
+
+    /**
+     * 删除
+     * @param roleId
+     * @return
+     */
+    Integer deleteRole(String roleId);
+
+
+
+    public int upDataStatus(long roleId,String status);
 }
 

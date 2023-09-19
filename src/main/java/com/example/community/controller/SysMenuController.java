@@ -116,6 +116,19 @@ public class SysMenuController extends ApiController {
         //没有重复可以新增
         //获取即将添加的菜单的父类
         SysMenu parent = sysMenuService.getParent(sysMenu);
+        if (parent==null){
+            //没有父类
+            if (sysMenu.getMenuType().equals("M")){
+                //必须是目录才可以添加
+                return add(sysMenu, result);
+            }else {
+                //不是目录不可以添加
+                result.put("status", 201);
+                result.put("success", false);
+                result.put("msg", "没有父类目录的菜单添加只能添加目录类型");
+                return result;
+            }
+        }
         if (parent.getMenuType().equals("F")) {
             //父类是按钮 不能添加
             result.put("status", 201);
