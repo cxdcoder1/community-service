@@ -1,7 +1,5 @@
 package com.example.community.controller;
 
-
-
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.api.ApiController;
 import com.baomidou.mybatisplus.extension.api.R;
@@ -10,13 +8,10 @@ import com.example.community.entity.SysMenu;
 import com.example.community.entity.SysRole;
 import com.example.community.service.SysRoleService;
 import com.example.community.utils.MenuTree;
-import org.apache.ibatis.session.RowBounds;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-
 import javax.annotation.Resource;
-import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -39,24 +34,25 @@ public class SysRoleController extends ApiController {
 
     /**
      * 新增角色
+     *
      * @param role
      * @return
      */
     @GetMapping("insertRole")
-    public Map<String, Object> insertRole(SysRole role){
+    public Map<String, Object> insertRole(SysRole role) {
         Map<String, Object> map = new HashMap<>();
         Integer integer = sysRoleService.selectRoleName(role.getRoleName());
-        if (integer==0){
+        if (integer == 0) {
             int i = sysRoleService.insertRole(role);
-            map.put("msg","新增成功");
+            map.put("msg", "新增成功");
             map.put("status", 200);
             map.put("success", true);
             return map;
         }
-           map.put("msg","角色名重复");
-           map.put("status", 201);
-           map.put("success", false);
-           return map;
+        map.put("msg", "角色名重复");
+        map.put("status", 201);
+        map.put("success", false);
+        return map;
     }
 
     @GetMapping("list")
@@ -71,7 +67,7 @@ public class SysRoleController extends ApiController {
     /**
      * 分页查询所有数据
      *
-     * @param page 分页对象
+     * @param page    分页对象
      * @param sysRole 查询实体
      * @return 所有数据
      */
@@ -83,12 +79,11 @@ public class SysRoleController extends ApiController {
     /**
      * 通过主键查询单条数据
      *
-     * @param id 主键
      * @return 单条数据
      */
-    @GetMapping("{id}")
-    public R selectOne(@PathVariable Serializable id) {
-        return success(this.sysRoleService.getById(id));
+    @RequestMapping("getRole")
+    public R selectOne( SysRole sysRole) {
+        return success(this.sysRoleService.getRoleById(sysRole.getRoleId()));
     }
 
     /**
@@ -130,9 +125,9 @@ public class SysRoleController extends ApiController {
     @PutMapping("edit")
     public String edit(@Validated @RequestBody SysRole role) {
         int i = sysRoleService.updateRole(role);
-        if (i!=0){
+        if (i != 0) {
             return "修改成功";
-        }else {
+        } else {
             return "修改失败";
         }
     }
@@ -144,10 +139,9 @@ public class SysRoleController extends ApiController {
 //    public String dataScope(@RequestBody SysRole role) {
 //        roleService.
 //    }
-
     @RequestMapping("getRoleMenuTreeselect")
-    public R getRoleMenuTreeselect(int roleId) {
-        List<SysMenu> menus = sysRoleService.getRoleMenuTreeselect(roleId);
+    public R getRoleMenuTreeselect( SysRole sysRole) {
+        List<SysMenu> menus = sysRoleService.getRoleMenuTreeselect(sysRole.getRoleId());
         List<SysMenu> menuList = new MenuTree(menus).builTree();
         if (menuList != null && !menuList.isEmpty()) {
             System.out.println(menuList);

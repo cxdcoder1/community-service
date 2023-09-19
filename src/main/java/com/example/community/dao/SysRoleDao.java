@@ -1,11 +1,11 @@
 package com.example.community.dao;
 
-import java.util.List;
-
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.example.community.entity.SysMenu;
-import org.apache.ibatis.annotations.Param;
 import com.example.community.entity.SysRole;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
  * 角色信息表(SysRole)表数据库访问层
@@ -26,10 +26,13 @@ public interface SysRoleDao extends BaseMapper<SysRole> {
 
     /**
      * 新增和修改的验重
+     *
      * @param RoleName
      * @return
      */
     public int selectRoleName(String RoleName);
+
+    public SysRole selectRoleById(Long id);
 
 
     /**
@@ -43,7 +46,7 @@ public interface SysRoleDao extends BaseMapper<SysRole> {
 
     public int updateRole(SysRole role);
 
-    public List<SysMenu> getRoleMenuTreeselect(int roleId);
+    public List<SysMenu> getRoleMenuTreeselect(Long roleId);
 
 }
 

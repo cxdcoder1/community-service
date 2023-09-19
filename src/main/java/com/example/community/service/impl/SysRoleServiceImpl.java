@@ -11,8 +11,6 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.util.List;
 
-import javax.annotation.Resource;
-
 /**
  * 角色信息表(SysRole)表服务实现类
  *
@@ -38,6 +36,11 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleDao, SysRole> impleme
         page.setTotal(total);
         page.setRecords(roleMapper.selectRoleList((page.getCurrent()-1)*page.getSize(),page.getSize(),sysRole));
         return page;
+    }
+
+    @Override
+    public SysRole getRoleById(Long id) {
+        return sysRoleDao.selectRoleById(id);
     }
 
     @Resource
@@ -69,7 +72,7 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleDao, SysRole> impleme
     }
 
     @Override
-    public List<SysMenu> getRoleMenuTreeselect(int roleId) {
+    public List<SysMenu> getRoleMenuTreeselect(Long roleId) {
         return sysRoleDao.getRoleMenuTreeselect(roleId);
     }
 

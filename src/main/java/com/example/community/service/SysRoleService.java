@@ -7,8 +7,6 @@ import com.example.community.entity.SysRole;
 
 import java.util.List;
 
-import java.util.List;
-
 /**
  * 角色信息表(SysRole)表服务接口
  *
@@ -27,6 +25,8 @@ public interface SysRoleService extends IService<SysRole> {
 
     Page<SysRole> roleList(Page<SysRole> page, SysRole sysRole);
 
+    public SysRole getRoleById(Long id);
+
 
     /**
      * 新增验重角色名
@@ -37,6 +37,6 @@ public interface SysRoleService extends IService<SysRole> {
 
     public int updateRole(SysRole role);
 
-    public List<SysMenu> getRoleMenuTreeselect(int roleId);
+    public List<SysMenu> getRoleMenuTreeselect(Long roleId);
 }
 
