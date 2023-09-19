@@ -59,7 +59,7 @@
             resultMap="SysRoleMap">
         select * from sys_role
         <where>
-            role_id != 1 and  del_flag = '0'
+            role_id != 1 and del_flag = '0'
             <if test="sysRole.roleName != null and sysRole.roleName !=''">
                 and role_name like concat('%',#{sysRole.roleName},'%')
             </if>
@@ -141,14 +141,20 @@
     <select id="getRoleMenuTreeselect" resultType="com.example.community.entity.SysMenu">
         select m.*
         from sys_role r
-                 LEFT JOIN sys_role_menu rm on r.role_id = rm.role_id
-                 LEFT JOIN sys_menu m on rm.menu_id = m.menu_id
+        INNER JOIN sys_role_menu rm on r.role_id = rm.role_id
+        INNER JOIN sys_menu m on rm.menu_id = m.menu_id
         <where>
-            <if test="roleId!=0">
+            <if test="roleId!=null">
                 r.role_id = #{roleId}
             </if>
         </where>
         order by order_num asc
+    </select>
+
+    <select id="selectRoleById" resultType="com.example.community.entity.SysRole">
+        select *
+        from sys_role
+        where role_id = #{id}
     </select>
 
     <select id="getDeriveList" resultType="com.example.community.entity.SysRole">

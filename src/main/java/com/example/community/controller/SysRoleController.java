@@ -60,12 +60,13 @@ public class SysRoleController extends ApiController {
      * @param role
      * @return
      */
-    @GetMapping("insertRole")
-    public Map<String, Object> insertRole(SysRole role){
+    @PostMapping("insertRole")
+    public Map<String, Object> insertRole(@RequestBody SysRole role){
         Map<String, Object> map = new HashMap<>();
         Integer integer = sysRoleService.selectRoleName(role.getRoleName());
-        if (integer==0){
-            int i = sysRoleService.insertRole(role);
+//
+        if (integer==null){
+            Integer integer1 = sysRoleService.insertRole(role);
             map.put("msg","新增成功");
             map.put("status", 200);
             map.put("success", true);
@@ -79,9 +80,9 @@ public class SysRoleController extends ApiController {
 
     @GetMapping("list")
     public R selectPageAll(Page<SysRole> page, SysRole sysRole) {
-        System.err.println(sysRole);
-        System.err.println(sysRole.getCreateTime());
-        System.err.println(sysRole.getUpdateTime());
+//        System.err.println("角色类"+sysRole);
+//        System.err.println(page.getCurrent());
+//        System.err.println(page.getSize());
 
         return success(this.sysRoleService.roleList(page, sysRole));
     }
@@ -146,13 +147,21 @@ public class SysRoleController extends ApiController {
      * 修改保存角色
      */
     @PutMapping("edit")
-    public String edit(@Validated @RequestBody SysRole role) {
-        int i = sysRoleService.updateRole(role);
-        if (i!=0){
-            return "修改成功";
-        }else {
-            return "修改失败";
+    public Map<String, Object> edit(@RequestBody SysRole role) {
+        Map<String, Object> map = new HashMap<>();
+        System.err.println(role);
+        Integer integer = sysRoleService.selectRoleName(role.getRoleName());
+        if (integer==null){
+            sysRoleService.updateRole(role);
+            map.put("msg","修改成功");
+            map.put("status", 200);
+            map.put("success", true);
+            return map;
         }
+        map.put("msg","角色名重复");
+        map.put("status", 201);
+        map.put("success", false);
+        return map;
     }
 
     /**
@@ -164,16 +173,22 @@ public class SysRoleController extends ApiController {
 //    }
 
     @RequestMapping("getRoleMenuTreeselect")
-    public R getRoleMenuTreeselect(int roleId) {
+    public R getRoleMenuTreeselect(Integer roleId) {
         List<SysMenu> menus = sysRoleService.getRoleMenuTreeselect(roleId);
+//        System.err.println(menus);
         List<SysMenu> menuList = new MenuTree(menus).builTree();
         if (menuList != null && !menuList.isEmpty()) {
-            System.out.println(menuList);
+//            System.out.println(menuList);
             return R.ok(menuList);
         }
         System.err.println(R.ok(menus));
 
         return R.ok(menus);
+    }
+
+    @RequestMapping("getRole")
+    public R selectOne( SysRole sysRole) {
+        return success(this.sysRoleService.getRoleById(sysRole.getRoleId()));
     }
 
     /**

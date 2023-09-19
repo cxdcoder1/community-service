@@ -77,7 +77,7 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleDao, SysRole> impleme
      * @return
      */
     @Override
-    public int insertRole(SysRole role) {
+    public Integer insertRole(SysRole role) {
         return sysRoleDao.insertRole(role);
     }
 
@@ -98,7 +98,7 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleDao, SysRole> impleme
     }
 
     @Override
-    public List<SysMenu> getRoleMenuTreeselect(int roleId) {
+    public List<SysMenu> getRoleMenuTreeselect(Integer roleId) {
         return sysRoleDao.getRoleMenuTreeselect(roleId);
     }
 
@@ -116,6 +116,11 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleDao, SysRole> impleme
     @Override
     public int upDataStatus(long roleId, String status) {
         return sysRoleDao.upDataStatus(roleId,status);
+    }
+
+    @Override
+    public SysRole getRoleById(Long id) {
+        return sysRoleDao.selectRoleById(id);
     }
 
 }

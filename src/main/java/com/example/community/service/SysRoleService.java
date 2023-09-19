@@ -21,7 +21,7 @@ public interface SysRoleService extends IService<SysRole> {
      * @param role 角色信息
      * @return 结果
      */
-    public int insertRole(SysRole role);
+    public Integer insertRole(SysRole role);
 
     Page<SysRole> roleList(Page<SysRole> page, SysRole sysRole);
 
@@ -36,7 +36,9 @@ public interface SysRoleService extends IService<SysRole> {
 
     public int updateRole(SysRole role);
 
-    public List<SysMenu> getRoleMenuTreeselect(int roleId);
+    public List<SysMenu> getRoleMenuTreeselect(Integer roleId);
+
+    public SysRole getRoleById(Long id);
 
     /**
      * 获取要导出的角色信息
