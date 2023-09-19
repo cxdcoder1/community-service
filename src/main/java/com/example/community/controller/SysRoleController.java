@@ -70,7 +70,10 @@ public class SysRoleController extends ApiController {
             map.put("msg","新增成功");
             map.put("status", 200);
             map.put("success", true);
+            //获取新增角色的主键
+            System.out.println(role.getRoleId());
             return map;
+
         }
            map.put("msg","角色名重复");
            map.put("status", 201);
