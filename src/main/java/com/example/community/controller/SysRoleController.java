@@ -63,9 +63,13 @@ public class SysRoleController extends ApiController {
     @PostMapping("insertRole")
     public Map<String, Object> insertRole(@RequestBody SysRole role){
         Map<String, Object> map = new HashMap<>();
-        Integer integer = sysRoleService.selectRoleName(role.getRoleName());
-//
-        if (integer==null){
+        SysRole sysRole = sysRoleService.selectRoleName(role.getRoleName());
+        if (sysRole.getRoleName().equals(role.getRoleName())){
+            map.put("msg","角色名重复");
+            map.put("status", 201);
+            map.put("success", false);
+            return map;
+        }
             Integer integer1 = sysRoleService.insertRole(role);
             map.put("msg","新增成功");
             map.put("status", 200);
@@ -74,11 +78,8 @@ public class SysRoleController extends ApiController {
             System.out.println(role.getRoleId());
             return map;
 
-        }
-           map.put("msg","角色名重复");
-           map.put("status", 201);
-           map.put("success", false);
-           return map;
+
+
     }
 
     @GetMapping("list")
@@ -153,18 +154,24 @@ public class SysRoleController extends ApiController {
     public Map<String, Object> edit(@RequestBody SysRole role) {
         Map<String, Object> map = new HashMap<>();
         System.err.println(role);
-        Integer integer = sysRoleService.selectRoleName(role.getRoleName());
-        if (integer==null){
+        SysRole sysRole = sysRoleService.selectRoleName(role.getRoleName());
+        if (sysRole.getRoleName().equals(role.getRoleName())){
+            if (!sysRole.getRoleId().equals(role.getRoleId())){
+                //重复
+                map.put("msg","角色名重复");
+                map.put("status", 201);
+                map.put("success", false);
+                return map;
+            }
+        }
+
             sysRoleService.updateRole(role);
             map.put("msg","修改成功");
             map.put("status", 200);
             map.put("success", true);
             return map;
-        }
-        map.put("msg","角色名重复");
-        map.put("status", 201);
-        map.put("success", false);
-        return map;
+
+
     }
 
     /**

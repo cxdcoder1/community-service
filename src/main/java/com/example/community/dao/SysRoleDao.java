@@ -46,7 +46,7 @@ public interface SysRoleDao extends BaseMapper<SysRole> {
      * @param RoleName
      * @return
      */
-    public Integer selectRoleName(String RoleName);
+    public SysRole selectRoleName(String RoleName);
 
 
     /**

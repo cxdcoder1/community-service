@@ -88,7 +88,7 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleDao, SysRole> impleme
      * @return
      */
     @Override
-    public Integer selectRoleName(String roleName) {
+    public SysRole selectRoleName(String roleName) {
         return sysRoleDao.selectRoleName(roleName);
     }
 
