@@ -54,6 +54,8 @@ public class SysMenu extends Model<SysMenu> {
 
     private List<SysMenu> Children;
 
+
+
     public List<SysMenu> getChildren() {
         return Children;
     }

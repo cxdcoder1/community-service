@@ -6,6 +6,9 @@ import com.example.community.entity.SysUserRole;
 import com.example.community.service.SysUserRoleService;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
+import java.util.List;
+
 /**
  * 用户和角色关联表(SysUserRole)表服务实现类
  *
@@ -14,6 +17,12 @@ import org.springframework.stereotype.Service;
  */
 @Service("sysUserRoleService")
 public class SysUserRoleServiceImpl extends ServiceImpl<SysUserRoleDao, SysUserRole> implements SysUserRoleService {
+    @Resource
+    private SysUserRoleDao sysUserRoleDao;
 
+    @Override
+    public List<SysUserRole> roleIsUsed(String roleId) {
+        return sysUserRoleDao.roleIsUsed(roleId);
+    }
 }
 

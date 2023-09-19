@@ -8,7 +8,9 @@ import com.baomidou.mybatisplus.extension.api.R;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.community.entity.SysMenu;
 import com.example.community.entity.SysRole;
+import com.example.community.entity.SysUserRole;
 import com.example.community.service.SysRoleService;
+import com.example.community.service.SysUserRoleService;
 import com.example.community.utils.MenuTree;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.validation.annotation.Validated;
@@ -36,6 +38,11 @@ public class SysRoleController extends ApiController {
      */
     @Resource
     private SysRoleService sysRoleService;
+    /**
+     * 用户角色关联服务对象
+     */
+    @Resource
+    private SysUserRoleService sysUserRoleService;
 
     /**
      * 新增角色
@@ -62,6 +69,7 @@ public class SysRoleController extends ApiController {
     @GetMapping("list")
     public R selectPageAll(Page<SysRole> page, SysRole sysRole) {
         System.err.println("角色类"+sysRole);
+        System.err.println(page);
         System.err.println(page.getCurrent());
         System.err.println(page.getSize());
 
@@ -156,6 +164,35 @@ public class SysRoleController extends ApiController {
         System.err.println(R.ok(menus));
 
         return R.ok(menus);
+    }
+
+    /**
+     * 删除角色(设置del_flag为'2')
+     * @param roleId
+     * @return
+     */
+    @DeleteMapping("delete/{roleId}")
+    public Map<String, Object> deleteRole(@PathVariable String roleId){
+        Map<String, Object> map = new HashMap<>();
+        //查询角色是否被分配
+        List<SysUserRole> sysUserRoles = sysUserRoleService.roleIsUsed(roleId);
+        if (sysUserRoles.size()!=0){
+            //角色已经被分配
+            map.put("msg","删除失败，角色已被分配");
+            map.put("status","201");
+            return map;
+        }
+        //删除角色
+        Integer integer = sysRoleService.deleteRole(roleId);
+        if (integer==1){
+            //成功
+            map.put("msg","成功删除");
+            map.put("status","200");
+            return map;
+        }
+        map.put("msg","删除失败");
+        map.put("status","201");
+        return map;
     }
 }
 

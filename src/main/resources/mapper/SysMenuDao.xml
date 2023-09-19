@@ -249,11 +249,12 @@
         order by parent_id, order_num ASC
     </select>
 
-    <select id="getParent" resultType="com.example.community.entity.SysMenu">
-        SELECT * FROM sys_menu where menu_id = #{sysMenu.parentId}
-    </select>
+
     <select id="getMenuChildren" resultType="com.example.community.entity.SysMenu">
         SELECT * from sys_menu WHERE parent_id = #{sysMenu.parentId}
+    </select>
+    <select id="getParent" resultType="com.example.community.entity.SysMenu">
+        SELECT * FROM sys_menu where menu_id = #{parentId}
     </select>
 
 </mapper>

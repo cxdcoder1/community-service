@@ -48,6 +48,9 @@
         values(create_by) , create_time = values(create_time) , update_by = values(update_by) , update_time =
         values(update_time) , remark = values(remark)
     </insert>
+    <update id="deleteRole">
+        update sys_role SET del_flag = 2 WHERE role_id = ${roleId}
+    </update>
 
 
     <resultMap type="com.example.community.entity.SysRole" id="sysRoleResult">
@@ -157,6 +160,18 @@
             </if>
         </where>
         order by order_num asc
+    </select>
+
+    <select id="getDeriveList" resultType="com.example.community.entity.SysRole">
+        SELECT * FROM sys_role  WHERE role_id != 1
+        <if test="list!=null">
+            and
+            role_id in
+            <foreach collection="list" item="num" index="index" open="(" close=")" separator=",">
+                #{num}
+            </foreach>
+        </if>
+
     </select>
 
 </mapper>

@@ -21,6 +21,8 @@ import javax.annotation.Resource;
  */
 @Service("sysRoleService")
 public class SysRoleServiceImpl extends ServiceImpl<SysRoleDao, SysRole> implements SysRoleService {
+    @Resource
+    private SysRoleDao sysRoleDao;
 
 
     @Resource
@@ -36,12 +38,20 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleDao, SysRole> impleme
 
         int total = roleMapper.selectRoleList(0L,0L,sysRole).size();
         page.setTotal(total);
+        //总页数
+        int pages = (int) Math.ceil(page.getTotal() * 1.0 / page.getSize());
+        if (page.getCurrent()>pages){
+            page.setCurrent(pages);
+        }
         page.setRecords(roleMapper.selectRoleList((page.getCurrent()-1)*page.getSize(),page.getSize(),sysRole));
         return page;
     }
 
-    @Resource
-    private SysRoleDao sysRoleDao;
+    @Override
+    public List<SysRole> selectRoleList(SysRole role) {
+        return null;
+    }
+
 
     /**
      * 新增角色
@@ -72,6 +82,17 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleDao, SysRole> impleme
     public List<SysMenu> getRoleMenuTreeselect(int roleId) {
         return sysRoleDao.getRoleMenuTreeselect(roleId);
     }
+
+    @Override
+    public List<SysRole> getDeriveList(List<String> list) {
+        return sysRoleDao.getDeriveList(list);
+    }
+
+    @Override
+    public Integer deleteRole(String roleId) {
+        return sysRoleDao.deleteRole(roleId);
+    }
+
 
 }
 
