@@ -136,7 +136,7 @@
         where menu_id = #{menuId}
     </update>
     <update id="upTypeToM">
-        update sys_menu SET menu_type = 'M' WHERE menu_id = #{sysMenu.menuId}
+        update sys_menu SET menu_type = 'M' WHERE menu_id = #{menuId}
     </update>
 
 
@@ -251,7 +251,7 @@
 
 
     <select id="getMenuChildren" resultType="com.example.community.entity.SysMenu">
-        SELECT * from sys_menu WHERE parent_id = #{sysMenu.parentId}
+        SELECT * from sys_menu WHERE parent_id = #{menuId}
     </select>
     <select id="getParent" resultType="com.example.community.entity.SysMenu">
         SELECT * FROM sys_menu where menu_id = #{parentId}
