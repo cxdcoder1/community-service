@@ -247,6 +247,14 @@ public class SysMenuController extends ApiController {
     @PutMapping("updateMenu")
     public Map<String,Object> update(@RequestBody SysMenu sysMenu) {
         Map<String, Object> result = new HashMap<>();
+        //判断父类是否是自己
+        if (sysMenu.getMenuId().equals(sysMenu.getParentId())){
+            //修改的父类为自己 不可修改
+            result.put("status", 201);
+            result.put("success", false);
+            result.put("msg", "不可以把上级菜单置为自己");
+            return result;
+        }
         Boolean cName = sysMenuService.checkName(sysMenu.getMenuName(), sysMenu.getMenuId() + "", sysMenu.getParentId() + "");
         Boolean cPath = sysMenuService.checkPath(sysMenu.getMenuName(), sysMenu.getMenuId() + "");
         //判断是否重复
@@ -265,6 +273,7 @@ public class SysMenuController extends ApiController {
         //没有重复可以修改
         //获取修改后菜单的父类
         SysMenu parent = sysMenuService.getParent(sysMenu);
+
         if (parent==null){
             //没有父类
             if (sysMenu.getMenuType().equals("M")){

@@ -64,12 +64,17 @@ public class SysRoleController extends ApiController {
     public Map<String, Object> insertRole(@RequestBody SysRole role){
         Map<String, Object> map = new HashMap<>();
         SysRole sysRole = sysRoleService.selectRoleName(role.getRoleName());
-        if (sysRole.getRoleName().equals(role.getRoleName())){
+        System.err.println(sysRole);
+        if (sysRole!=null){
+            //重复
             map.put("msg","角色名重复");
             map.put("status", 201);
             map.put("success", false);
             return map;
         }
+//        if (sysRole.getRoleName().equals(role.getRoleName())){
+//
+//        }
             Integer integer1 = sysRoleService.insertRole(role);
             map.put("msg","新增成功");
             map.put("status", 200);
