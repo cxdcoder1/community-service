@@ -53,25 +53,10 @@
     </update>
 
 
-    <resultMap type="com.example.community.entity.SysRole" id="sysRoleResult">
-        <id property="roleId" column="role_id"/>
-        <result property="roleName" column="role_name"/>
-        <result property="roleKey" column="role_key"/>
-        <result property="roleSort" column="role_sort"/>
-        <result property="dataScope" column="data_scope"/>
-        <result property="menuCheckStrictly" column="menu_check_strictly"/>
-        <result property="deptCheckStrictly" column="dept_check_strictly"/>
-        <result property="status" column="status"/>
-        <result property="delFlag" column="del_flag"/>
-        <result property="createBy" column="create_by"/>
-        <result property="createTime" column="create_time"/>
-        <result property="updateBy" column="update_by"/>
-        <result property="updateTime" column="update_time"/>
-        <result property="remark" column="remark"/>
-    </resultMap>
+
 
     <select id="selectRoleList" parameterType="com.example.community.entity.SysRole"
-            resultMap="sysRoleResult">
+            resultMap="SysRoleMap">
         select * from sys_role
         <where>
             role_id != 1 and  del_flag = '0'
@@ -85,10 +70,10 @@
                 and status = #{sysRole.status}
             </if>
             <if test="sysRole.createTime != null and sysRole.createTime !=''">
-                and date_format(create_time,'%y%m%d') &gt;= date_format(#{sysRole.createTime},'%y%m%d')
+                and DATE_FORMAT(create_time, '%y%m%d') &gt;= DATE_FORMAT(#{sysRole.createTime}, '%y%m%d')
             </if>
             <if test="sysRole.updateTime != null and sysRole.updateTime !=''">
-                and date_format(create_time,'%y%m%d') &lt;= date_format(#{sysRole.updateTime},'%y%m%d')
+                and DATE_FORMAT(update_time, '%y%m%d') &lt;= DATE_FORMAT(#{sysRole.updateTime}, '%y%m%d')
             </if>
         </where>
         <if test='size != 0'>
@@ -146,6 +131,10 @@
             update_time = sysdate()
         </set>
         where role_id = #{roleId}
+    </update>
+
+    <update id="upDataStatus">
+        update sys_role set status = #{status} where role_id = #{roleId}
     </update>
 
 

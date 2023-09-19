@@ -44,6 +44,17 @@ public class SysRoleController extends ApiController {
     @Resource
     private SysUserRoleService sysUserRoleService;
 
+
+    /**
+     * 状态
+     *
+     * @param
+     */
+    @PutMapping("upDataStatus")
+    public R upDataStatus(@RequestParam("status") String status, @RequestParam("roleId") int roleId) {
+        return success(this.sysRoleService.upDataStatus(roleId,status));
+    }
+
     /**
      * 新增角色
      * @param role
@@ -68,10 +79,9 @@ public class SysRoleController extends ApiController {
 
     @GetMapping("list")
     public R selectPageAll(Page<SysRole> page, SysRole sysRole) {
-        System.err.println("角色类"+sysRole);
-        System.err.println(page);
-        System.err.println(page.getCurrent());
-        System.err.println(page.getSize());
+        System.err.println(sysRole);
+        System.err.println(sysRole.getCreateTime());
+        System.err.println(sysRole.getUpdateTime());
 
         return success(this.sysRoleService.roleList(page, sysRole));
     }

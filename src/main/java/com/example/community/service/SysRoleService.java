@@ -52,5 +52,7 @@ public interface SysRoleService extends IService<SysRole> {
     Integer deleteRole(String roleId);
 
 
+
+    public int upDataStatus(long roleId,String status);
 }
 

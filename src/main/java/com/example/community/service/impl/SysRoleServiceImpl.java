@@ -9,6 +9,7 @@ import com.example.community.service.SysRoleService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -28,15 +29,31 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleDao, SysRole> impleme
     @Resource
     private SysRoleDao roleMapper;
 
-
+//    @Override
+//    public Page<SysRole> roleList(Page<SysRole> page, SysRole sysRole) {
+//        // 设置分页大小和当前页码
+//        page.setSize(page.getSize());
+//        page.setCurrent(page.getCurrent());
+//
+//        // 获取满足条件的角色列表总数
+//        int total = roleMapper.selectRoleList(0L,0L,sysRole).size();
+//        page.setTotal(total);
+//
+//        // 获取满足条件的角色列表，并设置到Page对象中
+//        List<SysRole> roleList = roleMapper.selectRoleList((page.getCurrent()-1) * page.getSize(), page.getSize(), sysRole);
+//        page.setRecords(roleList);
+//
+//        return page;
+//    }
 
     @Override
     public Page<SysRole> roleList(Page<SysRole> page, SysRole sysRole) {
-
+        // 设置分页大小和当前页码
         page.setSize(page.getSize());
         page.setCurrent(page.getCurrent());
 
-        int total = roleMapper.selectRoleList(0L,0L,sysRole).size();
+        // 获取满足条件的角色列表总数
+        int total = roleMapper.selectRoleList(0L, 0L, sysRole).size();
         page.setTotal(total);
         //总页数
         int pages = (int) Math.ceil(page.getTotal() * 1.0 / page.getSize());
@@ -55,6 +72,7 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleDao, SysRole> impleme
 
     /**
      * 新增角色
+     *
      * @param role 角色信息
      * @return
      */
@@ -65,6 +83,7 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleDao, SysRole> impleme
 
     /**
      * 验重角色名
+     *
      * @param roleName
      * @return
      */
@@ -93,6 +112,11 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleDao, SysRole> impleme
         return sysRoleDao.deleteRole(roleId);
     }
 
+
+    @Override
+    public int upDataStatus(long roleId, String status) {
+        return sysRoleDao.upDataStatus(roleId,status);
+    }
 
 }
 
