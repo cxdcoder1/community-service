@@ -183,7 +183,6 @@
         where u.user_id = #{id}
           and m.visible=0
           and m.menu_type in ('M', 'C')
-          and m.status = 0
           AND ro.status = 0
         order by m.parent_id, m.order_num
     </select>
@@ -245,7 +244,6 @@
         select * from sys_menu
         where visible=0
           and menu_type in ('M', 'C')
-          and status = 0
         order by parent_id, order_num ASC
     </select>
 

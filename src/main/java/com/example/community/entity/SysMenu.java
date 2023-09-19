@@ -2,6 +2,7 @@ package com.example.community.entity;
 
 
 import com.baomidou.mybatisplus.extension.activerecord.Model;
+import lombok.Data;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -51,6 +52,7 @@ public class SysMenu extends Model<SysMenu> {
     private Date updateTime;
     //备注
     private String remark;
+
 
     private List<SysMenu> Children;
 

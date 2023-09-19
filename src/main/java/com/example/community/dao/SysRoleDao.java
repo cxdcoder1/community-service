@@ -39,14 +39,14 @@ public interface SysRoleDao extends BaseMapper<SysRole> {
      * @param role 角色信息
      * @return 结果
      */
-    public int insertRole(SysRole role);
+    public Integer insertRole(SysRole role);
 
     /**
      * 新增和修改的验重
      * @param RoleName
      * @return
      */
-    public int selectRoleName(String RoleName);
+    public Integer selectRoleName(String RoleName);
 
 
     /**
@@ -60,7 +60,9 @@ public interface SysRoleDao extends BaseMapper<SysRole> {
 
     public int updateRole(SysRole role);
 
-    public List<SysMenu> getRoleMenuTreeselect(int roleId);
+    public List<SysMenu> getRoleMenuTreeselect(Integer roleId);
+
+    public SysRole selectRoleById(Long id);
 
     List<SysRole> getDeriveList(List<String> list);
 
