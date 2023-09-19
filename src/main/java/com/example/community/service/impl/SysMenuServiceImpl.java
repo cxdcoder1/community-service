@@ -91,8 +91,6 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuDao, SysMenu> impleme
 
     @Override
     public List<SysMenu> getMenuChildren(SysMenu sysMenu) {
-
-
         return sysMenuDao.getMenuChildren(sysMenu);
     }
 

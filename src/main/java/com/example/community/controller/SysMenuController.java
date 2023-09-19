@@ -139,7 +139,7 @@ public class SysMenuController extends ApiController {
         }
 
         //判断父为目录 子为按钮时 不能添加
-        if (parent.getMenuType().equals("M") && sysMenu.getParentId().equals("F")) {
+        if (parent.getMenuType().equals("M") && sysMenu.getMenuType().equals("F")) {
             result.put("status", 201);
             result.put("success", false);
             result.put("msg", "不能在目录下面添加按钮");
@@ -163,7 +163,7 @@ public class SysMenuController extends ApiController {
                 } else {
                     //没有按钮
                     //把父集提升为目录
-                    sysMenuService.updateMenu(sysMenu);
+                    sysMenuService.upTypeToM(parent);
                     return add(sysMenu, result);
                 }
             }
@@ -178,7 +178,7 @@ public class SysMenuController extends ApiController {
                 } else {
                     //没有按钮
                     //把父集提升为目录
-                    sysMenuService.updateMenu(sysMenu);
+                    sysMenuService.upTypeToM(sysMenu);
                     return add(sysMenu, result);
                 }
             }
@@ -263,9 +263,97 @@ public class SysMenuController extends ApiController {
             return result;
         }
         //没有重复可以修改
+        //获取修改后菜单的父类
+        SysMenu parent = sysMenuService.getParent(sysMenu);
+        if (parent==null){
+            //没有父类
+            if (sysMenu.getMenuType().equals("M")){
+                //子类必须是目录才可以修改
+                return up(sysMenu, result);
+            }else {
+                //子类不是目录不可以修改
+                result.put("status", 201);
+                result.put("success", false);
+                result.put("msg", "只有目录才可以修改到最高级");
+                return result;
+            }
+        }
+        if (parent.getMenuType().equals("F")) {
+            //父类是按钮 不能修改
+            result.put("status", 201);
+            result.put("success", false);
+            result.put("msg", "不能修改菜单到按钮下");
+            return result;
+        }
 
+        //判断父为目录 子为按钮时 不能修改
+        if (parent.getMenuType().equals("M") && sysMenu.getMenuType().equals("F")) {
+            result.put("status", 201);
+            result.put("success", false);
+            result.put("msg", "不能修改按钮到目录下");
+            return result;
+        } else if (parent.getMenuType().equals("M")) {
+            return up(sysMenu, result);
+        }
 
-        //修改当前菜单
+        //判断父为菜单时
+        if (parent.getMenuType().equals("C")) {
+            //首先查询父类菜单是否有按钮
+            Boolean t = hasF(parent);
+            if (sysMenu.getMenuType().equals("M")) {
+                //子为目录
+                if (t) {
+                    //含有按钮
+                    result.put("status", 201);
+                    result.put("success", false);
+                    result.put("msg", "不能把目录修改到有按钮的菜单下面");
+                    return result;
+                } else {
+                    //没有按钮
+                    //把父集提升为目录
+                    sysMenuService.upTypeToM(parent);
+                    return up(sysMenu, result);
+                }
+            }
+            if (sysMenu.getMenuType().equals("C")) {
+                //子为菜单
+                if (t) {
+                    //含有按钮
+                    result.put("status", 201);
+                    result.put("success", false);
+                    result.put("msg", "不能把菜单修改到有按钮的菜单下");
+                    return result;
+                } else {
+                    //没有按钮
+                    //把父集提升为目录
+                    sysMenuService.upTypeToM(sysMenu);
+                    return up(sysMenu, result);
+                }
+            }
+            if (sysMenu.getMenuType().equals("F")) {
+                //子为按钮时
+                return up(sysMenu, result);
+            }
+        }
+        //父为按钮
+        if (parent.getMenuType().equals("F")) {
+            result.put("status", 201);
+            result.put("success", false);
+            result.put("msg", "不能修改到按钮下");
+            return result;
+        }
+        result.put("msg","其他");
+        result.put("status","202");
+        return result;
+    }
+
+    /**
+     * 条件成立 修改
+     * @param sysMenu
+     * @param result
+     * @return
+     */
+    public Map<String, Object> up(SysMenu sysMenu , Map<String,Object> result){
         Integer i = sysMenuService.updateMenu(sysMenu);
         if (i==1){
             result.put("status",200);
