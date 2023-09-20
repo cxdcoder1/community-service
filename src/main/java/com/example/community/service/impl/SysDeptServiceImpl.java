@@ -6,6 +6,9 @@ import com.example.community.entity.SysDept;
 import com.example.community.service.SysDeptService;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
+import java.util.List;
+
 /**
  * 部门表(SysDept)表服务实现类
  *
@@ -15,5 +18,12 @@ import org.springframework.stereotype.Service;
 @Service("sysDeptService")
 public class SysDeptServiceImpl extends ServiceImpl<SysDeptDao, SysDept> implements SysDeptService {
 
+    @Resource
+    private SysDeptDao sysDeptDao;
+
+    @Override
+    public List<SysDept> selAllDept(SysDept sysDept) {
+        return sysDeptDao.getDeptList(sysDept);
+    }
 }
 

@@ -8,7 +8,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.List;
 
-@Data
+
 public class RolesAndMenuIds {
     //角色ID
     @ColumnWidth(8)//单独设置列宽
@@ -58,4 +58,269 @@ public class RolesAndMenuIds {
     private String remark;
 
     List menuIds;
+
+    public RolesAndMenuIds() {
+    }
+
+    public RolesAndMenuIds(Long roleId, String roleName, String roleKey, Integer roleSort, String dataScope, Integer menuCheckStrictly, Integer deptCheckStrictly, String status, String delFlag, String createBy, String createTime, String updateBy, String updateTime, String remark, List menuIds) {
+        this.roleId = roleId;
+        this.roleName = roleName;
+        this.roleKey = roleKey;
+        this.roleSort = roleSort;
+        this.dataScope = dataScope;
+        this.menuCheckStrictly = menuCheckStrictly;
+        this.deptCheckStrictly = deptCheckStrictly;
+        this.status = status;
+        this.delFlag = delFlag;
+        this.createBy = createBy;
+        this.createTime = createTime;
+        this.updateBy = updateBy;
+        this.updateTime = updateTime;
+        this.remark = remark;
+        this.menuIds = menuIds;
+    }
+
+    /**
+     * 获取
+     * @return roleId
+     */
+    public Long getRoleId() {
+        return roleId;
+    }
+
+    /**
+     * 设置
+     * @param roleId
+     */
+    public void setRoleId(Long roleId) {
+        this.roleId = roleId;
+    }
+
+    /**
+     * 获取
+     * @return roleName
+     */
+    public String getRoleName() {
+        return roleName;
+    }
+
+    /**
+     * 设置
+     * @param roleName
+     */
+    public void setRoleName(String roleName) {
+        this.roleName = roleName;
+    }
+
+    /**
+     * 获取
+     * @return roleKey
+     */
+    public String getRoleKey() {
+        return roleKey;
+    }
+
+    /**
+     * 设置
+     * @param roleKey
+     */
+    public void setRoleKey(String roleKey) {
+        this.roleKey = roleKey;
+    }
+
+    /**
+     * 获取
+     * @return roleSort
+     */
+    public Integer getRoleSort() {
+        return roleSort;
+    }
+
+    /**
+     * 设置
+     * @param roleSort
+     */
+    public void setRoleSort(Integer roleSort) {
+        this.roleSort = roleSort;
+    }
+
+    /**
+     * 获取
+     * @return dataScope
+     */
+    public String getDataScope() {
+        return dataScope;
+    }
+
+    /**
+     * 设置
+     * @param dataScope
+     */
+    public void setDataScope(String dataScope) {
+        this.dataScope = dataScope;
+    }
+
+    /**
+     * 获取
+     * @return menuCheckStrictly
+     */
+    public Integer getMenuCheckStrictly() {
+        return menuCheckStrictly;
+    }
+
+    /**
+     * 设置
+     * @param menuCheckStrictly
+     */
+    public void setMenuCheckStrictly(Integer menuCheckStrictly) {
+        this.menuCheckStrictly = menuCheckStrictly;
+    }
+
+    /**
+     * 获取
+     * @return deptCheckStrictly
+     */
+    public Integer getDeptCheckStrictly() {
+        return deptCheckStrictly;
+    }
+
+    /**
+     * 设置
+     * @param deptCheckStrictly
+     */
+    public void setDeptCheckStrictly(Integer deptCheckStrictly) {
+        this.deptCheckStrictly = deptCheckStrictly;
+    }
+
+    /**
+     * 获取
+     * @return status
+     */
+    public String getStatus() {
+        return status;
+    }
+
+    /**
+     * 设置
+     * @param status
+     */
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    /**
+     * 获取
+     * @return delFlag
+     */
+    public String getDelFlag() {
+        return delFlag;
+    }
+
+    /**
+     * 设置
+     * @param delFlag
+     */
+    public void setDelFlag(String delFlag) {
+        this.delFlag = delFlag;
+    }
+
+    /**
+     * 获取
+     * @return createBy
+     */
+    public String getCreateBy() {
+        return createBy;
+    }
+
+    /**
+     * 设置
+     * @param createBy
+     */
+    public void setCreateBy(String createBy) {
+        this.createBy = createBy;
+    }
+
+    /**
+     * 获取
+     * @return createTime
+     */
+    public String getCreateTime() {
+        return createTime;
+    }
+
+    /**
+     * 设置
+     * @param createTime
+     */
+    public void setCreateTime(String createTime) {
+        this.createTime = createTime;
+    }
+
+    /**
+     * 获取
+     * @return updateBy
+     */
+    public String getUpdateBy() {
+        return updateBy;
+    }
+
+    /**
+     * 设置
+     * @param updateBy
+     */
+    public void setUpdateBy(String updateBy) {
+        this.updateBy = updateBy;
+    }
+
+    /**
+     * 获取
+     * @return updateTime
+     */
+    public String getUpdateTime() {
+        return updateTime;
+    }
+
+    /**
+     * 设置
+     * @param updateTime
+     */
+    public void setUpdateTime(String updateTime) {
+        this.updateTime = updateTime;
+    }
+
+    /**
+     * 获取
+     * @return remark
+     */
+    public String getRemark() {
+        return remark;
+    }
+
+    /**
+     * 设置
+     * @param remark
+     */
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
+
+    /**
+     * 获取
+     * @return menuIds
+     */
+    public List getMenuIds() {
+        return menuIds;
+    }
+
+    /**
+     * 设置
+     * @param menuIds
+     */
+    public void setMenuIds(List menuIds) {
+        this.menuIds = menuIds;
+    }
+
+    public String toString() {
+        return "RolesAndMenuIds{roleId = " + roleId + ", roleName = " + roleName + ", roleKey = " + roleKey + ", roleSort = " + roleSort + ", dataScope = " + dataScope + ", menuCheckStrictly = " + menuCheckStrictly + ", deptCheckStrictly = " + deptCheckStrictly + ", status = " + status + ", delFlag = " + delFlag + ", createBy = " + createBy + ", createTime = " + createTime + ", updateBy = " + updateBy + ", updateTime = " + updateTime + ", remark = " + remark + ", menuIds = " + menuIds + "}";
+    }
 }

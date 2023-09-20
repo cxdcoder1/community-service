@@ -31,5 +31,12 @@ int insertBatch(@Param("entities") List<SysDept> entities);
 */
 int insertOrUpdateBatch(@Param("entities") List<SysDept> entities);
 
+    /**
+     * 部门表单新增修改的树形结构
+     * @return
+     */
+    List<SysDept>getDeptList(SysDept sysDept);
+
+
 }
 

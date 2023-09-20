@@ -59,6 +59,7 @@ public interface SysRoleDao extends BaseMapper<SysRole> {
      */
     List<SysRole> selectRoleList(@Param("index") Long index, @Param("size") Long size , @Param("sysRole") SysRole sysRole);
 
+    long count(SysRole sysRole);
 
     public int updateRole(RolesAndMenuIds rolesAndMenuIds);
 

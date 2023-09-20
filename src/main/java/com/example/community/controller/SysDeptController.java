@@ -8,11 +8,14 @@ import com.baomidou.mybatisplus.extension.api.R;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.community.entity.SysDept;
 import com.example.community.service.SysDeptService;
+import com.example.community.utils.DeptTree;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 部门表(SysDept)表控制层
@@ -22,6 +25,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("sysDept")
+@CrossOrigin
 public class SysDeptController extends ApiController {
     /**
      * 服务对象
@@ -36,7 +40,7 @@ public class SysDeptController extends ApiController {
      * @param sysDept 查询实体
      * @return 所有数据
      */
-    @GetMapping
+    @GetMapping("selectAll")
     public R selectAll(Page<SysDept> page, SysDept sysDept) {
         return success(this.sysDeptService.page(page, new QueryWrapper<>(sysDept)));
     }
@@ -84,5 +88,29 @@ public class SysDeptController extends ApiController {
     public R delete(@RequestParam("idList") List<Long> idList) {
         return success(this.sysDeptService.removeByIds(idList));
     }
+
+    @PostMapping("getDeptList")
+    public Map<String,Object> getMenuList(@RequestBody SysDept sysDept){
+        Map<String,Object> result = new HashMap<>();
+        List<SysDept> sysDeptList = sysDeptService.selAllDept(sysDept);
+        int len = sysDeptList.size();
+        for(int i = 0; i < len; i++){
+            int count = 0 ;
+            for(int j = 0; j < len; j++){
+                if(sysDeptList.get(i).getParentId().equals(sysDeptList.get(j).getDeptId())){
+                    count++;
+                }
+            }
+            if(count==0){
+                sysDeptList.get(i).setParentId(0L);
+            }
+        }
+        DeptTree deptTree = new DeptTree(sysDeptList);
+        List<SysDept> sysDepts = deptTree.builTree();
+        result.put("menuList",sysDepts);
+        result.put("msg","获取成功");
+        System.err.println(result);
+        return result;
+    };
 }
 

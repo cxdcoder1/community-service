@@ -71,18 +71,41 @@
                 and status = #{sysRole.status}
             </if>
             <if test="sysRole.createTime != null and sysRole.createTime !=''">
-                and DATE_FORMAT(create_time, '%y%m%d') &gt;= DATE_FORMAT(#{sysRole.createTime}, '%y%m%d')
+                and DATE_FORMAT(create_time, '%y%m%d') &gt; DATE_FORMAT(#{sysRole.createTime}, '%y%m%d')
             </if>
             <if test="sysRole.updateTime != null and sysRole.updateTime !=''">
-                and DATE_FORMAT(update_time, '%y%m%d') &lt;= DATE_FORMAT(#{sysRole.updateTime}, '%y%m%d')
+                and DATE_FORMAT(update_time, '%y%m%d') &lt; DATE_FORMAT(#{sysRole.updateTime}, '%y%m%d')
             </if>
         </where>
-        <if test='size != 0'>
-            limit #{index},#{size}
-        </if>
-
+        limit #{index},#{size}
     </select>
-    <select id="RoleList" resultType="com.example.community.entity.SysRole"></select>
+
+    <!--    <select id="selectRoleList" parameterType="com.example.community.entity.SysRole" >-->
+    <!--        select * from sys_role-->
+    <!--        <where>-->
+    <!--            role_id != 1-->
+    <!--            and del_flag!=2-->
+    <!--            <if test="sysRole.roleName != null and sysRole.roleName !=''">-->
+    <!--                and role_name like concat('%',#{sysRole.roleName},'%')-->
+    <!--            </if>-->
+    <!--            <if test="sysRole.roleKey != null and sysRole.roleKey !=''">-->
+    <!--                and role_key like concat('%', #{sysRole.roleKey}, '%')-->
+    <!--            </if>-->
+    <!--            <if test="sysRole.status != null and sysRole.status !=''">-->
+    <!--                and status = #{sysRole.status}-->
+    <!--            </if>-->
+    <!--            <if test="sysRole.createTime != null">-->
+    <!--                and date_format(create_time,'%y%m%d') &gt;= date_format(#{sysRole.createTime},'%y%m%d')-->
+    <!--            </if>-->
+    <!--            <if test="sysRole.updateTime != null">-->
+    <!--                and date_format(create_time,'%y%m%d') &lt;= date_format(#{sysRole.updateTime},'%y%m%d')-->
+    <!--            </if>-->
+    <!--        </where>-->
+    <!--        <if test='size != 0'>-->
+    <!--            limit #{index},#{size}-->
+    <!--        </if>-->
+    <!--    </select>-->
+
 
     <insert id="insertRole" parameterType="com.example.community.entity.SysRole" useGeneratedKeys="true"
             keyProperty="roleId">
@@ -158,6 +181,27 @@
             </foreach>
         </if>
 
+    </select>
+    <select id="count" resultType="java.lang.Long">
+        select count(*) from sys_role
+        <where>
+            role_id != 1 and del_flag = '0'
+            <if test="roleName != null and roleName !=''">
+                and role_name like concat('%',#{roleName},'%')
+            </if>
+            <if test="roleKey != null and roleKey !=''">
+                and role_key like concat('%', #{roleKey}, '%')
+            </if>
+            <if test="status != null and status !=''">
+                and status = #{status}
+            </if>
+            <if test="createTime != null and createTime !=''">
+                and DATE_FORMAT(create_time, '%y%m%d') &gt; DATE_FORMAT(#{createTime}, '%y%m%d')
+            </if>
+            <if test="updateTime != null and updateTime !=''">
+                and DATE_FORMAT(update_time, '%y%m%d') &lt; DATE_FORMAT(#{updateTime}, '%y%m%d')
+            </if>
+        </where>
     </select>
     <select id="selectRoleName" resultType="com.example.community.entity.SysRole">
         select *

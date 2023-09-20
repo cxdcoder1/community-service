@@ -2,9 +2,11 @@ package com.example.community.entity;
 
 
 import com.baomidou.mybatisplus.extension.activerecord.Model;
+import lombok.Data;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  * 部门表(SysDept)表实体类
@@ -43,6 +45,15 @@ public class SysDept extends Model<SysDept> {
     //更新时间
     private Date updateTime;
 
+    private List<SysDept> Children;
+
+    public List<SysDept> getChildren() {
+        return Children;
+    }
+
+    public void setChildren(List<SysDept> children) {
+        Children = children;
+    }
 
     public Long getDeptId() {
         return deptId;
