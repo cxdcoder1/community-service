@@ -47,18 +47,24 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleDao, SysRole> impleme
 
     @Override
     public Page<SysRole> roleList(Page<SysRole> page, SysRole sysRole) {
-
         // 获取满足条件的角色列表总数
         long total = roleMapper.count(sysRole);
         page.setTotal(total);
-        //总页数
-        int pages = (int) Math.ceil(total * 1.0 / page.getSize());
-        page.setPages(pages);
-        page.setRecords(roleMapper.selectRoleList((page.getCurrent()-1)*page.getSize(),page.getSize(),sysRole));
 
-        if (page.getCurrent()>pages){
-            page.setCurrent(pages);
+        // 计算总页数
+        int totalPages = (int) Math.ceil(total * 1.0 / page.getSize());
+        if (page.getCurrent() > totalPages) {
+            page.setCurrent(totalPages);
         }
+
+        if(page.getCurrent()<=0){
+            page.setCurrent(1);
+        }
+
+        page.setPages(totalPages);
+
+        page.setRecords(roleMapper.selectRoleList((page.getCurrent()-1) * page.getSize(), page.getSize(), sysRole));
+
         return page;
     }
 
