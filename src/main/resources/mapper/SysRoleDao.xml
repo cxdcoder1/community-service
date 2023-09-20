@@ -110,11 +110,7 @@
         )
     </insert>
 
-    <select id="selectRoleName" resultType="java.lang.Integer">
-        select *
-        from sys_role
-        where role_name = #{roleName}
-    </select>
+
 
     <update id="updateRole" parameterType="com.example.community.entity.SysRole">
         update sys_role
@@ -167,6 +163,11 @@
             </foreach>
         </if>
 
+    </select>
+    <select id="selectRoleName" resultType="com.example.community.entity.SysRole">
+        select *
+        from sys_role
+        where role_name = #{roleName}
     </select>
 
 </mapper>

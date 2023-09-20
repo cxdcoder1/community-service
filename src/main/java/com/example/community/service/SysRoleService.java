@@ -32,7 +32,7 @@ public interface SysRoleService extends IService<SysRole> {
      * @param roleName
      * @return
      */
-    public Integer selectRoleName(String roleName);
+    public SysRole selectRoleName(String roleName);
 
     public int updateRole(SysRole role);
 
