@@ -21,21 +21,33 @@
 
     <!-- 批量插入 -->
     <insert id="insertBatch" keyProperty="deptId" useGeneratedKeys="true">
-        insert into zy-community.sys_dept(parent_id, ancestors, dept_name, order_num, leader, phone, email, status, del_flag, create_by, create_time, update_by, update_time)
+        insert into zy-community.sys_dept(parent_id, ancestors, dept_name, order_num, leader, phone, email, status,
+        del_flag, create_by, create_time, update_by, update_time)
         values
         <foreach collection="entities" item="entity" separator=",">
-        (#{entity.parentId}, #{entity.ancestors}, #{entity.deptName}, #{entity.orderNum}, #{entity.leader}, #{entity.phone}, #{entity.email}, #{entity.status}, #{entity.delFlag}, #{entity.createBy}, #{entity.createTime}, #{entity.updateBy}, #{entity.updateTime})
+            (#{entity.parentId}, #{entity.ancestors}, #{entity.deptName}, #{entity.orderNum}, #{entity.leader},
+            #{entity.phone}, #{entity.email}, #{entity.status}, #{entity.delFlag}, #{entity.createBy},
+            #{entity.createTime}, #{entity.updateBy}, #{entity.updateTime})
         </foreach>
     </insert>
     <!-- 批量插入或按主键更新 -->
     <insert id="insertOrUpdateBatch" keyProperty="deptId" useGeneratedKeys="true">
-        insert into zy-community.sys_dept(parent_id, ancestors, dept_name, order_num, leader, phone, email, status, del_flag, create_by, create_time, update_by, update_time)
+        insert into zy-community.sys_dept(parent_id, ancestors, dept_name, order_num, leader, phone, email, status,
+        del_flag, create_by, create_time, update_by, update_time)
         values
         <foreach collection="entities" item="entity" separator=",">
-            (#{entity.parentId}, #{entity.ancestors}, #{entity.deptName}, #{entity.orderNum}, #{entity.leader}, #{entity.phone}, #{entity.email}, #{entity.status}, #{entity.delFlag}, #{entity.createBy}, #{entity.createTime}, #{entity.updateBy}, #{entity.updateTime})
+            (#{entity.parentId}, #{entity.ancestors}, #{entity.deptName}, #{entity.orderNum}, #{entity.leader},
+            #{entity.phone}, #{entity.email}, #{entity.status}, #{entity.delFlag}, #{entity.createBy},
+            #{entity.createTime}, #{entity.updateBy}, #{entity.updateTime})
         </foreach>
         on duplicate key update
-         parent_id = values(parent_id) , ancestors = values(ancestors) , dept_name = values(dept_name) , order_num = values(order_num) , leader = values(leader) , phone = values(phone) , email = values(email) , status = values(status) , del_flag = values(del_flag) , create_by = values(create_by) , create_time = values(create_time) , update_by = values(update_by) , update_time = values(update_time)     </insert>
+        parent_id = values(parent_id) , ancestors = values(ancestors) , dept_name = values(dept_name) , order_num =
+        values(order_num) , leader = values(leader) , phone = values(phone) , email = values(email) , status =
+        values(status) , del_flag = values(del_flag) , create_by = values(create_by) , create_time = values(create_time)
+        , update_by = values(update_by) , update_time = values(update_time)
+    </insert>
+
+
 
 </mapper>
 

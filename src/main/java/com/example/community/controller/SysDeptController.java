@@ -22,6 +22,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("sysDept")
+@CrossOrigin
 public class SysDeptController extends ApiController {
     /**
      * 服务对象
@@ -36,7 +37,7 @@ public class SysDeptController extends ApiController {
      * @param sysDept 查询实体
      * @return 所有数据
      */
-    @GetMapping
+    @GetMapping("selectAll")
     public R selectAll(Page<SysDept> page, SysDept sysDept) {
         return success(this.sysDeptService.page(page, new QueryWrapper<>(sysDept)));
     }
