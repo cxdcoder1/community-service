@@ -1,11 +1,13 @@
 package com.example.community.dao;
 
-import java.util.List;
-
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.example.community.dto.RolesAndMenuIds;
 import com.example.community.entity.SysMenu;
-import org.apache.ibatis.annotations.Param;
 import com.example.community.entity.SysRole;
+import com.example.community.entity.SysRoleMenu;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
  * 角色信息表(SysRole)表数据库访问层
@@ -39,7 +41,7 @@ public interface SysRoleDao extends BaseMapper<SysRole> {
      * @param role 角色信息
      * @return 结果
      */
-    public Integer insertRole(SysRole role);
+    public Integer insertRole(RolesAndMenuIds rolesAndMenuIds);
 
     /**
      * 新增和修改的验重
@@ -58,7 +60,7 @@ public interface SysRoleDao extends BaseMapper<SysRole> {
     List<SysRole> selectRoleList(@Param("index") Long index, @Param("size") Long size , @Param("sysRole") SysRole sysRole);
 
 
-    public int updateRole(SysRole role);
+    public int updateRole(RolesAndMenuIds rolesAndMenuIds);
 
     public List<SysMenu> getRoleMenuTreeselect(Integer roleId);
 
@@ -69,6 +71,12 @@ public interface SysRoleDao extends BaseMapper<SysRole> {
     Integer deleteRole(@Param("roleId") String roleId);
     public int upDataStatus(long roleId,String status);
 
+
+    public int deleteMenu(Long roleId);
+
+    public int addMenu(@Param("roleId") Long roleId,@Param("menuId")Object menuId);
+
+    public List<SysRoleMenu>  getMenuIds(Long roleId);
 
 }
 

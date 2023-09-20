@@ -17,7 +17,6 @@ public class SysRoleMenu extends Model<SysRoleMenu> {
     //菜单ID
     private Long menuId;
 
-
     public Long getRoleId() {
         return roleId;
     }

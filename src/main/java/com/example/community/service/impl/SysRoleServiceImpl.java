@@ -3,16 +3,15 @@ package com.example.community.service.impl;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.community.dao.SysRoleDao;
+import com.example.community.dto.RolesAndMenuIds;
 import com.example.community.entity.SysMenu;
 import com.example.community.entity.SysRole;
+import com.example.community.entity.SysRoleMenu;
 import com.example.community.service.SysRoleService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.Date;
 import java.util.List;
-
-import javax.annotation.Resource;
 
 /**
  * 角色信息表(SysRole)表服务实现类
@@ -70,15 +69,14 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleDao, SysRole> impleme
     }
 
 
-    /**
-     * 新增角色
-     *
-     * @param role 角色信息
-     * @return
-     */
     @Override
-    public Integer insertRole(SysRole role) {
-        return sysRoleDao.insertRole(role);
+    public Integer insertRole(RolesAndMenuIds rolesAndMenuIds) {
+         sysRoleDao.insertRole(rolesAndMenuIds);
+        System.err.println(rolesAndMenuIds.getRoleId());
+        for (Object menuId : rolesAndMenuIds.getMenuIds()) {
+            sysRoleDao.addMenu(rolesAndMenuIds.getRoleId(),menuId);
+        }
+        return 1;
     }
 
     /**
@@ -93,8 +91,15 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleDao, SysRole> impleme
     }
 
     @Override
-    public int updateRole(SysRole role) {
-        return sysRoleDao.updateRole(role);
+    public int updateRole(RolesAndMenuIds rolesAndMenuIds) {
+        sysRoleDao.updateRole(rolesAndMenuIds);
+        sysRoleDao.deleteMenu(rolesAndMenuIds.getRoleId());
+        for (Object menuId : rolesAndMenuIds.getMenuIds()) {
+            System.err.println(rolesAndMenuIds.getRoleId());
+            sysRoleDao.addMenu(rolesAndMenuIds.getRoleId(), menuId);
+
+        }
+        return 1;
     }
 
     @Override
@@ -116,6 +121,11 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleDao, SysRole> impleme
     @Override
     public int upDataStatus(long roleId, String status) {
         return sysRoleDao.upDataStatus(roleId,status);
+    }
+
+    @Override
+    public List<SysRoleMenu>  getMenuIds(Long roleId) {
+        return sysRoleDao.getMenuIds(roleId);
     }
 
     @Override

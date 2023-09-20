@@ -6,19 +6,19 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.api.ApiController;
 import com.baomidou.mybatisplus.extension.api.R;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.example.community.dto.RolesAndMenuIds;
 import com.example.community.entity.SysMenu;
 import com.example.community.entity.SysRole;
+import com.example.community.entity.SysRoleMenu;
 import com.example.community.entity.SysUserRole;
 import com.example.community.service.SysRoleService;
 import com.example.community.service.SysUserRoleService;
 import com.example.community.utils.MenuTree;
-import org.apache.ibatis.session.RowBounds;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
 
 import javax.annotation.Resource;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -57,14 +57,14 @@ public class SysRoleController extends ApiController {
 
     /**
      * 新增角色
-     * @param role
+     * @param
      * @return
      */
     @PostMapping("insertRole")
-    public Map<String, Object> insertRole(@RequestBody SysRole role){
+    public Map<String, Object> insertRole(@RequestBody RolesAndMenuIds rolesAndMenuIds){
         Map<String, Object> map = new HashMap<>();
-        SysRole sysRole = sysRoleService.selectRoleName(role.getRoleName());
-        System.err.println(sysRole);
+        SysRole sysRole = sysRoleService.selectRoleName(rolesAndMenuIds.getRoleName());
+//
         if (sysRole!=null){
             //重复
             map.put("msg","角色名重复");
@@ -73,17 +73,14 @@ public class SysRoleController extends ApiController {
             return map;
         }
 //        if (sysRole.getRoleName().equals(role.getRoleName())){
-//
 //        }
-            Integer integer1 = sysRoleService.insertRole(role);
-            map.put("msg","新增成功");
-            map.put("status", 200);
-            map.put("success", true);
-            //获取新增角色的主键
-            System.out.println(role.getRoleId());
-            return map;
-
-
+        Integer integer1 = sysRoleService.insertRole(rolesAndMenuIds);
+        map.put("msg","新增成功");
+        map.put("status", 200);
+        map.put("success", true);
+        //获取新增角色的主键
+        System.out.println(rolesAndMenuIds.getRoleId());
+        return map;
 
     }
 
@@ -156,12 +153,11 @@ public class SysRoleController extends ApiController {
      * 修改保存角色
      */
     @PutMapping("edit")
-    public Map<String, Object> edit(@RequestBody SysRole role) {
+    public Map<String, Object> edit(@RequestBody RolesAndMenuIds rolesAndMenuIds) {
         Map<String, Object> map = new HashMap<>();
-        System.err.println(role);
-        SysRole sysRole = sysRoleService.selectRoleName(role.getRoleName());
-        if (sysRole.getRoleName().equals(role.getRoleName())){
-            if (!sysRole.getRoleId().equals(role.getRoleId())){
+        SysRole sysRole = sysRoleService.selectRoleName(rolesAndMenuIds.getRoleName());
+        if (sysRole.getRoleName().equals(rolesAndMenuIds.getRoleName())){
+            if (!sysRole.getRoleId().equals(rolesAndMenuIds.getRoleId())){
                 //重复
                 map.put("msg","角色名重复");
                 map.put("status", 201);
@@ -170,13 +166,11 @@ public class SysRoleController extends ApiController {
             }
         }
 
-            sysRoleService.updateRole(role);
-            map.put("msg","修改成功");
-            map.put("status", 200);
-            map.put("success", true);
-            return map;
-
-
+        sysRoleService.updateRole(rolesAndMenuIds);
+        map.put("msg","修改成功");
+        map.put("status", 200);
+        map.put("success", true);
+        return map;
     }
 
     /**
@@ -233,6 +227,18 @@ public class SysRoleController extends ApiController {
         map.put("msg","删除失败");
         map.put("status","201");
         return map;
+    }
+
+    @RequestMapping("getMenuIds/{roleId}")
+    public List getMenuIds(@PathVariable Long roleId){
+//        System.out.println(roleId);
+        List<SysRoleMenu> sysRoleMenu = sysRoleService.getMenuIds(roleId);
+        System.err.println("test1111");
+        List<Long> menuIds = new ArrayList();
+        for (SysRoleMenu menuId : sysRoleMenu) {
+            menuIds.add(menuId.getMenuId());
+        }
+        return menuIds;
     }
 }
 

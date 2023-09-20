@@ -2,8 +2,10 @@ package com.example.community.service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.example.community.dto.RolesAndMenuIds;
 import com.example.community.entity.SysMenu;
 import com.example.community.entity.SysRole;
+import com.example.community.entity.SysRoleMenu;
 
 import java.util.List;
 
@@ -21,7 +23,7 @@ public interface SysRoleService extends IService<SysRole> {
      * @param role 角色信息
      * @return 结果
      */
-    public Integer insertRole(SysRole role);
+    public Integer insertRole(RolesAndMenuIds rolesAndMenuIds);
 
     Page<SysRole> roleList(Page<SysRole> page, SysRole sysRole);
 
@@ -34,7 +36,7 @@ public interface SysRoleService extends IService<SysRole> {
      */
     public SysRole selectRoleName(String roleName);
 
-    public int updateRole(SysRole role);
+    public int updateRole(RolesAndMenuIds rolesAndMenuIds);
 
     public List<SysMenu> getRoleMenuTreeselect(Integer roleId);
 
@@ -56,5 +58,7 @@ public interface SysRoleService extends IService<SysRole> {
 
 
     public int upDataStatus(long roleId,String status);
+
+    List<SysRoleMenu> getMenuIds(Long roleId);
 }
 
