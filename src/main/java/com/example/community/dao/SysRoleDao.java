@@ -70,6 +70,7 @@ public interface SysRoleDao extends BaseMapper<SysRole> {
     List<SysRole> getDeriveList(List<String> list);
 
     Integer deleteRole(@Param("roleId") String roleId);
+
     public int upDataStatus(long roleId,String status);
 
 

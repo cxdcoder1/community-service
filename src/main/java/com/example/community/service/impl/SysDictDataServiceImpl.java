@@ -21,11 +21,16 @@ public class SysDictDataServiceImpl extends ServiceImpl<SysDictDataDao, SysDictD
     @Resource
     private SysDictDataDao sysDictDataDao;
 
+
     @Override
-    public List<SysDictData> selectDataName(String name) {
-        System.err.println("service"+name);
+    public List<SysDictData> selectDataName(List<String> name) {
         return sysDictDataDao.selectDataName(name);
     }
 
+    @Override
+    public int updDictType(String type,String type2 ) {
+        return sysDictDataDao.updDictType(type,type2);
+
+    }
 }
 

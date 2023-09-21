@@ -28,7 +28,7 @@ public interface SysDictTypeService extends IService<SysDictType> {
     //查重
     List<SysDictType> selDictType(String name);
     //删除
-    int deleteDictType(long id);
+    int deleteDictType(List<Long> id);
 
     List<SysDictType> getDeriveList(List<String> list);
 }

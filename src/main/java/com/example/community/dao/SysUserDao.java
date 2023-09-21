@@ -2,6 +2,7 @@ package com.example.community.dao;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.example.community.dto.UserAndDeptAndRole;
+import com.example.community.entity.SysRole;
 import com.example.community.entity.SysUser;
 import org.apache.ibatis.annotations.Param;
 
@@ -35,6 +36,8 @@ int insertOrUpdateBatch(@Param("entities") List<SysUser> entities);
     UserAndDeptAndRole getUserInfo(int id);
 
     int updataUser(@Param("sysUser") SysUser sysUser);
+
+    List<SysUser> selectUserList(@Param("index") Long index, @Param("size") Long size , @Param("sysUser") SysUser sysUser);
 
 }
 

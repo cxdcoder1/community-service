@@ -8,6 +8,7 @@ import com.baomidou.mybatisplus.extension.api.R;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.community.constant.SystemConstant;
 import com.example.community.dto.UserAndDeptAndRole;
+import com.example.community.entity.SysRole;
 import com.example.community.entity.SysUser;
 import com.example.community.service.SysUserService;
 import com.example.community.utils.JwtUtil;
@@ -36,6 +37,9 @@ public class SysUserController extends ApiController {
     @Resource
     private SysUserService sysUserService;
 
+
+
+
     /**
      * 分页查询所有数据
      *
@@ -45,13 +49,11 @@ public class SysUserController extends ApiController {
      */
     @GetMapping("/selectAll")
     public R selectAll(Page<SysUser> page, SysUser sysUser) {
-
         return success(this.sysUserService.page(page, new QueryWrapper<>(sysUser)));
     }
 
     @GetMapping("/selectAll2")
     public R selectAll2(Page<SysUser> page, SysUser sysUser) {
-
         return success(this.sysUserService.page(page, new QueryWrapper<>(sysUser)));
     }
 
@@ -122,10 +124,7 @@ public class SysUserController extends ApiController {
      * @param sysUser 实体对象
      * @return 修改结果
      */
-//    @PutMapping("/updataUser")
-//    public R update(SysUser sysUser) {
-//        return success(this.sysUserService.updateById(sysUser));
-//    }
+
     @PutMapping("updataUser")
     public R update(@RequestBody SysUser sysUser) {
         System.err.println(sysUser);
@@ -142,5 +141,17 @@ public class SysUserController extends ApiController {
     public R delete(@RequestParam("idList") List<Long> idList) {
         return success(this.sysUserService.removeByIds(idList));
     }
+
+
+    @GetMapping("sysUserlist")
+    public R selectPageAll(Page<SysUser> page, SysUser sysUser) {
+//        System.err.println("角色类"+sysRole);
+//        System.err.println(page.getCurrent());
+//        System.err.println(page.getSize());
+        System.err.println(sysUser);
+        return success(this.sysUserService.UserList(page, sysUser));
+    }
+
+
 }
 

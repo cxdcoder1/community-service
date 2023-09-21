@@ -1,5 +1,6 @@
 package com.example.community.service.impl;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.community.dao.SysUserDao;
 import com.example.community.dto.UserAndDeptAndRole;
@@ -29,6 +30,27 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserDao, SysUser> impleme
     @Override
     public int updateUser(SysUser sysUser) {
         return sysUserDao.updataUser(sysUser);
+    }
+
+
+
+    @Override
+    public Page<SysUser> UserList(Page<SysUser> page, SysUser sysUser) {
+        // 获取满足条件的角色列表总数
+        long total = sysUserDao.selectUserList(0l,0l,sysUser).size();
+        page.setTotal(total);
+        // 计算总页数
+        int totalPages = (int) Math.ceil(total * 1.0 / page.getSize());
+        if (page.getCurrent() > totalPages) {
+            page.setCurrent(totalPages);
+        }
+        if(page.getCurrent()<=0){
+            page.setCurrent(1);
+        }
+        page.setPages(totalPages);
+
+        page.setRecords(sysUserDao.selectUserList((page.getCurrent()-1) * page.getSize(), page.getSize(), sysUser));
+        return page;
     }
 }
 
