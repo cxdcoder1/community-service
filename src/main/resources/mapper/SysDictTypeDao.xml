@@ -62,7 +62,7 @@
                 update_by = #{updateBy},
             </if>
             <if test="updateTime != null and updateTime != ''">
-                update_time = #{updateTime},
+             update_time = #{updateTime},
             </if>
             <if test="remark != null and remark != ''">
                 remark = #{remark}
@@ -141,6 +141,13 @@
 
     <select id="selDictType" resultType="com.example.community.entity.SysDictType">
         select * from sys_dict_type  where dict_name = #{dictName};
+    </select>
+
+    <select id="getDictOptionselect" resultType="com.example.community.entity.SysDictType">
+             select * from sys_dict_type
+             <if test="dictId!=null">
+                 where dict_id=#{dictId}
+             </if>
     </select>
 
 

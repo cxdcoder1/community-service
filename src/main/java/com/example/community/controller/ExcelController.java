@@ -1,19 +1,14 @@
 package com.example.community.controller;
+
 import com.alibaba.excel.EasyExcel;
-import com.alibaba.excel.EasyExcelFactory;
 import com.alibaba.excel.write.style.HorizontalCellStyleStrategy;
-import com.baomidou.mybatisplus.extension.api.R;
-import com.example.community.entity.DeriveList;
+import com.example.community.entity.SysDictData;
 import com.example.community.entity.SysDictType;
-import com.example.community.entity.SysMenu;
 import com.example.community.entity.SysRole;
 import com.example.community.service.SysDictDataService;
 import com.example.community.service.SysDictTypeService;
 import com.example.community.service.SysRoleService;
 import com.example.community.utils.easyexcel.StyleUtils;
-import com.example.community.utils.easyexcel.TextWriteObject;
-import org.apache.poi.ss.usermodel.CellStyle;
-import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -32,9 +27,11 @@ public class ExcelController {
 
     @Resource
     private SysRoleService sysRoleService;
-
+    @Resource
+    private SysDictDataService sysDictDataService;
     @Resource
     private SysDictTypeService sysDictTypeService;
+
     /**
      * 导出数据
      * @param fileName
@@ -47,9 +44,30 @@ public class ExcelController {
         for (SysRole sysRole : list) {
             dataList.add(sysRole);
         }
+
         // 设置单元格样式
         HorizontalCellStyleStrategy horizontalCellStyleStrategy = new HorizontalCellStyleStrategy( StyleUtils.getHeadStyle(),StyleUtils.getContentStyle());
+
+
+
         EasyExcel.write(fileName, SysRole.class)
+                .sheet(0)
+                .registerWriteHandler(horizontalCellStyleStrategy)
+                .doWrite(dataList);
+    }
+
+    public static void simpleWrite1(String fileName,List<SysDictData> list){
+        //"E:\\lx.xls"
+        List<SysDictData> dataList = new ArrayList<>();
+
+        for (SysDictData sysDictData : list) {
+            dataList.add(sysDictData);
+        }
+
+        // 设置单元格样式
+        HorizontalCellStyleStrategy horizontalCellStyleStrategy = new HorizontalCellStyleStrategy( StyleUtils.getHeadStyle(),StyleUtils.getContentStyle());
+
+        EasyExcel.write(fileName, SysDictData.class)
                 .sheet(0)
                 .registerWriteHandler(horizontalCellStyleStrategy)
                 .doWrite(dataList);
@@ -89,6 +107,24 @@ public class ExcelController {
         List<SysRole> deriveList = sysRoleService.getDeriveList(lists);
         String path = "D:\\lx.xls";
         simpleWrite(path,deriveList);
+        result.put("msg","导出成功");
+        result.put("status","200");
+        result.put("path",path);
+        return result;
+    }
+
+    @PostMapping("list2")
+    public Map<String, Object> menuList1(@RequestBody List<String> lists) {
+        Map<String, Object> result = new HashMap<>();
+        //根据需要导出的角色id查询对应信息
+        if (lists.size()==0){
+            lists=null;
+        }
+        System.err.println(lists);
+
+        List<SysDictData> deriveList = sysDictDataService.getDeriveList(lists);
+        String path = "D:\\lx.xls";
+        simpleWrite1(path,deriveList);
         result.put("msg","导出成功");
         result.put("status","200");
         result.put("path",path);

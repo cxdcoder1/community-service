@@ -2,10 +2,7 @@ package com.example.community.service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.example.community.entity.SysDictData;
 import com.example.community.entity.SysDictType;
-import com.example.community.entity.SysRole;
-import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -16,7 +13,8 @@ import java.util.List;
  * @since 2023-09-14 09:53:01
  */
 public interface SysDictTypeService extends IService<SysDictType> {
-
+    //获取字典名称集合
+    List<SysDictType> getDictOptionselect(Long dictId);
 
 //    List<SysDictType> selectDictType(@Param("index") Long index, @Param("size") Long size , @Param("sysDictType") SysDictType sysDictType);
 
