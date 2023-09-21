@@ -1,6 +1,9 @@
 package com.example.community.entity;
 
 
+import com.alibaba.excel.annotation.ExcelIgnore;
+import com.alibaba.excel.annotation.ExcelProperty;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -15,25 +18,36 @@ import java.util.Date;
  */
 @SuppressWarnings("serial")
 public class SysDictType extends Model<SysDictType> {
+    private static final long serialVersionUID = 1L;
     //字典主键
+    @ExcelProperty(index = 0, value = {"ID"})
+    @TableId
     private Long dictId;
     //字典名称
+    /** 字典名称 */
+    @ExcelProperty(index = 1, value = {"角色名称"})
     private String dictName;
     //字典类型
+    @ExcelProperty(index = 2, value = {"字典类型"})
     private String dictType;
     //状态（0正常 1停用）
+    @ExcelProperty(index = 3, value = {"状态"})
     private String status;
     //创建者
+    @ExcelIgnore
     private String createBy;
     //创建时间
+    @ExcelProperty(index = 4, value = {"创建时间"})
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private String createTime;
     //更新者
+    @ExcelIgnore
     private String updateBy;
     //更新时间
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private String updateTime;
     //备注
+    @ExcelProperty(index = 5, value = {"备注"})
     private String remark;
 
     public SysDictType() {
