@@ -25,11 +25,11 @@ public interface SysDictTypeService extends IService<SysDictType> {
     Page<SysDictType> selectDictType(Page<SysDictType> page, SysDictType sysDictType);
 
     int updDictType(SysDictType sysDictType);
-
+    //查重
     List<SysDictType> selDictType(String name);
-
+    //删除
     int deleteDictType(long id);
 
-
+    List<SysDictType> getDeriveList(List<String> list);
 }
 
