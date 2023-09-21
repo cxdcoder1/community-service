@@ -7,8 +7,10 @@ import com.baomidou.mybatisplus.extension.api.ApiController;
 import com.baomidou.mybatisplus.extension.api.R;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.community.entity.SysDept;
+import com.example.community.entity.SysMenu;
 import com.example.community.service.SysDeptService;
 import com.example.community.utils.DeptTree;
+import org.simpleframework.xml.core.Validate;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -75,16 +77,17 @@ public class SysDeptController extends ApiController {
      * @param sysDept 实体对象
      * @return 修改结果
      */
-    @PutMapping
-    public R update(@RequestBody SysDept sysDept) {
-        return success(this.sysDeptService.updateById(sysDept));
-    }
+//    @PutMapping
+//    public R update(@RequestBody SysDept sysDept) {
+//        return success(this.sysDeptService.updateById(sysDept));
+//    }
 
     /**
      * 删除部门
      * @param deptId
      * @return
      */
+
     @DeleteMapping("/delete/{deptId}")
     public Map<String,Object> deleteDept(@PathVariable String deptId){
         Map<String, Object> map = new HashMap<>();
@@ -146,5 +149,72 @@ public class SysDeptController extends ApiController {
         System.err.println(result);
         return result;
     };
+
+    @PostMapping("treeDeptList")
+    public Map<String,Object> treeMenuList(@RequestBody SysDept sysDept){
+        Map<String,Object> result = new HashMap<>();
+        List<SysDept> sysDeptList = sysDeptService.selAllDept(sysDept);
+        int len = sysDeptList.size();
+        for(int i = 0; i < len; i++){
+            int count = 0 ;
+            for(int j = 0; j < len; j++){
+                if(sysDeptList.get(i).getParentId().equals(sysDeptList.get(j).getDeptId())){
+                    count++;
+                }
+            }
+            if(count==0){
+                sysDeptList.get(i).setParentId(0L);
+            }
+        }
+        DeptTree deptTree = new DeptTree(sysDeptList);
+        List<SysDept> sysDepts = deptTree.builTree();
+        result.put("menuList",sysDepts);
+        result.put("msg","获取成功");
+        System.err.println(result);
+        return result;
+    }
+
+    @PostMapping("addDept")
+    public Map<String,Object>insertDept(@RequestBody SysDept sysDept){
+        Map<String, Object> result = new HashMap<>();
+
+        List<SysDept> deptList = sysDeptService.selectRoleName(sysDept.getParentId());
+        boolean isDuplicate = false;
+        for (SysDept dept : deptList) {
+            if (dept.getDeptName().equals(sysDept.getDeptName())) {
+                isDuplicate = true;
+                break;
+            }
+        }
+        if (isDuplicate) {
+            result.put("status", 201);
+            result.put("success", false);
+            result.put("msg", "同一级别下部门名重复");
+            return result;
+        }
+        sysDeptService.insertDept(sysDept);
+        result.put("msg","新增成功");
+        result.put("status", 200);
+        result.put("success", true);
+        return result;
+    }
+    @PutMapping("updateDept")
+    public Map<String, Object> update(@RequestBody SysDept sysDept) {
+        Map<String, Object> result = new HashMap<>();
+        Boolean t = sysDeptService.checkName(sysDept.getDeptName(), sysDept.getDeptId() + "", sysDept.getParentId() + "");
+        if (!t){
+            result.put("status", 201);
+            result.put("success", false);
+            result.put("msg", "同一级别下部门名重复");
+            return result;
+        }
+        // 执行部门更新逻辑...
+        sysDeptService.updateDept(sysDept);
+        result.put("msg", "修改成功");
+        result.put("status", 200);
+        result.put("success", true);
+        return result;
+    }
+
 }
 

@@ -2,6 +2,7 @@ package com.example.community.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.example.community.entity.SysDept;
+import com.sun.org.apache.xpath.internal.operations.Bool;
 
 import java.util.List;
 
@@ -14,12 +15,15 @@ import java.util.List;
 public interface SysDeptService extends IService<SysDept> {
         List<SysDept> selAllDept(SysDept sysDept);
 
-        /**
-         * 删除部门
-         * @param deptId
-         * @return
-         */
+        int insertDept(SysDept sysDept);
+
+         List selectRoleName(long id);
+
+         Integer updateDept(SysDept sysDept);
+
         Integer deleteDept(String deptId);
+
+        Boolean checkName(String deptName,String deptId ,String parentId);
 
         /**
          * 查询是否有子集

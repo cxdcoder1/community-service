@@ -5,6 +5,7 @@ import com.example.community.dao.SysDeptDao;
 import com.example.community.entity.SysDept;
 import com.example.community.service.SysDeptService;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -36,6 +37,37 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptDao, SysDept> impleme
     public List<SysDept> isChildren(String deptId) {
 
         return sysDeptDao.isChildren(deptId);
+    }
+
+    @Override
+    public Boolean checkName(String deptName, String deptId, String parentId) {
+        SysDept sysDept1 = sysDeptDao.checkName(deptName, deptId, parentId);
+        if (sysDept1 == null) {
+            return true;
+        } else {
+            Integer deptId1 = sysDept1.getDeptId().intValue();
+            if (deptId1==Integer.parseInt(deptId)) {
+                return true;
+            }
+            return false;
+        }
+    }
+
+    @Override
+    public int insertDept(@RequestBody SysDept sysDept) {
+        System.err.println(sysDept.getDeptName());
+        System.out.println(sysDept.getParentId());
+        return sysDeptDao.insert(sysDept);
+    }
+
+    @Override
+    public List selectRoleName(long id) {
+        return sysDeptDao.selectRoleName(id);
+    }
+
+    @Override
+    public Integer updateDept(SysDept sysDept) {
+        return sysDeptDao.updateDept(sysDept);
     }
 }
 
