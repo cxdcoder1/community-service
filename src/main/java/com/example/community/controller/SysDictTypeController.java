@@ -6,13 +6,17 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.api.ApiController;
 import com.baomidou.mybatisplus.extension.api.R;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.example.community.entity.SysDictData;
 import com.example.community.entity.SysDictType;
+import com.example.community.service.SysDictDataService;
 import com.example.community.service.SysDictTypeService;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 字典类型表(SysDictType)表控制层
@@ -22,6 +26,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("sysDictType")
+@CrossOrigin
 public class SysDictTypeController extends ApiController {
     /**
      * 服务对象
@@ -29,7 +34,74 @@ public class SysDictTypeController extends ApiController {
     @Resource
     private SysDictTypeService sysDictTypeService;
 
+    @Resource
+    private SysDictDataService sysDictDataService;
+
     /**
+     * 删除数据
+     *
+     * @param
+     * @return 删除
+     */
+
+
+    @DeleteMapping("delType")
+    public Map<String, Object> delType(@RequestParam("name") String name,@RequestParam("id") long id) {
+        Map<String, Object> map = new HashMap<>();
+        List<SysDictData> sysDictData = sysDictDataService.selectDataName(name);
+
+        if(sysDictData.size()>0){
+            map.put("msg","该数据在别的地方存在");
+            map.put("status", 201);
+            map.put("success", false);
+            return map;
+        }
+
+        sysDictTypeService.deleteDictType(id);
+        map.put("msg","删除成功");
+        map.put("status", 200);
+        map.put("success", true);
+        return map;
+    }
+
+    //修改
+    @PutMapping("updType")
+    public Map<String, Object> updType(@RequestBody SysDictType sysDictType) {
+
+        List<SysDictType> sysDictTypes = sysDictTypeService.selDictType(sysDictType.getDictName());
+        Map<String, Object> map = new HashMap<>();
+
+        if(sysDictTypes.size() == 0){
+            sysDictTypeService.updDictType(sysDictType);
+            map.put("msg","修改成功");
+            map.put("status", 200);
+            map.put("success", true);
+            return map;
+        }else{
+            SysDictType sysDictType1 = sysDictTypes.get(0);
+            System.err.println(sysDictType1);
+            System.err.println(sysDictType);
+            if(sysDictType1.getDictId().equals(sysDictType.getDictId())){
+                sysDictTypeService.updDictType(sysDictType);
+                map.put("msg","修改成功");
+                map.put("status", 200);
+                map.put("success", true);
+                return map;
+            }
+        }
+        map.put("msg","该参数已存在");
+        map.put("status", 201);
+        map.put("success", false);
+        return map;
+    }
+
+
+
+    @GetMapping("selectDictType")
+    public R selectDictType(Page<SysDictType> page, SysDictType sysDictType) {
+     return success(this.sysDictTypeService.selectDictType(page,sysDictType));
+     }
+     /**
      * 分页查询所有数据
      *
      * @param page 分页对象
@@ -58,9 +130,23 @@ public class SysDictTypeController extends ApiController {
      * @param sysDictType 实体对象
      * @return 新增结果
      */
-    @PostMapping
-    public R insert(@RequestBody SysDictType sysDictType) {
-        return success(this.sysDictTypeService.save(sysDictType));
+    @PostMapping("insDictType")
+    public Map<String, Object> insert(@RequestBody SysDictType sysDictType) {
+
+        Map<String, Object> map = new HashMap<>();
+
+        SysDictType sysDictType1 = sysDictTypeService.selectName(sysDictType.getDictName());
+        if(sysDictType1 != null){
+            map.put("msg","添加已存在");
+            map.put("status", 201);
+            map.put("success", false);
+            return map;
+        }
+        sysDictTypeService.save(sysDictType);
+        map.put("msg","添加成功");
+        map.put("status", 200);
+        map.put("success", true);
+        return map;
     }
 
     /**
@@ -71,6 +157,7 @@ public class SysDictTypeController extends ApiController {
      */
     @PutMapping
     public R update(@RequestBody SysDictType sysDictType) {
+//        System.err.println(sysDictType);
         return success(this.sysDictTypeService.updateById(sysDictType));
     }
 
@@ -82,6 +169,7 @@ public class SysDictTypeController extends ApiController {
      */
     @DeleteMapping
     public R delete(@RequestParam("idList") List<Long> idList) {
+
         return success(this.sysDictTypeService.removeByIds(idList));
     }
 }
