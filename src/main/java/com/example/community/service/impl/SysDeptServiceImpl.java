@@ -25,5 +25,11 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptDao, SysDept> impleme
     public List<SysDept> selAllDept(SysDept sysDept) {
         return sysDeptDao.getDeptList(sysDept);
     }
+
+    @Override
+    public Integer deleteDept(String deptId) {
+
+        return sysDeptDao.deleteDept(deptId);
+    }
 }
 

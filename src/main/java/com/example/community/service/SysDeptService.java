@@ -13,5 +13,7 @@ import java.util.List;
  */
 public interface SysDeptService extends IService<SysDept> {
         List<SysDept> selAllDept(SysDept sysDept);
+
+        Integer deleteDept(String deptId);
 }
 

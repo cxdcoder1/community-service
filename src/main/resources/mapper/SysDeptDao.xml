@@ -46,14 +46,17 @@
         values(status) , del_flag = values(del_flag) , create_by = values(create_by) , create_time = values(create_time)
         , update_by = values(update_by) , update_time = values(update_time)
     </insert>
+    <delete id="deleteDept">
+        DELETE from sys_dept WHERE dept_id=#{deptId}
+    </delete>
     <select id="getDeptList" resultType="com.example.community.entity.SysDept">
     select * from sys_dept
     <where>
         <if test="deptName!= null and deptName != ''">
-            and dept_name like concat('%', #{dept.deptName},'%')
+            and dept_name like concat('%', #{deptName},'%')
         </if>
         <if test="status != null and status != ''">
-            and status = #{dept.status}
+            and status = #{status}
         </if>
     </where>
     order by order_num,parent_id

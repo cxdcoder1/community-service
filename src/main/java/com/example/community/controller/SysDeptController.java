@@ -45,6 +45,8 @@ public class SysDeptController extends ApiController {
         return success(this.sysDeptService.page(page, new QueryWrapper<>(sysDept)));
     }
 
+
+
     /**
      * 通过主键查询单条数据
      *
@@ -79,6 +81,25 @@ public class SysDeptController extends ApiController {
     }
 
     /**
+     * 删除部门
+     * @param deptId
+     * @return
+     */
+    @DeleteMapping("/delete/{deptId}")
+    public Map<String,Object> deleteDept(@PathVariable String deptId){
+        Map<String, Object> map = new HashMap<>();
+        Integer integer = sysDeptService.deleteDept(deptId);
+        if (integer==1){
+            map.put("msg","删除成功");
+            map.put("status","200");
+            return map;
+        }else {
+            map.put("msg","删除失败");
+            map.put("status","201");
+            return map;
+        }
+    }
+    /**
      * 删除数据
      *
      * @param idList 主键结合
@@ -89,6 +110,11 @@ public class SysDeptController extends ApiController {
         return success(this.sysDeptService.removeByIds(idList));
     }
 
+    /**
+     * 获取列表
+     * @param sysDept
+     * @return
+     */
     @PostMapping("getDeptList")
     public Map<String,Object> getMenuList(@RequestBody SysDept sysDept){
         Map<String,Object> result = new HashMap<>();
