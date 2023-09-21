@@ -31,5 +31,8 @@ int insertBatch(@Param("entities") List<SysDictData> entities);
 */
 int insertOrUpdateBatch(@Param("entities") List<SysDictData> entities);
 
+
+   List<SysDictData> selectDataName(String name);
+
 }
 

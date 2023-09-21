@@ -37,5 +37,11 @@
         on duplicate key update
          dict_sort = values(dict_sort) , dict_label = values(dict_label) , dict_value = values(dict_value) , dict_type = values(dict_type) , css_class = values(css_class) , list_class = values(list_class) , is_default = values(is_default) , status = values(status) , create_by = values(create_by) , create_time = values(create_time) , update_by = values(update_by) , update_time = values(update_time) , remark = values(remark)     </insert>
 
+
+
+    <select id="selectDataName" resultType="com.example.community.entity.SysDictData" >
+        select * from sys_dict_data where dict_type=#{dictType}
+    </select>
+
 </mapper>
 
