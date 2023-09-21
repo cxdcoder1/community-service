@@ -61,6 +61,10 @@
     </where>
     order by order_num,parent_id
     </select>
+    <select id="isChildren" resultType="com.example.community.entity.SysDept">
+        SELECT * FROM `sys_dept` where parent_id =  #{deptId}
+    </select>
+
 
 </mapper>
 

@@ -14,6 +14,19 @@ import java.util.List;
 public interface SysDeptService extends IService<SysDept> {
         List<SysDept> selAllDept(SysDept sysDept);
 
+        /**
+         * 删除部门
+         * @param deptId
+         * @return
+         */
         Integer deleteDept(String deptId);
+
+        /**
+         * 查询是否有子集
+         * @param deptId
+         * @return
+         */
+        List<SysDept> isChildren(String deptId);
+
 }
 

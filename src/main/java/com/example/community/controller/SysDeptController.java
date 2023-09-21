@@ -88,6 +88,14 @@ public class SysDeptController extends ApiController {
     @DeleteMapping("/delete/{deptId}")
     public Map<String,Object> deleteDept(@PathVariable String deptId){
         Map<String, Object> map = new HashMap<>();
+        //查询是否有子集
+        List<SysDept> children = sysDeptService.isChildren(deptId);
+        if (children.size()!=0){
+            //存在子集不能删除
+            map.put("msg","删除失败,此类型下有其他部门");
+            map.put("status","201");
+            return map;
+        }
         Integer integer = sysDeptService.deleteDept(deptId);
         if (integer==1){
             map.put("msg","删除成功");

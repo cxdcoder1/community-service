@@ -31,5 +31,11 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptDao, SysDept> impleme
 
         return sysDeptDao.deleteDept(deptId);
     }
+
+    @Override
+    public List<SysDept> isChildren(String deptId) {
+
+        return sysDeptDao.isChildren(deptId);
+    }
 }
 

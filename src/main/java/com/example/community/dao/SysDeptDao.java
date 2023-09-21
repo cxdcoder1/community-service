@@ -39,6 +39,7 @@ int insertOrUpdateBatch(@Param("entities") List<SysDept> entities);
 
     Integer deleteDept(String deptId);
 
+    List<SysDept> isChildren(String deptId);
 
 }
 
