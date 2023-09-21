@@ -14,10 +14,7 @@ import com.example.community.entity.SysUserRole;
 import com.example.community.service.SysRoleService;
 import com.example.community.service.SysUserRoleService;
 import com.example.community.utils.MenuTree;
-import org.apache.ibatis.session.RowBounds;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
 
 import javax.annotation.Resource;
 import java.io.Serializable;

@@ -1,17 +1,14 @@
 package com.example.community.controller;
 
 
-
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.api.ApiController;
-import com.baomidou.mybatisplus.extension.api.R;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.community.entity.SysDictData;
 import com.example.community.service.SysDictDataService;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import java.io.Serializable;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -22,6 +19,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("sysDictData")
+@CrossOrigin
 public class SysDictDataController extends ApiController {
     /**
      * 服务对象
@@ -29,60 +27,74 @@ public class SysDictDataController extends ApiController {
     @Resource
     private SysDictDataService sysDictDataService;
 
-    /**
-     * 分页查询所有数据
-     *
-     * @param page 分页对象
-     * @param sysDictData 查询实体
-     * @return 所有数据
-     */
-    @GetMapping
-    public R selectAll(Page<SysDictData> page, SysDictData sysDictData) {
-        return success(this.sysDictDataService.page(page, new QueryWrapper<>(sysDictData)));
+    @GetMapping("listdata")
+    //根据条件获取字典数据
+    public HashMap<String, Object> listData(Page page, SysDictData sysDictData) {
+        HashMap<String, Object> map = new HashMap<>();
+        System.err.println("当前页：" + page.getCurrent() + "" + page.getSize());
+        System.out.println("test sysDictData" + sysDictData);
+        //符合条件的列表
+        List<SysDictData> data = sysDictDataService.getData(sysDictData, (page.getCurrent() - 1) * page.getSize(), page.getSize());
+
+        //符合条件总数
+        int count = sysDictDataService.getData(sysDictData, 0, 0).size();
+//
+//        // 计算总页数
+//        int totalPages = (int) Math.ceil(count * 1.0 / page.getSize());
+//        if (page.getCurrent() > totalPages) {
+//            page.setCurrent(totalPages);
+//        }
+//
+//        if(page.getCurrent()<=0){
+//            page.setCurrent(1);
+//        }
+
+        map.put("count", count);
+        map.put("data", data);
+//        map.put("current", page.getCurrent());
+
+        return map;
     }
 
-    /**
-     * 通过主键查询单条数据
-     *
-     * @param id 主键
-     * @return 单条数据
-     */
-    @GetMapping("{id}")
-    public R selectOne(@PathVariable Serializable id) {
-        return success(this.sysDictDataService.getById(id));
+    @RequestMapping("updateData")
+    public HashMap<String, Object> updateData(@RequestBody SysDictData sysDictData) {
+        HashMap<String, Object> map = new HashMap<>();
+        int isok = sysDictDataService.isok(sysDictData);
+        if (isok == 0) {
+            System.out.println(sysDictData.toString());
+            int i = sysDictDataService.updateData(sysDictData);
+
+            map.put("data", i);
+            return map;
+        }
+        map.put("data", 0);
+        return map;
     }
 
-    /**
-     * 新增数据
-     *
-     * @param sysDictData 实体对象
-     * @return 新增结果
-     */
-    @PostMapping
-    public R insert(@RequestBody SysDictData sysDictData) {
-        return success(this.sysDictDataService.save(sysDictData));
+    @RequestMapping("addData")
+    public HashMap<String, Object> addData(@RequestBody SysDictData sysDictData) {
+        HashMap<String, Object> map = new HashMap<>();
+        System.out.println(sysDictData.toString());
+        int isok = sysDictDataService.isok(sysDictData);
+        System.err.println(isok + "ccccccccccccccccccccc");
+        if (isok == 0) {
+            boolean save = sysDictDataService.save(sysDictData);
+            map.put("data", 1);
+            return map;
+        }
+        map.put("data", 0);
+        return map;
     }
 
-    /**
-     * 修改数据
-     *
-     * @param sysDictData 实体对象
-     * @return 修改结果
-     */
-    @PutMapping
-    public R update(@RequestBody SysDictData sysDictData) {
-        return success(this.sysDictDataService.updateById(sysDictData));
+    @DeleteMapping("delete/{id}")
+    public HashMap<String, Object> delete(@PathVariable("id") Long id) {
+        HashMap<String, Object> map = new HashMap<>();
+        System.out.println(id);
+        int save = sysDictDataService.removeDictById(id);
+        map.put("data", save);
+        return map;
     }
 
-    /**
-     * 删除数据
-     *
-     * @param idList 主键结合
-     * @return 删除结果
-     */
-    @DeleteMapping
-    public R delete(@RequestParam("idList") List<Long> idList) {
-        return success(this.sysDictDataService.removeByIds(idList));
-    }
+
 }
 

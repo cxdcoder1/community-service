@@ -156,6 +156,26 @@ public class SysDictData extends Model<SysDictData> {
         this.remark = remark;
     }
 
+    @Override
+    public String toString() {
+        return "SysDictData{" +
+                "dictCode=" + dictCode +
+                ", dictSort=" + dictSort +
+                ", dictLabel='" + dictLabel + '\'' +
+                ", dictValue='" + dictValue + '\'' +
+                ", dictType='" + dictType + '\'' +
+                ", cssClass='" + cssClass + '\'' +
+                ", listClass='" + listClass + '\'' +
+                ", isDefault='" + isDefault + '\'' +
+                ", status='" + status + '\'' +
+                ", createBy='" + createBy + '\'' +
+                ", createTime=" + createTime +
+                ", updateBy='" + updateBy + '\'' +
+                ", updateTime=" + updateTime +
+                ", remark='" + remark + '\'' +
+                '}';
+    }
+
     /**
      * 获取主键值
      *

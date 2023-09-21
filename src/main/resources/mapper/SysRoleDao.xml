@@ -207,6 +207,7 @@
             </if>
         </where>
     </select>
+
     <select id="selectRoleName" resultType="com.example.community.entity.SysRole">
         select *
         from sys_role

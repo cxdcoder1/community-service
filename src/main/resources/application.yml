@@ -22,7 +22,7 @@ mybatis-plus:
     map-underscore-to-camel-case: true
     plugins:
         - com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor
-        #开启mybatis自带日志
+    #开启mybatis自带日志
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 
 minio:

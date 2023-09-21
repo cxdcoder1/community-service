@@ -19,7 +19,22 @@ import java.util.List;
 public class SysDictDataServiceImpl extends ServiceImpl<SysDictDataDao, SysDictData> implements SysDictDataService {
 
     @Resource
-    private SysDictDataDao sysDictDataDao;
+    SysDictDataDao sysDictDataDao;
+
+    @Override
+    public List<SysDictData> getData(SysDictData sysDictData, long index, long size) {
+        return sysDictDataDao.getData(sysDictData,index,size);
+    }
+
+    @Override
+    public int updateData(SysDictData sysDictData) {
+        return sysDictDataDao.updateData(sysDictData);
+    }
+
+    @Override
+    public int removeDictById(Long id) {
+        return sysDictDataDao.removeDictById(id);
+    }
 
 
     @Override
@@ -32,5 +47,15 @@ public class SysDictDataServiceImpl extends ServiceImpl<SysDictDataDao, SysDictD
         return sysDictDataDao.updDictType(type,type2);
 
     }
+    @Override
+    public List<SysDictData> getDeriveList(List<String> list) {
+        return sysDictDataDao.getDeriveList(list);
+    }
+
+    @Override
+    public int isok(SysDictData sysDictData) {
+        return sysDictDataDao.isAddUpdate(sysDictData);
+    }
+
 }
 

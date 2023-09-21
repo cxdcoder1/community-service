@@ -11,12 +11,22 @@ import java.util.List;
  * @author makejava
  * @since 2023-09-14 09:53:01
  */
-
 public interface SysDictDataService extends IService<SysDictData> {
 
     List<SysDictData> selectDataName(List<String> name);
 
     int updDictType(String type,String type2);
+    List<SysDictData> getData(SysDictData sysDictData, long index, long size);
+
+    int updateData(SysDictData sysDictData);
+
+    int removeDictById(Long id);
+
+    List<SysDictData> selectDataName(String name);
+
+    List<SysDictData> getDeriveList(List<String> list);
+
+    int isok(SysDictData sysDictData);
 
 }
 

@@ -46,19 +46,100 @@
         values(is_default) , status = values(status) , create_by = values(create_by) , create_time = values(create_time)
         , update_by = values(update_by) , update_time = values(update_time) , remark = values(remark)
     </insert>
+        dict_sort = values(dict_sort) , dict_label = values(dict_label) , dict_value = values(dict_value) , dict_type =
+        values(dict_type) , css_class = values(css_class) , list_class = values(list_class) , is_default =
+        values(is_default) , status = values(status) , create_by = values(create_by) , create_time = values(create_time)
+        , update_by = values(update_by) , update_time = values(update_time) , remark = values(remark)
+    </insert>
 
+    <update id="updateData">
+        update sys_dict_data
+        <set>
+            <if test="dictLabel!=null">
+               dict_label=#{dictLabel},
+            </if>
+            <if test="dictValue!=null">
+                dict_value=#{dictValue},
+            </if>
+            <if test="cssClass!=null">
+               css_Class=#{cssClass},
+            </if>
+            <if test="dictSort!=null">
+                dict_sort=#{dictSort},
+            </if>
+            <if test="listClass!=null">
+                list_Class=#{listClass},
+            </if>
+            <if test="status!=null">
+                status=#{status},
+            </if>
+            <if test="remark!=null">
+               remark=#{remark}
+            </if>
+        </set>
+        <if test="dictCode!=null">
+            where dict_code=#{dictCode}
+        </if>
+    </update>
+
+    <delete id="removeDictById">
+        delete from sys_dict_data where dict_code=#{id}
+    </delete>
 
     <update id="updDictType" parameterType="com.example.community.entity.SysDictData">
         UPDATE sys_dict_data
         set dict_type = #{type2}
         where dict_type = #{type}
     </update>
+    <select id="getData" resultType="com.example.community.entity.SysDictData">
+        select * from sys_dict_data
+        <where>
+            <if test="sysDictData.status !=null and sysDictData.status!=''">
+                and status=#{sysDictData.status}
+            </if>
+            <if test="sysDictData.dictLabel !=null and sysDictData.dictLabel!=''">
+                and dict_label like concat('%',#{sysDictData.dictLabel},'%')
+            </if>
+            <if test="sysDictData.dictType !=null and sysDictData.dictLabel!=''">
+                and dict_type=#{sysDictData.dictType}
+            </if>
+        </where>
+        order by dict_sort
+        <if test="size!=0">
+            limit #{index},#{size}
+        </if>
+
+    </select>
 
     <select id="selectDataName" resultType="com.example.community.entity.SysDictData">
         select * from sys_dict_data where dict_type in
         <foreach collection="name" item="num" index="index" open="(" close=")" separator=",">
             #{num}
         </foreach>
+    </select>
+
+    <select id="getDeriveList" resultType="com.example.community.entity.SysDictData">
+        SELECT * FROM sys_dict_data  WHERE 1=1
+        <if test="list!=null">
+            and
+            dict_code
+             in
+            <foreach collection="list" item="num" index="index" open="(" close=")" separator=",">
+                #{num}
+            </foreach>
+        </if>
+
+    </select>
+
+    <select id="isAddUpdate" resultType="java.lang.Integer">
+        select count(dict_code) from sys_dict_data
+        <where>
+            (dict_label = #{dictLabel})
+            <if test="dictCode != null and dictCode != ''">
+                and dict_code != #{dictCode}
+            </if>
+            and dict_type = #{dictType}
+        </where>
     </select>
 
 

@@ -4,7 +4,6 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.community.dao.SysDictTypeDao;
 import com.example.community.entity.SysDictType;
-import com.example.community.entity.SysRole;
 import com.example.community.service.SysDictTypeService;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +21,18 @@ public class SysDictTypeServiceImpl extends ServiceImpl<SysDictTypeDao, SysDictT
 
     @Resource
     SysDictTypeDao sysDictTypeDao;
+
+    @Override
+    public List<SysDictType> getDictOptionselect(Long dictId) {
+
+        List<SysDictType> dictOptionselect = sysDictTypeDao.getDictOptionselect(dictId);
+//        ArrayList<Object> dictNameList = new ArrayList<>();
+//        for (SysDictType sysDictType : dictOptionselect) {
+//            dictNameList.add(sysDictType.getDictName());
+//        }
+
+        return dictOptionselect;
+    }
 
     @Override
     public SysDictType selectName(String name) {
