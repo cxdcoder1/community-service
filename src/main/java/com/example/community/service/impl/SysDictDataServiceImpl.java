@@ -36,12 +36,23 @@ public class SysDictDataServiceImpl extends ServiceImpl<SysDictDataDao, SysDictD
         return sysDictDataDao.removeDictById(id);
     }
 
+//    @Override
+//    public List<SysDictData> selectDataName(String name) {
+//        System.err.println("service"+name);
+//        return sysDictDataDao.selectDataName(name);
+//    }
+
+
     @Override
-    public List<SysDictData> selectDataName(String name) {
-        System.err.println("service"+name);
+    public List<SysDictData> selectDataName(List<String> name) {
         return sysDictDataDao.selectDataName(name);
     }
 
+    @Override
+    public int updDictType(String type,String type2 ) {
+        return sysDictDataDao.updDictType(type,type2);
+
+    }
     @Override
     public List<SysDictData> getDeriveList(List<String> list) {
         return sysDictDataDao.getDeriveList(list);

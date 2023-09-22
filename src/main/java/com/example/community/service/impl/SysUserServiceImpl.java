@@ -1,5 +1,6 @@
 package com.example.community.service.impl;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.community.dao.SysUserDao;
 import com.example.community.dto.UserAndDeptAndRole;
@@ -30,5 +31,41 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserDao, SysUser> impleme
     public int updateUser(SysUser sysUser) {
         return sysUserDao.updataUser(sysUser);
     }
+
+    @Override
+    public Page<SysUser> selUserlist(Page<SysUser> page, SysUser sysUser) {
+        // 获取满足条件的角色列表总数
+        long total = sysUserDao.count(sysUser);
+        page.setTotal(total);
+
+        // 计算总页数
+        int totalPages = (int) Math.ceil(total * 1.0 / page.getSize());
+        if (page.getCurrent() > totalPages) {
+            page.setCurrent(totalPages);
+        }
+
+        if(page.getCurrent()<=0){
+            page.setCurrent(1);
+        }
+
+        page.setPages(totalPages);
+
+        page.setRecords(sysUserDao.selUserlist((page.getCurrent()-1) * page.getSize(), page.getSize(), sysUser));
+//        sysUserDao.selUserlist(page,sysUser);
+        return page;
+
+    }
+
+    @Override
+    public int restUserPwd(int id, int pwd) {
+        return sysUserDao.restUserPwd(id,pwd);
+    }
+
+    @Override
+    public int upDataStatus(int id, String status) {
+        return sysUserDao.upDataStatus(id,status);
+    }
+
+
 }
 

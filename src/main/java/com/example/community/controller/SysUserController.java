@@ -8,9 +8,12 @@ import com.baomidou.mybatisplus.extension.api.R;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.community.constant.SystemConstant;
 import com.example.community.dto.UserAndDeptAndRole;
+import com.example.community.entity.SysRole;
 import com.example.community.entity.SysUser;
 import com.example.community.service.SysUserService;
 import com.example.community.utils.JwtUtil;
+import com.sun.org.apache.regexp.internal.RE;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -142,5 +145,27 @@ public class SysUserController extends ApiController {
     public R delete(@RequestParam("idList") List<Long> idList) {
         return success(this.sysUserService.removeByIds(idList));
     }
+
+
+    @GetMapping("sysUserList")
+    public R selectPageAll(Page<SysUser> page, SysUser sysUser) {
+        System.err.println(sysUser);
+        return success(this.sysUserService.selUserlist(page, sysUser));
+    }
+
+
+    //密码重置
+    @PutMapping("resetPwd")
+    public R resetPwd(@RequestParam("id") int id,@RequestParam("pwd") int pwd) {
+        return success(this.sysUserService.restUserPwd(id,pwd));
+    }
+
+    //状态
+    @PutMapping("updateUser")
+    public R updateUser(@RequestParam("id") int id,@RequestParam("status") String status) {
+        return success(this.sysUserService.upDataStatus(id,status));
+    }
+
 }
+
 

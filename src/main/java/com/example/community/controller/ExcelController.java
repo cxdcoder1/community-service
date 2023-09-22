@@ -147,7 +147,7 @@ public class ExcelController {
 
         List<SysDictType> deriveList = sysDictTypeService.getDeriveList(lists);
 
-        String path = "D:\\lx.xls";
+        String path = "F:\\lx.xls";
         Dictexcel(path,deriveList);
         result.put("msg","导出成功");
         result.put("status","200");

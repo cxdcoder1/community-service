@@ -15,26 +15,34 @@ import java.util.List;
  */
 public interface SysUserDao extends BaseMapper<SysUser> {
 
-/**
-* 批量新增数据（MyBatis原生foreach方法）
-*
-* @param entities List<SysUser> 实例对象列表
-* @return 影响行数
-*/
-int insertBatch(@Param("entities") List<SysUser> entities);
+    /**
+     * 批量新增数据（MyBatis原生foreach方法）
+     *
+     * @param entities List<SysUser> 实例对象列表
+     * @return 影响行数
+     */
+    int insertBatch(@Param("entities") List<SysUser> entities);
 
-/**
-* 批量新增或按主键更新数据（MyBatis原生foreach方法）
-*
-* @param entities List<SysUser> 实例对象列表
-* @return 影响行数
-* @throws org.springframework.jdbc.BadSqlGrammarException 入参是空List的时候会抛SQL语句错误的异常，请自行校验入参
-*/
-int insertOrUpdateBatch(@Param("entities") List<SysUser> entities);
+    /**
+     * 批量新增或按主键更新数据（MyBatis原生foreach方法）
+     *
+     * @param entities List<SysUser> 实例对象列表
+     * @return 影响行数
+     * @throws org.springframework.jdbc.BadSqlGrammarException 入参是空List的时候会抛SQL语句错误的异常，请自行校验入参
+     */
+    int insertOrUpdateBatch(@Param("entities") List<SysUser> entities);
 
     UserAndDeptAndRole getUserInfo(int id);
 
     int updataUser(@Param("sysUser") SysUser sysUser);
+
+    List<SysUser> selUserlist(@Param("index") Long index, @Param("size") Long size, @Param("sysUser") SysUser sysUser);
+
+    long count(SysUser sysUser);
+
+    int restUserPwd(@Param("id") int id,@Param("pwd") int pwd);
+
+    int upDataStatus(@Param("id") int id,@Param("status") String status);
 
 }
 

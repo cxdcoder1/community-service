@@ -31,11 +31,14 @@ public interface SysDictDataDao extends BaseMapper<SysDictData> {
      */
     int insertOrUpdateBatch(@Param("entities") List<SysDictData> entities);
 
+   int updDictType(@Param("type")String type,@Param("type2") String type2);
     public List<SysDictData> getData(@Param("sysDictData") SysDictData sysDictData, @Param("index") long index, @Param("size") long size);
 
     int updateData(SysDictData sysDictData);
 
     int removeDictById(Long id);
+
+   List<SysDictData> selectDataName(@Param("name") List<String> name);
 
     List<SysDictData> selectDataName(String name);
 
