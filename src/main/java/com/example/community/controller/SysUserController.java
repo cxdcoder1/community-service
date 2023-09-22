@@ -8,6 +8,7 @@ import com.baomidou.mybatisplus.extension.api.R;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.community.constant.SystemConstant;
 import com.example.community.dto.UserAndDeptAndRole;
+import com.example.community.entity.SysPost;
 import com.example.community.entity.SysRole;
 import com.example.community.entity.SysUser;
 import com.example.community.service.SysUserService;
@@ -37,9 +38,6 @@ public class SysUserController extends ApiController {
     @Resource
     private SysUserService sysUserService;
 
-
-
-
     /**
      * 分页查询所有数据
      *
@@ -49,11 +47,13 @@ public class SysUserController extends ApiController {
      */
     @GetMapping("/selectAll")
     public R selectAll(Page<SysUser> page, SysUser sysUser) {
+
         return success(this.sysUserService.page(page, new QueryWrapper<>(sysUser)));
     }
 
     @GetMapping("/selectAll2")
     public R selectAll2(Page<SysUser> page, SysUser sysUser) {
+
         return success(this.sysUserService.page(page, new QueryWrapper<>(sysUser)));
     }
 
@@ -124,7 +124,10 @@ public class SysUserController extends ApiController {
      * @param sysUser 实体对象
      * @return 修改结果
      */
-
+//    @PutMapping("/updataUser")
+//    public R update(SysUser sysUser) {
+//        return success(this.sysUserService.updateById(sysUser));
+//    }
     @PutMapping("updataUser")
     public R update(@RequestBody SysUser sysUser) {
         System.err.println(sysUser);
@@ -142,16 +145,26 @@ public class SysUserController extends ApiController {
         return success(this.sysUserService.removeByIds(idList));
     }
 
+//    @GetMapping("listUser")
+//    public HashMap<String,Object> listUser(){
+//        HashMap<Object, Object> map = new HashMap<>();
+//
+//
+//
+//        return map;
+//    }
 
-    @GetMapping("sysUserlist")
-    public R selectPageAll(Page<SysUser> page, SysUser sysUser) {
-//        System.err.println("角色类"+sysRole);
-//        System.err.println(page.getCurrent());
-//        System.err.println(page.getSize());
-        System.err.println(sysUser);
-        return success(this.sysUserService.UserList(page, sysUser));
+    @GetMapping("getUser")
+    public HashMap<String, Object> getUser(){
+        HashMap<String, Object> map = new HashMap<>();
+        List<SysPost> allPost = sysUserService.getAllPost();
+        List<SysRole> allRole = sysUserService.getAllRole();
+
+        map.put("posts",allPost);
+        map.put("roles",allRole);
+
+
+        return map;
     }
-
-
 }
 

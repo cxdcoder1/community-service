@@ -13,9 +13,6 @@ import java.util.List;
  */
 public interface SysDictDataService extends IService<SysDictData> {
 
-    List<SysDictData> selectDataName(List<String> name);
-
-    int updDictType(String type,String type2);
     List<SysDictData> getData(SysDictData sysDictData, long index, long size);
 
     int updateData(SysDictData sysDictData);

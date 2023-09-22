@@ -100,37 +100,13 @@
         where u.user_id=#{id}
     </select>
 
-
-    <select id="selectUserList" parameterType="com.example.community.entity.SysUser"
-            resultMap="SysUserMap">
-        select * from  sys_user
-        <where>
-            <if test="sysUser.userId != null and sysUser.userId !=''">
-                and user_id = #{sysUser.userId}
-            </if>
-            <if test="sysUser.userName != null and sysUser.userName !=''">
-                and user_name like concat('%', #{sysUser.userName}, '%')
-            </if>
-            <if test="sysUser.nickName != null and sysUser.nickName !=''">
-
-                and nick_name  like concat('%',#{sysUser.nickName},'%')
-            </if>
-            <if test="sysUser.deptId != null and sysUser.deptId !=''">
-                and dept_id = #{sysUser.deptId}
-            </if>
-            <if test="sysUser.phonenumber != null and sysUser.phonenumber !=''">
-                and phonenumber = #{sysUser.phonenumber}
-            </if>
-            <if test="sysUser.status != null and sysUser.status !=''">
-                and status =#{sysUser.status}
-            </if>
-            <if test="sysUser.createTime != null and sysUser.createTime !=''">
-                and DATE_FORMAT(create_time, '%y%m%d') &gt; DATE_FORMAT(#{sysUser.createTime}, '%y%m%d')
-            </if>
-        </where>
-        limit #{index},#{size}
+    <select id="getAllPost" resultType="com.example.community.entity.SysPost">
+        select * from sys_post
     </select>
 
+    <select id="getAllRole" resultType="com.example.community.entity.SysRole">
+        select * from sys_role
+    </select>
 
 </mapper>
 

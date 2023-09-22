@@ -29,21 +29,21 @@ int insertBatch(@Param("entities") List<SysDictType> entities);
 * @return 影响行数
 * @throws org.springframework.jdbc.BadSqlGrammarException 入参是空List的时候会抛SQL语句错误的异常，请自行校验入参
 */
-    int insertOrUpdateBatch(@Param("entities") List<SysDictType> entities);
+int insertOrUpdateBatch(@Param("entities") List<SysDictType> entities);
 
     public List<SysDictType> getDictOptionselect(Long dictId);
 
     List<SysDictType> selectDictType(@Param("index") Long index, @Param("size") Long size , @Param("sysDictType") SysDictType sysDictType);
 
-    long count(@Param("sysDictType") SysDictType sysDictType);
+    long count(SysDictType sysDictType);
 
-    SysDictType  selectDictTypeName(@Param("name") String name);
+    SysDictType  selectDictTypeName(String name);
 
     int updDictType(SysDictType sysDictType);
 
-    List<SysDictType> selDictType(@Param("name") String name);
+    List<SysDictType> selDictType(String name);
 
-    int deleteDictType(@Param("id") List<Long> id);
+    int deleteDictType(long id);
 
     List<SysDictType> getDeriveList(List<String> list);
 }

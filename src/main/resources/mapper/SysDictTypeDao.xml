@@ -75,15 +75,9 @@
         </where>
     </update>
 
-<!--批量删除-->
     <delete id="deleteDictType">
-        delete from sys_dict_type where dict_id in
-        <foreach collection="id" item="num" index="index" open="(" close=")" separator=",">
-            #{num}
-        </foreach>
+        delete from sys_dict_type where dict_id = #{dictId}
     </delete>
-
-
 
     <select id="getDeriveList" resultType="com.example.community.entity.SysDictType">
         SELECT * FROM sys_dict_type WHERE 1=1
@@ -112,26 +106,29 @@
             <if test="sysDictType.createTime != null and sysDictType.createTime !=''">
                 and DATE_FORMAT(create_time, '%y%m%d') &gt; DATE_FORMAT(#{sysDictType.createTime}, '%y%m%d')
             </if>
+            <if test="sysDictType.updateTime != null and sysDictType.updateTime !=''">
+                and DATE_FORMAT(update_time, '%y%m%d') &lt; DATE_FORMAT(#{sysDictType.updateTime}, '%y%m%d')
+            </if>
         </where>
-        <if test="size > 0">
-            limit #{index},#{size}
-        </if>
-
+        limit #{index},#{size}
     </select>
     <select id="count" resultType="java.lang.Long">
         select count(*) from sys_dict_type
         <where>
-            <if test="sysDictType.dictName != null and sysDictType.dictName !=''">
-                and dict_name like concat('%',#{sysDictType.dictName},'%')
+            <if test="dictName != null and dictName !=''">
+                and dict_name like concat('%',#{dictName},'%')
             </if>
-            <if test="sysDictType.dictType != null and sysDictType.dictType !=''">
-                and dict_type like concat('%', #{sysDictType.dictType}, '%')
+            <if test="dictType != null and dictType !=''">
+                and dict_type like concat('%', #{dictType}, '%')
             </if>
-            <if test="sysDictType.status != null and sysDictType.status !=''">
-                and status = #{sysDictType.status}
+            <if test="status != null and status !=''">
+                and status = #{status}
             </if>
-            <if test="sysDictType.createTime != null and sysDictType.createTime !=''">
-                and DATE_FORMAT(create_time, '%y%m%d') &gt; DATE_FORMAT(#{sysDictType.createTime}, '%y%m%d')
+            <if test="createTime != null and createTime !=''">
+                and DATE_FORMAT(create_time, '%y%m%d') &gt; DATE_FORMAT(#{createTime}, '%y%m%d')
+            </if>
+            <if test="updateTime != null and updateTime !=''">
+                and DATE_FORMAT(update_time, '%y%m%d') &lt; DATE_FORMAT(#{updateTime}, '%y%m%d')
             </if>
         </where>
     </select>
@@ -139,12 +136,11 @@
     <select id="selectDictTypeName" resultType="com.example.community.entity.SysDictType">
         select *
         from sys_dict_type
-        where dict_name = #{name}
+        where dict_name = #{dictName}
     </select>
 
-
     <select id="selDictType" resultType="com.example.community.entity.SysDictType">
-        select * from sys_dict_type  where dict_name = #{name};
+        select * from sys_dict_type  where dict_name = #{dictName};
     </select>
 
     <select id="getDictOptionselect" resultType="com.example.community.entity.SysDictType">
