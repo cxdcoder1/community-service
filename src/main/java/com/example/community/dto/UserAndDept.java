@@ -1,12 +1,14 @@
 package com.example.community.dto;
 
+import com.example.community.entity.SysDept;
+import com.example.community.entity.SysRole;
 import lombok.Data;
 
 import java.util.Date;
+import java.util.List;
 
-@Data
-public class UserAndPostIdAndRoleId {
 
+public class UserAndDept {
     //用户ID
     private Long userId;
     //部门ID
@@ -45,16 +47,16 @@ public class UserAndPostIdAndRoleId {
     private Date updateTime;
     //备注
     private String remark;
-    //角色id
-    private Long roleIds;
-    //职位id
-    private Long postIds;
+    //部门对象
+    SysDept sysDept;
+    //角色对象
+    SysRole sysRole;
 
 
-    public UserAndPostIdAndRoleId() {
+    public UserAndDept() {
     }
 
-    public UserAndPostIdAndRoleId(Long userId, Long deptId, String userName, String nickName, String userType, String email, String phonenumber, String sex, String avatar, String password, String status, String delFlag, String loginIp, Date loginDate, String createBy, Date createTime, String updateBy, Date updateTime, String remark, Long roleIds, Long postIds) {
+    public UserAndDept(Long userId, Long deptId, String userName, String nickName, String userType, String email, String phonenumber, String sex, String avatar, String password, String status, String delFlag, String loginIp, Date loginDate, String createBy, Date createTime, String updateBy, Date updateTime, String remark, SysDept sysDept, SysRole sysRole) {
         this.userId = userId;
         this.deptId = deptId;
         this.userName = userName;
@@ -74,8 +76,8 @@ public class UserAndPostIdAndRoleId {
         this.updateBy = updateBy;
         this.updateTime = updateTime;
         this.remark = remark;
-        this.roleIds = roleIds;
-        this.postIds = postIds;
+        this.sysDept = sysDept;
+        this.sysRole = sysRole;
     }
 
     /**
@@ -384,37 +386,37 @@ public class UserAndPostIdAndRoleId {
 
     /**
      * 获取
-     * @return roleIds
+     * @return sysDept
      */
-    public Long getRoleIds() {
-        return roleIds;
+    public SysDept getSysDept() {
+        return sysDept;
     }
 
     /**
      * 设置
-     * @param roleIds
+     * @param sysDept
      */
-    public void setRoleIds(Long roleIds) {
-        this.roleIds = roleIds;
+    public void setSysDept(SysDept sysDept) {
+        this.sysDept = sysDept;
     }
 
     /**
      * 获取
-     * @return postIds
+     * @return sysRole
      */
-    public Long getPostIds() {
-        return postIds;
+    public SysRole getSysRole() {
+        return sysRole;
     }
 
     /**
      * 设置
-     * @param postIds
+     * @param sysRole
      */
-    public void setPostIds(Long postIds) {
-        this.postIds = postIds;
+    public void setSysRole(SysRole sysRole) {
+        this.sysRole = sysRole;
     }
 
     public String toString() {
-        return "UserAndPostIdAndRoleId{userId = " + userId + ", deptId = " + deptId + ", userName = " + userName + ", nickName = " + nickName + ", userType = " + userType + ", email = " + email + ", phonenumber = " + phonenumber + ", sex = " + sex + ", avatar = " + avatar + ", password = " + password + ", status = " + status + ", delFlag = " + delFlag + ", loginIp = " + loginIp + ", loginDate = " + loginDate + ", createBy = " + createBy + ", createTime = " + createTime + ", updateBy = " + updateBy + ", updateTime = " + updateTime + ", remark = " + remark + ", roleIds = " + roleIds + ", postIds = " + postIds + "}";
+        return "UserAndDept{userId = " + userId + ", deptId = " + deptId + ", userName = " + userName + ", nickName = " + nickName + ", userType = " + userType + ", email = " + email + ", phonenumber = " + phonenumber + ", sex = " + sex + ", avatar = " + avatar + ", password = " + password + ", status = " + status + ", delFlag = " + delFlag + ", loginIp = " + loginIp + ", loginDate = " + loginDate + ", createBy = " + createBy + ", createTime = " + createTime + ", updateBy = " + updateBy + ", updateTime = " + updateTime + ", remark = " + remark + ", sysDept = " + sysDept + ", sysRole = " + sysRole + "}";
     }
 }

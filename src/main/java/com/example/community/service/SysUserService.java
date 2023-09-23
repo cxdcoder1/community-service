@@ -2,6 +2,7 @@ package com.example.community.service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.example.community.dto.UserAndDeptAndPostAndRole;
 import com.example.community.dto.UserAndDeptAndRole;
 import com.example.community.entity.SysDept;
 import com.example.community.entity.SysPost;
@@ -22,7 +23,7 @@ public interface SysUserService extends IService<SysUser> {
 
     int updateUser(SysUser sysUser);
 
-    Page<SysUser> selUserlist(Page<SysUser> page,SysUser sysUser);
+    Page<UserAndDeptAndPostAndRole> selUserlist(Page<UserAndDeptAndPostAndRole> page, UserAndDeptAndPostAndRole userAndDeptAndPostAndRole);
 
     List<SysRole> getAllRole();
 

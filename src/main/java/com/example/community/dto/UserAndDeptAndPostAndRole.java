@@ -1,12 +1,11 @@
 package com.example.community.dto;
 
-import lombok.Data;
+import com.example.community.entity.SysDept;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 
-@Data
-public class UserAndPostIdAndRoleId {
-
+public class UserAndDeptAndPostAndRole {
     //用户ID
     private Long userId;
     //部门ID
@@ -34,27 +33,34 @@ public class UserAndPostIdAndRoleId {
     //最后登录IP
     private String loginIp;
     //最后登录时间
-    private Date loginDate;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private String loginDate;
     //创建者
     private String createBy;
     //创建时间
-    private Date createTime;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private String createTime;
     //更新者
     private String updateBy;
     //更新时间
-    private Date updateTime;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private String updateTime;
     //备注
     private String remark;
-    //角色id
-    private Long roleIds;
-    //职位id
-    private Long postIds;
+
+    //部门
+    private SysDept sysDeptList;
+    //岗位和用户
+    private UserAndPostDto userAndPostDto;
+
+    //角色和用户
+    private UserAndRoleDto userAndRoleDto;
 
 
-    public UserAndPostIdAndRoleId() {
+    public UserAndDeptAndPostAndRole() {
     }
 
-    public UserAndPostIdAndRoleId(Long userId, Long deptId, String userName, String nickName, String userType, String email, String phonenumber, String sex, String avatar, String password, String status, String delFlag, String loginIp, Date loginDate, String createBy, Date createTime, String updateBy, Date updateTime, String remark, Long roleIds, Long postIds) {
+    public UserAndDeptAndPostAndRole(Long userId, Long deptId, String userName, String nickName, String userType, String email, String phonenumber, String sex, String avatar, String password, String status, String delFlag, String loginIp, String loginDate, String createBy, String createTime, String updateBy, String updateTime, String remark, SysDept sysDeptList, UserAndPostDto userAndPostDto, UserAndRoleDto userAndRoleDto) {
         this.userId = userId;
         this.deptId = deptId;
         this.userName = userName;
@@ -74,8 +80,9 @@ public class UserAndPostIdAndRoleId {
         this.updateBy = updateBy;
         this.updateTime = updateTime;
         this.remark = remark;
-        this.roleIds = roleIds;
-        this.postIds = postIds;
+        this.sysDeptList = sysDeptList;
+        this.userAndPostDto = userAndPostDto;
+        this.userAndRoleDto = userAndRoleDto;
     }
 
     /**
@@ -290,7 +297,7 @@ public class UserAndPostIdAndRoleId {
      * 获取
      * @return loginDate
      */
-    public Date getLoginDate() {
+    public String getLoginDate() {
         return loginDate;
     }
 
@@ -298,7 +305,7 @@ public class UserAndPostIdAndRoleId {
      * 设置
      * @param loginDate
      */
-    public void setLoginDate(Date loginDate) {
+    public void setLoginDate(String loginDate) {
         this.loginDate = loginDate;
     }
 
@@ -322,7 +329,7 @@ public class UserAndPostIdAndRoleId {
      * 获取
      * @return createTime
      */
-    public Date getCreateTime() {
+    public String getCreateTime() {
         return createTime;
     }
 
@@ -330,7 +337,7 @@ public class UserAndPostIdAndRoleId {
      * 设置
      * @param createTime
      */
-    public void setCreateTime(Date createTime) {
+    public void setCreateTime(String createTime) {
         this.createTime = createTime;
     }
 
@@ -354,7 +361,7 @@ public class UserAndPostIdAndRoleId {
      * 获取
      * @return updateTime
      */
-    public Date getUpdateTime() {
+    public String getUpdateTime() {
         return updateTime;
     }
 
@@ -362,7 +369,7 @@ public class UserAndPostIdAndRoleId {
      * 设置
      * @param updateTime
      */
-    public void setUpdateTime(Date updateTime) {
+    public void setUpdateTime(String updateTime) {
         this.updateTime = updateTime;
     }
 
@@ -384,37 +391,53 @@ public class UserAndPostIdAndRoleId {
 
     /**
      * 获取
-     * @return roleIds
+     * @return sysDeptList
      */
-    public Long getRoleIds() {
-        return roleIds;
+    public SysDept getSysDeptList() {
+        return sysDeptList;
     }
 
     /**
      * 设置
-     * @param roleIds
+     * @param sysDeptList
      */
-    public void setRoleIds(Long roleIds) {
-        this.roleIds = roleIds;
+    public void setSysDeptList(SysDept sysDeptList) {
+        this.sysDeptList = sysDeptList;
     }
 
     /**
      * 获取
-     * @return postIds
+     * @return userAndPostDto
      */
-    public Long getPostIds() {
-        return postIds;
+    public UserAndPostDto getUserAndPostDto() {
+        return userAndPostDto;
     }
 
     /**
      * 设置
-     * @param postIds
+     * @param userAndPostDto
      */
-    public void setPostIds(Long postIds) {
-        this.postIds = postIds;
+    public void setUserAndPostDto(UserAndPostDto userAndPostDto) {
+        this.userAndPostDto = userAndPostDto;
+    }
+
+    /**
+     * 获取
+     * @return userAndRoleDto
+     */
+    public UserAndRoleDto getUserAndRoleDto() {
+        return userAndRoleDto;
+    }
+
+    /**
+     * 设置
+     * @param userAndRoleDto
+     */
+    public void setUserAndRoleDto(UserAndRoleDto userAndRoleDto) {
+        this.userAndRoleDto = userAndRoleDto;
     }
 
     public String toString() {
-        return "UserAndPostIdAndRoleId{userId = " + userId + ", deptId = " + deptId + ", userName = " + userName + ", nickName = " + nickName + ", userType = " + userType + ", email = " + email + ", phonenumber = " + phonenumber + ", sex = " + sex + ", avatar = " + avatar + ", password = " + password + ", status = " + status + ", delFlag = " + delFlag + ", loginIp = " + loginIp + ", loginDate = " + loginDate + ", createBy = " + createBy + ", createTime = " + createTime + ", updateBy = " + updateBy + ", updateTime = " + updateTime + ", remark = " + remark + ", roleIds = " + roleIds + ", postIds = " + postIds + "}";
+        return "UserAndDeptAndPostAndRole{userId = " + userId + ", deptId = " + deptId + ", userName = " + userName + ", nickName = " + nickName + ", userType = " + userType + ", email = " + email + ", phonenumber = " + phonenumber + ", sex = " + sex + ", avatar = " + avatar + ", password = " + password + ", status = " + status + ", delFlag = " + delFlag + ", loginIp = " + loginIp + ", loginDate = " + loginDate + ", createBy = " + createBy + ", createTime = " + createTime + ", updateBy = " + updateBy + ", updateTime = " + updateTime + ", remark = " + remark + ", sysDeptList = " + sysDeptList + ", userAndPostDto = " + userAndPostDto + ", userAndRoleDto = " + userAndRoleDto + "}";
     }
 }

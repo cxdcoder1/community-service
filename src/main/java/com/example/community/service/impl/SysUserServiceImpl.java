@@ -3,6 +3,7 @@ package com.example.community.service.impl;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.community.dao.SysUserDao;
+import com.example.community.dto.UserAndDeptAndPostAndRole;
 import com.example.community.dto.UserAndDeptAndRole;
 import com.example.community.entity.SysDept;
 import com.example.community.entity.SysPost;
@@ -37,9 +38,12 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserDao, SysUser> impleme
     }
 
     @Override
-    public Page<SysUser> selUserlist(Page<SysUser> page, SysUser sysUser) {
+    public Page<UserAndDeptAndPostAndRole> selUserlist(Page<UserAndDeptAndPostAndRole> page, UserAndDeptAndPostAndRole userAndDeptAndPostAndRole) {
         // 获取满足条件的角色列表总数
-        long total = sysUserDao.count(sysUser);
+        System.out.println(page.getCurrent());
+        System.out.println(page.getSize());
+
+        long total = sysUserDao.count(userAndDeptAndPostAndRole);
         page.setTotal(total);
 
         // 计算总页数
@@ -47,14 +51,13 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserDao, SysUser> impleme
         if (page.getCurrent() > totalPages) {
             page.setCurrent(totalPages);
         }
-
         if(page.getCurrent()<=0){
             page.setCurrent(1);
         }
 
         page.setPages(totalPages);
 
-        page.setRecords(sysUserDao.selUserlist((page.getCurrent()-1) * page.getSize(), page.getSize(), sysUser));
+        page.setRecords(sysUserDao.selUserlist((page.getCurrent()-1) * page.getSize(), page.getSize(), userAndDeptAndPostAndRole));
 //        sysUserDao.selUserlist(page,sysUser);
         return page;
 

@@ -1,6 +1,7 @@
 package com.example.community.dao;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.example.community.dto.UserAndDeptAndPostAndRole;
 import com.example.community.dto.UserAndDeptAndRole;
 import com.example.community.entity.SysDept;
 import com.example.community.entity.SysPost;
@@ -57,8 +58,9 @@ public interface SysUserDao extends BaseMapper<SysUser> {
 
     //获取用户添加修改的部门
     List<SysDept> getDeptList(SysDept sysDept);
+    List<UserAndDeptAndPostAndRole> selUserlist(@Param("index") Long index, @Param("size") Long size, @Param("sysUser") UserAndDeptAndPostAndRole userAndDeptAndPostAndRole);
 
-    long count(SysUser sysUser);
+    long count(UserAndDeptAndPostAndRole userAndDeptAndPostAndRole);
 
     int restUserPwd(@Param("id") int id, @Param("pwd") int pwd);
 
