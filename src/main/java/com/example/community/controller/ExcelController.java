@@ -12,10 +12,7 @@ import com.example.community.utils.easyexcel.StyleUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Excel表格导出
@@ -31,6 +28,16 @@ public class ExcelController {
     private SysDictDataService sysDictDataService;
     @Resource
     private SysDictTypeService sysDictTypeService;
+
+    /**
+     * 生成随机文件名 并返回固定路径
+     * @return
+     */
+    static String getPath() {
+        UUID randomUUID = UUID.randomUUID();
+        String s = randomUUID.toString().replaceAll("-", "");
+        return "D:\\"+s+".xls";
+    }
 
     /**
      * 导出数据
@@ -105,7 +112,8 @@ public class ExcelController {
         System.err.println(lists);
 
         List<SysRole> deriveList = sysRoleService.getDeriveList(lists);
-        String path = "D:\\lx.xls";
+
+        String path = getPath();
         simpleWrite(path,deriveList);
         result.put("msg","导出成功");
         result.put("status","200");
@@ -132,7 +140,7 @@ public class ExcelController {
     }
 
     /**
-     * 表格导出
+     * 角色表格导出
      * @param lists
      * @return
      */

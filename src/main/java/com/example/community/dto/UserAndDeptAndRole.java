@@ -1,5 +1,9 @@
 package com.example.community.dto;
 
+import com.alibaba.excel.annotation.ExcelProperty;
+import com.alibaba.excel.annotation.write.style.ColumnWidth;
+import com.alibaba.excel.annotation.write.style.ContentRowHeight;
+import com.alibaba.excel.annotation.write.style.HeadRowHeight;
 import com.example.community.entity.SysDept;
 import com.example.community.entity.SysRole;
 import lombok.Data;
@@ -7,15 +11,20 @@ import lombok.Data;
 import java.util.Date;
 import java.util.List;
 
-
+@ColumnWidth(15) //列宽,最大值为255
+@HeadRowHeight(16) //表头行高
+@ContentRowHeight(16) //数据行高
 public class UserAndDeptAndRole {
     //用户ID
+
     private Long userId;
     //部门ID
     private Long deptId;
     //用户账号
+
     private String userName;
     //用户昵称
+
     private String nickName;
     //用户类型（00系统用户）
     private String userType;

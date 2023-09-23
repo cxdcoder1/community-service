@@ -8,15 +8,26 @@ import com.alibaba.excel.EasyExcel;
 import com.alibaba.excel.context.AnalysisContext;
 import com.alibaba.excel.event.SyncReadListener;
 import com.alibaba.fastjson.JSON;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+
+import java.util.*;
 
 import javax.annotation.Resource;
 import java.util.List;
 
 @SpringBootTest
 class CommunityApplicationTests {
+
+    static String usingUUID() {
+        UUID randomUUID = UUID.randomUUID();
+        return randomUUID.toString().replaceAll("-", "");
+    }
+
+    @Test
+    void test(){
+        String randomString = usingUUID();
+        String path = "D:\\"+randomString+".xls";
+        System.err.println(path);
+    }
 
     @Test
     void contextLoads() {
