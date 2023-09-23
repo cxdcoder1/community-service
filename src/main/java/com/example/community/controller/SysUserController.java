@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.extension.api.ApiController;
 import com.baomidou.mybatisplus.extension.api.R;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.community.constant.SystemConstant;
+import com.example.community.dto.UserAndDeptAndPostAndRole;
 import com.example.community.dto.UserAndDeptAndRole;
 import com.example.community.dto.UserAndPostIdAndRoleId;
 import com.example.community.entity.SysDept;
@@ -158,9 +159,9 @@ public class SysUserController extends ApiController {
 //    }
 
     @GetMapping("sysUserList")
-    public R selectPageAll(Page<SysUser> page, SysUser sysUser) {
-        System.err.println(sysUser);
-        return success(this.sysUserService.selUserlist(page, sysUser));
+    public R selectPageAll(Page<UserAndDeptAndPostAndRole> page, UserAndDeptAndPostAndRole userAndDeptAndPostAndRole) {
+        System.err.println(userAndDeptAndPostAndRole);
+        return success(this.sysUserService.selUserlist(page, userAndDeptAndPostAndRole));
     }
 
     @GetMapping("getUser")
