@@ -8,10 +8,13 @@ import com.baomidou.mybatisplus.extension.api.R;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.community.constant.SystemConstant;
 import com.example.community.dto.UserAndDeptAndRole;
+import com.example.community.dto.UserAndPostIdAndRoleId;
+import com.example.community.entity.SysDept;
 import com.example.community.entity.SysPost;
 import com.example.community.entity.SysRole;
 import com.example.community.entity.SysUser;
 import com.example.community.service.SysUserService;
+import com.example.community.utils.DeptTree;
 import com.example.community.utils.JwtUtil;
 import org.springframework.web.bind.annotation.*;
 
@@ -130,8 +133,8 @@ public class SysUserController extends ApiController {
 //    }
     @PutMapping("updataUser")
     public R update(@RequestBody SysUser sysUser) {
-        System.err.println(sysUser);
-       return success(this.sysUserService.updateUser(sysUser));
+//        System.err.println(sysUser);
+        return success(this.sysUserService.updateUser(sysUser));
     }
 
     /**
@@ -154,8 +157,14 @@ public class SysUserController extends ApiController {
 //        return map;
 //    }
 
+    @GetMapping("sysUserList")
+    public R selectPageAll(Page<SysUser> page, SysUser sysUser) {
+        System.err.println(sysUser);
+        return success(this.sysUserService.selUserlist(page, sysUser));
+    }
+
     @GetMapping("getUser")
-    public HashMap<String, Object> getUser(){
+    public HashMap<String, Object> getUser() {
         HashMap<String, Object> map = new HashMap<>();
         List<SysPost> allPost = sysUserService.getAllPost();
         List<SysRole> allRole = sysUserService.getAllRole();
@@ -163,8 +172,104 @@ public class SysUserController extends ApiController {
         map.put("posts",allPost);
         map.put("roles",allRole);
 
-
         return map;
     }
+
+    @PutMapping("updateUser")
+    public HashMap<String, Object> updateUser(@RequestBody UserAndPostIdAndRoleId userAndPostIdAndRoleId) {
+        HashMap<String, Object> map = new HashMap<>();
+        SysUser sysUser = new SysUser();
+        sysUser.setUserId(userAndPostIdAndRoleId.getUserId());
+        sysUser.setDeptId(userAndPostIdAndRoleId.getDeptId());
+        sysUser.setSex(userAndPostIdAndRoleId.getSex());
+        sysUser.setUserName(userAndPostIdAndRoleId.getUserName());
+        sysUser.setEmail(userAndPostIdAndRoleId.getEmail());
+        sysUser.setStatus(userAndPostIdAndRoleId.getStatus());
+        sysUser.setRemark(userAndPostIdAndRoleId.getRemark());
+        sysUser.setNickName(userAndPostIdAndRoleId.getNickName());
+        sysUser.setPhonenumber(userAndPostIdAndRoleId.getPhonenumber());
+        //验重
+        if (sysUserService.isok(sysUser) == 0) {
+            System.out.println(sysUser);
+            //更新user信息
+            sysUserService.updateUser(sysUser);
+            //更新user职位
+            sysUserService.updatePost(userAndPostIdAndRoleId.getUserId(), userAndPostIdAndRoleId.getPostIds());
+            //更新user角色
+            sysUserService.updateRole(userAndPostIdAndRoleId.getUserId(), userAndPostIdAndRoleId.getRoleIds());
+
+            map.put("data", 1);
+
+            return map;
+        }
+        map.put("data", 0);
+        return map;
+    }
+
+    @PutMapping("addUser")
+    public HashMap<String, Object> addUser(@RequestBody UserAndPostIdAndRoleId userAndPostIdAndRoleId) {
+        HashMap<String, Object> map = new HashMap<>();
+        System.err.println(userAndPostIdAndRoleId);
+        SysUser sysUser = new SysUser();
+        sysUser.setPhonenumber(userAndPostIdAndRoleId.getPhonenumber());
+        sysUser.setDeptId(userAndPostIdAndRoleId.getDeptId());
+        sysUser.setUserName(userAndPostIdAndRoleId.getUserName());
+        sysUser.setEmail(userAndPostIdAndRoleId.getEmail());
+        sysUser.setPassword(userAndPostIdAndRoleId.getPassword());
+        sysUser.setStatus(userAndPostIdAndRoleId.getStatus());
+        sysUser.setRemark(userAndPostIdAndRoleId.getRemark());
+        sysUser.setNickName(userAndPostIdAndRoleId.getNickName());
+        //验重
+        if (sysUserService.isok(sysUser) == 0) {
+
+            //插入user信息并返还对象
+            sysUserService.insertUser(sysUser);
+            //插入新user职位
+            sysUserService.insertPost(sysUser.getUserId(), userAndPostIdAndRoleId.getPostIds());
+            //插入新user角色
+            sysUserService.insertRole(sysUser.getUserId(), userAndPostIdAndRoleId.getRoleIds());
+
+            map.put("data", 1);
+            return map;
+        }
+        map.put("data", 0);
+        return map;
+    }
+    //密码重置
+    @PutMapping("resetPwd")
+    public R resetPwd(@RequestParam("id") int id,@RequestParam("pwd") int pwd) {
+        return success(this.sysUserService.restUserPwd(id,pwd));
+    }
+
+    //状态
+    @PutMapping("updateUserStatus")
+    public R updateUser(@RequestParam("id") int id,@RequestParam("status") String status) {
+        return success(this.sysUserService.upDataStatus(id,status));
+    }
+
+    @PostMapping("getDeptList")
+    public Map<String,Object> getMenuList(@RequestBody SysDept sysDept){
+        Map<String,Object> result = new HashMap<>();
+        List<SysDept> sysDeptList = sysUserService.selAllDept(sysDept);
+        int len = sysDeptList.size();
+        for(int i = 0; i < len; i++){
+            int count = 0 ;
+            for(int j = 0; j < len; j++){
+                if(sysDeptList.get(i).getParentId().equals(sysDeptList.get(j).getDeptId())){
+                    count++;
+                }
+            }
+            if(count==0){
+                sysDeptList.get(i).setParentId(0L);
+            }
+        }
+        DeptTree deptTree = new DeptTree(sysDeptList);
+        List<SysDept> sysDepts = deptTree.builTree();
+        result.put("menuList",sysDepts);
+        result.put("msg","获取成功");
+        System.err.println(result);
+        return result;
+    };
+
 }
 

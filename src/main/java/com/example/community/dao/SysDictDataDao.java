@@ -39,6 +39,7 @@ public interface SysDictDataDao extends BaseMapper<SysDictData> {
     int removeDictById(Long id);
 
    List<SysDictData> selectDataName(@Param("name") List<String> name);
+
     List<SysDictData> selectDataName(String name);
 
     List<SysDictData> getDeriveList(List<String> list);

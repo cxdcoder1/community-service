@@ -73,6 +73,7 @@ public interface SysRoleDao extends BaseMapper<SysRole> {
 
     public int upDataStatus(long roleId,String status);
 
+
     public int deleteMenu(Long roleId);
 
     public int addMenu(@Param("roleId") Long roleId,@Param("menuId")Object menuId);

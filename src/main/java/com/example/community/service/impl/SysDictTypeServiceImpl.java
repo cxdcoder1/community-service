@@ -68,13 +68,20 @@ public class SysDictTypeServiceImpl extends ServiceImpl<SysDictTypeDao, SysDictT
         return sysDictTypeDao.updDictType(sysDictType);
     }
 
+
     @Override
     public List<SysDictType> selDictType(String name) {
         return sysDictTypeDao.selDictType(name);
     }
 
+//    @Override
+//    public List<SysDictType> selDictType(String name) {
+//        return sysDictTypeDao.selDictType(name);
+//    }
+
+
     @Override
-    public int deleteDictType(long id) {
+    public int deleteDictType(List<Long> id) {
         return sysDictTypeDao.deleteDictType(id);
     }
 

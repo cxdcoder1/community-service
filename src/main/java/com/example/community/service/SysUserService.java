@@ -1,7 +1,9 @@
 package com.example.community.service;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.example.community.dto.UserAndDeptAndRole;
+import com.example.community.entity.SysDept;
 import com.example.community.entity.SysPost;
 import com.example.community.entity.SysRole;
 import com.example.community.entity.SysUser;
@@ -20,8 +22,30 @@ public interface SysUserService extends IService<SysUser> {
 
     int updateUser(SysUser sysUser);
 
-    List<SysPost> getAllPost();
+    Page<SysUser> selUserlist(Page<SysUser> page,SysUser sysUser);
 
     List<SysRole> getAllRole();
+
+    List<SysPost> getAllPost();
+
+    int updatePost(Long UserId, Long PostId);
+
+    int updateRole(Long UserId, Long RoleId);
+
+    int insertUser(SysUser sysUser);
+
+    int insertPost(Long UserId, Long PostId);
+
+    int insertRole(Long UserId, Long RoleId);
+
+    int isok(SysUser sysUser);
+    //获取用户选择的部门列表
+    List<SysDept> selAllDept(SysDept sysDept);
+
+    int restUserPwd(int id,int pwd);
+
+    int upDataStatus( int id, String status);
+
+
 }
 

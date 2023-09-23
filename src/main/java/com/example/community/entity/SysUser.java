@@ -2,9 +2,7 @@ package com.example.community.entity;
 
 
 import com.baomidou.mybatisplus.extension.activerecord.Model;
-
-import java.io.Serializable;
-import java.util.Date;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  * 用户信息表(SysUser)表实体类
@@ -15,6 +13,17 @@ import java.util.Date;
 @SuppressWarnings("serial")
 
 public class SysUser extends Model<SysUser> {
+
+//    private SysDept sysDept;
+
+//    public SysDept getSysDept() {
+//        return sysDept;
+//    }
+//
+//    public void setSysDept(SysDept sysDept) {
+//        this.sysDept = sysDept;
+//    }
+
     //用户ID
     private Long userId;
     //部门ID
@@ -42,18 +51,20 @@ public class SysUser extends Model<SysUser> {
     //最后登录IP
     private String loginIp;
     //最后登录时间
-    private Date loginDate;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private String loginDate;
     //创建者
     private String createBy;
     //创建时间
-    private Date createTime;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private String createTime;
     //更新者
     private String updateBy;
     //更新时间
-    private Date updateTime;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private String updateTime;
     //备注
     private String remark;
-
 
     public Long getUserId() {
         return userId;
@@ -159,11 +170,11 @@ public class SysUser extends Model<SysUser> {
         this.loginIp = loginIp;
     }
 
-    public Date getLoginDate() {
+    public String getLoginDate() {
         return loginDate;
     }
 
-    public void setLoginDate(Date loginDate) {
+    public void setLoginDate(String loginDate) {
         this.loginDate = loginDate;
     }
 
@@ -175,11 +186,11 @@ public class SysUser extends Model<SysUser> {
         this.createBy = createBy;
     }
 
-    public Date getCreateTime() {
+    public String getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(Date createTime) {
+    public void setCreateTime(String createTime) {
         this.createTime = createTime;
     }
 
@@ -191,11 +202,11 @@ public class SysUser extends Model<SysUser> {
         this.updateBy = updateBy;
     }
 
-    public Date getUpdateTime() {
+    public String getUpdateTime() {
         return updateTime;
     }
 
-    public void setUpdateTime(Date updateTime) {
+    public void setUpdateTime(String updateTime) {
         this.updateTime = updateTime;
     }
 
@@ -223,23 +234,38 @@ public class SysUser extends Model<SysUser> {
                 ", status='" + status + '\'' +
                 ", delFlag='" + delFlag + '\'' +
                 ", loginIp='" + loginIp + '\'' +
-                ", loginDate=" + loginDate +
+                ", loginDate='" + loginDate + '\'' +
                 ", createBy='" + createBy + '\'' +
-                ", createTime=" + createTime +
+                ", createTime='" + createTime + '\'' +
                 ", updateBy='" + updateBy + '\'' +
-                ", updateTime=" + updateTime +
+                ", updateTime='" + updateTime + '\'' +
                 ", remark='" + remark + '\'' +
                 '}';
     }
 
-    /**
-     * 获取主键值
-     *
-     * @return 主键值
-     */
-    @Override
-    protected Serializable pkVal() {
-        return this.userId;
+    public SysUser() {
     }
+
+    public SysUser(Long userId, Long deptId, String userName, String nickName, String userType, String email, String phonenumber, String sex, String avatar, String password, String status, String delFlag, String loginIp, String loginDate, String createBy, String createTime, String updateBy, String updateTime, String remark) {
+        this.userId = userId;
+        this.deptId = deptId;
+        this.userName = userName;
+        this.nickName = nickName;
+        this.userType = userType;
+        this.email = email;
+        this.phonenumber = phonenumber;
+        this.sex = sex;
+        this.avatar = avatar;
+        this.password = password;
+        this.status = status;
+        this.delFlag = delFlag;
+        this.loginIp = loginIp;
+        this.loginDate = loginDate;
+        this.createBy = createBy;
+        this.createTime = createTime;
+        this.updateBy = updateBy;
+        this.updateTime = updateTime;
+        this.remark = remark;
     }
+}
 

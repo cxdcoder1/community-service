@@ -1,8 +1,10 @@
 package com.example.community.service.impl;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.community.dao.SysUserDao;
 import com.example.community.dto.UserAndDeptAndRole;
+import com.example.community.entity.SysDept;
 import com.example.community.entity.SysPost;
 import com.example.community.entity.SysRole;
 import com.example.community.entity.SysUser;
@@ -35,13 +37,87 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserDao, SysUser> impleme
     }
 
     @Override
-    public List<SysPost> getAllPost() {
-        return sysUserDao.getAllPost();
+    public Page<SysUser> selUserlist(Page<SysUser> page, SysUser sysUser) {
+        // 获取满足条件的角色列表总数
+        long total = sysUserDao.count(sysUser);
+        page.setTotal(total);
+
+        // 计算总页数
+        int totalPages = (int) Math.ceil(total * 1.0 / page.getSize());
+        if (page.getCurrent() > totalPages) {
+            page.setCurrent(totalPages);
+        }
+
+        if(page.getCurrent()<=0){
+            page.setCurrent(1);
+        }
+
+        page.setPages(totalPages);
+
+        page.setRecords(sysUserDao.selUserlist((page.getCurrent()-1) * page.getSize(), page.getSize(), sysUser));
+//        sysUserDao.selUserlist(page,sysUser);
+        return page;
+
     }
+
 
     @Override
     public List<SysRole> getAllRole() {
         return sysUserDao.getAllRole();
     }
+
+    @Override
+    public List<SysPost> getAllPost() {
+        return sysUserDao.getAllPost();
+    }
+
+    @Override
+    public int updatePost(Long UserId, Long PostId) {
+        int i = sysUserDao.updatePost(UserId, PostId);
+        return i;
+    }
+
+    @Override
+    public int updateRole(Long UserId, Long RoleId) {
+        int i = sysUserDao.updateRole(UserId, RoleId);
+        return i;
+    }
+
+    @Override
+    public int insertUser(SysUser sysUser) {
+        return sysUserDao.insertUser1(sysUser);
+    }
+
+    @Override
+    public int insertPost(Long UserId, Long PostId) {
+        return sysUserDao.insertPost(UserId,PostId);
+    }
+
+    @Override
+    public int insertRole(Long UserId, Long RoleId) {
+        return sysUserDao.insertRole(UserId,RoleId);
+    }
+
+    @Override
+    public int isok(SysUser sysUser) {
+        return sysUserDao.isAddUpdate(sysUser);
+    }
+
+    @Override
+    public List<SysDept> selAllDept(SysDept sysDept) {
+        return sysUserDao.getDeptList(sysDept);
+    }
+
+    @Override
+    public int restUserPwd(int id, int pwd) {
+        return 0;
+    }
+
+    @Override
+    public int upDataStatus(int id, String status) {
+        return sysUserDao.upDataStatus(id,status);
+    }
+
+
 }
 

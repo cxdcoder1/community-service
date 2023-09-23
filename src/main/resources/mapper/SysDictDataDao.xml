@@ -21,16 +21,25 @@
 
     <!-- 批量插入 -->
     <insert id="insertBatch" keyProperty="dictCode" useGeneratedKeys="true">
-        insert into zy-community.sys_dict_data(dict_sort, dict_label, dict_value, dict_type, css_class, list_class,
-        is_default, status, create_by, create_time, update_by, update_time, remark)
+        insert into zy-community.sys_dict_data(dict_sort, dict_label, dict_value, dict_type, css_class, list_class, is_default, status, create_by, create_time, update_by, update_time, remark)
         values
         <foreach collection="entities" item="entity" separator=",">
-            (#{entity.dictSort}, #{entity.dictLabel}, #{entity.dictValue}, #{entity.dictType}, #{entity.cssClass},
-            #{entity.listClass}, #{entity.isDefault}, #{entity.status}, #{entity.createBy}, #{entity.createTime},
-            #{entity.updateBy}, #{entity.updateTime}, #{entity.remark})
+        (#{entity.dictSort}, #{entity.dictLabel}, #{entity.dictValue}, #{entity.dictType}, #{entity.cssClass}, #{entity.listClass}, #{entity.isDefault}, #{entity.status}, #{entity.createBy}, #{entity.createTime}, #{entity.updateBy}, #{entity.updateTime}, #{entity.remark})
         </foreach>
     </insert>
-
+    <!-- 批量插入或按主键更新 -->
+    <insert id="insertOrUpdateBatch" keyProperty="dictCode" useGeneratedKeys="true">
+        insert into zy-community.sys_dict_data(dict_sort, dict_label, dict_value, dict_type, css_class, list_class, is_default, status, create_by, create_time, update_by, update_time, remark)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.dictSort}, #{entity.dictLabel}, #{entity.dictValue}, #{entity.dictType}, #{entity.cssClass}, #{entity.listClass}, #{entity.isDefault}, #{entity.status}, #{entity.createBy}, #{entity.createTime}, #{entity.updateBy}, #{entity.updateTime}, #{entity.remark})
+        </foreach>
+        on duplicate key update
+        dict_sort = values(dict_sort) , dict_label = values(dict_label) , dict_value = values(dict_value) , dict_type =
+        values(dict_type) , css_class = values(css_class) , list_class = values(list_class) , is_default =
+        values(is_default) , status = values(status) , create_by = values(create_by) , create_time = values(create_time)
+        , update_by = values(update_by) , update_time = values(update_time) , remark = values(remark)
+    </insert>
 
     <update id="updateData">
         update sys_dict_data
@@ -97,6 +106,10 @@
             #{num}
         </foreach>
     </select>
+
+<!--    <select id="selectDataName" resultType="com.example.community.entity.SysDictData" >-->
+<!--    select * from sys_dict_data where dict_type=#{dictType}-->
+<!--</select>-->
 
     <select id="getDeriveList" resultType="com.example.community.entity.SysDictData">
         SELECT * FROM sys_dict_data  WHERE 1=1

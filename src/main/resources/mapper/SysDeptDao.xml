@@ -98,6 +98,7 @@
     <delete id="deleteDept">
         DELETE from sys_dept WHERE dept_id=#{deptId}
     </delete>
+
     <select id="getDeptList" resultType="com.example.community.entity.SysDept">
     select * from sys_dept
     <where>
@@ -110,6 +111,7 @@
     </where>
     order by order_num,parent_id
     </select>
+
     <select id="isChildren" resultType="com.example.community.entity.SysDept">
         SELECT * FROM `sys_dept` where parent_id =  #{deptId}
     </select>
