@@ -133,6 +133,7 @@
         sysdate()
         )
     </insert>
+
     <insert id="addMenu">
         insert into sys_role_menu values(#{roleId},#{menuId})
     </insert>
@@ -162,7 +163,7 @@
 
 
     <select id="getRoleMenuTreeselect" resultType="com.example.community.entity.SysMenu">
-        select * from sys_menu
+        select * from sys_menu m where m.visible!=1 and m.status!=1
     </select>
 
     <select id="selectRoleById" resultType="com.example.community.entity.SysRole">

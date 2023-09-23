@@ -2,6 +2,9 @@ package com.example.community.dao;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.example.community.dto.UserAndDeptAndRole;
+import com.example.community.entity.SysDept;
+import com.example.community.entity.SysPost;
+import com.example.community.entity.SysRole;
 import com.example.community.entity.SysUser;
 import org.apache.ibatis.annotations.Param;
 
@@ -36,13 +39,32 @@ public interface SysUserDao extends BaseMapper<SysUser> {
 
     int updataUser(@Param("sysUser") SysUser sysUser);
 
-    List<SysUser> selUserlist(@Param("index") Long index, @Param("size") Long size, @Param("sysUser") SysUser sysUser);
+    List<SysPost> getAllPost();
+
+    List<SysRole> getAllRole();
+
+    int updatePost(Long UserId, Long PostId);
+
+    int updateRole(Long UserId, Long RoleId);
+
+    int insertUser1(SysUser sysUser);
+
+    int insertPost(Long UserId, Long PostId);
+
+    int insertRole(Long UserId, Long RoleId);
+
+    int isAddUpdate(SysUser sysUser);
+
+    //获取用户添加修改的部门
+    List<SysDept> getDeptList(SysDept sysDept);
 
     long count(SysUser sysUser);
 
-    int restUserPwd(@Param("id") int id,@Param("pwd") int pwd);
+    int restUserPwd(@Param("id") int id, @Param("pwd") int pwd);
 
-    int upDataStatus(@Param("id") int id,@Param("status") String status);
+    int upDataStatus(@Param("id") int id, @Param("status") String status);
+
+    List<SysUser> selUserlist(@Param("index") Long index, @Param("size") Long size, @Param("sysUser") SysUser sysUser);
 
 }
 

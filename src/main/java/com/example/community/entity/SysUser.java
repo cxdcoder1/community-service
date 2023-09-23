@@ -4,10 +4,6 @@ package com.example.community.entity;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import java.io.Serializable;
-import java.util.Date;
-import java.util.List;
-
 /**
  * 用户信息表(SysUser)表实体类
  *
@@ -70,9 +66,185 @@ public class SysUser extends Model<SysUser> {
     //备注
     private String remark;
 
-    public SysUser() {
+    public Long getUserId() {
+        return userId;
     }
 
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
+    public Long getDeptId() {
+        return deptId;
+    }
+
+    public void setDeptId(Long deptId) {
+        this.deptId = deptId;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getNickName() {
+        return nickName;
+    }
+
+    public void setNickName(String nickName) {
+        this.nickName = nickName;
+    }
+
+    public String getUserType() {
+        return userType;
+    }
+
+    public void setUserType(String userType) {
+        this.userType = userType;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPhonenumber() {
+        return phonenumber;
+    }
+
+    public void setPhonenumber(String phonenumber) {
+        this.phonenumber = phonenumber;
+    }
+
+    public String getSex() {
+        return sex;
+    }
+
+    public void setSex(String sex) {
+        this.sex = sex;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getDelFlag() {
+        return delFlag;
+    }
+
+    public void setDelFlag(String delFlag) {
+        this.delFlag = delFlag;
+    }
+
+    public String getLoginIp() {
+        return loginIp;
+    }
+
+    public void setLoginIp(String loginIp) {
+        this.loginIp = loginIp;
+    }
+
+    public String getLoginDate() {
+        return loginDate;
+    }
+
+    public void setLoginDate(String loginDate) {
+        this.loginDate = loginDate;
+    }
+
+    public String getCreateBy() {
+        return createBy;
+    }
+
+    public void setCreateBy(String createBy) {
+        this.createBy = createBy;
+    }
+
+    public String getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(String createTime) {
+        this.createTime = createTime;
+    }
+
+    public String getUpdateBy() {
+        return updateBy;
+    }
+
+    public void setUpdateBy(String updateBy) {
+        this.updateBy = updateBy;
+    }
+
+    public String getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(String updateTime) {
+        this.updateTime = updateTime;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
+
+    @Override
+    public String toString() {
+        return "SysUser{" +
+                "userId=" + userId +
+                ", deptId=" + deptId +
+                ", userName='" + userName + '\'' +
+                ", nickName='" + nickName + '\'' +
+                ", userType='" + userType + '\'' +
+                ", email='" + email + '\'' +
+                ", phonenumber='" + phonenumber + '\'' +
+                ", sex='" + sex + '\'' +
+                ", avatar='" + avatar + '\'' +
+                ", password='" + password + '\'' +
+                ", status='" + status + '\'' +
+                ", delFlag='" + delFlag + '\'' +
+                ", loginIp='" + loginIp + '\'' +
+                ", loginDate='" + loginDate + '\'' +
+                ", createBy='" + createBy + '\'' +
+                ", createTime='" + createTime + '\'' +
+                ", updateBy='" + updateBy + '\'' +
+                ", updateTime='" + updateTime + '\'' +
+                ", remark='" + remark + '\'' +
+                '}';
+    }
+
+    public SysUser() {
+    }
 
     public SysUser(Long userId, Long deptId, String userName, String nickName, String userType, String email, String phonenumber, String sex, String avatar, String password, String status, String delFlag, String loginIp, String loginDate, String createBy, String createTime, String updateBy, String updateTime, String remark) {
         this.userId = userId;
@@ -94,314 +266,6 @@ public class SysUser extends Model<SysUser> {
         this.updateBy = updateBy;
         this.updateTime = updateTime;
         this.remark = remark;
-    }
-
-    /**
-     * 获取
-     * @return userId
-     */
-    public Long getUserId() {
-        return userId;
-    }
-
-    /**
-     * 设置
-     * @param userId
-     */
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
-
-    /**
-     * 获取
-     * @return deptId
-     */
-    public Long getDeptId() {
-        return deptId;
-    }
-
-    /**
-     * 设置
-     * @param deptId
-     */
-    public void setDeptId(Long deptId) {
-        this.deptId = deptId;
-    }
-
-    /**
-     * 获取
-     * @return userName
-     */
-    public String getUserName() {
-        return userName;
-    }
-
-    /**
-     * 设置
-     * @param userName
-     */
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    /**
-     * 获取
-     * @return nickName
-     */
-    public String getNickName() {
-        return nickName;
-    }
-
-    /**
-     * 设置
-     * @param nickName
-     */
-    public void setNickName(String nickName) {
-        this.nickName = nickName;
-    }
-
-    /**
-     * 获取
-     * @return userType
-     */
-    public String getUserType() {
-        return userType;
-    }
-
-    /**
-     * 设置
-     * @param userType
-     */
-    public void setUserType(String userType) {
-        this.userType = userType;
-    }
-
-    /**
-     * 获取
-     * @return email
-     */
-    public String getEmail() {
-        return email;
-    }
-
-    /**
-     * 设置
-     * @param email
-     */
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    /**
-     * 获取
-     * @return phonenumber
-     */
-    public String getPhonenumber() {
-        return phonenumber;
-    }
-
-    /**
-     * 设置
-     * @param phonenumber
-     */
-    public void setPhonenumber(String phonenumber) {
-        this.phonenumber = phonenumber;
-    }
-
-    /**
-     * 获取
-     * @return sex
-     */
-    public String getSex() {
-        return sex;
-    }
-
-    /**
-     * 设置
-     * @param sex
-     */
-    public void setSex(String sex) {
-        this.sex = sex;
-    }
-
-    /**
-     * 获取
-     * @return avatar
-     */
-    public String getAvatar() {
-        return avatar;
-    }
-
-    /**
-     * 设置
-     * @param avatar
-     */
-    public void setAvatar(String avatar) {
-        this.avatar = avatar;
-    }
-
-    /**
-     * 获取
-     * @return password
-     */
-    public String getPassword() {
-        return password;
-    }
-
-    /**
-     * 设置
-     * @param password
-     */
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    /**
-     * 获取
-     * @return status
-     */
-    public String getStatus() {
-        return status;
-    }
-
-    /**
-     * 设置
-     * @param status
-     */
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    /**
-     * 获取
-     * @return delFlag
-     */
-    public String getDelFlag() {
-        return delFlag;
-    }
-
-    /**
-     * 设置
-     * @param delFlag
-     */
-    public void setDelFlag(String delFlag) {
-        this.delFlag = delFlag;
-    }
-
-    /**
-     * 获取
-     * @return loginIp
-     */
-    public String getLoginIp() {
-        return loginIp;
-    }
-
-    /**
-     * 设置
-     * @param loginIp
-     */
-    public void setLoginIp(String loginIp) {
-        this.loginIp = loginIp;
-    }
-
-    /**
-     * 获取
-     * @return loginDate
-     */
-    public String getLoginDate() {
-        return loginDate;
-    }
-
-    /**
-     * 设置
-     * @param loginDate
-     */
-    public void setLoginDate(String loginDate) {
-        this.loginDate = loginDate;
-    }
-
-    /**
-     * 获取
-     * @return createBy
-     */
-    public String getCreateBy() {
-        return createBy;
-    }
-
-    /**
-     * 设置
-     * @param createBy
-     */
-    public void setCreateBy(String createBy) {
-        this.createBy = createBy;
-    }
-
-    /**
-     * 获取
-     * @return createTime
-     */
-    public String getCreateTime() {
-        return createTime;
-    }
-
-    /**
-     * 设置
-     * @param createTime
-     */
-    public void setCreateTime(String createTime) {
-        this.createTime = createTime;
-    }
-
-    /**
-     * 获取
-     * @return updateBy
-     */
-    public String getUpdateBy() {
-        return updateBy;
-    }
-
-    /**
-     * 设置
-     * @param updateBy
-     */
-    public void setUpdateBy(String updateBy) {
-        this.updateBy = updateBy;
-    }
-
-    /**
-     * 获取
-     * @return updateTime
-     */
-    public String getUpdateTime() {
-        return updateTime;
-    }
-
-    /**
-     * 设置
-     * @param updateTime
-     */
-    public void setUpdateTime(String updateTime) {
-        this.updateTime = updateTime;
-    }
-
-    /**
-     * 获取
-     * @return remark
-     */
-    public String getRemark() {
-        return remark;
-    }
-
-    /**
-     * 设置
-     * @param remark
-     */
-    public void setRemark(String remark) {
-        this.remark = remark;
-    }
-
-    public String toString() {
-        return "SysUser{userId = " + userId + ", deptId = " + deptId + ", userName = " + userName + ", nickName = " + nickName + ", userType = " + userType + ", email = " + email + ", phonenumber = " + phonenumber + ", sex = " + sex + ", avatar = " + avatar + ", password = " + password + ", status = " + status + ", delFlag = " + delFlag + ", loginIp = " + loginIp + ", loginDate = " + loginDate + ", createBy = " + createBy + ", createTime = " + createTime + ", updateBy = " + updateBy + ", updateTime = " + updateTime + ", remark = " + remark + "}";
     }
 }
 
