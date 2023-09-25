@@ -113,7 +113,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserDao, SysUser> impleme
 
     @Override
     public int restUserPwd(int id, int pwd) {
-        return 0;
+        return sysUserDao.restUserPwd(id,pwd);
     }
 
     @Override

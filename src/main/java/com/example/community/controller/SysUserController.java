@@ -17,6 +17,7 @@ import com.example.community.entity.SysUser;
 import com.example.community.service.SysUserService;
 import com.example.community.utils.DeptTree;
 import com.example.community.utils.JwtUtil;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -45,7 +46,7 @@ public class SysUserController extends ApiController {
     /**
      * 分页查询所有数据
      *
-     * @param page 分页对象
+     * @param page    分页对象
      * @param sysUser 查询实体
      * @return 所有数据
      */
@@ -74,29 +75,30 @@ public class SysUserController extends ApiController {
 
     /**
      * 登录
+     *
      * @param user
      * @return
      */
     @RequestMapping("login")
-    public Map<String,Object> login(@RequestBody SysUser user, HttpServletRequest request) throws Exception {
-        Map<String,Object> result = new HashMap<>();
+    public Map<String, Object> login(@RequestBody SysUser user, HttpServletRequest request) throws Exception {
+        Map<String, Object> result = new HashMap<>();
         //校验用户名和密码
         QueryWrapper queryWrapper = new QueryWrapper<SysUser>();
-        queryWrapper.eq("phonenumber",user.getPhonenumber());
+        queryWrapper.eq("phonenumber", user.getPhonenumber());
         //根据电话查询用户z
         SysUser user1 = sysUserService.getOne(queryWrapper);
-        if (user1 != null){
-            if (user1.getPassword().equals(user.getPassword())){
+        if (user1 != null) {
+            if (user1.getPassword().equals(user.getPassword())) {
                 //将用户信息存储到Session  //登入成功
-                HttpSession session = request. getSession();
-                session. setAttribute("userInfo", user1);  //1.用于拦截器的判断  2.界面显示用户信息
-                result. put("user", user1);
+                HttpSession session = request.getSession();
+                session.setAttribute("userInfo", user1);  //1.用于拦截器的判断  2.界面显示用户信息
+                result.put("user", user1);
                 //把token返回给客户端-->客户端保存至localStorage-->客户端每次请求附带localStorage参数
                 //SystemConstant.JWT_TTL：token有效时间
                 String JWT = JwtUtil.createJWT("1", JSON.toJSONString(user1), SystemConstant.JWT_TTL);
 //                log.info(JWT);
-                result.put("JWT",JWT);
-                result.put("status","200");
+                result.put("JWT", JWT);
+                result.put("status", "200");
                 return result;
             }
 //            //登录失败 ，密码错误
@@ -105,9 +107,9 @@ public class SysUserController extends ApiController {
 //            return result;
         }
         //登录失败，用户名错误或不存在
-        result. put("success", false);
-        result. put("msg", "用户名或密码错误!");
-        result.put("status","201");
+        result.put("success", false);
+        result.put("msg", "用户名或密码错误!");
+        result.put("status", "201");
         return result;
     }
 
@@ -170,13 +172,14 @@ public class SysUserController extends ApiController {
         List<SysPost> allPost = sysUserService.getAllPost();
         List<SysRole> allRole = sysUserService.getAllRole();
 
-        map.put("posts",allPost);
-        map.put("roles",allRole);
+        map.put("posts", allPost);
+        map.put("roles", allRole);
 
         return map;
     }
 
     @PutMapping("updateUser")
+    @Transactional
     public HashMap<String, Object> updateUser(@RequestBody UserAndPostIdAndRoleId userAndPostIdAndRoleId) {
         HashMap<String, Object> map = new HashMap<>();
         SysUser sysUser = new SysUser();
@@ -236,41 +239,44 @@ public class SysUserController extends ApiController {
         map.put("data", 0);
         return map;
     }
+
     //密码重置
     @PutMapping("resetPwd")
-    public R resetPwd(@RequestParam("id") int id,@RequestParam("pwd") int pwd) {
-        return success(this.sysUserService.restUserPwd(id,pwd));
+    public R resetPwd(@RequestParam("id") int id, @RequestParam("pwd") int pwd) {
+        return success(this.sysUserService.restUserPwd(id, pwd));
     }
 
     //状态
     @PutMapping("updateUserStatus")
-    public R updateUser(@RequestParam("id") int id,@RequestParam("status") String status) {
-        return success(this.sysUserService.upDataStatus(id,status));
+    public R updateUser(@RequestParam("id") int id, @RequestParam("status") String status) {
+        return success(this.sysUserService.upDataStatus(id, status));
     }
 
     @PostMapping("getDeptList")
-    public Map<String,Object> getMenuList(@RequestBody SysDept sysDept){
-        Map<String,Object> result = new HashMap<>();
+    public Map<String, Object> getMenuList(@RequestBody SysDept sysDept) {
+        Map<String, Object> result = new HashMap<>();
         List<SysDept> sysDeptList = sysUserService.selAllDept(sysDept);
         int len = sysDeptList.size();
-        for(int i = 0; i < len; i++){
-            int count = 0 ;
-            for(int j = 0; j < len; j++){
-                if(sysDeptList.get(i).getParentId().equals(sysDeptList.get(j).getDeptId())){
+        for (int i = 0; i < len; i++) {
+            int count = 0;
+            for (int j = 0; j < len; j++) {
+                if (sysDeptList.get(i).getParentId().equals(sysDeptList.get(j).getDeptId())) {
                     count++;
                 }
             }
-            if(count==0){
+            if (count == 0) {
                 sysDeptList.get(i).setParentId(0L);
             }
         }
         DeptTree deptTree = new DeptTree(sysDeptList);
         List<SysDept> sysDepts = deptTree.builTree();
-        result.put("menuList",sysDepts);
-        result.put("msg","获取成功");
+        result.put("menuList", sysDepts);
+        result.put("msg", "获取成功");
         System.err.println(result);
         return result;
-    };
+    }
+
+    ;
 
 }
 

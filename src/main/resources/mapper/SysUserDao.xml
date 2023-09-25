@@ -198,6 +198,7 @@
             </association>
         </collection>
     </resultMap>
+
     <select id="selUserlist" resultMap="Userlist">
         select  *,
         sys_user.user_id,
@@ -241,6 +242,7 @@
 
         limit #{index},#{size}
     </select>
+
     <select id="getAllPost" resultType="com.example.community.entity.SysPost">
         select * from sys_post
         where status=0
@@ -266,7 +268,7 @@
         where d.status=0
         order by order_num,parent_id
     </select>
-    <select id="count" resultType="java.lang.Long" >
+
     <select id="count" resultType="java.lang.Long">
         select count(*) from sys_user
         <where>
