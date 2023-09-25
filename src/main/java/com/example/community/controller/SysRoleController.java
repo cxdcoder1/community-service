@@ -241,5 +241,12 @@ public class SysRoleController extends ApiController {
         }
         return menuIds;
     }
+
+    //状态下拉框
+    @GetMapping("/statusOption")
+    public R statusOption() {
+        System.err.println();
+        return success(this.sysRoleService.statusOption());
+    }
 }
 

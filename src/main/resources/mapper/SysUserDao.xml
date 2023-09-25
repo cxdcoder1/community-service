@@ -151,7 +151,7 @@
         where user_id =#{UserId}
     </update>
 
-    <resultMap id="UserInfo" type="com.example.community.dto.UserAndDept" autoMapping="true">
+    <resultMap id="UserInfo" type="com.example.community.dto.UserAndDeptAndRole" autoMapping="true">
         <id property="userId" column="userId"></id>
         <association property="sysRole" javaType="com.example.community.entity.SysRole" autoMapping="true">
             <id property="roleId" column="roleId"></id>
@@ -239,8 +239,9 @@
                 and DATE_FORMAT(sys_user.create_time, '%y%m%d') &gt; DATE_FORMAT(#{sysUser.createTime}, '%y%m%d')
             </if>
         </where>
-
+        <if test="size != 0">
         limit #{index},#{size}
+        </if>
     </select>
 
     <select id="getAllPost" resultType="com.example.community.entity.SysPost">
@@ -297,6 +298,11 @@
         </where>
 
     </select>
+
+
+
+
+
 
 </mapper>
 

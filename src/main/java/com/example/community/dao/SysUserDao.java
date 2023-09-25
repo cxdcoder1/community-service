@@ -58,6 +58,7 @@ public interface SysUserDao extends BaseMapper<SysUser> {
 
     //获取用户添加修改的部门
     List<SysDept> getDeptList(SysDept sysDept);
+
     List<UserAndDeptAndPostAndRole> selUserlist(@Param("index") Long index, @Param("size") Long size, @Param("sysUser") UserAndDeptAndPostAndRole userAndDeptAndPostAndRole);
 
     long count(UserAndDeptAndPostAndRole userAndDeptAndPostAndRole);
@@ -67,6 +68,8 @@ public interface SysUserDao extends BaseMapper<SysUser> {
     int upDataStatus(@Param("id") int id, @Param("status") String status);
 
     List<SysUser> selUserlist(@Param("index") Long index, @Param("size") Long size, @Param("sysUser") SysUser sysUser);
+
+
 
 }
 

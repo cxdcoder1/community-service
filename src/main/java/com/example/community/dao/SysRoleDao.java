@@ -80,5 +80,7 @@ public interface SysRoleDao extends BaseMapper<SysRole> {
 
     public List<SysRoleMenu>  getMenuIds(Long roleId);
 
+
+
 }
 

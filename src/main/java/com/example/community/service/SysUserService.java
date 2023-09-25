@@ -4,10 +4,8 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.example.community.dto.UserAndDeptAndPostAndRole;
 import com.example.community.dto.UserAndDeptAndRole;
-import com.example.community.entity.SysDept;
-import com.example.community.entity.SysPost;
-import com.example.community.entity.SysRole;
-import com.example.community.entity.SysUser;
+import com.example.community.entity.*;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -47,6 +45,7 @@ public interface SysUserService extends IService<SysUser> {
 
     int upDataStatus( int id, String status);
 
+    List<SysDictData> statusOption();
 
 }
 

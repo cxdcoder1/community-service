@@ -10,10 +10,7 @@ import com.example.community.constant.SystemConstant;
 import com.example.community.dto.UserAndDeptAndPostAndRole;
 import com.example.community.dto.UserAndDeptAndRole;
 import com.example.community.dto.UserAndPostIdAndRoleId;
-import com.example.community.entity.SysDept;
-import com.example.community.entity.SysPost;
-import com.example.community.entity.SysRole;
-import com.example.community.entity.SysUser;
+import com.example.community.entity.*;
 import com.example.community.service.SysUserService;
 import com.example.community.utils.DeptTree;
 import com.example.community.utils.JwtUtil;
@@ -46,7 +43,7 @@ public class SysUserController extends ApiController {
     /**
      * 分页查询所有数据
      *
-     * @param page    分页对象
+     * @param page 分页对象
      * @param sysUser 查询实体
      * @return 所有数据
      */
@@ -75,7 +72,6 @@ public class SysUserController extends ApiController {
 
     /**
      * 登录
-     *
      * @param user
      * @return
      */
@@ -179,7 +175,6 @@ public class SysUserController extends ApiController {
     }
 
     @PutMapping("updateUser")
-    @Transactional
     public HashMap<String, Object> updateUser(@RequestBody UserAndPostIdAndRoleId userAndPostIdAndRoleId) {
         HashMap<String, Object> map = new HashMap<>();
         SysUser sysUser = new SysUser();
@@ -239,17 +234,18 @@ public class SysUserController extends ApiController {
         map.put("data", 0);
         return map;
     }
-
     //密码重置
     @PutMapping("resetPwd")
-    public R resetPwd(@RequestParam("id") int id, @RequestParam("pwd") int pwd) {
-        return success(this.sysUserService.restUserPwd(id, pwd));
+    public R resetPwd(@RequestParam("id") int id,@RequestParam("pwd") int pwd) {
+        System.err.println(id);
+        System.err.println(pwd);
+        return success(this.sysUserService.restUserPwd(id,pwd));
     }
 
     //状态
     @PutMapping("updateUserStatus")
-    public R updateUser(@RequestParam("id") int id, @RequestParam("status") String status) {
-        return success(this.sysUserService.upDataStatus(id, status));
+    public R updateUser(@RequestParam("id") int id,@RequestParam("status") String status) {
+        return success(this.sysUserService.upDataStatus(id,status));
     }
 
     @PostMapping("getDeptList")
@@ -277,6 +273,13 @@ public class SysUserController extends ApiController {
     }
 
     ;
+
+    //状态下拉框
+    @GetMapping("/statusOption")
+    public R statusOption() {
+        return success(this.sysUserService.statusOption());
+    }
+
 
 }
 
