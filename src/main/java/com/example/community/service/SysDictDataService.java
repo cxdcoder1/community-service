@@ -28,5 +28,7 @@ public interface SysDictDataService extends IService<SysDictData> {
 
     int isok(SysDictData sysDictData);
 
+    List<SysDictData>statusList();
+
 }
 

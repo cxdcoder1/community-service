@@ -6,6 +6,8 @@ import com.example.community.entity.SysUserPost;
 import com.example.community.service.SysUserPostService;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
+
 /**
  * 用户与岗位关联表(SysUserPost)表服务实现类
  *
@@ -15,5 +17,12 @@ import org.springframework.stereotype.Service;
 @Service("sysUserPostService")
 public class SysUserPostServiceImpl extends ServiceImpl<SysUserPostDao, SysUserPost> implements SysUserPostService {
 
+    @Resource
+    private SysUserPostDao sysUserPostDao;
+
+    @Override
+    public Integer setUserPost(Integer postId) {
+        return sysUserPostDao.selUserPost(postId);
+    }
 }
 

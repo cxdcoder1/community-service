@@ -242,8 +242,8 @@
 <!--    管理员查询所有菜单-->
     <select id="MenuList" resultType="com.example.community.entity.SysMenu">
         select * from sys_menu
-        where visible=0
-          and menu_type in ('M', 'C')
+        where
+          menu_type in ('M', 'C')
         order by parent_id, order_num ASC
     </select>
 

@@ -2,6 +2,7 @@ package com.example.community.controller;
 
 
 import com.baomidou.mybatisplus.extension.api.ApiController;
+import com.baomidou.mybatisplus.extension.api.R;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.community.entity.SysDictData;
 import com.example.community.service.SysDictDataService;
@@ -95,6 +96,10 @@ public class SysDictDataController extends ApiController {
         return map;
     }
 
+    @GetMapping("getStatus")
+    public R statusList(){
+       return this.success(sysDictDataService.statusList());
+    }
 
 }
 

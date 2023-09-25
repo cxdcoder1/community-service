@@ -134,6 +134,9 @@
             and dict_type = #{dictType}
         </where>
     </select>
+    <select id="statusList" resultType="com.example.community.entity.SysDictData">
+        select * from sys_dict_data WHERE dict_type='sys_post_status' and status=0 order by dict_sort
+    </select>
 
 
 </mapper>
