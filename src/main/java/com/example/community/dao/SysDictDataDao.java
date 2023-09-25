@@ -46,5 +46,10 @@ public interface SysDictDataDao extends BaseMapper<SysDictData> {
 
     int isAddUpdate(SysDictData sysDictData);
 
+    List<SysDictData> statusOption();
+
+    List<SysDictData>statusList();
+
+
 }
 

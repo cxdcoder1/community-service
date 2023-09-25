@@ -63,5 +63,10 @@ public class SysDictDataServiceImpl extends ServiceImpl<SysDictDataDao, SysDictD
         return sysDictDataDao.isAddUpdate(sysDictData);
     }
 
+    @Override
+    public List<SysDictData> statusList() {
+        return sysDictDataDao.statusList();
+    }
+
 }
 

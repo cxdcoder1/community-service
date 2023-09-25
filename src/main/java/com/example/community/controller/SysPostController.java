@@ -6,13 +6,17 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.api.ApiController;
 import com.baomidou.mybatisplus.extension.api.R;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.example.community.entity.SysDept;
 import com.example.community.entity.SysPost;
 import com.example.community.service.SysPostService;
+import com.example.community.service.SysUserPostService;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 岗位信息表(SysPost)表控制层
@@ -22,6 +26,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("sysPost")
+@CrossOrigin
 public class SysPostController extends ApiController {
     /**
      * 服务对象
@@ -29,6 +34,9 @@ public class SysPostController extends ApiController {
     @Resource
     private SysPostService sysPostService;
 
+
+    @Resource
+    private SysUserPostService sysUserPostService;
     /**
      * 分页查询所有数据
      *
@@ -39,6 +47,12 @@ public class SysPostController extends ApiController {
     @GetMapping
     public R selectAll(Page<SysPost> page, SysPost sysPost) {
         return success(this.sysPostService.page(page, new QueryWrapper<>(sysPost)));
+    }
+
+
+    @GetMapping("postList")
+    public R selectPost(Page<SysPost>page,SysPost sysPost){
+        return success(this.sysPostService.postList(page,sysPost));
     }
 
     /**
@@ -70,7 +84,7 @@ public class SysPostController extends ApiController {
      * @return 修改结果
      */
     @PutMapping
-    public R update(@RequestBody SysPost sysPost) {
+    public R updatea(@RequestBody SysPost sysPost) {
         return success(this.sysPostService.updateById(sysPost));
     }
 
@@ -84,5 +98,86 @@ public class SysPostController extends ApiController {
     public R delete(@RequestParam("idList") List<Long> idList) {
         return success(this.sysPostService.removeByIds(idList));
     }
+
+    @GetMapping("insertPost")
+    public Map<String, Object>insertPost(SysPost sysPost) throws Exception {
+        Map<String, Object> map = new HashMap<>();
+        Integer integer = sysPostService.selName(sysPost);
+        if (integer!=0){
+            map.put("status", 201);
+            map.put("success", false);
+            map.put("msg", "编码或者名字重复");
+            return map;
+        }
+        int i = sysPostService.insertPost(sysPost);
+        map.put("msg","新增成功");
+        map.put("status", 200);
+        map.put("success", true);
+        return map;
+    }
+    @PutMapping("updatePosts")
+    public Map<String, Object> update(@RequestBody SysPost sysPost) {
+        Map<String, Object> map = new HashMap<>();
+        Integer integer = sysPostService.selName(sysPost);
+        if (integer==0){
+            int i = sysPostService.update(sysPost);
+            map.put("msg","修改成功");
+            map.put("status", 200);
+            map.put("success", true);
+            return map;
+        }
+        map.put("status", 201);
+        map.put("success", false);
+        map.put("msg", "编码或者名字重复");
+        return map;
+    }
+
+    @DeleteMapping("delPost/{postId}")
+    public Map<String ,Object> delPost(@PathVariable Integer postId){
+        Map<String, Object> map = new HashMap<>();
+        Integer integer = sysUserPostService.setUserPost(postId);
+        if (integer!=null){
+            map.put("status", 201);
+            map.put("success", false);
+            map.put("msg", "该岗位下有员工不能删除");
+            return map;
+        }
+        sysPostService.delPost(postId);
+        map.put("msg","删除成功");
+        map.put("status", 200);
+        map.put("success", true);
+        return map;
+    }
+    @GetMapping("delPostS/{houseIds}")
+    public Map<String,Object> delPostS(@PathVariable Long[] houseIds) {
+        Map<String, Object> map = new HashMap<>();
+        Integer integer = sysPostService.deleteByIds(houseIds);
+        if (integer!=null){
+            map.put("msg","删除成功");
+            map.put("status", 200);
+            map.put("success", true);
+            return map;
+        }
+        map.put("status", 201);
+        map.put("success", false);
+        map.put("msg", "删除失败");
+        return map;
+    }
+
+    @PostMapping("deletes")
+    public Map<String,Object> deletes(@RequestBody int[] ids){
+        Map<String,Object> result = new HashMap<>();
+        boolean deletes = sysPostService.deletes(ids);
+        if(deletes){
+            result.put("status",200);
+            result.put("msg","删除成功");
+        }else{
+            result.put("status",400);
+            result.put("msg","删除的岗位中绑定了个人信息,删除失败");
+        }
+        return result;
+    }
+
+
 }
 

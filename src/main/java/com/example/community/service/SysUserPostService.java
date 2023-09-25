@@ -11,5 +11,8 @@ import com.example.community.entity.SysUserPost;
  */
 public interface SysUserPostService extends IService<SysUserPost> {
 
+    Integer setUserPost(Integer postId);
+
+
 }
 

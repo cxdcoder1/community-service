@@ -31,7 +31,130 @@
             (#{entity.postCode}, #{entity.postName}, #{entity.postSort}, #{entity.status}, #{entity.createBy}, #{entity.createTime}, #{entity.updateBy}, #{entity.updateTime}, #{entity.remark})
         </foreach>
         on duplicate key update
-         post_code = values(post_code) , post_name = values(post_name) , post_sort = values(post_sort) , status = values(status) , create_by = values(create_by) , create_time = values(create_time) , update_by = values(update_by) , update_time = values(update_time) , remark = values(remark)     </insert>
+         post_code = values(post_code) , post_name = values(post_name) , post_sort = values(post_sort) , status = values(status) , create_by = values(create_by) , create_time = values(create_time) , update_by = values(update_by) , update_time = values(update_time) , remark = values(remark)
+        </insert>
+
+    <insert id="insertPost">
+        insert into sys_post
+
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="postCode != null">post_Code,</if>
+            <if test="postName != null">post_name,</if>
+            <if test="postSort != null">post_sort,</if>
+            <if test="status != null">status,</if>
+            <if test="remark != null">remark,</if>
+        </trim>
+        values
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="postCode != null">#{postCode},</if>
+            <if test="postName != null">#{postName},</if>
+            <if test="postSort != null">#{postSort},</if>
+            <if test="status != null">#{status},</if>
+            <if test="remark != null">#{remark},</if>
+        </trim>
+
+    </insert>
+    <update id="updateDept" parameterType="com.example.community.entity.SysPost">
+        UPDATE sys_post
+        SET
+        <trim prefix="" suffixOverrides=",">
+            <if test="postCode != null and postCode != ''">post_code = #{postCode},</if>
+            <if test="postName != null and postName != ''">post_name = #{postName},</if>
+            <if test="postSort != null">post_sort = #{postSort},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="remark != null">remark = #{remark}</if>
+        </trim>
+        WHERE post_id = #{postId}
+    </update>
+    <delete id="deletePostById" parameterType="Long">
+        delete from sys_post where post_id = #{postId}
+    </delete>
+    <delete id="deletePostIds"  parameterType="Long">
+        delect * from where post_Id in
+        <foreach collection="array" item="houseIds" open="(" separator="," close=")">
+            #{houseId}
+        </foreach>
+    </delete>
+    <delete id="deletes">
+        delete from sys_post where post_id in
+        <foreach collection="ids" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
+
+    <select id="count" resultType="java.lang.Long">
+        SELECT COUNT(*) FROM sys_post
+    <where>
+        <if test="postCode != null and postCode != ''">
+            and  post_code LIKE CONCAT('%', #{postCode}, '%')
+        </if>
+        <if test="postName != null and postName != ''">
+            AND post_name LIKE CONCAT('%', #{postName}, '%')
+        </if>
+        <if test="status != null and status != ''">
+            AND status = #{status}
+        </if>
+    </where>
+    </select>
+    <select id="selectPost"  parameterType="com.example.community.entity.SysPost"
+            resultMap="SysPostMap">
+        SELECT * FROM sys_post
+        <where>
+            <if test="sysPost.postCode != null and sysPost.postCode != ''">
+                and  post_code LIKE CONCAT('%', #{sysPost.postCode}, '%')
+            </if>
+            <if test="sysPost.postName != null and sysPost.postName != ''">
+                AND post_name LIKE CONCAT('%', #{sysPost.postName}, '%')
+            </if>
+            <if test="sysPost.status != null and sysPost.status != ''">
+                AND status = #{sysPost.status}
+            </if>
+        </where>
+        order by post_sort asc
+        limit #{index},#{size}
+    </select>
+
+    <select id="getPostByCodeOrName" resultType="java.lang.Integer">
+        SELECT * FROM sys_post
+        WHERE post_code = #{postCode} OR post_name = #{postName}
+    </select>
+    <select id="checkName" resultType="com.example.community.entity.SysPost">
+        select * from sys_post
+        where post_name =#{postName}  or post_code = #{postCode}
+    </select>
+
+
+
+
+    <select id="selCode" resultType="java.lang.Integer">
+        SELECT COUNT(post_id)
+        FROM sys_post
+        WHERE post_code = #{postCode}
+          AND post_id != #{postId}
+    </select>
+    <select id="selNamePost" resultType="java.lang.Integer">
+        select count(post_id) from sys_post
+        <where>
+            (post_code = #{postCode} or post_name = #{postName})
+            <if test="postId != null and postId != ''">
+                and post_id != #{postId}
+            </if>
+        </where>
+    </select>
+    <select id="getPostList" resultType="com.example.community.entity.SysPost">
+        SELECT * FROM sys_post  WHERE post_id != 1
+        <if test="list!=null">
+            and
+            post_id in
+            <foreach collection="list" item="num" index="index" open="(" close=")" separator=",">
+                #{num}
+            </foreach>
+        </if>
+    </select>
+    <select id="getUserByPost" resultType="java.lang.Integer">
+        select count(p.post_id) from sys_post p join sys_user ur on p.post_id = ur.user_id where p.post_id = #{id}
+    </select>
+
 
 </mapper>
 

@@ -2,13 +2,11 @@ package com.example.community.service.impl;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.example.community.dao.SysDictDataDao;
 import com.example.community.dao.SysUserDao;
 import com.example.community.dto.UserAndDeptAndPostAndRole;
 import com.example.community.dto.UserAndDeptAndRole;
-import com.example.community.entity.SysDept;
-import com.example.community.entity.SysPost;
-import com.example.community.entity.SysRole;
-import com.example.community.entity.SysUser;
+import com.example.community.entity.*;
 import com.example.community.service.SysUserService;
 import org.springframework.stereotype.Service;
 
@@ -27,6 +25,9 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserDao, SysUser> impleme
     @Resource
     SysUserDao sysUserDao;
 
+    @Resource
+    SysDictDataDao sysDictDataDao;
+
     @Override
     public UserAndDeptAndRole getUserInfo(int id) {
         return sysUserDao.getUserInfo(id);
@@ -43,7 +44,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserDao, SysUser> impleme
         System.out.println(page.getCurrent());
         System.out.println(page.getSize());
 
-        long total = sysUserDao.count(userAndDeptAndPostAndRole);
+        long total = sysUserDao.selUserlist(0L,0L,userAndDeptAndPostAndRole).size();
         page.setTotal(total);
 
         // 计算总页数
@@ -113,12 +114,17 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserDao, SysUser> impleme
 
     @Override
     public int restUserPwd(int id, int pwd) {
-        return 0;
+        return sysUserDao.restUserPwd(id,pwd);
     }
 
     @Override
     public int upDataStatus(int id, String status) {
         return sysUserDao.upDataStatus(id,status);
+    }
+
+    @Override
+    public List<SysDictData> statusOption() {
+        return sysDictDataDao.statusOption();
     }
 
 

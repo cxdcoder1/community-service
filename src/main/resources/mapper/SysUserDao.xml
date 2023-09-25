@@ -151,7 +151,7 @@
         where user_id =#{UserId}
     </update>
 
-    <resultMap id="UserInfo" type="com.example.community.dto.UserAndDept" autoMapping="true">
+    <resultMap id="UserInfo" type="com.example.community.dto.UserAndDeptAndRole" autoMapping="true">
         <id property="userId" column="userId"></id>
         <association property="sysRole" javaType="com.example.community.entity.SysRole" autoMapping="true">
             <id property="roleId" column="roleId"></id>
@@ -198,6 +198,7 @@
             </association>
         </collection>
     </resultMap>
+
     <select id="selUserlist" resultMap="Userlist">
         select  *,
         sys_user.user_id,
@@ -238,9 +239,11 @@
                 and DATE_FORMAT(sys_user.create_time, '%y%m%d') &gt; DATE_FORMAT(#{sysUser.createTime}, '%y%m%d')
             </if>
         </where>
-
+        <if test="size != 0">
         limit #{index},#{size}
+        </if>
     </select>
+
     <select id="getAllPost" resultType="com.example.community.entity.SysPost">
         select * from sys_post
         where status=0
@@ -266,7 +269,7 @@
         where d.status=0
         order by order_num,parent_id
     </select>
-    <select id="count" resultType="java.lang.Long" >
+
     <select id="count" resultType="java.lang.Long">
         select count(*) from sys_user
         <where>
@@ -295,6 +298,11 @@
         </where>
 
     </select>
+
+
+
+
+
 
 </mapper>
 

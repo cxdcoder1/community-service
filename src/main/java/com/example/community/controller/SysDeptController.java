@@ -126,6 +126,11 @@ public class SysDeptController extends ApiController {
      * @param sysDept
      * @return
      */
+    /**
+     * 获取列表
+     * @param sysDept
+     * @return
+     */
     @PostMapping("getDeptList")
     public Map<String,Object> getMenuList(@RequestBody SysDept sysDept){
         Map<String,Object> result = new HashMap<>();
@@ -143,6 +148,7 @@ public class SysDeptController extends ApiController {
             }
         }
         DeptTree deptTree = new DeptTree(sysDeptList);
+        System.err.println(deptTree);
         List<SysDept> sysDepts = deptTree.builTree();
         result.put("menuList",sysDepts);
         result.put("msg","获取成功");

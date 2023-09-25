@@ -4,9 +4,11 @@ import com.alibaba.excel.EasyExcel;
 import com.alibaba.excel.write.style.HorizontalCellStyleStrategy;
 import com.example.community.entity.SysDictData;
 import com.example.community.entity.SysDictType;
+import com.example.community.entity.SysPost;
 import com.example.community.entity.SysRole;
 import com.example.community.service.SysDictDataService;
 import com.example.community.service.SysDictTypeService;
+import com.example.community.service.SysPostService;
 import com.example.community.service.SysRoleService;
 import com.example.community.utils.easyexcel.StyleUtils;
 import org.springframework.web.bind.annotation.*;
@@ -28,6 +30,8 @@ public class ExcelController {
     private SysDictDataService sysDictDataService;
     @Resource
     private SysDictTypeService sysDictTypeService;
+    @Resource
+    private SysPostService sysPostService;
 
     /**
      * 生成随机文件名 并返回固定路径
@@ -58,6 +62,28 @@ public class ExcelController {
 
 
         EasyExcel.write(fileName, SysRole.class)
+                .sheet(0)
+                .registerWriteHandler(horizontalCellStyleStrategy)
+                .doWrite(dataList);
+    }
+
+    /**
+     * 岗位
+     * @param fileName
+     * @param list
+     */
+    public static void simpleWrites(String fileName,List<SysPost> list){
+        //"E:\\lx.xls"
+        List<SysPost> dataList = new ArrayList<>();
+
+        for (SysPost sysPost : list) {
+            dataList.add(sysPost);
+        }
+
+        // 设置单元格样式
+        HorizontalCellStyleStrategy horizontalCellStyleStrategy = new HorizontalCellStyleStrategy( StyleUtils.getHeadStyle(),StyleUtils.getContentStyle());
+
+        EasyExcel.write(fileName, SysPost.class)
                 .sheet(0)
                 .registerWriteHandler(horizontalCellStyleStrategy)
                 .doWrite(dataList);
@@ -152,11 +178,24 @@ public class ExcelController {
             lists=null;
         }
         System.err.println(lists);
-
         List<SysDictType> deriveList = sysDictTypeService.getDeriveList(lists);
-
         String path = "F:\\lx.xls";
         Dictexcel(path,deriveList);
+        result.put("msg","导出成功");
+        result.put("status","200");
+        result.put("path",path);
+        return result;
+    }
+
+    @PostMapping("postListS")
+    public Map<String, Object> postList(@RequestBody List<String> lists) {
+        Map<String, Object> result = new HashMap<>();
+        if (lists.size()==0){
+            lists=null;
+        }
+        List<SysPost> postList = sysPostService.getPostList(lists);
+        String path="D:\\lx.xls";
+        simpleWrites(path,postList);
         result.put("msg","导出成功");
         result.put("status","200");
         result.put("path",path);

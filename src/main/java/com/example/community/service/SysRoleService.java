@@ -3,6 +3,7 @@ package com.example.community.service;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.example.community.dto.RolesAndMenuIds;
+import com.example.community.entity.SysDictData;
 import com.example.community.entity.SysMenu;
 import com.example.community.entity.SysRole;
 import com.example.community.entity.SysRoleMenu;
@@ -55,7 +56,7 @@ public interface SysRoleService extends IService<SysRole> {
      */
     Integer deleteRole(String roleId);
 
-
+    List<SysDictData> statusOption();
 
     public int upDataStatus(long roleId,String status);
 

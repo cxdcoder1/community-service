@@ -31,5 +31,15 @@ int insertBatch(@Param("entities") List<SysUserPost> entities);
 */
 int insertOrUpdateBatch(@Param("entities") List<SysUserPost> entities);
 
+
+    /**
+     * 查询岗位下面的用户
+     * @param postId
+     * @return
+     */
+    Integer selUserPost(Integer postId);
+
+
+
 }
 

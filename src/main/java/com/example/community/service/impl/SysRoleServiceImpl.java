@@ -2,8 +2,10 @@ package com.example.community.service.impl;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.example.community.dao.SysDictDataDao;
 import com.example.community.dao.SysRoleDao;
 import com.example.community.dto.RolesAndMenuIds;
+import com.example.community.entity.SysDictData;
 import com.example.community.entity.SysMenu;
 import com.example.community.entity.SysRole;
 import com.example.community.entity.SysRoleMenu;
@@ -23,11 +25,10 @@ import java.util.List;
 public class SysRoleServiceImpl extends ServiceImpl<SysRoleDao, SysRole> implements SysRoleService {
     @Resource
     private SysRoleDao sysRoleDao;
-
-
     @Resource
     private SysRoleDao roleMapper;
-
+    @Resource
+    private SysDictDataDao sysDictDataDao;
 //    @Override
 //    public Page<SysRole> roleList(Page<SysRole> page, SysRole sysRole) {
 //        // 设置分页大小和当前页码
@@ -130,6 +131,11 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleDao, SysRole> impleme
     @Override
     public SysRole getRoleById(Long id) {
         return sysRoleDao.selectRoleById(id);
+    }
+
+    @Override
+    public List<SysDictData> statusOption() {
+        return sysDictDataDao.statusOption();
     }
 
 }
