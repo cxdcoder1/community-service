@@ -6,12 +6,14 @@ import com.example.community.dao.SysDictDataDao;
 import com.example.community.dao.SysUserDao;
 import com.example.community.dto.UserAndDeptAndPostAndRole;
 import com.example.community.dto.UserAndDeptAndRole;
+import com.example.community.dto.UserAndDeptImport;
+import com.example.community.entity.*;
 import com.example.community.entity.*;
 import com.example.community.service.SysUserService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.List;
+import java.util.*;
 
 /**
  * 用户信息表(SysUser)表服务实现类
@@ -44,7 +46,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserDao, SysUser> impleme
         System.out.println(page.getCurrent());
         System.out.println(page.getSize());
 
-        long total = sysUserDao.selUserlist(0L,0L,userAndDeptAndPostAndRole).size();
+        long total = sysUserDao.count(userAndDeptAndPostAndRole);
         page.setTotal(total);
 
         // 计算总页数
@@ -125,6 +127,91 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserDao, SysUser> impleme
     @Override
     public List<SysDictData> statusOption() {
         return sysDictDataDao.statusOption();
+    }
+
+    @Override
+    public List<UserAndDeptImport> getUserList(List<String> list) {
+
+        return sysUserDao.getUserList(list);
+    }
+
+    @Override
+    public Integer deleteUsers(List<String> list) {
+
+        return sysUserDao.deleteUsers(list);
+    }
+
+    @Override
+    public Integer delById(String id) {
+
+
+        return sysUserDao.delById(id);
+    }
+
+    @Override
+    public Map<String,Object> checkUserName(List<UserAndDeptImport> list) {
+        Map<String,Object> result = new HashMap<>();
+        Set<String> set = new HashSet<>();
+        //判断文件中是否重复
+        for (UserAndDeptImport u : list) {
+            if (!set.add(u.getUserName())){
+                //重复
+                result.put("status","false");
+                result.put("msg","文件中有用户名重复");
+                result.put("userName",u.getUserName());
+                return result;
+            }
+        }
+        //判断与数据库是否重复
+        //获取数据库的数据
+        Set<String> names = sysUserDao.getNames();
+        for (UserAndDeptImport u : list) {
+            if (!names.add(u.getUserName())){
+                //重复
+                result.put("status","false");
+                result.put("msg","用户名已经存在");
+                result.put("userName",u.getUserName());
+                return result;
+            }
+        }
+        result.put("status","true");
+        result.put("msg","没有重复");
+        return result;
+    }
+
+    @Override
+    public Map<String,Object> checkPhone(List<UserAndDeptImport> list) {
+        Map<String,Object> result = new HashMap<>();
+        Set<String> set = new HashSet<>();
+        //判断文件中是否重复
+        for (UserAndDeptImport u : list) {
+            if (!set.add(u.getPhonenumber())){
+                //重复
+                result.put("status","false");
+                result.put("msg","文件中的电话号码重复");
+                result.put("phone",u.getPhonenumber());
+                return result;
+            }
+        }
+        Set<String> phone = sysUserDao.getPhone();
+        //判断与数据库中是否重复
+        for (UserAndDeptImport u : list) {
+            if (!phone.add(u.getPhonenumber())){
+                //重复
+                result.put("status","false");
+                result.put("msg","电话号码已经存在");
+                result.put("phone",u.getPhonenumber());
+                return result;
+            }
+        }
+        result.put("status","true");
+        result.put("msg","没有重复");
+        return result;
+    }
+
+    @Override
+    public void batchInsert(List<UserAndDeptImport> list) throws Exception {
+        sysUserDao.batchInsert(list);
     }
 
 

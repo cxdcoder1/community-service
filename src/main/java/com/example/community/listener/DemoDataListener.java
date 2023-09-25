@@ -5,12 +5,13 @@ import com.alibaba.excel.event.AnalysisEventListener;
 import java.util.Map;
 import java.util.List;
 
+import com.example.community.dto.UserAndDeptImport;
 import com.example.community.utils.easyexcel.TextReadObject;
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
-public class DemoDataListener extends AnalysisEventListener<TextReadObject> {
-    private List<TextReadObject> dataList;
+public class DemoDataListener extends AnalysisEventListener<UserAndDeptImport> {
+    private List<UserAndDeptImport> dataList;
     //读取表头的内容
     @Override
     public void invokeHeadMap(Map<Integer, String> headMap, AnalysisContext context) {
@@ -18,7 +19,7 @@ public class DemoDataListener extends AnalysisEventListener<TextReadObject> {
     }
     //一行一行读取excel中的内容
     @Override
-    public void invoke(TextReadObject data, AnalysisContext context) {
+    public void invoke(UserAndDeptImport data, AnalysisContext context) {
         dataList.add(data);
     }
     //读取完成之后执行的方法

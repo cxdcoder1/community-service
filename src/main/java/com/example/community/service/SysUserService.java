@@ -6,8 +6,11 @@ import com.example.community.dto.UserAndDeptAndPostAndRole;
 import com.example.community.dto.UserAndDeptAndRole;
 import com.example.community.entity.*;
 import org.apache.ibatis.annotations.Param;
+import com.example.community.dto.UserAndDeptImport;
+import com.example.community.entity.*;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 用户信息表(SysUser)表服务接口
@@ -46,6 +49,36 @@ public interface SysUserService extends IService<SysUser> {
     int upDataStatus( int id, String status);
 
     List<SysDictData> statusOption();
+    /**
+     * 获取用户导出的数据
+     * @param list
+     * @return
+     */
+    List<UserAndDeptImport> getUserList(List<String> list);
+
+    Integer deleteUsers(List<String> list);
+
+    Integer delById(String id);
+
+    /**
+     * 用户名验重
+     * @param list
+     * @return
+     */
+    Map<String,Object> checkUserName(List<UserAndDeptImport> list);
+
+    /**
+     * 电话号码验重
+     * @param list
+     * @return
+     */
+    Map<String,Object> checkPhone(List<UserAndDeptImport> list);
+
+    /**
+     * 批量插入
+     * @param list
+     */
+    void batchInsert(List<UserAndDeptImport> list) throws Exception;
 
 }
 

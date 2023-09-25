@@ -13,24 +13,32 @@ import java.util.List;
  * @since 2023-09-14 09:53:01
  */
 public interface SysDeptService extends IService<SysDept> {
-        List<SysDept> selAllDept(SysDept sysDept);
+    List<SysDept> selAllDept(SysDept sysDept);
 
-        int insertDept(SysDept sysDept);
+    int insertDept(SysDept sysDept);
 
-         List selectRoleName(long id);
+    List selectRoleName(long id);
 
-         Integer updateDept(SysDept sysDept);
+    Integer updateDept(SysDept sysDept);
 
-        Integer deleteDept(String deptId);
+    Integer deleteDept(String deptId);
 
-        Boolean checkName(String deptName,String deptId ,String parentId);
+    Boolean checkName(String deptName, String deptId, String parentId);
 
-        /**
-         * 查询是否有子集
-         * @param deptId
-         * @return
-         */
-        List<SysDept> isChildren(String deptId);
+    /**
+     * 查询是否有子集
+     *
+     * @param deptId
+     * @return
+     */
+    List<SysDept> isChildren(String deptId);
+
+    /**
+     * 根据id查询部门信息
+     * @param deptId
+     * @return
+     */
+    SysDept getById(String deptId);
 
 }
 

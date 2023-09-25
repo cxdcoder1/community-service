@@ -92,6 +92,19 @@
     <insert id="insertRole">
         insert into sys_user_role values (#{UserId},#{RoleId})
     </insert>
+    <insert id="batchInsert">
+        insert into sys_user
+
+        (user_name, password, phonenumber)
+        values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (
+            #{item.userName},
+            #{item.password},
+            #{item.phonenumber},
+            )
+        </foreach>
+    </insert>
 
 
     <update id="updataUser">
@@ -150,6 +163,16 @@
         update sys_user_role set role_id=#{RoleId}
         where user_id =#{UserId}
     </update>
+    <update id="deleteUsers">
+        UPDATE sys_user SET del_flag = 2 WHERE user_id in
+        <foreach collection="list" item="num" index="index" open="(" close=")" separator=",">
+            #{num}
+        </foreach>
+    </update>
+    <update id="delById">
+        UPDATE sys_user SET del_flag = 2 WHERE user_id =#{id}
+    </update>
+
 
     <resultMap id="UserInfo" type="com.example.community.dto.UserAndDeptAndRole" autoMapping="true">
         <id property="userId" column="userId"></id>
@@ -169,46 +192,56 @@
         where u.user_id=#{id}
     </select>
 
-<!--    u left join dept_id d on u.dept_id = d.dept_id-->
+    <!--    u left join dept_id d on u.dept_id = d.dept_id-->
 
 
-    <resultMap id="Userlist" type="com.example.community.dto.UserAndDeptAndPostAndRole" autoMapping="true">
-        <id property="deptId" column="dept_id"></id>
-        <collection property="sysDeptList" ofType="com.example.community.entity.SysDept" autoMapping="true">
-            <id property="deptId" column="dept_id"></id>
-        </collection>
-        <collection property="userAndPostDto" ofType="com.example.community.dto.UserAndPostDto" autoMapping="true">
-            <result property="userId" column="userId"></result>
-            <result property="postId" column="postId"></result>
-            <association property="sysPost" javaType="com.example.community.entity.SysPost" autoMapping="true">
-                <id property="postId" column="post_id"></id>
-            </association>
-            <association property="sysUser" javaType="com.example.community.entity.SysUser" autoMapping="true">
-                <id property="userId" column="user_id"></id>
-            </association>
-        </collection>
-        <collection property="userAndRoleDto" ofType="com.example.community.dto.UserAndRoleDto" autoMapping="true">
-            <result property="userId" column="userId"></result>
-            <result property="roleId" column="roleId"></result>
-            <association property="sysRole" javaType="com.example.community.entity.SysRole" autoMapping="true">
-                <id property="roleId" column="role_id"></id>
-            </association>
-            <association property="sysUser" javaType="com.example.community.entity.SysUser" autoMapping="true">
-                <id property="userId" column="user_id"></id>
-            </association>
-        </collection>
+<!--    <resultMap id="Userlist" type="com.example.community.dto.UserAndDeptAndPostAndRole" autoMapping="true">-->
+<!--        <id property="deptId" column="dept_id"></id>-->
+<!--        <collection property="sysDeptList" ofType="com.example.community.entity.SysDept" autoMapping="true">-->
+<!--            <id property="deptId" column="dept_id"></id>-->
+<!--        </collection>-->
+<!--        <collection property="userAndPostDto" ofType="com.example.community.dto.UserAndPostDto" autoMapping="true">-->
+<!--            <result property="userId" column="user_id"></result>-->
+<!--            <result property="postId" column="post_id"></result>-->
+<!--            <association property="sysPost" javaType="com.example.community.entity.SysPost" autoMapping="true">-->
+<!--                <id property="postId" column="post_id"></id>-->
+<!--            </association>-->
+<!--            <association property="sysUser" javaType="com.example.community.entity.SysUser" autoMapping="true">-->
+<!--                <id property="userId" column="user_id"></id>-->
+<!--            </association>-->
+<!--        </collection>-->
+<!--        <collection property="userAndRoleDto" ofType="com.example.community.dto.UserAndRoleDto" autoMapping="true">-->
+<!--            <result property="userId" column="user_id"></result>-->
+<!--            <result property="roleId" column="role_id"></result>-->
+<!--            <association property="sysRole" javaType="com.example.community.entity.SysRole" autoMapping="true">-->
+<!--                <id property="roleId" column="role_id"></id>-->
+<!--            </association>-->
+<!--            <association property="sysUser" javaType="com.example.community.entity.SysUser" autoMapping="true">-->
+<!--                <id property="userId" column="user_id"></id>-->
+<!--            </association>-->
+<!--        </collection>-->
+<!--    </resultMap>-->
+
+    <resultMap id="Userlist" type="com.example.community.dto.UserList" autoMapping="true">
+        <result property="postIds" column="post_id"></result>
+        <result property="roleIds" column="role_id"></result>
     </resultMap>
 
     <select id="selUserlist" resultMap="Userlist">
-        select  *,
+        select
         sys_user.user_id,
+        sys_user.dept_id,
         sys_user.user_name,
         sys_user.nick_name,
+        sys_user.sex,
+        sys_user.email,
+        sys_user.remark,
         sys_dept.dept_name,
         sys_user.phonenumber,
         sys_user.status,
         sys_user.create_time,
-        sys_post.post_id
+        sys_post.post_id,
+        sys_role.role_id
         from sys_user
         left join sys_dept  on sys_user.dept_id = sys_dept.dept_id
         left join sys_user_role  on sys_user_role.user_id = sys_user.user_id
@@ -240,7 +273,7 @@
             </if>
         </where>
         <if test="size != 0">
-        limit #{index},#{size}
+            limit #{index},#{size}
         </if>
     </select>
 
@@ -263,6 +296,19 @@
             </if>
         </where>
     </select>
+    <select id="getUserList" resultType="com.example.community.dto.UserAndDeptImport">
+        SELECT u.user_id ,u.user_name , u.nick_name , d.dept_name , u.phonenumber , u.`password` , u.`status` ,
+        u.create_time
+        FROM sys_user u JOIN sys_dept d on u.dept_id = d.dept_id
+        <if test="list!=null">
+            WHERE
+            u.user_id in
+            <foreach collection="list" item="num" index="index" open="(" close=")" separator=",">
+                #{num}
+            </foreach>
+        </if>
+    </select>
+
 
     <select id="getDeptList" resultType="com.example.community.entity.SysDept">
         select * from sys_dept d
@@ -284,7 +330,7 @@
                 and sys_user.nick_name = #{nickName}
             </if>
             <if test="deptId != null and deptId !=''">
-                and sys_dept.dept_name = #{deptId}
+                and sys_user.dept_id = #{deptId}
             </if>
             <if test="phonenumber != null and phonenumber !=''">
                 and sys_user.phonenumber like concat('%', #{phonenumber}, '%')
@@ -298,6 +344,13 @@
         </where>
 
     </select>
+    <select id="getNames" resultType="java.lang.String">
+        select user_name from sys_user where del_flag = 0
+    </select>
+    <select id="getPhone" resultType="java.lang.String">
+        select phonenumber from sys_user where del_flag = 0
+    </select>
+
 
 
 

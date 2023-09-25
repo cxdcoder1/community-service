@@ -125,6 +125,9 @@
         where dept_name = #{deptName}
           and parent_id = #{parentId}
     </select>
+    <select id="getById" resultType="com.example.community.entity.SysDept">
+        select * from  sys_dept where dept_id = #{deptId}
+    </select>
 
 
 </mapper>

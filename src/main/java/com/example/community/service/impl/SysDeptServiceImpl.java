@@ -40,6 +40,12 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptDao, SysDept> impleme
     }
 
     @Override
+    public SysDept getById(String deptId) {
+
+        return sysDeptDao.getById(deptId);
+    }
+
+    @Override
     public Boolean checkName(String deptName, String deptId, String parentId) {
         SysDept sysDept1 = sysDeptDao.checkName(deptName, deptId, parentId);
         if (sysDept1 == null) {

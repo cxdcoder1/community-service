@@ -15,28 +15,29 @@ import com.example.community.entity.SysDept;
  */
 public interface SysDeptDao extends BaseMapper<SysDept> {
 
-/**
-* 批量新增数据（MyBatis原生foreach方法）
-*
-* @param entities List<SysDept> 实例对象列表
-* @return 影响行数
-*/
-int insertBatch(@Param("entities") List<SysDept> entities);
+    /**
+     * 批量新增数据（MyBatis原生foreach方法）
+     *
+     * @param entities List<SysDept> 实例对象列表
+     * @return 影响行数
+     */
+    int insertBatch(@Param("entities") List<SysDept> entities);
 
-/**
-* 批量新增或按主键更新数据（MyBatis原生foreach方法）
-*
-* @param entities List<SysDept> 实例对象列表
-* @return 影响行数
-* @throws org.springframework.jdbc.BadSqlGrammarException 入参是空List的时候会抛SQL语句错误的异常，请自行校验入参
-*/
-int insertOrUpdateBatch(@Param("entities") List<SysDept> entities);
+    /**
+     * 批量新增或按主键更新数据（MyBatis原生foreach方法）
+     *
+     * @param entities List<SysDept> 实例对象列表
+     * @return 影响行数
+     * @throws org.springframework.jdbc.BadSqlGrammarException 入参是空List的时候会抛SQL语句错误的异常，请自行校验入参
+     */
+    int insertOrUpdateBatch(@Param("entities") List<SysDept> entities);
 
     /**
      * 部门表单新增修改的树形结构
+     *
      * @return
      */
-    List<SysDept>getDeptList(SysDept sysDept);
+    List<SysDept> getDeptList(SysDept sysDept);
 
     Integer deleteDept(String deptId);
 
@@ -45,10 +46,12 @@ int insertOrUpdateBatch(@Param("entities") List<SysDept> entities);
 
     public List<SysDept> selectRoleName(long id);
 
-      Integer insetDept(SysDept sysDept);
+    Integer insetDept(SysDept sysDept);
 
-      Integer updateDept(SysDept sysDept);
+    Integer updateDept(SysDept sysDept);
 
-      SysDept checkName(String deptName,String deptId ,String parentId);
+    SysDept checkName(String deptName, String deptId, String parentId);
+
+    SysDept getById(String deptId);
 }
 

@@ -3,13 +3,12 @@ package com.example.community.dao;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.example.community.dto.UserAndDeptAndPostAndRole;
 import com.example.community.dto.UserAndDeptAndRole;
-import com.example.community.entity.SysDept;
-import com.example.community.entity.SysPost;
-import com.example.community.entity.SysRole;
-import com.example.community.entity.SysUser;
+import com.example.community.dto.UserAndDeptImport;
+import com.example.community.entity.*;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * 用户信息表(SysUser)表数据库访问层
@@ -67,9 +66,21 @@ public interface SysUserDao extends BaseMapper<SysUser> {
 
     int upDataStatus(@Param("id") int id, @Param("status") String status);
 
-    List<SysUser> selUserlist(@Param("index") Long index, @Param("size") Long size, @Param("sysUser") SysUser sysUser);
 
 
+
+
+    List<UserAndDeptImport> getUserList(List<String> list);
+
+    Integer deleteUsers(List<String> list);
+
+    Integer delById(String id);
+
+    Set<String> getNames();
+
+    Set<String> getPhone();
+
+    void batchInsert(List<UserAndDeptImport> list) throws Exception;
 
 }
 
