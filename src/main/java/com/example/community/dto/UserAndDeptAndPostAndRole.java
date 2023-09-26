@@ -4,6 +4,7 @@ import com.example.community.entity.SysDept;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
+import java.util.List;
 
 public class UserAndDeptAndPostAndRole {
     //用户ID
@@ -56,6 +57,16 @@ public class UserAndDeptAndPostAndRole {
     //角色和用户
     private UserAndRoleDto userAndRoleDto;
 
+    //部门子集id
+    private List<String> deptIds;
+
+    public List<String> getDeptIds() {
+        return deptIds;
+    }
+
+    public void setDeptIds(List<String> deptIds) {
+        this.deptIds = deptIds;
+    }
 
     public UserAndDeptAndPostAndRole() {
     }

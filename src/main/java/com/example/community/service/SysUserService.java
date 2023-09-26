@@ -80,5 +80,7 @@ public interface SysUserService extends IService<SysUser> {
      */
     void batchInsert(List<UserAndDeptImport> list) throws Exception;
 
+    SysPost getPostStatus(String id);
+
 }
 

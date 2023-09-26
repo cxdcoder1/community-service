@@ -214,6 +214,12 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserDao, SysUser> impleme
         sysUserDao.batchInsert(list);
     }
 
+    @Override
+    public SysPost getPostStatus(String id) {
+
+        return sysUserDao.getPostStatus(id);
+    }
+
 
 }
 

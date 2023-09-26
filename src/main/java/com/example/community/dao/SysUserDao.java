@@ -82,5 +82,7 @@ public interface SysUserDao extends BaseMapper<SysUser> {
 
     void batchInsert(List<UserAndDeptImport> list) throws Exception;
 
+    SysPost getPostStatus(String id);
+
 }
 

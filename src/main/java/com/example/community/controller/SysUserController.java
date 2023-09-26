@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -103,12 +104,23 @@ public class SysUserController extends ApiController {
                     return result;
                 }
                 //校验部门是否被停用
-                if (user.getDeptId()!=null){
+                if (user1.getDeptId()!=null){
                     SysDept dept = sysDeptService.getById(user1.getDeptId() + "");
                     if (dept.getStatus().equals("1")){
                         //用户的部门被停用
                         result. put("success", false);
                         result. put("msg", "该用户所属部门已被停用!");
+                        result.put("status","201");
+                        return result;
+                    }
+                }
+                //校验岗位是否被禁用
+                SysPost post= sysUserService.getPostStatus(user1.getUserId() + "");
+                if (post!=null){
+                    if (post.getStatus().equals("1")){
+                        //岗位被禁用
+                        result. put("success", false);
+                        result. put("msg", "该用户所属岗位已被停用!");
                         result.put("status","201");
                         return result;
                     }
@@ -188,6 +200,9 @@ public class SysUserController extends ApiController {
     @GetMapping("sysUserList")
     public R selectPageAll(Page<UserAndDeptAndPostAndRole> page, UserAndDeptAndPostAndRole userAndDeptAndPostAndRole) {
         System.err.println(userAndDeptAndPostAndRole);
+        List<String> s = new ArrayList<>();
+        s.add(userAndDeptAndPostAndRole.getDeptId()+"");
+
         return success(this.sysUserService.selUserlist(page, userAndDeptAndPostAndRole));
     }
 
