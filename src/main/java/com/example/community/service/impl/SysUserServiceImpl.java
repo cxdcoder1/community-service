@@ -115,7 +115,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserDao, SysUser> impleme
     }
 
     @Override
-    public int restUserPwd(int id, int pwd) {
+    public int restUserPwd(int id, Long pwd) {
         return sysUserDao.restUserPwd(id,pwd);
     }
 

@@ -27,7 +27,8 @@ public class UserAndDeptImport {
     private String userName;
 
     //用户昵称
-    @ExcelProperty(index = 2, value = {"用户昵称"})
+    @ColumnWidth(35)//单独设置列宽
+    @ExcelProperty(index = 2, value = {"用户昵称(必填)"})
     private String nickName;
 
     //用户类型（00系统用户）

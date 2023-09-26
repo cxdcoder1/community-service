@@ -44,7 +44,7 @@ public interface SysUserService extends IService<SysUser> {
     //获取用户选择的部门列表
     List<SysDept> selAllDept(SysDept sysDept);
 
-    int restUserPwd(int id,int pwd);
+    int restUserPwd(int id,Long pwd);
 
     int upDataStatus( int id, String status);
 

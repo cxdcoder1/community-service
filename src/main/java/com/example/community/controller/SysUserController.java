@@ -265,9 +265,8 @@ public class SysUserController extends ApiController {
     }
     //密码重置
     @PutMapping("resetPwd")
-    public R resetPwd(@RequestParam("id") int id,@RequestParam("pwd") int pwd) {
-        System.err.println(id);
-        System.err.println(pwd);
+    public R resetPwd(@RequestParam("id") int id,@RequestParam("pwd") Long pwd) {
+
         return success(this.sysUserService.restUserPwd(id,pwd));
     }
 
