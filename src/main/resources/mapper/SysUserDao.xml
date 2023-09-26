@@ -226,6 +226,11 @@
     <resultMap id="Userlist" type="com.example.community.dto.UserList" autoMapping="true">
         <result property="postIds" column="post_id"></result>
         <result property="roleIds" column="role_id"></result>
+
+<!--        <result property="deptId" column="dept_id"></result>-->
+<!--        <collection property="sysDeptList" ofType="com.example.community.entity.SysDept" autoMapping="true">-->
+<!--            <id property="deptId" column="dept_id"></id>-->
+<!--        </collection>-->
     </resultMap>
 
     <select id="selUserlist" resultMap="Userlist">
@@ -318,7 +323,7 @@
     </select>
 
     <select id="count" resultType="java.lang.Long">
-        select count(*) from sys_user
+        select count(sys_user.user_id) from sys_user
         <where>
             sys_user.user_id != 1 and sys_user.del_flag =0
             <if test="userId != null and userId !=''">

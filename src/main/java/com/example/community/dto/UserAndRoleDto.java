@@ -8,6 +8,7 @@ import com.example.community.entity.SysUser;
 public class UserAndRoleDto {
     //用户ID
     private Long userId;
+
     //角色ID
     private Long roleId;
 

@@ -199,6 +199,7 @@ public class SysUserController extends ApiController {
 
     @GetMapping("sysUserList")
     public R selectPageAll(Page<UserAndDeptAndPostAndRole> page, UserAndDeptAndPostAndRole userAndDeptAndPostAndRole) {
+
         System.err.println(userAndDeptAndPostAndRole);
         List<String> s = new ArrayList<>();
         s.add(userAndDeptAndPostAndRole.getDeptId()+"");

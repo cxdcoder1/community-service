@@ -1,9 +1,12 @@
 package com.example.community.dto;
 
+import com.example.community.entity.SysDept;
 import org.springframework.format.annotation.DateTimeFormat;
 
 public class UserList {
 
+    //部门
+    private SysDept sysDeptList;
     //用户ID
     private Long userId;
     //部门ID
@@ -51,6 +54,37 @@ public class UserList {
     private Long roleIds;
 
     private Long postIds;
+
+
+
+    public UserList() {
+    }
+
+    public UserList(SysDept sysDeptList, Long userId, Long deptId, String userName, String nickName, String userType, String email, String phonenumber, String sex, String avatar, String password, String status, String delFlag, String loginIp, String loginDate, String createBy, String createTime, String updateBy, String updateTime, String remark, String deptName, Long roleIds, Long postIds) {
+        this.sysDeptList = sysDeptList;
+        this.userId = userId;
+        this.deptId = deptId;
+        this.userName = userName;
+        this.nickName = nickName;
+        this.userType = userType;
+        this.email = email;
+        this.phonenumber = phonenumber;
+        this.sex = sex;
+        this.avatar = avatar;
+        this.password = password;
+        this.status = status;
+        this.delFlag = delFlag;
+        this.loginIp = loginIp;
+        this.loginDate = loginDate;
+        this.createBy = createBy;
+        this.createTime = createTime;
+        this.updateBy = updateBy;
+        this.updateTime = updateTime;
+        this.remark = remark;
+        this.deptName = deptName;
+        this.roleIds = roleIds;
+        this.postIds = postIds;
+    }
 
     @Override
     public String toString() {
@@ -253,4 +287,23 @@ public class UserList {
     public void setPostIds(Long postIds) {
         this.postIds = postIds;
     }
+
+    /**
+     * 获取
+     * @return sysDeptList
+     */
+    public SysDept getSysDeptList() {
+        return sysDeptList;
+    }
+
+    /**
+     * 设置
+     * @param sysDeptList
+     */
+    public void setSysDeptList(SysDept sysDeptList) {
+        this.sysDeptList = sysDeptList;
+    }
+
+
+
 }
