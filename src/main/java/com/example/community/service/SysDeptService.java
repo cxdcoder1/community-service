@@ -15,6 +15,9 @@ import java.util.List;
 public interface SysDeptService extends IService<SysDept> {
     List<SysDept> selAllDept(SysDept sysDept);
 
+
+    List<SysDept> getDeptLists(SysDept sysDept);
+
     int insertDept(SysDept sysDept);
 
     List selectRoleName(long id);
@@ -39,6 +42,9 @@ public interface SysDeptService extends IService<SysDept> {
      * @return
      */
     SysDept getById(String deptId);
+
+
+    Integer updateDeptlis(String status,long id);
 
 }
 

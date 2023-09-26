@@ -39,6 +39,8 @@ public interface SysDeptDao extends BaseMapper<SysDept> {
      */
     List<SysDept> getDeptList(SysDept sysDept);
 
+    List<SysDept> getDeptLists(SysDept sysDept);
+
     Integer deleteDept(String deptId);
 
     List<SysDept> isChildren(String deptId);
@@ -50,8 +52,12 @@ public interface SysDeptDao extends BaseMapper<SysDept> {
 
     Integer updateDept(SysDept sysDept);
 
+    Integer updateDeptlis(String status,long id);
+
     SysDept checkName(String deptName, String deptId, String parentId);
 
     SysDept getById(String deptId);
+
+
 }
 

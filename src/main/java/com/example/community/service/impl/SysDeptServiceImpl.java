@@ -28,6 +28,11 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptDao, SysDept> impleme
     }
 
     @Override
+    public List<SysDept> getDeptLists(SysDept sysDept) {
+        return sysDeptDao.getDeptLists(sysDept);
+    }
+
+    @Override
     public Integer deleteDept(String deptId) {
 
         return sysDeptDao.deleteDept(deptId);
@@ -44,6 +49,14 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptDao, SysDept> impleme
 
         return sysDeptDao.getById(deptId);
     }
+
+
+
+    @Override
+    public Integer updateDeptlis(String status,long id) {
+        return sysDeptDao.updateDeptlis(status,id);
+    }
+
 
     @Override
     public Boolean checkName(String deptName, String deptId, String parentId) {

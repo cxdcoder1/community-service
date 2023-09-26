@@ -95,29 +95,40 @@
         WHERE dept_id = #{deptId}
     </update>
 
+    <update id="updateDeptlis" >
+        UPDATE sys_dept
+        SET  status = #{status}
+        WHERE parent_id = #{id}
+    </update>
+
     <delete id="deleteDept">
-        DELETE from sys_dept WHERE dept_id=#{deptId}
+        DELETE
+        from sys_dept
+        WHERE dept_id = #{deptId}
     </delete>
 
     <select id="getDeptList" resultType="com.example.community.entity.SysDept">
-    select * from sys_dept
-    <where>
-        <if test="deptName!= null and deptName != ''">
-            and dept_name like concat('%', #{deptName},'%')
-        </if>
-        <if test="status != null and status != ''">
-            and status = #{status}
-        </if>
-    </where>
-    order by order_num,parent_id
+        select * from sys_dept
+        <where>
+            <if test="deptName!= null and deptName != ''">
+                and dept_name like concat('%', #{deptName},'%')
+            </if>
+            <if test="status != null and status != ''">
+                and status = #{status}
+            </if>
+        </where>
+        order by order_num,parent_id
     </select>
 
     <select id="isChildren" resultType="com.example.community.entity.SysDept">
-        SELECT * FROM `sys_dept` where parent_id =  #{deptId}
+        SELECT *
+        FROM `sys_dept`
+        where parent_id = #{deptId}
     </select>
     <select id="selectRoleName" resultType="com.example.community.entity.SysDept">
-        select * from sys_dept
-        where parent_id=#{id}
+        select *
+        from sys_dept
+        where parent_id = #{id}
     </select>
     <select id="checkName" resultType="com.example.community.entity.SysDept">
         select *
@@ -126,8 +137,24 @@
           and parent_id = #{parentId}
     </select>
     <select id="getById" resultType="com.example.community.entity.SysDept">
-        select * from  sys_dept where dept_id = #{deptId}
+        select *
+        from sys_dept
+        where dept_id = #{deptId}
     </select>
+    <select id="getDeptLists" resultType="com.example.community.entity.SysDept">
+        select * from sys_dept
+        <where>
+        and status=0
+            <if test="deptName!= null and deptName != ''">
+                and dept_name like concat('%', #{deptName},'%')
+            </if>
+            <if test="status != null and status != ''">
+                and status = #{status}
+            </if>
+        </where>
+        order by order_num,parent_id
+    </select>
+
 
 
 </mapper>

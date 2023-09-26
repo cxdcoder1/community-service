@@ -135,7 +135,8 @@
         </where>
     </select>
     <select id="statusList" resultType="com.example.community.entity.SysDictData">
-        select * from sys_dict_data WHERE dict_type='sys_post_status' and status=0 order by dict_sort
+        select * from sys_dict_data dd join sys_dict_type dt on dd.dict_type = dt.dict_type where dt.dict_id = 26 and dt.status = "0"
+
     </select>
 
     <select id="statusOption" resultType="com.example.community.entity.SysDictData">

@@ -156,10 +156,11 @@ public class SysDeptController extends ApiController {
         return result;
     };
 
+    //表单中的部门列表
     @PostMapping("treeDeptList")
     public Map<String,Object> treeMenuList(@RequestBody SysDept sysDept){
         Map<String,Object> result = new HashMap<>();
-        List<SysDept> sysDeptList = sysDeptService.selAllDept(sysDept);
+        List<SysDept> sysDeptList = sysDeptService.getDeptLists(sysDept);
         int len = sysDeptList.size();
         for(int i = 0; i < len; i++){
             int count = 0 ;
@@ -216,6 +217,7 @@ public class SysDeptController extends ApiController {
         }
         // 执行部门更新逻辑...
         sysDeptService.updateDept(sysDept);
+        sysDeptService.updateDeptlis(sysDept.getStatus(),sysDept.getDeptId());
         result.put("msg", "修改成功");
         result.put("status", 200);
         result.put("success", true);

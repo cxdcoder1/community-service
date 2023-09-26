@@ -49,7 +49,12 @@ public class SysPostController extends ApiController {
         return success(this.sysPostService.page(page, new QueryWrapper<>(sysPost)));
     }
 
-
+    /**
+     * 分页加条件查询
+     * @param page
+     * @param sysPost
+     * @return
+     */
     @GetMapping("postList")
     public R selectPost(Page<SysPost>page,SysPost sysPost){
         return success(this.sysPostService.postList(page,sysPost));
@@ -99,6 +104,12 @@ public class SysPostController extends ApiController {
         return success(this.sysPostService.removeByIds(idList));
     }
 
+    /**
+     * 新增岗位
+     * @param sysPost
+     * @return
+     * @throws Exception
+     */
     @GetMapping("insertPost")
     public Map<String, Object>insertPost(SysPost sysPost) throws Exception {
         Map<String, Object> map = new HashMap<>();
@@ -115,6 +126,12 @@ public class SysPostController extends ApiController {
         map.put("success", true);
         return map;
     }
+
+    /**
+     * 修改岗位
+     * @param sysPost
+     * @return
+     */
     @PutMapping("updatePosts")
     public Map<String, Object> update(@RequestBody SysPost sysPost) {
         Map<String, Object> map = new HashMap<>();
@@ -132,6 +149,11 @@ public class SysPostController extends ApiController {
         return map;
     }
 
+    /**
+     * 单个删除
+     * @param postId
+     * @return
+     */
     @DeleteMapping("delPost/{postId}")
     public Map<String ,Object> delPost(@PathVariable Integer postId){
         Map<String, Object> map = new HashMap<>();
@@ -148,22 +170,12 @@ public class SysPostController extends ApiController {
         map.put("success", true);
         return map;
     }
-    @GetMapping("delPostS/{houseIds}")
-    public Map<String,Object> delPostS(@PathVariable Long[] houseIds) {
-        Map<String, Object> map = new HashMap<>();
-        Integer integer = sysPostService.deleteByIds(houseIds);
-        if (integer!=null){
-            map.put("msg","删除成功");
-            map.put("status", 200);
-            map.put("success", true);
-            return map;
-        }
-        map.put("status", 201);
-        map.put("success", false);
-        map.put("msg", "删除失败");
-        return map;
-    }
 
+    /**
+     * 批量删除
+     * @param
+     * @return
+     */
     @PostMapping("deletes")
     public Map<String,Object> deletes(@RequestBody int[] ids){
         Map<String,Object> result = new HashMap<>();
