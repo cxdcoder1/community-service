@@ -46,6 +46,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserDao, SysUser> impleme
         System.out.println(page.getCurrent());
         System.out.println(page.getSize());
 
+//        long total = sysUserDao.selUserlist(0L,0L,userAndDeptAndPostAndRole).size();
         long total = sysUserDao.count(userAndDeptAndPostAndRole);
         page.setTotal(total);
 

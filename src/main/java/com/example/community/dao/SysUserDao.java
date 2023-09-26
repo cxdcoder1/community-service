@@ -66,10 +66,6 @@ public interface SysUserDao extends BaseMapper<SysUser> {
 
     int upDataStatus(@Param("id") int id, @Param("status") String status);
 
-
-
-
-
     List<UserAndDeptImport> getUserList(List<String> list);
 
     Integer deleteUsers(List<String> list);

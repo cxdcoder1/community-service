@@ -92,18 +92,11 @@ public class SysDictTypeController extends ApiController {
             return map;
         } else {
             SysDictType sysDictType1 = sysDictTypes.get(0);
-            System.err.println(sysDictType1);
-            System.err.println(sysDictType);
             if (sysDictType1.getDictId().equals(sysDictType.getDictId())) {
-                try {
+
                     sysDictDataService.updDictType(type, type2);
                     sysDictTypeService.updDictType(sysDictType);
-                } catch (Exception e) {
-                    map.put("msg", sysDictType.getDictType() + "已存在");
-                    map.put("status", 201);
-                    map.put("success", false);
-                    return map;
-                }
+
                 map.put("msg", "修改成功");
                 map.put("status", 200);
                 map.put("success", true);

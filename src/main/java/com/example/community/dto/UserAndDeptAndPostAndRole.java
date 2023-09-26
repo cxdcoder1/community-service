@@ -51,6 +51,7 @@ public class UserAndDeptAndPostAndRole {
 
     //部门
     private SysDept sysDeptList;
+
     //岗位和用户
     private UserAndPostDto userAndPostDto;
 
