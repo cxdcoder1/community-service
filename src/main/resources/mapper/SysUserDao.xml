@@ -285,7 +285,7 @@
 
     <select id="getAllRole" resultType="com.example.community.entity.SysRole">
         select * from sys_role r
-        where r.status=0
+        where r.status=0 and r.role_id!=1
     </select>
 
     <select id="isAddUpdate" resultType="java.lang.Integer">

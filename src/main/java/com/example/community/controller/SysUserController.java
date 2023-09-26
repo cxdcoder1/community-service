@@ -1,6 +1,5 @@
 package com.example.community.controller;
 
-
 import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.api.ApiController;
@@ -10,7 +9,6 @@ import com.example.community.constant.SystemConstant;
 import com.example.community.dto.UserAndDeptAndPostAndRole;
 import com.example.community.dto.UserAndDeptAndRole;
 import com.example.community.dto.UserAndPostIdAndRoleId;
-import com.example.community.entity.*;
 import com.example.community.entity.SysDept;
 import com.example.community.entity.SysPost;
 import com.example.community.entity.SysRole;
@@ -19,7 +17,6 @@ import com.example.community.service.SysDeptService;
 import com.example.community.service.SysUserService;
 import com.example.community.utils.DeptTree;
 import com.example.community.utils.JwtUtil;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;

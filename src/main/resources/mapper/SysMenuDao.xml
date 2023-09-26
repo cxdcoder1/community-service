@@ -35,6 +35,7 @@
             #{entity.updateTime}, #{entity.remark})
         </foreach>
     </insert>
+
     <!-- 批量插入或按主键更新 -->
     <insert id="insertOrUpdateBatch" keyProperty="menuId" useGeneratedKeys="true">
         insert into zy-community.sys_menu(menu_name, parent_id, order_num, path, component, is_frame, is_cache,
@@ -135,6 +136,7 @@
         </set>
         where menu_id = #{menuId}
     </update>
+
     <update id="upTypeToM">
         update sys_menu SET menu_type = 'M' WHERE menu_id = #{menuId}
     </update>
@@ -196,26 +198,26 @@
         <if test="status != null and status != ''">
             and status = #{status}
         </if>
-<!--        <if test="menuName != null and menuName != ''">-->
-<!--            UNION-->
-<!--            select * from sys_menu sm1 where sm1.parent_id in-->
-<!--            (select sm2.menu_id from sys_menu sm2 where menu_name LIKE concat("%",#{menuName},"%"))-->
-<!--            <if test="status != null and status != ''">-->
-<!--                and status = #{status}-->
-<!--            </if>-->
-<!--            UNION-->
-<!--            select * from sys_menu sm1 where sm1.menu_id in-->
-<!--            (select sm2.parent_id from sys_menu sm2 where menu_name LIKE concat("%",#{menuName},"%"))-->
-<!--            <if test="status != null and status != ''">-->
-<!--                and status = #{status}-->
-<!--            </if>-->
-<!--        </if>-->
-<!--        <if test="status != null and status != '' and menuName == null || menuName == ''">-->
-<!--            UNION-->
-<!--            select * from sys_menu sm1-->
-<!--            where sm1.menu_id in-->
-<!--            (select sm2.parent_id from sys_menu sm2 where status = #{status})-->
-<!--        </if>-->
+        <!--        <if test="menuName != null and menuName != ''">-->
+        <!--            UNION-->
+        <!--            select * from sys_menu sm1 where sm1.parent_id in-->
+        <!--            (select sm2.menu_id from sys_menu sm2 where menu_name LIKE concat("%",#{menuName},"%"))-->
+        <!--            <if test="status != null and status != ''">-->
+        <!--                and status = #{status}-->
+        <!--            </if>-->
+        <!--            UNION-->
+        <!--            select * from sys_menu sm1 where sm1.menu_id in-->
+        <!--            (select sm2.parent_id from sys_menu sm2 where menu_name LIKE concat("%",#{menuName},"%"))-->
+        <!--            <if test="status != null and status != ''">-->
+        <!--                and status = #{status}-->
+        <!--            </if>-->
+        <!--        </if>-->
+        <!--        <if test="status != null and status != '' and menuName == null || menuName == ''">-->
+        <!--            UNION-->
+        <!--            select * from sys_menu sm1-->
+        <!--            where sm1.menu_id in-->
+        <!--            (select sm2.parent_id from sys_menu sm2 where status = #{status})-->
+        <!--        </if>-->
         order by order_num asc
     </select>
 
@@ -239,7 +241,7 @@
         where parent_id = #{id}
     </select>
 
-<!--    管理员查询所有菜单-->
+    <!--    管理员查询所有菜单-->
     <select id="MenuList" resultType="com.example.community.entity.SysMenu">
         select * from sys_menu
         where
@@ -247,10 +249,10 @@
         order by parent_id, order_num ASC
     </select>
 
-
     <select id="getMenuChildren" resultType="com.example.community.entity.SysMenu">
         SELECT * from sys_menu WHERE parent_id = #{menuId}
     </select>
+
     <select id="getParent" resultType="com.example.community.entity.SysMenu">
         SELECT * FROM sys_menu where menu_id = #{parentId}
     </select>

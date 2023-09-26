@@ -33,10 +33,9 @@ public class SysMenuController extends ApiController {
     private SysMenuService sysMenuService;
 
 
-
     @PostMapping("/menuList")
     public R menuList(@RequestBody SysMenu sysMenu) {
-        List<SysMenu> menus = sysMenuService.getMenuList(sysMenu.getMenuName(),sysMenu.getStatus());
+        List<SysMenu> menus = sysMenuService.getMenuList(sysMenu.getMenuName(), sysMenu.getStatus());
         List<SysMenu> menuList = new MenuTree(menus).builTree();
 
         if (menuList != null && !menuList.isEmpty()) {
@@ -54,15 +53,11 @@ public class SysMenuController extends ApiController {
 //        return success(this.sysMenuService.getMenuList(sysMenu.getMenuName(),sysMenu.getStatus()));
 //    }
 
-
-
-
-
     @GetMapping("getTreeMenu/{id}")
     public R MenuTreeList(@PathVariable int id) {
-        if (id==1){
+        if (id == 1) {
             return success(this.sysMenuService.MenuList());
-        }else {
+        } else {
             return success(this.sysMenuService.MenuTree(id));
         }
     }
@@ -81,11 +76,11 @@ public class SysMenuController extends ApiController {
 
 
     @RequestMapping("deleteMenu")
-    public Map<String, Object> deleteMenu(@RequestBody SysMenu sysMenu){
+    public Map<String, Object> deleteMenu(@RequestBody SysMenu sysMenu) {
         Map<String, Object> map = new HashMap<>();
         System.err.println(sysMenu.toString());
         String s = sysMenuService.deleteMenu(sysMenu.getMenuId(), null);
-        map.put("data",s);
+        map.put("data", s);
         System.out.println(map);
         return map;
     }
@@ -117,12 +112,12 @@ public class SysMenuController extends ApiController {
         //没有重复可以新增
         //获取即将添加的菜单的父类
         SysMenu parent = sysMenuService.getParent(sysMenu);
-        if (parent==null){
+        if (parent == null) {
             //没有父类
-            if (sysMenu.getMenuType().equals("M")){
+            if (sysMenu.getMenuType().equals("M")) {
                 //必须是目录才可以添加
                 return add(sysMenu, result);
-            }else {
+            } else {
                 //不是目录不可以添加
                 result.put("status", 201);
                 result.put("success", false);
@@ -194,20 +189,21 @@ public class SysMenuController extends ApiController {
             result.put("msg", "不能在按钮下添加");
             return result;
         }
-        result.put("msg","其他");
-        result.put("status","202");
+        result.put("msg", "其他");
+        result.put("status", "202");
         return result;
     }
 
     /**
      * 是否子集是否含有按钮
+     *
      * @param sysMenu
      * @return
      */
-    public Boolean hasF(SysMenu sysMenu){
+    public Boolean hasF(SysMenu sysMenu) {
         List<SysMenu> list = sysMenuService.getMenuChildren(sysMenu);
         for (SysMenu menu : list) {
-            if (menu.getMenuType().equals("F")){
+            if (menu.getMenuType().equals("F")) {
                 //查询到按钮
                 return true;
             }
@@ -217,15 +213,16 @@ public class SysMenuController extends ApiController {
 
     /**
      * 条件成立 新增
+     *
      * @param sysMenu
      * @return
      */
-    public Map<String, Object> add(SysMenu sysMenu , Map<String,Object> result){
+    public Map<String, Object> add(SysMenu sysMenu, Map<String, Object> result) {
         //新增
         sysMenu.setChildren(null);
         sysMenu.setCreateTime(new Date());
         Integer i = sysMenuService.addMenu(sysMenu);
-        if (i==1) {
+        if (i == 1) {
             result.put("status", 200);
             result.put("success", true);
             result.put("msg", "成功");
@@ -245,10 +242,10 @@ public class SysMenuController extends ApiController {
      * @return 修改结果
      */
     @PutMapping("updateMenu")
-    public Map<String,Object> update(@RequestBody SysMenu sysMenu) {
+    public Map<String, Object> update(@RequestBody SysMenu sysMenu) {
         Map<String, Object> result = new HashMap<>();
         //判断父类是否是自己
-        if (sysMenu.getMenuId().equals(sysMenu.getParentId())){
+        if (sysMenu.getMenuId().equals(sysMenu.getParentId())) {
             //修改的父类为自己 不可修改
             result.put("status", 201);
             result.put("success", false);
@@ -274,12 +271,12 @@ public class SysMenuController extends ApiController {
         //获取修改后菜单的父类
         SysMenu parent = sysMenuService.getParent(sysMenu);
 
-        if (parent==null){
+        if (parent == null) {
             //没有父类
-            if (sysMenu.getMenuType().equals("M")){
+            if (sysMenu.getMenuType().equals("M")) {
                 //子类必须是目录才可以修改
                 return up(sysMenu, result);
-            }else {
+            } else {
                 //子类不是目录不可以修改
                 result.put("status", 201);
                 result.put("success", false);
@@ -351,23 +348,26 @@ public class SysMenuController extends ApiController {
             result.put("msg", "不能修改到按钮下");
             return result;
         }
-        result.put("msg","其他");
-        result.put("status","202");
+        result.put("msg", "其他");
+        result.put("status", "202");
         return result;
     }
 
     /**
      * 条件成立 修改
+     *
      * @param sysMenu
      * @param result
      * @return
      */
-    public Map<String, Object> up(SysMenu sysMenu , Map<String,Object> result){
+    public Map<String, Object> up(SysMenu sysMenu, Map<String, Object> result) {
         Integer i = sysMenuService.updateMenu(sysMenu);
-        if (i==1){
-            result.put("status",200);
-            result.put("success",true);
-            result.put("msg","成功");
+        System.err.println("ccccccccccc"+sysMenu.getMenuId());
+
+        if (i == 1) {
+            result.put("status", 200);
+            result.put("success", true);
+            result.put("msg", "成功");
             return result;
         }
         result.put("status", 201);
