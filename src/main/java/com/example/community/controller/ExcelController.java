@@ -4,10 +4,7 @@ import com.alibaba.excel.EasyExcel;
 import com.alibaba.excel.write.style.HorizontalCellStyleStrategy;
 import com.alibaba.fastjson.JSON;
 import com.example.community.dto.UserAndDeptImport;
-import com.example.community.entity.SysDictData;
-import com.example.community.entity.SysDictType;
-import com.example.community.entity.SysPost;
-import com.example.community.entity.SysRole;
+import com.example.community.entity.*;
 import com.example.community.service.SysDictDataService;
 import com.example.community.service.SysDictTypeService;
 import com.example.community.service.SysPostService;
@@ -41,6 +38,8 @@ public class ExcelController {
     private SysUserService sysUserService;
     @Resource
     private SysPostService sysPostService;
+    @Resource
+    private ZyBuildingService zyBuildingService;
 
     /**
      * 生成随机文件名 并返回固定路径
@@ -67,6 +66,28 @@ public class ExcelController {
         HorizontalCellStyleStrategy horizontalCellStyleStrategy = new HorizontalCellStyleStrategy( StyleUtils.getHeadStyle(),StyleUtils.getContentStyle());
 
         EasyExcel.write(fileName, SysRole.class)
+                .sheet(0)
+                .registerWriteHandler(horizontalCellStyleStrategy)
+                .doWrite(dataList);
+    }
+
+    /**
+     * 楼栋表
+     * @param fileName
+     * @param list
+     */
+    public static void buildingLists(String fileName,List<ZyBuilding> list){
+        //"E:\\lx.xls"
+        List<ZyBuilding> dataList = new ArrayList<>();
+
+        for (ZyBuilding zyBuilding : list) {
+            dataList.add(zyBuilding);
+        }
+
+        // 设置单元格样式
+        HorizontalCellStyleStrategy horizontalCellStyleStrategy = new HorizontalCellStyleStrategy( StyleUtils.getHeadStyle(),StyleUtils.getContentStyle());
+
+        EasyExcel.write(fileName, ZyBuilding.class)
                 .sheet(0)
                 .registerWriteHandler(horizontalCellStyleStrategy)
                 .doWrite(dataList);
@@ -323,6 +344,21 @@ public class ExcelController {
         List<SysPost> postList = sysPostService.getPostList(lists);
         String path="D:\\lx.xls";
         simpleWrites(path,postList);
+        result.put("msg","导出成功");
+        result.put("status","200");
+        result.put("path",path);
+        return result;
+    }
+
+    @PostMapping("buildingList")
+    public Map<String, Object> buildingList(@RequestBody List<String> lists) {
+        Map<String, Object> result = new HashMap<>();
+        if (lists.size()==0){
+            lists=null;
+        }
+        List<ZyBuilding> buildingList = zyBuildingService.getBuildingList(lists);
+        String path="D:\\lx.xls";
+        buildingLists(path,buildingList);
         result.put("msg","导出成功");
         result.put("status","200");
         result.put("path",path);

@@ -84,5 +84,7 @@ public class ZyCommunityController extends ApiController {
     public R delete(@RequestParam("idList") List<Long> idList) {
         return success(this.zyCommunityService.removeByIds(idList));
     }
+
+
 }
 

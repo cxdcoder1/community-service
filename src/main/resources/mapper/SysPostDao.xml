@@ -36,7 +36,6 @@
 
     <insert id="insertPost">
         insert into sys_post
-
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="postCode != null">post_Code,</if>
             <if test="postName != null">post_name,</if>

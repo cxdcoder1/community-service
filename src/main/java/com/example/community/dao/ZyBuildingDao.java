@@ -3,6 +3,7 @@ package com.example.community.dao;
 import java.util.List;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.example.community.entity.SysPost;
 import org.apache.ibatis.annotations.Param;
 import com.example.community.entity.ZyBuilding;
 
@@ -30,6 +31,47 @@ int insertBatch(@Param("entities") List<ZyBuilding> entities);
 * @throws org.springframework.jdbc.BadSqlGrammarException 入参是空List的时候会抛SQL语句错误的异常，请自行校验入参
 */
 int insertOrUpdateBatch(@Param("entities") List<ZyBuilding> entities);
+
+List<ZyBuilding> selectBuild(@Param("index") Long index, @Param("size") Long size , @Param("zyBuilding") ZyBuilding zyBuilding,@Param("id")long id);
+
+long count(ZyBuilding zyBuilding,long id);
+
+    /**
+     * 新增
+     * @param zyBuilding
+     * @return
+     */
+    Integer addBuilding(ZyBuilding zyBuilding);
+
+    Long getBuildingName(String buildingName,long communityId );
+
+    Long selBuildingName(ZyBuilding zyBuilding);
+
+    /**
+     * 修改
+     * @param zyBuilding
+     * @return
+     */
+    Integer updateBuilding(ZyBuilding zyBuilding);
+
+    /**
+     * 单个删除
+     * @param id
+     * @return
+     */
+    Long delBuilding(long id);
+
+    Long getUnitName(long id);
+
+    /**
+     * 批量删除
+     * @param ids
+     * @return
+     */
+    Long deletesBuilding(@Param("ids") Long [] ids);
+
+
+    List<ZyBuilding> getBuildingList(List<String> list);
 
 }
 

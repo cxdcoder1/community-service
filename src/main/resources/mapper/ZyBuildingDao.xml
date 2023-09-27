@@ -32,6 +32,96 @@
         </foreach>
         on duplicate key update
          building_id = values(building_id) , building_name = values(building_name) , building_code = values(building_code) , building_acreage = values(building_acreage) , community_id = values(community_id) , create_by = values(create_by) , create_time = values(create_time) , update_by = values(update_by) , update_time = values(update_time) , remark = values(remark)     </insert>
+    <insert id="addBuilding">
+        insert into zy_building
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="buildingCode != null">building_Code,</if>
+            <if test="buildingId != null">building_id,</if>
+            <if test="buildingName != null">building_name,</if>
+            <if test="buildingAcreage != null">building_acreage,</if>
+            <if test="communityId != null">community_id,</if>
+            <if test="remark != null">remark,</if>
+        </trim>
+        values
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="buildingCode != null">#{buildingCode},</if>
+            <if test="buildingId != null">#{buildingId},</if>
+            <if test="buildingName != null">#{buildingName},</if>
+            <if test="buildingAcreage != null">#{buildingAcreage},</if>
+            <if test="communityId != null">#{communityId},</if>
+            <if test="remark != null">#{remark},</if>
+        </trim>
+    </insert>
+    <update id="updateBuilding" parameterType="com.example.community.entity.ZyBuilding">
+        UPDATE zy_building
+        SET
+        <trim prefix="" suffixOverrides=",">
+            <if test="buildingName != null and buildingName != ''">building_name = #{buildingName},</if>
+            <if test="buildingAcreage != null and buildingAcreage != ''">building_acreage = #{buildingAcreage},</if>
+            <if test="remark != null">remark = #{remark}</if>
+        </trim>
+        WHERE building_id = #{buildingId}
+    </update>
+    <delete id="delBuilding">
+        delete from zy_building where building_id=#{id}
+    </delete>
+    <delete id="deletesBuilding">
+        delete from zy_building where building_id in
+        <foreach collection="ids" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
+    <select id="selectBuild" resultType="com.example.community.entity.ZyBuilding">
+        select * from zy_building
+        <where>
+            <if test="zyBuilding.buildingName != null and zyBuilding.buildingName != ''">
+                and building_name LIKE CONCAT('%', #{zyBuilding.buildingName}, '%')
+            </if>
+            <if test="zyBuilding.buildingCode != null and zyBuilding.buildingCode != ''">
+                and building_code LIKE CONCAT('%', #{zyBuilding.buildingCode}, '%')
+            </if>
+            and community_id=#{id}
+        </where>
+        limit #{index},#{size}
+    </select>
+    <select id="count" resultType="java.lang.Long">
+        SELECT COUNT(*) FROM zy_building
+        <where>
+            <if test="zyBuilding.buildingName != null and zyBuilding.buildingName != ''">
+                AND building_name LIKE CONCAT('%', #{zyBuilding.buildingName}, '%')
+            </if>
+            <if test="zyBuilding.buildingCode != null and zyBuilding.buildingCode != ''">
+                AND building_code LIKE CONCAT('%', #{zyBuilding.buildingCode}, '%')
+            </if>
+            AND community_id=#{id}
+        </where>
+    </select>
+    <select id="getBuildingName" resultType="java.lang.Long">
+        select * from zy_building where building_name=#{buildingName} and community_id=#{communityId}
+    </select>
+    <select id="selBuildingName" resultType="java.lang.Long">
+        select count(building_id) from zy_building
+        <where>
+            (building_name=#{buildingName })
+            <if test="buildingId != null and buildingId != ''">
+            and building_id!=#{buildingId}
+            </if>
+        </where>
+    </select>
+    <select id="getUnitName" resultType="java.lang.Long">
+        select * from zy_unit where building_id=#{id}
+    </select>
+    <select id="getBuildingList" resultType="com.example.community.entity.ZyBuilding">
+        SELECT * FROM zy_building  WHERE building_id != 1
+        <if test="list!=null">
+            and
+            building_id in
+            <foreach collection="list" item="num" index="index" open="(" close=")" separator=",">
+                #{num}
+            </foreach>
+        </if>
+    </select>
+
 
 </mapper>
 

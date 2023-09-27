@@ -185,5 +185,27 @@ public class ZyCommunity extends Model<ZyCommunity> {
     protected Serializable pkVal() {
         return this.communityId;
     }
+
+    @Override
+    public String toString() {
+        return "ZyCommunity{" +
+                "communityId=" + communityId +
+                ", communityName='" + communityName + '\'' +
+                ", communityCode='" + communityCode + '\'' +
+                ", communityProvenceCode='" + communityProvenceCode + '\'' +
+                ", communityCityCode='" + communityCityCode + '\'' +
+                ", communityTownCode='" + communityTownCode + '\'' +
+                ", communityDetailedAddress='" + communityDetailedAddress + '\'' +
+                ", communityLongitude='" + communityLongitude + '\'' +
+                ", communityLatitude='" + communityLatitude + '\'' +
+                ", deptId=" + deptId +
+                ", communitySort=" + communitySort +
+                ", createBy='" + createBy + '\'' +
+                ", createTime=" + createTime +
+                ", updateBy='" + updateBy + '\'' +
+                ", updateTime=" + updateTime +
+                ", remark='" + remark + '\'' +
+                '}';
     }
+}
 
