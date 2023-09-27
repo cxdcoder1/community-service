@@ -195,5 +195,28 @@ public class ZyRoom extends Model<ZyRoom> {
         this.remark = remark;
     }
 
+    @Override
+    public String toString() {
+        return "ZyRoom{" +
+                "roomId=" + roomId +
+                ", communityId=" + communityId +
+                ", buildingId=" + buildingId +
+                ", unitId=" + unitId +
+                ", roomLevel=" + roomLevel +
+                ", roomCode='" + roomCode + '\'' +
+                ", roomName='" + roomName + '\'' +
+                ", roomAcreage=" + roomAcreage +
+                ", roomCost=" + roomCost +
+                ", roomStatus='" + roomStatus + '\'' +
+                ", roomIsShop='" + roomIsShop + '\'' +
+                ", roomSCommercialHouse='" + roomSCommercialHouse + '\'' +
+                ", roomHouseType='" + roomHouseType + '\'' +
+                ", createBy='" + createBy + '\'' +
+                ", createTime=" + createTime +
+                ", updateBy='" + updateBy + '\'' +
+                ", updateTime=" + updateTime +
+                ", remark='" + remark + '\'' +
+                '}';
+    }
 }
 

@@ -1,17 +1,15 @@
 package com.example.community.controller;
 
 
-
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.api.ApiController;
-import com.baomidou.mybatisplus.extension.api.R;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.example.community.entity.ZyRoom;
+import com.example.community.dto.RoomDto;
+import com.example.community.entity.*;
 import com.example.community.service.ZyRoomService;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import java.io.Serializable;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -22,67 +20,122 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("zyRoom")
+@CrossOrigin
 public class ZyRoomController extends ApiController {
-    /**
-     * 服务对象
-     */
+
     @Resource
     private ZyRoomService zyRoomService;
 
-    /**
-     * 分页查询所有数据
-     *
-     * @param page 分页对象
-     * @param zyRoom 查询实体
-     * @return 所有数据
-     */
-    @GetMapping
-    public R selectAll(Page<ZyRoom> page, ZyRoom zyRoom) {
-        return success(this.zyRoomService.page(page, new QueryWrapper<>(zyRoom)));
+    @GetMapping("getRoomList")
+    public HashMap<String, Object> getRoomList(Page<RoomDto> page, RoomDto roomDto) {
+        HashMap<String, Object> map = new HashMap<>();
+        System.out.println("当前页" + page.getCurrent() + "" + page.getSize());
+        List<RoomDto> roomList = zyRoomService.getRoomList(page.getCurrent(), page.getSize(), roomDto);
+        int count = zyRoomService.getRoomList(0, 0, roomDto).size();
+
+        map.put("total", count);
+        map.put("data", roomList);
+
+        return map;
     }
 
-    /**
-     * 通过主键查询单条数据
-     *
-     * @param id 主键
-     * @return 单条数据
-     */
-    @GetMapping("{id}")
-    public R selectOne(@PathVariable Serializable id) {
-        return success(this.zyRoomService.getById(id));
+    @GetMapping("getBuilding")
+    public HashMap<String, Object> getBuilding(ZyRoom zyRoom) {
+        HashMap<String, Object> map = new HashMap<>();
+        System.out.println(zyRoom);
+
+        List<ZyBuilding> building = zyRoomService.getBuilding(zyRoom);
+
+        map.put("building", building);
+
+        return map;
     }
 
-    /**
-     * 新增数据
-     *
-     * @param zyRoom 实体对象
-     * @return 新增结果
-     */
-    @PostMapping
-    public R insert(@RequestBody ZyRoom zyRoom) {
-        return success(this.zyRoomService.save(zyRoom));
+    @GetMapping("getUnit")
+    public HashMap<String, Object> getUnit(ZyRoom zyRoom) {
+        HashMap<String, Object> map = new HashMap<>();
+
+        List<ZyUnit> unit = zyRoomService.getUnit(zyRoom);
+
+        map.put("unit11", unit);
+
+        return map;
     }
 
-    /**
-     * 修改数据
-     *
-     * @param zyRoom 实体对象
-     * @return 修改结果
-     */
-    @PutMapping
-    public R update(@RequestBody ZyRoom zyRoom) {
-        return success(this.zyRoomService.updateById(zyRoom));
+    @GetMapping("getStatus")
+    public HashMap<String, Object> getStatus() {
+        HashMap<String, Object> map = new HashMap<>();
+
+        List<SysDictData> roomStatus = zyRoomService.getroomStatus();
+        List<SysDictData> houseType = zyRoomService.getroomHouseType();
+        List<ZyCommunity> community = zyRoomService.getCommunity();
+
+        map.put("community", community);
+        map.put("roomStatus", roomStatus);
+        map.put("houseType", houseType);
+
+        return map;
     }
 
-    /**
-     * 删除数据
-     *
-     * @param idList 主键结合
-     * @return 删除结果
-     */
-    @DeleteMapping
-    public R delete(@RequestParam("idList") List<Long> idList) {
-        return success(this.zyRoomService.removeByIds(idList));
+    @PutMapping("addRoom")
+    public HashMap<String, Object> getaddRoom(@RequestBody ZyRoom zyRoom) {
+        HashMap<String, Object> map = new HashMap<>();
+
+        System.err.println(zyRoom);
+
+        int check = zyRoomService.check(zyRoom);
+        if (check == 0) {
+            int i = zyRoomService.addRoom(zyRoom);
+
+            map.put("msg", "修改成功");
+            map.put("status", 200);
+            map.put("success", true);
+
+            return map;
+        }
+        //重复
+        map.put("msg", "房屋名重复");
+        map.put("status", 201);
+        map.put("success", false);
+        return map;
     }
+
+    @PutMapping("editRoom")
+    public HashMap<String, Object> editRoom(@RequestBody ZyRoom zyRoom) {
+        HashMap<String, Object> map = new HashMap<>();
+
+        System.err.println(zyRoom);
+
+        int check = zyRoomService.check(zyRoom);
+        if (check == 0) {
+            int i = zyRoomService.editRoom(zyRoom);
+
+            map.put("msg", "修改成功");
+            map.put("status", 200);
+            map.put("success", true);
+
+            return map;
+        }
+        //重复
+        map.put("msg", "房屋名重复");
+        map.put("status", 201);
+        map.put("success", false);
+        return map;
+
+    }
+
+    @DeleteMapping("deleteRoom/{roomId}")
+    public HashMap<String, Object> deleteRoom(@PathVariable Long roomId) {
+        HashMap<String, Object> map = new HashMap<>();
+
+        // System.err.println(zyRoom);
+
+        int i = zyRoomService.deleteRoom(roomId);
+
+        map.put("data", i);
+
+        return map;
+    }
+
 }
 

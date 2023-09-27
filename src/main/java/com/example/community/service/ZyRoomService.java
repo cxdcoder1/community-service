@@ -1,7 +1,10 @@
 package com.example.community.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.example.community.entity.ZyRoom;
+import com.example.community.dto.RoomDto;
+import com.example.community.entity.*;
+
+import java.util.List;
 
 /**
  * 房间 (ZyRoom)表服务接口
@@ -11,5 +14,24 @@ import com.example.community.entity.ZyRoom;
  */
 public interface ZyRoomService extends IService<ZyRoom> {
 
+    List<RoomDto> getRoomList(long current,long size ,RoomDto roomDto);
+
+    List<ZyCommunity> getCommunity();
+
+    List<ZyBuilding> getBuilding(ZyRoom zyRoom);
+
+    List<ZyUnit> getUnit(ZyRoom zyRoom);
+
+    List<SysDictData> getroomStatus();
+
+    List<SysDictData> getroomHouseType();
+
+    int addRoom(ZyRoom zyRoom);
+
+    int editRoom(ZyRoom zyRoom);
+
+    int check(ZyRoom zyRoom);
+
+    int deleteRoom(Long roomId);
 }
 

@@ -25,21 +25,163 @@
 
     <!-- 批量插入 -->
     <insert id="insertBatch" keyProperty="" useGeneratedKeys="true">
-        insert into zy-community.zy_room(room_id, community_id, building_id, unit_id, room_level, room_code, room_name, room_acreage, room_cost, room_status, room_is_shop, room_s_commercial_house, room_house_type, create_by, create_time, update_by, update_time, remark)
+        insert into zy-community.zy_room(room_id, community_id, building_id, unit_id, room_level, room_code, room_name,
+        room_acreage, room_cost, room_status, room_is_shop, room_s_commercial_house, room_house_type, create_by,
+        create_time, update_by, update_time, remark)
         values
         <foreach collection="entities" item="entity" separator=",">
-        (#{entity.roomId}, #{entity.communityId}, #{entity.buildingId}, #{entity.unitId}, #{entity.roomLevel}, #{entity.roomCode}, #{entity.roomName}, #{entity.roomAcreage}, #{entity.roomCost}, #{entity.roomStatus}, #{entity.roomIsShop}, #{entity.roomSCommercialHouse}, #{entity.roomHouseType}, #{entity.createBy}, #{entity.createTime}, #{entity.updateBy}, #{entity.updateTime}, #{entity.remark})
+            (#{entity.roomId}, #{entity.communityId}, #{entity.buildingId}, #{entity.unitId}, #{entity.roomLevel},
+            #{entity.roomCode}, #{entity.roomName}, #{entity.roomAcreage}, #{entity.roomCost}, #{entity.roomStatus},
+            #{entity.roomIsShop}, #{entity.roomSCommercialHouse}, #{entity.roomHouseType}, #{entity.createBy},
+            #{entity.createTime}, #{entity.updateBy}, #{entity.updateTime}, #{entity.remark})
         </foreach>
     </insert>
     <!-- 批量插入或按主键更新 -->
     <insert id="insertOrUpdateBatch" keyProperty="" useGeneratedKeys="true">
-        insert into zy-community.zy_room(room_id, community_id, building_id, unit_id, room_level, room_code, room_name, room_acreage, room_cost, room_status, room_is_shop, room_s_commercial_house, room_house_type, create_by, create_time, update_by, update_time, remark)
+        insert into zy-community.zy_room(room_id, community_id, building_id, unit_id, room_level, room_code, room_name,
+        room_acreage, room_cost, room_status, room_is_shop, room_s_commercial_house, room_house_type, create_by,
+        create_time, update_by, update_time, remark)
         values
         <foreach collection="entities" item="entity" separator=",">
-            (#{entity.roomId}, #{entity.communityId}, #{entity.buildingId}, #{entity.unitId}, #{entity.roomLevel}, #{entity.roomCode}, #{entity.roomName}, #{entity.roomAcreage}, #{entity.roomCost}, #{entity.roomStatus}, #{entity.roomIsShop}, #{entity.roomSCommercialHouse}, #{entity.roomHouseType}, #{entity.createBy}, #{entity.createTime}, #{entity.updateBy}, #{entity.updateTime}, #{entity.remark})
+            (#{entity.roomId}, #{entity.communityId}, #{entity.buildingId}, #{entity.unitId}, #{entity.roomLevel},
+            #{entity.roomCode}, #{entity.roomName}, #{entity.roomAcreage}, #{entity.roomCost}, #{entity.roomStatus},
+            #{entity.roomIsShop}, #{entity.roomSCommercialHouse}, #{entity.roomHouseType}, #{entity.createBy},
+            #{entity.createTime}, #{entity.updateBy}, #{entity.updateTime}, #{entity.remark})
         </foreach>
         on duplicate key update
-         room_id = values(room_id) , community_id = values(community_id) , building_id = values(building_id) , unit_id = values(unit_id) , room_level = values(room_level) , room_code = values(room_code) , room_name = values(room_name) , room_acreage = values(room_acreage) , room_cost = values(room_cost) , room_status = values(room_status) , room_is_shop = values(room_is_shop) , room_s_commercial_house = values(room_s_commercial_house) , room_house_type = values(room_house_type) , create_by = values(create_by) , create_time = values(create_time) , update_by = values(update_by) , update_time = values(update_time) , remark = values(remark)     </insert>
+        room_id = values(room_id) , community_id = values(community_id) , building_id = values(building_id) , unit_id =
+        values(unit_id) , room_level = values(room_level) , room_code = values(room_code) , room_name =
+        values(room_name) , room_acreage = values(room_acreage) , room_cost = values(room_cost) , room_status =
+        values(room_status) , room_is_shop = values(room_is_shop) , room_s_commercial_house =
+        values(room_s_commercial_house) , room_house_type = values(room_house_type) , create_by = values(create_by) ,
+        create_time = values(create_time) , update_by = values(update_by) , update_time = values(update_time) , remark =
+        values(remark)
+    </insert>
+
+    <insert id="addRoom" parameterType="com.example.community.entity.ZyRoom">
+        INSERT INTO zy_room
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="roomId != null">room_id,</if>
+            <if test="communityId != null">community_id,</if>
+            <if test="buildingId != null">building_id,</if>
+            <if test="unitId != null">unit_id,</if>
+            <if test="roomLevel != null">room_level,</if>
+            <if test="roomName != null">room_name,</if>
+            <if test="roomAcreage != null">room_acreage,</if>
+            <if test="roomCost != null">room_cost,</if>
+            <if test="roomStatus != null">room_status,</if>
+            <if test="roomIsShop != null">room_is_shop,</if>
+            <if test="roomSCommercialHouse != null">room_s_commercial_house,</if>
+            <if test="roomHouseType != null">room_house_type,</if>
+            <if test="remark != null">remark,</if>
+        </trim>
+        <trim prefix="VALUES (" suffix=")" suffixOverrides=",">
+            <if test="roomId != null">#{roomId},</if>
+            <if test="communityId != null">#{communityId},</if>
+            <if test="buildingId != null">#{buildingId},</if>
+            <if test="unitId != null">#{unitId},</if>
+            <if test="roomLevel != null">#{roomLevel},</if>
+            <if test="roomName != null">#{roomName},</if>
+            <if test="roomAcreage != null">#{roomAcreage},</if>
+            <if test="roomCost != null">#{roomCost},</if>
+            <if test="roomStatus != null">#{roomStatus},</if>
+            <if test="roomIsShop != null">#{roomIsShop},</if>
+            <if test="roomSCommercialHouse != null">#{roomSCommercialHouse},</if>
+            <if test="roomHouseType != null">#{roomHouseType},</if>
+            <if test="remark != null">#{remark},</if>
+        </trim>
+    </insert>
+
+    <update id="editRoom">
+        update zy_room
+        <set>
+            <if test="communityId != null">community_id = #{communityId},</if>
+            <if test="buildingId != null">building_id = #{buildingId},</if>
+            <if test="unitId != null">unit_id = #{unitId},</if>
+            <if test="roomLevel != null">room_level = #{roomLevel},</if>
+            <if test="roomName != null">room_name = #{roomName},</if>
+            <if test="roomAcreage != null">room_acreage = #{roomAcreage},</if>
+            <if test="roomCost != null">room_cost = #{roomCost},</if>
+            <if test="roomStatus != null">room_status = #{roomStatus},</if>
+            <if test="roomIsShop != null">room_is_shop = #{roomIsShop},</if>
+            <if test="roomSCommercialHouse != null">room_s_commercial_house = #{roomSCommercialHouse},</if>
+            <if test="roomHouseType != null">room_house_type = #{roomHouseType},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </set>
+        WHERE room_id = #{roomId}
+    </update>
+
+    <delete id="deleteRoom">
+        delete * from zy_room where room_id=#{roomId}
+    </delete>
+
+    <select id="getRoomList" resultType="com.example.community.dto.RoomDto">
+        SELECT r.*,u.unit_name,b.building_name,c.community_name FROM zy_room r
+        LEFT JOIN zy_unit u on u.unit_id=r.unit_id
+        LEFT JOIN zy_building b on b.building_id=r.building_id
+        LEFT JOIN zy_community c on c.community_id=r.community_id
+        <where>
+            <if test="zyRoom.communityId!=null">
+                and r.community_id=#{zyRoom.communityId}
+            </if>
+            <if test="zyRoom.buildingId!=null">
+                and r.building_id=#{zyRoom.buildingId}
+            </if>
+            <if test="zyRoom.unitId!=null">
+                and r.unit_id=#{zyRoom.unitId}
+            </if>
+            <if test="zyRoom.roomStatus!=null and zyRoom.roomStatus!=''">
+                and r.room_status=#{zyRoom.roomStatus}
+            </if>
+        </where>
+        <if test="size!=0">
+            limit #{index},#{size}
+        </if>
+    </select>
+
+    <select id="getCommunity" resultType="com.example.community.entity.ZyCommunity">
+        select * from zy_community
+    </select>
+
+    <select id="getBuilding" resultType="com.example.community.entity.ZyBuilding">
+        select * from zy_building
+        <where>
+            <if test="communityId!=null">
+                community_id=#{communityId}
+            </if>
+        </where>
+    </select>
+
+    <select id="getUnit" resultType="com.example.community.entity.ZyUnit">
+        select * from zy_unit
+        <where>
+            <if test="buildingId!=null">
+                building_id=#{buildingId}
+            </if>
+        </where>
+    </select>
+
+    <select id="getroomStatus" resultType="com.example.community.entity.SysDictData">
+        select * from sys_dict_data where dict_type='zy_room_state'
+    </select>
+
+    <select id="getroomHouseType" resultType="com.example.community.entity.SysDictData">
+        select * from sys_dict_data where dict_type='zy_house_state'
+    </select>
+
+    <select id="check" resultType="java.lang.Integer">
+        select count(room_id) from zy_room
+        <where>
+            room_name=#{roomName}
+            <if test="roomId != null and roomId != ''">
+                and room_id != #{roomId}
+            </if>
+            and community_id=#{communityId}
+            and building_id=#{buildingId}
+            and unit_id=#{unitId}
+        </where>
+    </select>
+
 
 </mapper>
 
