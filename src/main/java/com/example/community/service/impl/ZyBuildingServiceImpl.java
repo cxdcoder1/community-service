@@ -21,6 +21,18 @@ import java.util.List;
 public class ZyBuildingServiceImpl extends ServiceImpl<ZyBuildingDao, ZyBuilding> implements ZyBuildingService {
 
     @Resource
+    private ZyBuildingDao zyBuilding;
+
+    @Override
+    public List<ZyBuilding> selectName(String id) {
+        return zyBuilding.selectName(id);
+    }
+
+    @Override
+    public List<ZyBuilding> selectNames(List<String> id) {
+        return zyBuilding.selectNames(id);
+    }
+    @Resource
     private ZyBuildingDao zyBuildingDao;
     @Override
     public Page<ZyBuilding> buildingList(Page<ZyBuilding> page, ZyBuilding zyBuilding,long id) {

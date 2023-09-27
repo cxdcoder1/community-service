@@ -15,6 +15,7 @@ import java.util.List;
 public interface SysDeptService extends IService<SysDept> {
     List<SysDept> selAllDept(SysDept sysDept);
 
+    List<SysDept> getDept(SysDept sysDept);
 
     List<SysDept> getDeptLists(SysDept sysDept);
 

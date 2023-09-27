@@ -23,6 +23,18 @@
         (#{entity.buildingId}, #{entity.buildingName}, #{entity.buildingCode}, #{entity.buildingAcreage}, #{entity.communityId}, #{entity.createBy}, #{entity.createTime}, #{entity.updateBy}, #{entity.updateTime}, #{entity.remark})
         </foreach>
     </insert>
+
+    <select id="selectName" resultType="com.example.community.entity.ZyBuilding">
+         select * from zy_building where community_id=#{id}
+    </select>
+
+    <select id="selectNames" resultType="com.example.community.entity.ZyBuilding">
+        select * from zy_building where community_id in
+        <foreach collection="id" item="num" index="index" open="(" close=")" separator=",">
+            #{num}
+        </foreach>
+    </select>
+
     <!-- 批量插入或按主键更新 -->
     <insert id="insertOrUpdateBatch" keyProperty="" useGeneratedKeys="true">
         insert into zy-community.zy_building(building_id, building_name, building_code, building_acreage, community_id, create_by, create_time, update_by, update_time, remark)

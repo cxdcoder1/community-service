@@ -181,6 +181,32 @@ public class SysDeptController extends ApiController {
         return result;
     }
 
+    //表单中的部门列表
+    @PostMapping("treeDeptLists")
+    public Map<String,Object> treeMenuLists(@RequestBody SysDept sysDept){
+        Map<String,Object> result = new HashMap<>();
+        List<SysDept> sysDeptList = sysDeptService.getDept(sysDept);
+        int len = sysDeptList.size();
+        for(int i = 0; i < len; i++){
+            int count = 0 ;
+            for(int j = 0; j < len; j++){
+                if(sysDeptList.get(i).getParentId().equals(sysDeptList.get(j).getDeptId())){
+                    count++;
+                }
+            }
+            if(count==0){
+                sysDeptList.get(i).setParentId(0L);
+            }
+        }
+        DeptTree deptTree = new DeptTree(sysDeptList);
+        List<SysDept> sysDepts = deptTree.builTree();
+        result.put("menuList",sysDepts);
+        result.put("msg","获取成功");
+        System.err.println(result);
+        return result;
+    }
+
+
     @PostMapping("addDept")
     public Map<String,Object>insertDept(@RequestBody SysDept sysDept){
         Map<String, Object> result = new HashMap<>();
@@ -223,6 +249,9 @@ public class SysDeptController extends ApiController {
         result.put("success", true);
         return result;
     }
+
+
+
 
 }
 

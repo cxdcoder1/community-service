@@ -1,20 +1,11 @@
-package com.example.community.entity;
+package com.example.community.dto;
 
+import com.example.community.entity.SysDept;
 
-import com.baomidou.mybatisplus.extension.activerecord.Model;
-import org.springframework.format.annotation.DateTimeFormat;
-
-import java.io.Serializable;
 import java.util.Date;
 
-/**
- * 小区 (ZyCommunity)表实体类
- *
- * @author makejava
- * @since 2023-09-14 09:53:03
- */
-@SuppressWarnings("serial")
-public class ZyCommunity extends Model<ZyCommunity> {
+public class CommunityAndDeptDto {
+
 
     //小区id
     private String communityId;
@@ -41,7 +32,6 @@ public class ZyCommunity extends Model<ZyCommunity> {
     //创建者
     private String createBy;
     //创建时间
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date createTime;
     //更新者
     private String updateBy;
@@ -50,11 +40,13 @@ public class ZyCommunity extends Model<ZyCommunity> {
     //备注
     private String remark;
 
+    private SysDept sysDept;
 
-    public ZyCommunity() {
+
+    public CommunityAndDeptDto() {
     }
 
-    public ZyCommunity(String communityId, String communityName, String communityCode, String communityProvenceCode, String communityCityCode, String communityTownCode, String communityDetailedAddress, String communityLongitude, String communityLatitude, Long deptId, Integer communitySort, String createBy, Date createTime, String updateBy, Date updateTime, String remark) {
+    public CommunityAndDeptDto(String communityId, String communityName, String communityCode, String communityProvenceCode, String communityCityCode, String communityTownCode, String communityDetailedAddress, String communityLongitude, String communityLatitude, Long deptId, Integer communitySort, String createBy, Date createTime, String updateBy, Date updateTime, String remark, SysDept sysDept) {
         this.communityId = communityId;
         this.communityName = communityName;
         this.communityCode = communityCode;
@@ -71,6 +63,7 @@ public class ZyCommunity extends Model<ZyCommunity> {
         this.updateBy = updateBy;
         this.updateTime = updateTime;
         this.remark = remark;
+        this.sysDept = sysDept;
     }
 
     /**
@@ -329,8 +322,23 @@ public class ZyCommunity extends Model<ZyCommunity> {
         this.remark = remark;
     }
 
+    /**
+     * 获取
+     * @return sysDept
+     */
+    public SysDept getSysDept() {
+        return sysDept;
+    }
 
+    /**
+     * 设置
+     * @param sysDept
+     */
+    public void setSysDept(SysDept sysDept) {
+        this.sysDept = sysDept;
+    }
 
+    public String toString() {
+        return "CommunityAndDeptDto{communityId = " + communityId + ", communityName = " + communityName + ", communityCode = " + communityCode + ", communityProvenceCode = " + communityProvenceCode + ", communityCityCode = " + communityCityCode + ", communityTownCode = " + communityTownCode + ", communityDetailedAddress = " + communityDetailedAddress + ", communityLongitude = " + communityLongitude + ", communityLatitude = " + communityLatitude + ", deptId = " + deptId + ", communitySort = " + communitySort + ", createBy = " + createBy + ", createTime = " + createTime + ", updateBy = " + updateBy + ", updateTime = " + updateTime + ", remark = " + remark + ", sysDept = " + sysDept + "}";
+    }
 }
-
-

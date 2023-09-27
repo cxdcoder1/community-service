@@ -3,6 +3,7 @@ package com.example.community.controller;
 import com.alibaba.excel.EasyExcel;
 import com.alibaba.excel.write.style.HorizontalCellStyleStrategy;
 import com.alibaba.fastjson.JSON;
+import com.example.community.dao.ZyCommunityDao;
 import com.example.community.dto.UserAndDeptImport;
 import com.example.community.entity.*;
 import com.example.community.service.SysDictDataService;
@@ -40,6 +41,8 @@ public class ExcelController {
     private SysPostService sysPostService;
     @Resource
     private ZyBuildingService zyBuildingService;
+    @Resource
+    private ZyCommunityDao zyCommunityDao;
 
     /**
      * 生成随机文件名 并返回固定路径
@@ -193,6 +196,24 @@ public class ExcelController {
         return result;
     }
 
+    public static void simpleWriteCommunity(String fileName,List<ZyCommunity> Communitylist){
+        //"E:\\lx.xls"
+        List<ZyCommunity> dataList = new ArrayList<>();
+
+        for (ZyCommunity zyCommunity : Communitylist) {
+            dataList.add(zyCommunity);
+        }
+
+        // 设置单元格样式
+        HorizontalCellStyleStrategy horizontalCellStyleStrategy = new HorizontalCellStyleStrategy( StyleUtils.getHeadStyle(),StyleUtils.getContentStyle());
+
+        EasyExcel.write(fileName, ZyCommunity.class)
+                .sheet(0)
+                .registerWriteHandler(horizontalCellStyleStrategy)
+                .doWrite(dataList);
+    }
+
+
     public static void simpleWrite1(String fileName,List<SysDictData> list){
         //"E:\\lx.xls"
         List<SysDictData> dataList = new ArrayList<>();
@@ -232,6 +253,25 @@ public class ExcelController {
      * @param lists
      * @return
      */
+    @PostMapping("Communitylist")
+    public Map<String, Object> Communitylist(@RequestBody List<String> lists) {
+        Map<String, Object> result = new HashMap<>();
+        //根据需要导出的角色id查询对应信息
+        if (lists.size()==0){
+            lists=null;
+        }
+        System.err.println(lists);
+
+        List<ZyCommunity> CommunityList = zyCommunityDao.getCommunityDeriveList(lists);
+        String path = getPath();
+        simpleWriteCommunity(path,CommunityList);
+        result.put("msg","导出成功");
+        result.put("status","200");
+        result.put("path",path);
+        return result;
+    }
+
+
     @PostMapping("list")
     public Map<String, Object> menuList(@RequestBody List<String> lists) {
         Map<String, Object> result = new HashMap<>();
@@ -250,6 +290,8 @@ public class ExcelController {
         result.put("path",path);
         return result;
     }
+
+
 
     /**
      * 用户表格导出

@@ -3,9 +3,15 @@ package com.example.community.dao;
 import java.util.List;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.example.community.dto.CommunityAndDeptDto;
+import com.example.community.dto.UserAndDeptAndPostAndRole;
+import com.example.community.entity.SysRole;
 import org.apache.ibatis.annotations.Param;
 import com.example.community.entity.ZyCommunity;
 import org.apache.ibatis.annotations.Select;
+
+import javax.websocket.server.PathParam;
 
 /**
  * 小区 (ZyCommunity)表数据库访问层
@@ -32,6 +38,24 @@ int insertBatch(@Param("entities") List<ZyCommunity> entities);
 */
 int insertOrUpdateBatch(@Param("entities") List<ZyCommunity> entities);
 
+    List<CommunityAndDeptDto> getCommunity(@Param("index") Long index, @Param("size") Long size, @Param("zyCommunity") CommunityAndDeptDto communityAndDeptDto);
+
+    long getCount(CommunityAndDeptDto communityAndDeptDto);
+
+    //删除
+    long delCommunity(@Param("id") String id);
+
+    List<ZyCommunity> getCommunityDeriveList(List<String> list);
+
+    int deleteCommunity(@Param("id") List<String> id);
+
+    int insCommunit(ZyCommunity zyCommunity);
+
+    List<ZyCommunity> selCommunityDerive(ZyCommunity zyCommunity);
+
+    int updCommunityDerive(ZyCommunity zyCommunity);
+
+    int updCommunity(String communityId,String deptId);
 
     /**
      * 小区集合

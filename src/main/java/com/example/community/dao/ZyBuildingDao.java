@@ -32,6 +32,11 @@ int insertBatch(@Param("entities") List<ZyBuilding> entities);
 */
 int insertOrUpdateBatch(@Param("entities") List<ZyBuilding> entities);
 
+    List<ZyBuilding> selectName(@Param("id") String id);
+
+    List<ZyBuilding> selectNames(@Param("id") List<String> id);
+
+
 List<ZyBuilding> selectBuild(@Param("index") Long index, @Param("size") Long size , @Param("zyBuilding") ZyBuilding zyBuilding,@Param("id")long id);
 
 long count(ZyBuilding zyBuilding,long id);

@@ -41,6 +41,8 @@ public interface SysDeptDao extends BaseMapper<SysDept> {
 
     List<SysDept> getDeptLists(SysDept sysDept);
 
+    List<SysDept> getDept(SysDept sysDept);
+
     Integer deleteDept(String deptId);
 
     List<SysDept> isChildren(String deptId);

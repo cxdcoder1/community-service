@@ -155,6 +155,10 @@
         order by order_num,parent_id
     </select>
 
+    <select id="getDept" resultType="com.example.community.entity.SysDept">
+       select * from sys_dept where parent_id=100 or parent_id = 0
+    </select>
+
 
 
 </mapper>

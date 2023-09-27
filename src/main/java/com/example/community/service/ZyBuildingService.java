@@ -4,6 +4,9 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.example.community.entity.SysPost;
 import com.example.community.entity.ZyBuilding;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 import com.example.community.entity.ZyCommunity;
 import org.apache.ibatis.annotations.Param;
 
@@ -36,6 +39,10 @@ public interface ZyBuildingService extends IService<ZyBuilding> {
      * @return
      */
     List<ZyBuilding> getBuildingList(List<String> list);
+
+    List<ZyBuilding> selectName(String id);
+
+    List<ZyBuilding> selectNames(List<String> id);
 
 }
 

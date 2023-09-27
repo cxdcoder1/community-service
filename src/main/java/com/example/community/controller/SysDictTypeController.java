@@ -93,10 +93,8 @@ public class SysDictTypeController extends ApiController {
         } else {
             SysDictType sysDictType1 = sysDictTypes.get(0);
             if (sysDictType1.getDictId().equals(sysDictType.getDictId())) {
-
                     sysDictDataService.updDictType(type, type2);
                     sysDictTypeService.updDictType(sysDictType);
-
                 map.put("msg", "修改成功");
                 map.put("status", 200);
                 map.put("success", true);
@@ -134,7 +132,6 @@ public class SysDictTypeController extends ApiController {
         HashMap<String, Object> map = new HashMap<>();
         map.put("data", dictOptionselect.get(0));
         System.out.println("cccccccccccccc" + dictOptionselect.get(0));
-
         return map;
     }
 

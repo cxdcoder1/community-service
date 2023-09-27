@@ -46,5 +46,6 @@ int insertBatch(@Param("entities") List<SysDictType> entities);
     int deleteDictType(@Param("id") List<Long> id);
 
     List<SysDictType> getDeriveList(List<String> list);
+
 }
 

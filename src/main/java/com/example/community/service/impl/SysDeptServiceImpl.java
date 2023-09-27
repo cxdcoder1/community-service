@@ -28,6 +28,11 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptDao, SysDept> impleme
     }
 
     @Override
+    public List<SysDept> getDept(SysDept sysDept) {
+        return sysDeptDao.getDept(sysDept);
+    }
+
+    @Override
     public List<SysDept> getDeptLists(SysDept sysDept) {
         return sysDeptDao.getDeptLists(sysDept);
     }

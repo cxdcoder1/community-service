@@ -29,6 +29,10 @@ public class ZyCommentController extends ApiController {
     @Resource
     private ZyCommentService zyCommentService;
 
+
+
+
+
     /**
      * 分页查询所有数据
      *
@@ -84,5 +88,8 @@ public class ZyCommentController extends ApiController {
     public R delete(@RequestParam("idList") List<Long> idList) {
         return success(this.zyCommentService.removeByIds(idList));
     }
+
+
+
 }
 
