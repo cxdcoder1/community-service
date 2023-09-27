@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.community.dao.ZyBuildingDao;
 import com.example.community.dao.ZyCommunityDao;
 import com.example.community.entity.ZyBuilding;
+import com.example.community.entity.ZyCommunity;
 import com.example.community.service.ZyBuildingService;
 import org.springframework.stereotype.Service;
 
@@ -102,6 +103,13 @@ public class ZyBuildingServiceImpl extends ServiceImpl<ZyBuildingDao, ZyBuilding
     @Override
     public List<ZyBuilding> getBuildingList(List<String> list) {
         return zyBuildingDao.getBuildingList(list);
+    }
+
+
+    @Override
+    public List<ZyBuilding> getUBuild(String communityId) {
+
+        return zyBuildingDao.getUBuild(communityId);
     }
 }
 

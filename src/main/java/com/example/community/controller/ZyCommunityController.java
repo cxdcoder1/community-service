@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.extension.api.R;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.community.dto.CommunityAndDeptDto;
 import com.example.community.entity.ZyBuilding;
+import com.example.community.dto.RolesAndMenuIds;
 import com.example.community.entity.ZyCommunity;
 import com.example.community.service.ZyBuildingService;
 import com.example.community.service.ZyCommunityService;
@@ -244,5 +245,17 @@ public class ZyCommunityController extends ApiController {
 
 
 
+
+    /**
+     * 获取小区信息
+     * @return
+     */
+    @GetMapping("getUCommunity")
+    public Map<String, Object> getUCommunity() {
+        HashMap<String, Object> result = new HashMap<>();
+        List<ZyCommunity> uCommunity = zyCommunityService.getUCommunity();
+        result.put("communityList",uCommunity);
+        return result;
+    }
 }
 

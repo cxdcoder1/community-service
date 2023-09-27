@@ -6,13 +6,19 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.api.ApiController;
 import com.baomidou.mybatisplus.extension.api.R;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.example.community.dto.UnitAndCommunityAndBuilding;
+import com.example.community.entity.ZyCommunity;
+import com.example.community.entity.ZyRoom;
 import com.example.community.entity.ZyUnit;
 import com.example.community.service.ZyUnitService;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.io.Serializable;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 单元 (ZyUnit)表控制层
@@ -22,6 +28,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("zyUnit")
+@CrossOrigin
 public class ZyUnitController extends ApiController {
     /**
      * 服务对象
@@ -30,15 +37,144 @@ public class ZyUnitController extends ApiController {
     private ZyUnitService zyUnitService;
 
     /**
-     * 分页查询所有数据
+     * 分页查询单元信息
      *
      * @param page 分页对象
-     * @param zyUnit 查询实体
+     *
      * @return 所有数据
      */
-    @GetMapping
-    public R selectAll(Page<ZyUnit> page, ZyUnit zyUnit) {
-        return success(this.zyUnitService.page(page, new QueryWrapper<>(zyUnit)));
+    @GetMapping("getUnits")
+    public R selectAll(Page<UnitAndCommunityAndBuilding> page, UnitAndCommunityAndBuilding unitAndCommunityAndBuilding) {
+
+        return success(this.zyUnitService.getUnitList(page, unitAndCommunityAndBuilding));
+    }
+
+
+    /**
+     * 添加单元
+     * @param zyUnit
+     * @return
+     */
+    @PostMapping("addUnit")
+    public Map<String, Object> addUnit(@RequestBody ZyUnit zyUnit) {
+        HashMap<String, Object> result = new HashMap<>();
+        //验重
+        zyUnit.setCreateTime(new Date());
+        Boolean t1 = zyUnitService.checkUName(zyUnit);
+        if (!t1){
+            result.put("status",201);
+            result.put("msg","新增失败单元名称重复");
+            return result;
+        }
+        if (zyUnit.getUnitCode()!=null){
+            Boolean t2 = zyUnitService.checkCode(zyUnit);
+            if (!t2){
+                result.put("status",201);
+                result.put("msg","新增失败单元编号重复");
+                return result;
+            }
+        }
+        //新增操作
+        Integer save = zyUnitService.addUnit(zyUnit);
+        if (!save.equals(0)){
+            result.put("status",200);
+            result.put("msg","新增成功");
+            return result;
+        }else {
+            result.put("status",201);
+            result.put("msg","新增失败");
+            return result;
+        }
+    }
+
+    @PostMapping("updateUnit")
+    public Map<String, Object> updateUnit(@RequestBody ZyUnit zyUnit) {
+        HashMap<String, Object> result = new HashMap<>();
+        //验重
+        Boolean t1 = zyUnitService.checkUName(zyUnit);
+        if (!t1){
+            result.put("status",201);
+            result.put("msg","修改失败单元名称重复");
+            return result;
+        }
+        if (zyUnit.getUnitCode()!=null){
+            Boolean t2 = zyUnitService.checkCode(zyUnit);
+            if (!t2){
+                result.put("status",201);
+                result.put("msg","修改失败单元编号重复");
+                return result;
+            }
+        }
+
+        //修改
+        Integer b = zyUnitService.updateUnit(zyUnit);
+        if (!b.equals(0)){
+            result.put("status",200);
+            result.put("msg","修改成功");
+            return result;
+        }
+        result.put("status",201);
+        result.put("msg","修改失败");
+        return result;
+    }
+
+    /**
+     * 删除单个单元
+     * @param id
+     * @return
+     */
+    @GetMapping("delUnit/{id}")
+    public Map<String, Object> delUnit(@PathVariable("id") String id) {
+        HashMap<String, Object> result = new HashMap<>();
+
+        //验证是否能删除
+        List<ZyRoom> byUnit = zyUnitService.getByUnit(id);
+        if (byUnit.size()!=0){
+            result.put("status",201);
+            result.put("msg","删除失败,此单元下还有房间");
+            return result;
+        }
+        //删除
+        Integer i = zyUnitService.delById(id);
+        if (i!=1){
+            result.put("status",201);
+            result.put("msg","删除失败");
+            return result;
+        }else {
+            result.put("status",200);
+            result.put("msg","删除成功");
+            return result;
+        }
+    }
+
+    /**
+     * 删除多个单元
+     * @param list
+     * @return
+     */
+    @PostMapping("delUnits")
+    public HashMap<String, Object> delUnits(@RequestBody List<String> list) {
+        HashMap<String, Object> map = new HashMap<>();
+
+        //验证是否能删除
+        List<ZyRoom> byUnit = zyUnitService.getByUnits(list);
+        System.out.println(list);
+        if (byUnit.size()!=0){
+            map.put("status",201);
+            map.put("msg","删除失败,单元下还有房间");
+            return map;
+        }
+
+
+        Integer i = zyUnitService.delUnits(list);
+        if (i!=0){
+            map.put("status","200");
+            map.put("msg","删除成功");
+        }else {
+            map.put("status","201");
+            map.put("msg","删除失败");
+        }
+        return map;
     }
 
     /**

@@ -8,6 +8,7 @@ import com.baomidou.mybatisplus.extension.api.R;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.community.entity.SysRole;
 import com.example.community.entity.ZyBuilding;
+import com.example.community.entity.ZyCommunity;
 import com.example.community.service.ZyBuildingService;
 import com.example.community.service.ZyCommunityService;
 import org.springframework.web.bind.annotation.*;
@@ -169,6 +170,18 @@ public class ZyBuildingController extends ApiController {
             result.put("status",400);
             result.put("msg","删除的楼栋下绑定了单元,删除失败");
         }
+        return result;
+    }
+
+    /**
+     * 根据小区id获取楼栋信息
+     * @return
+     */
+    @GetMapping("getUBuild/{communityId}")
+    public Map<String, Object> getUBuild(@PathVariable("communityId") String communityId) {
+        HashMap<String, Object> result = new HashMap<>();
+        List<ZyBuilding> uBuild = zyBuildingService.getUBuild(communityId);
+        result.put("buildList",uBuild);
         return result;
     }
 }

@@ -1,69 +1,50 @@
-package com.example.community.entity;
+package com.example.community.dto;
 
-
-import com.alibaba.excel.annotation.ExcelIgnore;
-import com.alibaba.excel.annotation.ExcelProperty;
-import com.alibaba.excel.annotation.write.style.ColumnWidth;
-import com.alibaba.excel.annotation.write.style.ContentRowHeight;
-import com.alibaba.excel.annotation.write.style.HeadRowHeight;
-import com.baomidou.mybatisplus.extension.activerecord.Model;
+import com.example.community.entity.ZyBuilding;
+import com.example.community.entity.ZyCommunity;
 
 import java.util.Date;
 
-/**
- * 单元 (ZyUnit)表实体类
- *
- * @author makejava
- * @since 2023-09-14 09:53:04
- */
-@SuppressWarnings("serial")
-@ColumnWidth(15) //列宽,最大值为255
-@HeadRowHeight(16) //表头行高
-@ContentRowHeight(16) //数据行高
-public class ZyUnit extends Model<ZyUnit> {
+public class UnitAndCommunityAndBuilding {
+
     //单元id
-    @ExcelProperty(index = 0, value = {"单元id"})
     private Long unitId;
     //小区id
-    @ExcelProperty(index = 2, value = {"小区id"})
     private Long communityId;
     //楼栋id
-    @ExcelProperty(index = 3, value = {"楼栋id"})
     private Long buildingId;
     //单元名称
-    @ExcelProperty(index = 4, value = {"单元名称"})
     private String unitName;
     //单元编号
-    @ExcelProperty(index = 5, value = {"单元编号"})
     private String unitCode;
     //层数
-    @ExcelProperty(index = 6, value = {"层数"})
     private Integer unitLevel;
     //建筑面积
-    @ExcelProperty(index = 7, value = {"建筑面积"})
     private Double unitAcreage;
     //是否有电梯
-    @ExcelProperty(index = 8, value = {"是否有电梯"})
     private String unitHaveElevator;
     //创建者
-    @ExcelIgnore
     private String createBy;
     //创建时间
-    @ExcelIgnore
     private Date createTime;
     //更新者
-    @ExcelIgnore
     private String updateBy;
     //更新时间
-    @ExcelIgnore
     private Date updateTime;
     //备注
-    @ExcelProperty(index = 9, value = {"备注"})
     private String remark;
+
+    //小区
+    private ZyCommunity zyCommunity;
+
+    //楼栋
+    private ZyBuilding zyBuilding;
+
+
 
     @Override
     public String toString() {
-        return "ZyUnit{" +
+        return "UnitAndCommunityAndBuilding{" +
                 "unitId=" + unitId +
                 ", communityId=" + communityId +
                 ", buildingId=" + buildingId +
@@ -77,7 +58,30 @@ public class ZyUnit extends Model<ZyUnit> {
                 ", updateBy='" + updateBy + '\'' +
                 ", updateTime=" + updateTime +
                 ", remark='" + remark + '\'' +
+                ", zyCommunity=" + zyCommunity +
+                ", zyBuilding=" + zyBuilding +
                 '}';
+    }
+
+    public UnitAndCommunityAndBuilding() {
+    }
+
+    public UnitAndCommunityAndBuilding(Long unitId, Long communityId, Long buildingId, String unitName, String unitCode, Integer unitLevel, Double unitAcreage, String unitHaveElevator, String createBy, Date createTime, String updateBy, Date updateTime, String remark, ZyCommunity zyCommunity, ZyBuilding zyBuilding) {
+        this.unitId = unitId;
+        this.communityId = communityId;
+        this.buildingId = buildingId;
+        this.unitName = unitName;
+        this.unitCode = unitCode;
+        this.unitLevel = unitLevel;
+        this.unitAcreage = unitAcreage;
+        this.unitHaveElevator = unitHaveElevator;
+        this.createBy = createBy;
+        this.createTime = createTime;
+        this.updateBy = updateBy;
+        this.updateTime = updateTime;
+        this.remark = remark;
+        this.zyCommunity = zyCommunity;
+        this.zyBuilding = zyBuilding;
     }
 
     public Long getUnitId() {
@@ -184,5 +188,19 @@ public class ZyUnit extends Model<ZyUnit> {
         this.remark = remark;
     }
 
-}
+    public ZyCommunity getZyCommunity() {
+        return zyCommunity;
+    }
 
+    public void setZyCommunity(ZyCommunity zyCommunity) {
+        this.zyCommunity = zyCommunity;
+    }
+
+    public ZyBuilding getZyBuilding() {
+        return zyBuilding;
+    }
+
+    public void setZyBuilding(ZyBuilding zyBuilding) {
+        this.zyBuilding = zyBuilding;
+    }
+}

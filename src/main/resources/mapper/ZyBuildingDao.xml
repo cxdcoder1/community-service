@@ -17,10 +17,13 @@
 
     <!-- 批量插入 -->
     <insert id="insertBatch" keyProperty="" useGeneratedKeys="true">
-        insert into zy-community.zy_building(building_id, building_name, building_code, building_acreage, community_id, create_by, create_time, update_by, update_time, remark)
+        insert into zy-community.zy_building(building_id, building_name, building_code, building_acreage, community_id,
+        create_by, create_time, update_by, update_time, remark)
         values
         <foreach collection="entities" item="entity" separator=",">
-        (#{entity.buildingId}, #{entity.buildingName}, #{entity.buildingCode}, #{entity.buildingAcreage}, #{entity.communityId}, #{entity.createBy}, #{entity.createTime}, #{entity.updateBy}, #{entity.updateTime}, #{entity.remark})
+            (#{entity.buildingId}, #{entity.buildingName}, #{entity.buildingCode}, #{entity.buildingAcreage},
+            #{entity.communityId}, #{entity.createBy}, #{entity.createTime}, #{entity.updateBy}, #{entity.updateTime},
+            #{entity.remark})
         </foreach>
     </insert>
 
@@ -37,13 +40,20 @@
 
     <!-- 批量插入或按主键更新 -->
     <insert id="insertOrUpdateBatch" keyProperty="" useGeneratedKeys="true">
-        insert into zy-community.zy_building(building_id, building_name, building_code, building_acreage, community_id, create_by, create_time, update_by, update_time, remark)
+        insert into zy-community.zy_building(building_id, building_name, building_code, building_acreage, community_id,
+        create_by, create_time, update_by, update_time, remark)
         values
         <foreach collection="entities" item="entity" separator=",">
-            (#{entity.buildingId}, #{entity.buildingName}, #{entity.buildingCode}, #{entity.buildingAcreage}, #{entity.communityId}, #{entity.createBy}, #{entity.createTime}, #{entity.updateBy}, #{entity.updateTime}, #{entity.remark})
+            (#{entity.buildingId}, #{entity.buildingName}, #{entity.buildingCode}, #{entity.buildingAcreage},
+            #{entity.communityId}, #{entity.createBy}, #{entity.createTime}, #{entity.updateBy}, #{entity.updateTime},
+            #{entity.remark})
         </foreach>
         on duplicate key update
-         building_id = values(building_id) , building_name = values(building_name) , building_code = values(building_code) , building_acreage = values(building_acreage) , community_id = values(community_id) , create_by = values(create_by) , create_time = values(create_time) , update_by = values(update_by) , update_time = values(update_time) , remark = values(remark)     </insert>
+        building_id = values(building_id) , building_name = values(building_name) , building_code =
+        values(building_code) , building_acreage = values(building_acreage) , community_id = values(community_id) ,
+        create_by = values(create_by) , create_time = values(create_time) , update_by = values(update_by) , update_time
+        = values(update_time) , remark = values(remark)
+    </insert>
     <insert id="addBuilding">
         insert into zy_building
         <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -116,7 +126,7 @@
         <where>
             (building_name=#{buildingName })
             <if test="buildingId != null and buildingId != ''">
-            and building_id!=#{buildingId}
+                and building_id!=#{buildingId}
             </if>
         </where>
     </select>
@@ -124,7 +134,7 @@
         select * from zy_unit where building_id=#{id}
     </select>
     <select id="getBuildingList" resultType="com.example.community.entity.ZyBuilding">
-        SELECT * FROM zy_building  WHERE building_id != 1
+        SELECT * FROM zy_building WHERE building_id != 1
         <if test="list!=null">
             and
             building_id in
@@ -132,6 +142,10 @@
                 #{num}
             </foreach>
         </if>
+    </select>
+
+    <select id="getUBuild" resultType="com.example.community.entity.ZyBuilding">
+        select * from zy_building where community_id = #{communityId}
     </select>
 
 

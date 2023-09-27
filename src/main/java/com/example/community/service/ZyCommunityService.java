@@ -11,6 +11,8 @@ import java.util.List;
 
 import java.util.List;
 
+import java.util.List;
+
 /**
  * 小区 (ZyCommunity)表服务接口
  *
@@ -42,5 +44,10 @@ public interface ZyCommunityService extends IService<ZyCommunity> {
 
 
 
+    /**
+     * 获取小区信息
+     * @return
+     */
+    List<ZyCommunity> getUCommunity();
 }
 

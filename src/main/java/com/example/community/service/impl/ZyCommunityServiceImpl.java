@@ -94,5 +94,11 @@ public class ZyCommunityServiceImpl extends ServiceImpl<ZyCommunityDao, ZyCommun
     }
 
 
+
+
+    @Override
+    public List<ZyCommunity> getUCommunity() {
+        return zyCommunityDao.getUCommunity();
+    }
 }
 

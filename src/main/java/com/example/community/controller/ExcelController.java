@@ -40,6 +40,8 @@ public class ExcelController {
     @Resource
     private SysPostService sysPostService;
     @Resource
+    private ZyUnitService zyUnitService;
+    @Resource
     private ZyBuildingService zyBuildingService;
     @Resource
     private ZyCommunityDao zyCommunityDao;
@@ -135,6 +137,28 @@ public class ExcelController {
         HorizontalCellStyleStrategy horizontalCellStyleStrategy = new HorizontalCellStyleStrategy( StyleUtils.getHeadStyle(),StyleUtils.getContentStyle());
 
         EasyExcel.write(fileName, UserAndDeptImport.class)
+                .sheet(0)
+                .registerWriteHandler(horizontalCellStyleStrategy)
+                .doWrite(dataList);
+    }
+
+    /**
+     * 导出单元数据
+     * @param fileName
+     * @param list
+     */
+    public static void outUnit(String fileName,List<ZyUnit> list){
+        //"E:\\lx.xls"
+        List<ZyUnit> dataList = new ArrayList<>();
+
+        for (ZyUnit unit : list) {
+            dataList.add(unit);
+        }
+
+        // 设置单元格样式
+        HorizontalCellStyleStrategy horizontalCellStyleStrategy = new HorizontalCellStyleStrategy( StyleUtils.getHeadStyle(),StyleUtils.getContentStyle());
+
+        EasyExcel.write(fileName, ZyUnit.class)
                 .sheet(0)
                 .registerWriteHandler(horizontalCellStyleStrategy)
                 .doWrite(dataList);
@@ -310,6 +334,29 @@ public class ExcelController {
 //        System.err.println(userList);
         String path = getPath();
         simpleWriteUser(path,userList);
+        result.put("msg","导出成功");
+        result.put("status","200");
+        result.put("path",path);
+        return result;
+    }
+
+    /**
+     * 单元导出
+     * @param lists
+     * @return
+     */
+    @PostMapping("unitList")
+    public Map<String, Object> UnitList(@RequestBody List<String> lists) {
+        Map<String, Object> result = new HashMap<>();
+        //根据需要导出的角色id查询对应信息
+        if (lists.size()==0){
+            lists=null;
+        }
+
+        List<ZyUnit> units = zyUnitService.getUnitsById(lists);
+
+        String path = getPath();
+        outUnit(path,units);
         result.put("msg","导出成功");
         result.put("status","200");
         result.put("path",path);

@@ -44,5 +44,12 @@ public interface ZyBuildingService extends IService<ZyBuilding> {
 
     List<ZyBuilding> selectNames(List<String> id);
 
+    /**
+     * 获取楼栋信息
+     * @param
+     * @return
+     */
+    List<ZyBuilding> getUBuild(String communityId);
+
 }
 

@@ -61,6 +61,21 @@ public class ZyBuilding extends Model<ZyBuilding> {
     @ExcelIgnore
     private String remark;
 
+    @Override
+    public String toString() {
+        return "ZyBuilding{" +
+                "buildingId=" + buildingId +
+                ", buildingName='" + buildingName + '\'' +
+                ", buildingCode='" + buildingCode + '\'' +
+                ", buildingAcreage=" + buildingAcreage +
+                ", communityId=" + communityId +
+                ", createBy='" + createBy + '\'' +
+                ", createTime=" + createTime +
+                ", updateBy='" + updateBy + '\'' +
+                ", updateTime=" + updateTime +
+                ", remark='" + remark + '\'' +
+                '}';
+    }
 
     public Long getBuildingId() {
         return buildingId;

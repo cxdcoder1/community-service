@@ -20,21 +20,186 @@
 
     <!-- 批量插入 -->
     <insert id="insertBatch" keyProperty="" useGeneratedKeys="true">
-        insert into zy-community.zy_unit(unit_id, community_id, building_id, unit_name, unit_code, unit_level, unit_acreage, unit_have_elevator, create_by, create_time, update_by, update_time, remark)
+        insert into zy-community.zy_unit(unit_id, community_id, building_id, unit_name, unit_code, unit_level,
+        unit_acreage, unit_have_elevator, create_by, create_time, update_by, update_time, remark)
         values
         <foreach collection="entities" item="entity" separator=",">
-        (#{entity.unitId}, #{entity.communityId}, #{entity.buildingId}, #{entity.unitName}, #{entity.unitCode}, #{entity.unitLevel}, #{entity.unitAcreage}, #{entity.unitHaveElevator}, #{entity.createBy}, #{entity.createTime}, #{entity.updateBy}, #{entity.updateTime}, #{entity.remark})
+            (#{entity.unitId}, #{entity.communityId}, #{entity.buildingId}, #{entity.unitName}, #{entity.unitCode},
+            #{entity.unitLevel}, #{entity.unitAcreage}, #{entity.unitHaveElevator}, #{entity.createBy},
+            #{entity.createTime}, #{entity.updateBy}, #{entity.updateTime}, #{entity.remark})
         </foreach>
     </insert>
     <!-- 批量插入或按主键更新 -->
     <insert id="insertOrUpdateBatch" keyProperty="" useGeneratedKeys="true">
-        insert into zy-community.zy_unit(unit_id, community_id, building_id, unit_name, unit_code, unit_level, unit_acreage, unit_have_elevator, create_by, create_time, update_by, update_time, remark)
+        insert into zy-community.zy_unit(unit_id, community_id, building_id, unit_name, unit_code, unit_level,
+        unit_acreage, unit_have_elevator, create_by, create_time, update_by, update_time, remark)
         values
         <foreach collection="entities" item="entity" separator=",">
-            (#{entity.unitId}, #{entity.communityId}, #{entity.buildingId}, #{entity.unitName}, #{entity.unitCode}, #{entity.unitLevel}, #{entity.unitAcreage}, #{entity.unitHaveElevator}, #{entity.createBy}, #{entity.createTime}, #{entity.updateBy}, #{entity.updateTime}, #{entity.remark})
+            (#{entity.unitId}, #{entity.communityId}, #{entity.buildingId}, #{entity.unitName}, #{entity.unitCode},
+            #{entity.unitLevel}, #{entity.unitAcreage}, #{entity.unitHaveElevator}, #{entity.createBy},
+            #{entity.createTime}, #{entity.updateBy}, #{entity.updateTime}, #{entity.remark})
         </foreach>
         on duplicate key update
-         unit_id = values(unit_id) , community_id = values(community_id) , building_id = values(building_id) , unit_name = values(unit_name) , unit_code = values(unit_code) , unit_level = values(unit_level) , unit_acreage = values(unit_acreage) , unit_have_elevator = values(unit_have_elevator) , create_by = values(create_by) , create_time = values(create_time) , update_by = values(update_by) , update_time = values(update_time) , remark = values(remark)     </insert>
+        unit_id = values(unit_id) , community_id = values(community_id) , building_id = values(building_id) , unit_name
+        = values(unit_name) , unit_code = values(unit_code) , unit_level = values(unit_level) , unit_acreage =
+        values(unit_acreage) , unit_have_elevator = values(unit_have_elevator) , create_by = values(create_by) ,
+        create_time = values(create_time) , update_by = values(update_by) , update_time = values(update_time) , remark =
+        values(remark)
+    </insert>
+    <insert id="addUnit">
+        insert into zy_unit
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="unitId != null">unit_id,</if>
+            <if test="communityId != null">community_id,</if>
+            <if test="buildingId != null">building_id,</if>
+            <if test="unitName != null">unit_name,</if>
+            <if test="unitCode != null">unit_code,</if>
+            <if test="unitLevel != null">unit_level,</if>
+            <if test="unitAcreage != null">unit_acreage,</if>
+            <if test="unitHaveElevator != null">unit_have_elevator,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remark != null">remark,</if>
+
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="unitId != null">#{unitId},</if>
+            <if test="communityId != null">#{communityId},</if>
+            <if test="buildingId != null">#{buildingId},</if>
+            <if test="unitName != null">#{unitName},</if>
+            <if test="unitCode != null">#{unitCode},</if>
+            <if test="unitLevel != null">#{unitLevel},</if>
+            <if test="unitAcreage != null">#{unitAcreage},</if>
+            <if test="unitHaveElevator != null">#{unitHaveElevator},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remark != null">#{remark},</if>
+        </trim>
+    </insert>
+    <update id="updateUnit">
+        update zy_unit
+        <set>
+            <if test="buildingId != null">
+                building_id = #{buildingId},
+            </if>
+            <if test="unitName != null">
+                unit_name = #{unitName},
+            </if>
+            <if test="unitCode != null">
+                unit_code = #{unitCode},
+            </if>
+            <if test="unitLevel != null">
+                unit_level = #{unitLevel},
+            </if>
+            <if test="unitAcreage != null">
+                unit_acreage = #{unitAcreage},
+            </if>
+            <if test="unitHaveElevator != null">
+                unit_have_elevator = #{unitHaveElevator},
+            </if>
+            <if test="remark != null">
+                remark = #{remark},
+            </if>
+        </set>
+        where unit_id = #{unitId}
+    </update>
+    <delete id="delById">
+        DELETE FROM zy_unit WHERE unit_id = #{id};
+    </delete>
+    <delete id="delUnits">
+        DELETE FROM zy_unit WHERE unit_id in
+        <foreach collection="list" item="num" index="index" open="(" close=")" separator=",">
+            #{num}
+        </foreach>
+    </delete>
+
+
+    <resultMap id="getUnitList" type="com.example.community.dto.UnitAndCommunityAndBuilding" autoMapping="true">
+        <id property="unitId" column="unit_id"/>
+
+        <association property="zyCommunity" javaType="com.example.community.entity.ZyCommunity" autoMapping="true">
+            <id property="communityId" column="community_id"/>
+        </association>
+        <association property="zyBuilding" javaType="com.example.community.entity.ZyBuilding" autoMapping="true">
+            <id property="buildingId" column="building_id"/>
+        </association>
+    </resultMap>
+    <select id="getList" resultMap="getUnitList">
+        SELECT u.*,c.community_name,b.building_name FROM zy_unit u LEFT JOIN zy_community c
+        ON u.community_id = c.community_id LEFT JOIN zy_building b
+        ON u.building_id = b.building_id
+        <where>
+            <if test="unit.communityId!=null and unit.communityId!=''">
+                and u.community_id = #{unit.communityId}
+            </if>
+            <if test="unit.unitName!=null and unit.unitName!=''">
+                and u.unit_name like concat('%', #{unit.unitName}, '%')
+            </if>
+            <if test="unit.unitCode!=null and unit.unitCode!=''">
+                and u.unit_code like concat('%', #{unit.unitCode}, '%')
+            </if>
+            <if test="unit.unitHaveElevator!=null and unit.unitHaveElevator!=''">
+                and u.unit_have_elevator = #{unit.unitHaveElevator}
+            </if>
+            <if test="unit.buildingId!=null and unit.buildingId!=''">
+                and b.building_id = #{unit.buildingId}
+            </if>
+        </where>
+        <if test="size != 0">
+            limit #{index},#{size}
+        </if>
+    </select>
+    <select id="checkUName" resultType="com.example.community.entity.ZyUnit">
+        SELECT * from zy_unit
+        <where>
+            <if test="communityId!=null and communityId!=''">
+                and community_id = #{communityId}
+            </if>
+            <if test="buildingId!=null and buildingId!=''">
+                and building_id = #{buildingId}
+            </if>
+            <if test="unitName!=null and unitName!=''">
+                and unit_name = #{unitName}
+            </if>
+        </where>
+    </select>
+    <select id="checkCode" resultType="com.example.community.entity.ZyUnit">
+        SELECT * from zy_unit
+        <where>
+            <if test="communityId!=null and communityId!=''">
+                and community_id = #{communityId}
+            </if>
+            <if test="buildingId!=null and buildingId!=''">
+                and building_id = #{buildingId}
+            </if>
+            <if test="unitCode!=null and unitCode!=''">
+                and unit_code = #{unitCode}
+            </if>
+        </where>
+    </select>
+    <select id="getByUnit" resultType="com.example.community.entity.ZyRoom">
+        select * from zy_room where unit_id = #{id};
+    </select>
+    <select id="getByUnits" resultType="com.example.community.entity.ZyRoom">
+        select * from zy_room where unit_id in
+        <foreach collection="list" item="num" index="index" open="(" close=")" separator=",">
+            #{num}
+        </foreach>
+    </select>
+    <select id="getUnitsById" resultType="com.example.community.entity.ZyUnit">
+        select * from zy_unit
+        <if test="list!=null">
+            where unit_id in
+            <foreach collection="list" item="num" index="index" open="(" close=")" separator=",">
+                #{num}
+            </foreach>
+        </if>
+    </select>
+
 
 </mapper>
 

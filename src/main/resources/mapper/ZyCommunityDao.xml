@@ -57,10 +57,8 @@
     </insert>
 
 
-
-
     <insert id="insCommunit">
-    INSERT INTO zy_community (
+        INSERT INTO zy_community (
         community_id,
         <if test="communityName != null and communityName != ''">
             community_name,
@@ -83,34 +81,34 @@
         <if test="remark != null and remark != ''">
             remark,
         </if>
-            create_time
+        create_time
         )
-    VALUES
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-        #{communityId},
-        <if test="communityName != null and communityName != ''">
-            #{communityName},
-        </if>
-        <if test="communityCode != null and communityCode != ''">
-            #{communityCode},
-        </if>
-        <if test="communityDetailedAddress != null and communityDetailedAddress != ''">
-            #{communityDetailedAddress},
-        </if>
-        <if test="communityProvenceCode != null and communityProvenceCode != ''">
-            #{communityProvenceCode},
-        </if>
-        <if test="communityCityCode != null and communityCityCode != ''">
-            #{communityCityCode},
-        </if>
-        <if test="communityTownCode != null and communityTownCode != ''">
-            #{communityTownCode},
-        </if>
-        <if test="remark != null and remark != ''">
-            #{remark},
-        </if>
-        NOW()
-    </trim>
+        VALUES
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            #{communityId},
+            <if test="communityName != null and communityName != ''">
+                #{communityName},
+            </if>
+            <if test="communityCode != null and communityCode != ''">
+                #{communityCode},
+            </if>
+            <if test="communityDetailedAddress != null and communityDetailedAddress != ''">
+                #{communityDetailedAddress},
+            </if>
+            <if test="communityProvenceCode != null and communityProvenceCode != ''">
+                #{communityProvenceCode},
+            </if>
+            <if test="communityCityCode != null and communityCityCode != ''">
+                #{communityCityCode},
+            </if>
+            <if test="communityTownCode != null and communityTownCode != ''">
+                #{communityTownCode},
+            </if>
+            <if test="remark != null and remark != ''">
+                #{remark},
+            </if>
+            NOW()
+        </trim>
     </insert>
     <update id="updCommunityDerive">
         UPDATE zy_community
@@ -156,12 +154,12 @@
     </delete>
 
 
-<!--    <resultMap id="CommunityAndDept" type="com.example.community.dto.CommunityAndDeptDto" autoMapping="true">-->
-<!--        <id property="deptId" column="dept_id"></id>-->
-<!--        <association property="sysDept" javaType="com.example.community.entity.SysDept" autoMapping="true">-->
-<!--            <id property="deptId" column="dept_id"></id>-->
-<!--        </association>-->
-<!--    </resultMap>-->
+    <!--    <resultMap id="CommunityAndDept" type="com.example.community.dto.CommunityAndDeptDto" autoMapping="true">-->
+    <!--        <id property="deptId" column="dept_id"></id>-->
+    <!--        <association property="sysDept" javaType="com.example.community.entity.SysDept" autoMapping="true">-->
+    <!--            <id property="deptId" column="dept_id"></id>-->
+    <!--        </association>-->
+    <!--    </resultMap>-->
 
     <select id="getCommunity" resultMap="ZyCommunityMap">
         select
@@ -191,8 +189,6 @@
             limit #{index},#{size}
         </if>
     </select>
-
-
 
 
     <select id="getCount" resultType="java.lang.Long">
@@ -225,6 +221,14 @@
 
     <select id="selCommunityDerive" resultType="com.example.community.entity.ZyCommunity">
         select * from zy_community where community_name = #{communityName}
+    </select>
+
+<!--    <insert id="getCommunityList">-->
+<!--         community_name = values(community_name) , community_code = values(community_code) , community_provence_code = values(community_provence_code) , community_city_code = values(community_city_code) , community_town_code = values(community_town_code) , community_detailed_address = values(community_detailed_address) , community_longitude = values(community_longitude) , community_latitude = values(community_latitude) , dept_id = values(dept_id) , community_sort = values(community_sort) , create_by = values(create_by) , create_time = values(create_time) , update_by = values(update_by) , update_time = values(update_time) , remark = values(remark)     -->
+<!--    </insert>-->
+
+    <select id="getUCommunity" resultType="com.example.community.entity.ZyCommunity">
+        select * from zy_community
     </select>
 
 </mapper>
