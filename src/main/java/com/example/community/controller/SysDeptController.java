@@ -7,10 +7,8 @@ import com.baomidou.mybatisplus.extension.api.ApiController;
 import com.baomidou.mybatisplus.extension.api.R;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.community.entity.SysDept;
-import com.example.community.entity.SysMenu;
 import com.example.community.service.SysDeptService;
 import com.example.community.utils.DeptTree;
-import org.simpleframework.xml.core.Validate;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -234,6 +232,7 @@ public class SysDeptController extends ApiController {
     @PutMapping("updateDept")
     public Map<String, Object> update(@RequestBody SysDept sysDept) {
         Map<String, Object> result = new HashMap<>();
+        System.err.println(sysDept);
         Boolean t = sysDeptService.checkName(sysDept.getDeptName(), sysDept.getDeptId() + "", sysDept.getParentId() + "");
         if (!t){
             result.put("status", 201);

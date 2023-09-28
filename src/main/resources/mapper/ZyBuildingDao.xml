@@ -130,9 +130,11 @@
             </if>
         </where>
     </select>
+
     <select id="getUnitName" resultType="java.lang.Long">
         select * from zy_unit where building_id=#{id}
     </select>
+
     <select id="getBuildingList" resultType="com.example.community.entity.ZyBuilding">
         SELECT * FROM zy_building WHERE building_id != 1
         <if test="list!=null">

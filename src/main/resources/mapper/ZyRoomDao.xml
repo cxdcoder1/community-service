@@ -112,7 +112,14 @@
     </update>
 
     <delete id="deleteRoom">
-        delete * from zy_room where room_id=#{roomId}
+        delete from zy_room where room_id=#{roomId} and room_status='none'
+    </delete>
+
+    <delete id="delRooms">
+        delete from zy_room where room_id in
+        <foreach collection="list" item="num" index="index" open="(" close=")" separator=",">
+            #{num}
+        </foreach>
     </delete>
 
     <select id="getRoomList" resultType="com.example.community.dto.RoomDto">
@@ -180,6 +187,24 @@
             and building_id=#{buildingId}
             and unit_id=#{unitId}
         </where>
+    </select>
+
+    <select id="getRoomListExcel" resultType="com.example.community.entity.ZyRoom">
+        SELECT * FROM zy_room WHERE room_id != 1
+        <if test="list!=null">
+            and
+            room_id in
+            <foreach collection="list" item="num" index="index" open="(" close=")" separator=",">
+                #{num}
+            </foreach>
+        </if>
+    </select>
+
+    <select id="getRooms" resultType="java.lang.Integer">
+        select count(room_id) from zy_room where room_status!='none' and room_id in
+        <foreach collection="list" item="num" index="index" open="(" close=")" separator=",">
+            #{num}
+        </foreach>
     </select>
 
 

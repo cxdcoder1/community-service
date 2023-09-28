@@ -2,14 +2,10 @@ package com.example.community.controller;
 
 import com.alibaba.excel.EasyExcel;
 import com.alibaba.excel.write.style.HorizontalCellStyleStrategy;
-import com.alibaba.fastjson.JSON;
 import com.example.community.dao.ZyCommunityDao;
+import com.example.community.dao.ZyRoomDao;
 import com.example.community.dto.UserAndDeptImport;
 import com.example.community.entity.*;
-import com.example.community.service.SysDictDataService;
-import com.example.community.service.SysDictTypeService;
-import com.example.community.service.SysPostService;
-import com.example.community.service.SysRoleService;
 import com.example.community.listener.DemoDataListener;
 import com.example.community.service.*;
 import com.example.community.utils.easyexcel.StyleUtils;
@@ -17,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
-import java.io.File;
 import java.io.IOException;
 import java.util.*;
 
@@ -45,6 +40,8 @@ public class ExcelController {
     private ZyBuildingService zyBuildingService;
     @Resource
     private ZyCommunityDao zyCommunityDao;
+    @Resource
+    private ZyRoomDao zyRoomDao;
 
     /**
      * 生成随机文件名 并返回固定路径
@@ -93,6 +90,27 @@ public class ExcelController {
         HorizontalCellStyleStrategy horizontalCellStyleStrategy = new HorizontalCellStyleStrategy( StyleUtils.getHeadStyle(),StyleUtils.getContentStyle());
 
         EasyExcel.write(fileName, ZyBuilding.class)
+                .sheet(0)
+                .registerWriteHandler(horizontalCellStyleStrategy)
+                .doWrite(dataList);
+    }
+    /**
+     * 房屋表
+     * @param fileName
+     * @param list
+     */
+    public static void roomLists(String fileName,List<ZyRoom> list){
+        //"E:\\lx.xls"
+        List<ZyRoom> dataList = new ArrayList<>();
+
+        for (ZyRoom zyRoom : list) {
+            dataList.add(zyRoom);
+        }
+
+        // 设置单元格样式
+        HorizontalCellStyleStrategy horizontalCellStyleStrategy = new HorizontalCellStyleStrategy( StyleUtils.getHeadStyle(),StyleUtils.getContentStyle());
+
+        EasyExcel.write(fileName, ZyRoom.class)
                 .sheet(0)
                 .registerWriteHandler(horizontalCellStyleStrategy)
                 .doWrite(dataList);
@@ -449,6 +467,21 @@ public class ExcelController {
         List<ZyBuilding> buildingList = zyBuildingService.getBuildingList(lists);
         String path="D:\\lx.xls";
         buildingLists(path,buildingList);
+        result.put("msg","导出成功");
+        result.put("status","200");
+        result.put("path",path);
+        return result;
+    }
+
+    @PostMapping("roomList")
+    public Map<String, Object> roomList(@RequestBody List<String> lists) {
+        Map<String, Object> result = new HashMap<>();
+        if (lists.size()==0){
+            lists=null;
+        }
+        List<ZyRoom> roomListExcel = zyRoomDao.getRoomListExcel(lists);
+        String path="D:\\lx.xls";
+        roomLists(path,roomListExcel);
         result.put("msg","导出成功");
         result.put("status","200");
         result.put("path",path);

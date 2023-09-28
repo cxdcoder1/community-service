@@ -15,7 +15,7 @@ import java.util.List;
  */
 public interface ZyRoomDao extends BaseMapper<ZyRoom> {
 
-    List<RoomDto> getRoomList(@Param("index")long index,@Param("size") long size,@Param("zyRoom") RoomDto roomDto);
+    List<RoomDto> getRoomList(@Param("index") long index, @Param("size") long size, @Param("zyRoom") RoomDto roomDto);
 
     List<ZyCommunity> getCommunity();
 
@@ -35,6 +35,11 @@ public interface ZyRoomDao extends BaseMapper<ZyRoom> {
 
     int deleteRoom(Long roomId);
 
+    List<ZyRoom> getRoomListExcel(List<String> list);
+
+    Integer getRooms(List<String> list);
+
+    int delRooms(List<String> list);
 
 
 }

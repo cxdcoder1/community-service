@@ -1,6 +1,5 @@
 package com.example.community.controller;
 
-
 import com.baomidou.mybatisplus.extension.api.ApiController;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.community.dto.RoomDto;
@@ -30,7 +29,7 @@ public class ZyRoomController extends ApiController {
     public HashMap<String, Object> getRoomList(Page<RoomDto> page, RoomDto roomDto) {
         HashMap<String, Object> map = new HashMap<>();
         System.out.println("当前页" + page.getCurrent() + "" + page.getSize());
-        List<RoomDto> roomList = zyRoomService.getRoomList(page.getCurrent(), page.getSize(), roomDto);
+        List<RoomDto> roomList = zyRoomService.getRoomList(Math.max((page.getCurrent()-1)*page.getSize(),0),page.getSize(), roomDto);
         int count = zyRoomService.getRoomList(0, 0, roomDto).size();
 
         map.put("total", count);
@@ -52,7 +51,7 @@ public class ZyRoomController extends ApiController {
     }
 
     @GetMapping("getUnit")
-    public HashMap<String, Object> getUnit(ZyRoom zyRoom) {
+    public HashMap<String, Object> getUnit( ZyRoom zyRoom) {
         HashMap<String, Object> map = new HashMap<>();
 
         List<ZyUnit> unit = zyRoomService.getUnit(zyRoom);
@@ -131,9 +130,38 @@ public class ZyRoomController extends ApiController {
         // System.err.println(zyRoom);
 
         int i = zyRoomService.deleteRoom(roomId);
+        if (i==1){
+            map.put("data", i);
 
-        map.put("data", i);
+            return map;
+        }else {
+            map.put("data",i);
 
+            return map;
+        }
+
+    }
+
+    @PostMapping("deleteRooms")
+    public HashMap<String, Object> deleteRooms(@RequestBody List<String> list) {
+        HashMap<String, Object> map = new HashMap<>();
+
+        //验证是否能删除
+        int rooms = zyRoomService.getRooms(list);
+        if (rooms!=0){
+            map.put("status",201);
+            map.put("msg","删除失败,有房屋已出售!");
+            return map;
+        }
+
+        Integer i = zyRoomService.delRooms(list);
+        if (i!=0){
+            map.put("status","200");
+            map.put("msg","删除成功");
+        }else {
+            map.put("status","201");
+            map.put("msg","删除失败");
+        }
         return map;
     }
 

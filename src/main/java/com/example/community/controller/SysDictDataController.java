@@ -35,7 +35,7 @@ public class SysDictDataController extends ApiController {
         System.err.println("当前页：" + page.getCurrent() + "" + page.getSize());
         System.out.println("test sysDictData" + sysDictData);
         //符合条件的列表
-        List<SysDictData> data = sysDictDataService.getData(sysDictData, (page.getCurrent() - 1) * page.getSize(), page.getSize());
+        List<SysDictData> data = sysDictDataService.getData(sysDictData, Math.max((page.getCurrent()-1)*page.getSize(),0), page.getSize());
 
         //符合条件总数
         int count = sysDictDataService.getData(sysDictData, 0, 0).size();

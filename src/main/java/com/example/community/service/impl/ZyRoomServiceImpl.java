@@ -23,8 +23,8 @@ public class ZyRoomServiceImpl extends ServiceImpl<ZyRoomDao, ZyRoom> implements
     ZyRoomDao zyRoomDao;
 
     @Override
-    public List<RoomDto> getRoomList(long current, long size,RoomDto roomDto) {
-        return zyRoomDao.getRoomList((current-1)*size,size,roomDto);
+    public List<RoomDto> getRoomList(long index, long size,RoomDto roomDto) {
+        return zyRoomDao.getRoomList(index,size,roomDto);
     }
 
     @Override
@@ -70,6 +70,21 @@ public class ZyRoomServiceImpl extends ServiceImpl<ZyRoomDao, ZyRoom> implements
     @Override
     public int deleteRoom(Long roomId) {
         return zyRoomDao.deleteRoom(roomId);
+    }
+
+    @Override
+    public List<ZyRoom> getRoomList(List<String> list) {
+        return null;
+    }
+
+    @Override
+    public int getRooms(List<String> list) {
+        return zyRoomDao.getRooms(list);
+    }
+
+    @Override
+    public int delRooms(List<String> list) {
+        return zyRoomDao.delRooms(list);
     }
 }
 

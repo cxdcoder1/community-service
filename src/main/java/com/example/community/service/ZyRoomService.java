@@ -14,7 +14,7 @@ import java.util.List;
  */
 public interface ZyRoomService extends IService<ZyRoom> {
 
-    List<RoomDto> getRoomList(long current,long size ,RoomDto roomDto);
+    List<RoomDto> getRoomList(long index,long size ,RoomDto roomDto);
 
     List<ZyCommunity> getCommunity();
 
@@ -33,5 +33,11 @@ public interface ZyRoomService extends IService<ZyRoom> {
     int check(ZyRoom zyRoom);
 
     int deleteRoom(Long roomId);
+
+    List<ZyRoom> getRoomList(List<String> list);
+
+    int getRooms(List<String> list);
+
+    int delRooms(List<String> list);
 }
 

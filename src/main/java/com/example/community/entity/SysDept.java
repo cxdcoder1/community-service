@@ -2,7 +2,6 @@ package com.example.community.entity;
 
 
 import com.baomidou.mybatisplus.extension.activerecord.Model;
-import lombok.Data;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -167,6 +166,27 @@ public class SysDept extends Model<SysDept> {
         this.updateTime = updateTime;
     }
 
+    @Override
+    public String toString() {
+        return "SysDept{" +
+                "deptId=" + deptId +
+                ", parentId=" + parentId +
+                ", ancestors='" + ancestors + '\'' +
+                ", deptName='" + deptName + '\'' +
+                ", orderNum=" + orderNum +
+                ", leader='" + leader + '\'' +
+                ", phone='" + phone + '\'' +
+                ", email='" + email + '\'' +
+                ", status='" + status + '\'' +
+                ", delFlag='" + delFlag + '\'' +
+                ", createBy='" + createBy + '\'' +
+                ", createTime=" + createTime +
+                ", updateBy='" + updateBy + '\'' +
+                ", updateTime=" + updateTime +
+                ", Children=" + Children +
+                '}';
+    }
+
     /**
      * 获取主键值
      *
@@ -176,5 +196,5 @@ public class SysDept extends Model<SysDept> {
     protected Serializable pkVal() {
         return this.deptId;
     }
-    }
+}
 

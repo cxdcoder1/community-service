@@ -184,12 +184,14 @@
     <select id="getByUnit" resultType="com.example.community.entity.ZyRoom">
         select * from zy_room where unit_id = #{id};
     </select>
+
     <select id="getByUnits" resultType="com.example.community.entity.ZyRoom">
         select * from zy_room where unit_id in
         <foreach collection="list" item="num" index="index" open="(" close=")" separator=",">
             #{num}
         </foreach>
     </select>
+
     <select id="getUnitsById" resultType="com.example.community.entity.ZyUnit">
         select * from zy_unit
         <if test="list!=null">
