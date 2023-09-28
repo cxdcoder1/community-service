@@ -155,5 +155,24 @@
     </select>
 
 
+    <!-- 批量插入 -->
+    <insert id="insType" keyProperty="dictId" useGeneratedKeys="true">
+        insert into
+        sys_dict_type
+        (
+        dict_name, dict_type,status,create_time
+        <if test="remark != null and remark != ''">
+            ,remark
+        </if>
+        )
+        values
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+        #{dictName}, #{dictType}, #{status}, now(),
+        <if test="remark != null and remark != ''">
+        #{remark}
+        </if>
+        </trim>
+    </insert>
+
 </mapper>
 

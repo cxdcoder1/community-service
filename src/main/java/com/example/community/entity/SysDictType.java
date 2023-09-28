@@ -50,11 +50,12 @@ public class SysDictType extends Model<SysDictType> {
     @ExcelProperty(index = 5, value = {"备注"})
     private String remark;
 
+
     public SysDictType() {
     }
 
+    public SysDictType(long serialVersionUID, Long dictId, String dictName, String dictType, String status, String createBy, String createTime, String updateBy, String updateTime, String remark) {
 
-    public SysDictType(Long dictId, String dictName, String dictType, String status, String createBy, String createTime, String updateBy, String updateTime, String remark) {
         this.dictId = dictId;
         this.dictName = dictName;
         this.dictType = dictType;
@@ -211,7 +212,7 @@ public class SysDictType extends Model<SysDictType> {
     }
 
     public String toString() {
-        return "SysDictType{dictId = " + dictId + ", dictName = " + dictName + ", dictType = " + dictType + ", status = " + status + ", createBy = " + createBy + ", createTime = " + createTime + ", updateBy = " + updateBy + ", updateTime = " + updateTime + ", remark = " + remark + "}";
+        return "SysDictType{serialVersionUID = " + serialVersionUID + ", dictId = " + dictId + ", dictName = " + dictName + ", dictType = " + dictType + ", status = " + status + ", createBy = " + createBy + ", createTime = " + createTime + ", updateBy = " + updateBy + ", updateTime = " + updateTime + ", remark = " + remark + "}";
     }
 }
 

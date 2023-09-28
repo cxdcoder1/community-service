@@ -35,6 +35,11 @@ public class SysDictTypeServiceImpl extends ServiceImpl<SysDictTypeDao, SysDictT
     }
 
     @Override
+    public int insType(SysDictType entities) {
+        return sysDictTypeDao.insType(entities);
+    }
+
+    @Override
     public SysDictType selectName(String name) {
         return sysDictTypeDao.selectDictTypeName(name);
     }

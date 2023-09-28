@@ -16,6 +16,8 @@ public interface SysDictTypeService extends IService<SysDictType> {
     //获取字典名称集合
     List<SysDictType> getDictOptionselect(Long dictId);
 
+    int insType(SysDictType entities);
+
 //    List<SysDictType> selectDictType(@Param("index") Long index, @Param("size") Long size , @Param("sysDictType") SysDictType sysDictType);
 
     SysDictType selectName(String name);

@@ -41,7 +41,7 @@ public class ZyCommunity extends Model<ZyCommunity> {
     //创建者
     private String createBy;
     //创建时间
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
+//    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date createTime;
     //更新者
     private String updateBy;
@@ -74,6 +74,8 @@ public class ZyCommunity extends Model<ZyCommunity> {
 
     public ZyCommunity() {
     }
+
+
 
     public ZyCommunity(String communityId, String communityName, String communityCode, String communityProvenceCode, String communityCityCode, String communityTownCode, String communityDetailedAddress, String communityLongitude, String communityLatitude, Long deptId, Integer communitySort, String createBy, Date createTime, String updateBy, Date updateTime, String remark) {
         this.communityId = communityId;

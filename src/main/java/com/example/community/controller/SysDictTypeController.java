@@ -12,7 +12,9 @@ import com.example.community.service.SysDictTypeService;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.xml.crypto.Data;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -149,6 +151,7 @@ public class SysDictTypeController extends ApiController {
 
         Map<String, Object> map = new HashMap<>();
 
+
         SysDictType sysDictType1 = sysDictTypeService.selectName(sysDictType.getDictName());
 
         if (sysDictType1 != null) {
@@ -158,15 +161,15 @@ public class SysDictTypeController extends ApiController {
             map.put("success", false);
             return map;
         }
-        try {
-            sysDictTypeService.save(sysDictType);
-        } catch (Exception e) {
-            map.put("msg", sysDictType.getDictType() + "已存在");
-            map.put("status", 201);
-            map.put("success", false);
-            return map;
-        }
-
+        sysDictTypeService.insType(sysDictType);
+//        try {
+//            sysDictTypeService.insType(sysDictType);
+//        } catch (Exception e) {
+//            map.put("msg", sysDictType.getDictType() + "已存在");
+//            map.put("status", 201);
+//            map.put("success", false);
+//            return map;
+//        }
         map.put("msg", "添加成功");
         map.put("status", 200);
         map.put("success", true);

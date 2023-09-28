@@ -25,7 +25,6 @@ public class ZyCommunityServiceImpl extends ServiceImpl<ZyCommunityDao, ZyCommun
     private ZyCommunityDao zyCommunityDao;
 
 
-
     @Override
     public Page<CommunityAndDeptDto> getCommunity(Page<CommunityAndDeptDto> page, CommunityAndDeptDto communityAndDeptDto) {
         // 获取满足条件的角色列表总数
@@ -41,13 +40,14 @@ public class ZyCommunityServiceImpl extends ServiceImpl<ZyCommunityDao, ZyCommun
             page.setCurrent(totalPages);
         }
 
-        if(page.getCurrent()<=0){
+        if (page.getCurrent() <= 0) {
             page.setCurrent(1);
         }
 
         page.setPages(totalPages);
-
-        page.setRecords(zyCommunityDao.getCommunity((page.getCurrent()-1)*page.getSize(),page.getSize(),communityAndDeptDto));
+        List<CommunityAndDeptDto> list =  zyCommunityDao.getCommunity((page.getCurrent() - 1) * page.getSize(), page.getSize(), communityAndDeptDto);
+        System.err.println(list);
+        page.setRecords(list);
 
         return page;
     }
@@ -84,7 +84,7 @@ public class ZyCommunityServiceImpl extends ServiceImpl<ZyCommunityDao, ZyCommun
 
     @Override
     public int updCommunity(String communityId, String deptId) {
-        return zyCommunityDao.updCommunity(communityId,deptId);
+        return zyCommunityDao.updCommunity(communityId, deptId);
     }
 
 

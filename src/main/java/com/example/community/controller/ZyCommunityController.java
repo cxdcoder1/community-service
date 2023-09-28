@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import javax.websocket.server.PathParam;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -48,7 +49,7 @@ public class ZyCommunityController extends ApiController {
      */
     @GetMapping("getCommunityAll")
     public R getcommunityAll(Page<CommunityAndDeptDto> page, CommunityAndDeptDto zyCommunity) {
-        System.err.println(zyCommunity.getCommunityId()+""+zyCommunity.getCommunityName());
+
         return success(this.zyCommunityService.getCommunity(page,zyCommunity));
     }
     /**
@@ -174,6 +175,7 @@ public class ZyCommunityController extends ApiController {
 //        System.err.println(zyCommunity.toString());
 
         Map<String, Object> map = new HashMap<>();
+        zyCommunity.setCreateTime(new Date());
         List<ZyCommunity> zyCommunities = zyCommunityService.selCommunityDerive(zyCommunity);
         if(zyCommunities.size()>0){
             map.put("msg","重复");

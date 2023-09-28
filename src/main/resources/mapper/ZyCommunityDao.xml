@@ -83,32 +83,32 @@
         </if>
         create_time
         )
-        VALUES
-        <trim prefix="(" suffix=")" suffixOverrides=",">
-            #{communityId},
-            <if test="communityName != null and communityName != ''">
-                #{communityName},
-            </if>
-            <if test="communityCode != null and communityCode != ''">
-                #{communityCode},
-            </if>
-            <if test="communityDetailedAddress != null and communityDetailedAddress != ''">
-                #{communityDetailedAddress},
-            </if>
-            <if test="communityProvenceCode != null and communityProvenceCode != ''">
-                #{communityProvenceCode},
-            </if>
-            <if test="communityCityCode != null and communityCityCode != ''">
-                #{communityCityCode},
-            </if>
-            <if test="communityTownCode != null and communityTownCode != ''">
-                #{communityTownCode},
-            </if>
-            <if test="remark != null and remark != ''">
-                #{remark},
-            </if>
-            NOW()
-        </trim>
+    VALUES
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+        #{communityId},
+        <if test="communityName != null and communityName != ''">
+            #{communityName},
+        </if>
+        <if test="communityCode != null and communityCode != ''">
+            #{communityCode},
+        </if>
+        <if test="communityDetailedAddress != null and communityDetailedAddress != ''">
+            #{communityDetailedAddress},
+        </if>
+        <if test="communityProvenceCode != null and communityProvenceCode != ''">
+            #{communityProvenceCode},
+        </if>
+        <if test="communityCityCode != null and communityCityCode != ''">
+            #{communityCityCode},
+        </if>
+        <if test="communityTownCode != null and communityTownCode != ''">
+            #{communityTownCode},
+        </if>
+        <if test="remark != null and remark != ''">
+            #{remark},
+        </if>
+        #{createTime},
+    </trim>
     </insert>
     <update id="updCommunityDerive">
         UPDATE zy_community
@@ -129,8 +129,8 @@
                 community_town_code = #{communityTownCode},
             </if>
             <if test="remark != null and remark != ''">
-                remark = #{remark},
-            </if>
+            remark = #{remark},
+        </if>
             update_time = NOW()
         </set>
         WHERE community_id = #{communityId}
@@ -172,6 +172,7 @@
         zc.community_detailed_address,
         zc.dept_id,
         zc.remark,
+        zc.create_time,
         p.dept_name,
         p.status,
         p.create_time
@@ -203,7 +204,6 @@
                 and community_code= #{communityCode}
             </if>
         </where>
-
     </select>
 
 

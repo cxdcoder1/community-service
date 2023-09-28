@@ -31,6 +31,8 @@ int insertBatch(@Param("entities") List<SysDictType> entities);
 */
     int insertOrUpdateBatch(@Param("entities") List<SysDictType> entities);
 
+    int insType(SysDictType entities);
+
     public List<SysDictType> getDictOptionselect(Long dictId);
 
     List<SysDictType> selectDictType(@Param("index") Long index, @Param("size") Long size , @Param("sysDictType") SysDictType sysDictType);
@@ -46,6 +48,8 @@ int insertBatch(@Param("entities") List<SysDictType> entities);
     int deleteDictType(@Param("id") List<Long> id);
 
     List<SysDictType> getDeriveList(List<String> list);
+
+
 
 }
 

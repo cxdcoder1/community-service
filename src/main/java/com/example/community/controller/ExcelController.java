@@ -271,19 +271,20 @@ public class ExcelController {
                 .doWrite(dataList);
     }
 
-
     /**
-     * 角色表格导出
+     * 表格导出
      * @param lists
      * @return
      */
     @PostMapping("Communitylist")
     public Map<String, Object> Communitylist(@RequestBody List<String> lists) {
         Map<String, Object> result = new HashMap<>();
-        //根据需要导出的角色id查询对应信息
-        if (lists.size()==0){
+
+
+        if (lists.size() <= 0 || lists == null ){
             lists=null;
         }
+
         System.err.println(lists);
 
         List<ZyCommunity> CommunityList = zyCommunityDao.getCommunityDeriveList(lists);
