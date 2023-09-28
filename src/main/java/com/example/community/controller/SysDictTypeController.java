@@ -186,7 +186,6 @@ public class SysDictTypeController extends ApiController {
     public R update(@RequestBody SysDictType sysDictType) {
         return success(this.sysDictTypeService.updateById(sysDictType));
     }
-
     /**
      * 删除数据
      *

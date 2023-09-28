@@ -39,8 +39,7 @@ public interface ZyCommunityDao extends BaseMapper<ZyCommunity> {
     int insertOrUpdateBatch(@Param("entities") List<ZyCommunity> entities);
 
     List<CommunityAndDeptDto> getCommunity(@Param("index") Long index, @Param("size") Long size, @Param("zyCommunity") CommunityAndDeptDto communityAndDeptDto);
-
-    long getCount(CommunityAndDeptDto communityAndDeptDto);
+    Long getCount(CommunityAndDeptDto communityAndDeptDto);
 
     //删除
     long delCommunity(@Param("id") String id);
@@ -56,6 +55,8 @@ public interface ZyCommunityDao extends BaseMapper<ZyCommunity> {
     int updCommunityDerive(ZyCommunity zyCommunity);
 
     int updCommunity(String communityId,String deptId);
+
+    List<ZyCommunity> selCommunityCity(ZyCommunity zyCommunity);
 
     /**
      * 小区集合

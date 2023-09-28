@@ -30,7 +30,6 @@ public class ZyCommunityServiceImpl extends ServiceImpl<ZyCommunityDao, ZyCommun
         // 获取满足条件的角色列表总数
         System.out.println(page.getCurrent());
         System.out.println(page.getSize());
-//        long total = sysUserDao.selUserlist(0L,0L,userAndDeptAndPostAndRole).size();
         long total = zyCommunityDao.getCount(communityAndDeptDto);
         page.setTotal(total);
 
@@ -93,7 +92,10 @@ public class ZyCommunityServiceImpl extends ServiceImpl<ZyCommunityDao, ZyCommun
         return zyCommunityDao.getCommunityList();
     }
 
-
+    @Override
+    public List<ZyCommunity> selCommunityCity(ZyCommunity zyCommunity) {
+        return zyCommunityDao.selCommunityCity(zyCommunity);
+    }
 
 
     @Override

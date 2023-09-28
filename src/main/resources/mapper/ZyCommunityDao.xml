@@ -193,9 +193,8 @@
 
 
     <select id="getCount" resultType="java.lang.Long">
-        SELECT COUNT(zc.community_id)
-        FROM zy_community zc
-        LEFT JOIN sys_dept p ON zc.dept_id = p.dept_id
+        SELECT COUNT(*)
+        FROM zy_community
         <where>
             <if test="communityName !=null and communityName !='' ">
                 and community_name= #{communityName}
@@ -205,6 +204,7 @@
             </if>
         </where>
     </select>
+
 
 
     <select id="getCommunityDeriveList" resultType="com.example.community.entity.ZyCommunity">
@@ -229,6 +229,17 @@
 
     <select id="getUCommunity" resultType="com.example.community.entity.ZyCommunity">
         select * from zy_community
+    </select>
+
+    <select id="selCommunityCity" resultType="com.example.community.entity.ZyCommunity">
+        select * from zy_community
+        <where>
+        community_provence_code=#{communityProvenceCode} and
+        community_city_code=#{communityCityCode}
+        <if test="communityCode !=null and communityCode !='' ">
+        and  community_town_code = #{communityTownCode}
+        </if>
+        </where>
     </select>
 
 </mapper>

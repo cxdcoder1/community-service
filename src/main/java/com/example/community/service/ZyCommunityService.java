@@ -42,7 +42,7 @@ public interface ZyCommunityService extends IService<ZyCommunity> {
     int updCommunity(String communityId,String deptId);
     List<ZyCommunity> getCommunityList();
 
-
+    List<ZyCommunity> selCommunityCity(ZyCommunity zyCommunity);
 
     /**
      * 获取小区信息

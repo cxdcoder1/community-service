@@ -43,17 +43,18 @@ public class ZyCommunityController extends ApiController {
     /**
      * 分页查询所有数据
      *
-     * @param page 分页对象
+     * @param page        分页对象
      * @param zyCommunity 查询实体
      * @return 所有数据
      */
     @GetMapping("getCommunityAll")
     public R getcommunityAll(Page<CommunityAndDeptDto> page, CommunityAndDeptDto zyCommunity) {
 
-        return success(this.zyCommunityService.getCommunity(page,zyCommunity));
+        return success(this.zyCommunityService.getCommunity(page, zyCommunity));
     }
+
     /**
-    * 批量删除数据
+     * 批量删除数据
      *
      * @param
      * @return 删除
@@ -92,26 +93,26 @@ public class ZyCommunityController extends ApiController {
     @DeleteMapping("delCummunity")
     public Map<String, Object> delCummunity(@RequestParam("id") String id) {
         System.err.println(id);
-        List<ZyBuilding>  zyBuilding = zyBuildingService.selectName(id);
+        List<ZyBuilding> zyBuilding = zyBuildingService.selectName(id);
 
         Map<String, Object> map = new HashMap<>();
 
-        if(zyBuilding.size() >0){
-            map.put("msg","删除失败，楼栋存在");
-            map.put("status",201);
+        if (zyBuilding.size() > 0) {
+            map.put("msg", "删除失败，楼栋存在");
+            map.put("status", 201);
             return map;
         }
 
         zyCommunityService.delCommunity(id);
-        map.put("msg","删除成功");
-        map.put("status",200);
+        map.put("msg", "删除成功");
+        map.put("status", 200);
         return map;
     }
 
     /**
      * 分页查询所有数据
      *
-     * @param page 分页对象
+     * @param page        分页对象
      * @param zyCommunity 查询实体
      * @return 所有数据
      */
@@ -171,20 +172,30 @@ public class ZyCommunityController extends ApiController {
      * @return 新增结果
      */
     @PostMapping("insCommunity")
-    public Map<String, Object>  insCommunity(@RequestBody ZyCommunity zyCommunity) {
+    public Map<String, Object> insCommunity(@RequestBody ZyCommunity zyCommunity) {
 //        System.err.println(zyCommunity.toString());
 
         Map<String, Object> map = new HashMap<>();
-        zyCommunity.setCreateTime(new Date());
+
+        System.err.println(zyCommunity);
+
+        String communityProvenceCode = zyCommunity.getCommunityProvenceCode();
+        String communityCityCode = zyCommunity.getCommunityCityCode();
+
+        List<ZyCommunity> zyCommunities1 = zyCommunityService.selCommunityCity(zyCommunity);
+
         List<ZyCommunity> zyCommunities = zyCommunityService.selCommunityDerive(zyCommunity);
-        if(zyCommunities.size()>0){
-            map.put("msg","重复");
-            map.put("status",201);
+
+        zyCommunity.setCreateTime(new Date());
+
+        if (zyCommunities1.size() > 0 && zyCommunities.size() > 0) {
+            map.put("msg", "重复");
+            map.put("status", 201);
             return map;
         }
         zyCommunityService.insCommunit(zyCommunity);
-        map.put("msg","新增成功");
-        map.put("status",200);
+        map.put("msg", "新增成功");
+        map.put("status", 200);
         return map;
     }
 
@@ -195,31 +206,31 @@ public class ZyCommunityController extends ApiController {
      * @return 新增结果
      */
     @PutMapping("updCommunity")
-    public Map<String, Object>  updCommunity(@RequestBody ZyCommunity zyCommunity) {
+    public Map<String, Object> updCommunity(@RequestBody ZyCommunity zyCommunity) {
         System.err.println(zyCommunity.toString());
 
         Map<String, Object> map = new HashMap<>();
         List<ZyCommunity> zyCommunities = zyCommunityService.selCommunityDerive(zyCommunity);
-        if(zyCommunities.size() == 0){
+        if (zyCommunities.size() == 0) {
             zyCommunityService.updCommunityDerive(zyCommunity);
-            map.put("msg","修改成功");
-            map.put("status",200);
+            map.put("msg", "修改成功");
+            map.put("status", 200);
             return map;
-        }else{
+        } else {
             ZyCommunity zyCommunity1 = zyCommunities.get(0);
 
-            String a =zyCommunity1.getCommunityId();
-            String b=zyCommunity.getCommunityId();
+            String a = zyCommunity1.getCommunityId();
+            String b = zyCommunity.getCommunityId();
 
-            if(a.equals(b)){
+            if (a.equals(b)) {
                 zyCommunityService.updCommunityDerive(zyCommunity);
-                map.put("msg","修改成功");
-                map.put("status",200);
+                map.put("msg", "修改成功");
+                map.put("status", 200);
                 return map;
             }
         }
-        map.put("msg","重复");
-        map.put("status",201);
+        map.put("msg", "重复");
+        map.put("status", 201);
         return map;
     }
 
@@ -231,32 +242,31 @@ public class ZyCommunityController extends ApiController {
      * @return 新增结果
      */
     @PutMapping("replacement")
-    public Map<String, Object>  replacement(@PathParam("communityId") String communityId,@PathParam("deptId") String deptId ) {
+    public Map<String, Object> replacement(@PathParam("communityId") String communityId, @PathParam("deptId") String deptId) {
 
-        System.err.println(communityId+"|"+deptId);
+        System.err.println(communityId + "|" + deptId);
 
 
         Map<String, Object> map = new HashMap<>();
 
 
-        zyCommunityService.updCommunity(communityId,deptId);
+        zyCommunityService.updCommunity(communityId, deptId);
 
 
         return map;
     }
 
 
-
-
     /**
      * 获取小区信息
+     *
      * @return
      */
     @GetMapping("getUCommunity")
     public Map<String, Object> getUCommunity() {
         HashMap<String, Object> result = new HashMap<>();
         List<ZyCommunity> uCommunity = zyCommunityService.getUCommunity();
-        result.put("communityList",uCommunity);
+        result.put("communityList", uCommunity);
         return result;
     }
 }
