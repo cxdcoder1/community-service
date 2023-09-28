@@ -20,7 +20,6 @@ import java.util.List;
  */
 @Service("zyBuildingService")
 public class ZyBuildingServiceImpl extends ServiceImpl<ZyBuildingDao, ZyBuilding> implements ZyBuildingService {
-
     @Resource
     private ZyBuildingDao zyBuilding;
 
@@ -39,21 +38,17 @@ public class ZyBuildingServiceImpl extends ServiceImpl<ZyBuildingDao, ZyBuilding
     public Page<ZyBuilding> buildingList(Page<ZyBuilding> page, ZyBuilding zyBuilding,long id) {
         long total = zyBuildingDao.count(zyBuilding,id);
         page.setTotal(total);
-
         // 计算总页数
         int totalPages = (int) Math.ceil(total * 1.0 / page.getSize());
         if (page.getCurrent() > totalPages) {
             page.setCurrent(totalPages);
         }
-
         if(page.getCurrent()<=0){
             page.setCurrent(1);
         }
-
         page.setPages(totalPages);
         page.setRecords(zyBuildingDao.selectBuild((page.getCurrent()-1)*page.getSize(),page.getSize(),zyBuilding,id));
         return page;
-
     }
 
     @Override
