@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.community.dao.ZyUnitDao;
 import com.example.community.dto.UnitAndCommunityAndBuilding;
+import com.example.community.entity.SysDictData;
 import com.example.community.entity.ZyRoom;
 import com.example.community.entity.ZyUnit;
 import com.example.community.service.ZyUnitService;
@@ -118,6 +119,12 @@ public class ZyUnitServiceImpl extends ServiceImpl<ZyUnitDao, ZyUnit> implements
     public List<ZyUnit> getUnitsById(List<String> list) {
 
         return zyUnitDao.getUnitsById(list);
+    }
+
+    @Override
+    public List<SysDictData> statusList(String id) {
+
+        return zyUnitDao.statusList(id);
     }
 }
 

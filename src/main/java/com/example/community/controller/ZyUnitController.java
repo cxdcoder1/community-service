@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.extension.api.ApiController;
 import com.baomidou.mybatisplus.extension.api.R;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.community.dto.UnitAndCommunityAndBuilding;
+import com.example.community.entity.SysDictData;
 import com.example.community.entity.ZyCommunity;
 import com.example.community.entity.ZyRoom;
 import com.example.community.entity.ZyUnit;
@@ -175,6 +176,19 @@ public class ZyUnitController extends ApiController {
             map.put("msg","删除失败");
         }
         return map;
+    }
+
+    /**
+     * 获取电梯状态字典
+     * @param id
+     * @return
+     */
+    @GetMapping("getElevatorStatus/{id}")
+    public HashMap<String, Object> getElevatorStatus(@PathVariable("id") String id) {
+        HashMap<String, Object> result = new HashMap<>();
+        List<SysDictData> statusList = zyUnitService.statusList(id);
+        result.put("statusList",statusList);
+        return result;
     }
 
     /**

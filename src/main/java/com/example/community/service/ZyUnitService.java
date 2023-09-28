@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.example.community.dto.UnitAndCommunityAndBuilding;
 import com.example.community.dto.UserAndDeptAndPostAndRole;
+import com.example.community.entity.SysDictData;
 import com.example.community.entity.ZyRoom;
 import com.example.community.entity.ZyUnit;
 
@@ -42,5 +43,7 @@ public interface ZyUnitService extends IService<ZyUnit> {
     Integer delUnits(List<String> list);
 
     List<ZyUnit> getUnitsById(List<String> list);
+
+    List<SysDictData>statusList(String id);
 }
 

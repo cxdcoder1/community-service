@@ -5,6 +5,7 @@ import java.util.List;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.example.community.dto.UnitAndCommunityAndBuilding;
 import com.example.community.dto.UserAndDeptAndPostAndRole;
+import com.example.community.entity.SysDictData;
 import com.example.community.entity.ZyRoom;
 import org.apache.ibatis.annotations.Param;
 import com.example.community.entity.ZyUnit;
@@ -54,6 +55,7 @@ public interface ZyUnitDao extends BaseMapper<ZyUnit> {
 
     List<ZyUnit> getUnitsById(List<String> list);
 
+    List<SysDictData>statusList(String id);
 
 }
 
