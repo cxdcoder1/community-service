@@ -60,7 +60,11 @@ public interface SysUserDao extends BaseMapper<SysUser> {
 
     List<UserAndDeptAndPostAndRole> selUserlist(@Param("index") Long index, @Param("size") Long size, @Param("sysUser") UserAndDeptAndPostAndRole userAndDeptAndPostAndRole);
 
+    List<UserAndDeptAndPostAndRole> selUserlistByDeptS(@Param("index") Long index, @Param("size") Long size, @Param("sysUser") UserAndDeptAndPostAndRole userAndDeptAndPostAndRole);
+
     long count(UserAndDeptAndPostAndRole userAndDeptAndPostAndRole);
+
+    long countByDepts(UserAndDeptAndPostAndRole userAndDeptAndPostAndRole);
 
     int restUserPwd(@Param("id") int id, @Param("pwd") Long pwd);
 
@@ -79,6 +83,8 @@ public interface SysUserDao extends BaseMapper<SysUser> {
     void batchInsert(List<UserAndDeptImport> list) throws Exception;
 
     SysPost getPostStatus(String id);
+
+    List<String> getByDeptId(Long deptId);
 
 }
 

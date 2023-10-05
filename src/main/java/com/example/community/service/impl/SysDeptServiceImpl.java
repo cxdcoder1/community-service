@@ -62,6 +62,11 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptDao, SysDept> impleme
         return sysDeptDao.updateDeptlis(status,id);
     }
 
+    @Override
+    public SysDept getByDept(String deptId) {
+        return sysDeptDao.getById(deptId);
+    }
+
 
     @Override
     public Boolean checkName(String deptName, String deptId, String parentId) {

@@ -26,6 +26,20 @@ public interface SysUserService extends IService<SysUser> {
 
     Page<UserAndDeptAndPostAndRole> selUserlist(Page<UserAndDeptAndPostAndRole> page, UserAndDeptAndPostAndRole userAndDeptAndPostAndRole);
 
+    /**
+     * 根据分公司查询下面对应的员工
+     * @param page
+     * @param list
+     * @return
+     */
+    Page<UserAndDeptAndPostAndRole> selUserListByP(Page<UserAndDeptAndPostAndRole> page, UserAndDeptAndPostAndRole userAndDeptAndPostAndRole);
+
+    /**
+     * 根据部门id查询子集部门
+     * @return
+     */
+    List<String> getByDeptId(Long deptId);
+
     List<SysRole> getAllRole();
 
     List<SysPost> getAllPost();

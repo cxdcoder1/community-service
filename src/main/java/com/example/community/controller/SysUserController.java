@@ -17,6 +17,7 @@ import com.example.community.service.SysDeptService;
 import com.example.community.service.SysUserService;
 import com.example.community.utils.DeptTree;
 import com.example.community.utils.JwtUtil;
+import io.swagger.annotations.Api;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -33,6 +34,7 @@ import java.util.Map;
  * @author makejava
  * @since 2023-09-14 09:53:02
  */
+@Api(tags = "用户管理") //  tags：你可以当作是这个组的名字。
 @RestController
 @RequestMapping("sysUser")
 @CrossOrigin
@@ -200,6 +202,16 @@ public class SysUserController extends ApiController {
         System.err.println(userAndDeptAndPostAndRole);
         List<String> s = new ArrayList<>();
         s.add(userAndDeptAndPostAndRole.getDeptId()+"");
+        //获取部门的子集
+        List<String> ids = sysUserService.getByDeptId(userAndDeptAndPostAndRole.getDeptId());
+        if (ids.size()!=0){
+            //说明有子集
+            ids.add(userAndDeptAndPostAndRole.getDeptId()+"");
+            userAndDeptAndPostAndRole.setDeptIds(ids);
+            //根据部门以及子集id查询
+            return success(this.sysUserService.selUserListByP(page, userAndDeptAndPostAndRole));
+        }
+
 
         return success(this.sysUserService.selUserlist(page, userAndDeptAndPostAndRole));
     }

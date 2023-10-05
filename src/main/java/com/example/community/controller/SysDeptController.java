@@ -223,6 +223,10 @@ public class SysDeptController extends ApiController {
             result.put("msg", "同一级别下部门名重复");
             return result;
         }
+        //开始新增
+        SysDept parent = sysDeptService.getByDept(sysDept.getParentId()+"");
+        String ancestors = parent.getAncestors()+","+parent.getDeptId();
+        sysDept.setAncestors(ancestors);
         sysDeptService.insertDept(sysDept);
         result.put("msg","新增成功");
         result.put("status", 200);

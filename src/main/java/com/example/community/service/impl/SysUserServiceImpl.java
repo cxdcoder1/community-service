@@ -67,6 +67,33 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserDao, SysUser> impleme
 
     }
 
+    @Override
+    public Page<UserAndDeptAndPostAndRole> selUserListByP(Page<UserAndDeptAndPostAndRole> page, UserAndDeptAndPostAndRole userAndDeptAndPostAndRole) {
+        // 获取满足条件的角色列表总数
+        long total = sysUserDao.countByDepts(userAndDeptAndPostAndRole);
+        page.setTotal(total);
+
+        // 计算总页数
+        int totalPages = (int) Math.ceil(total * 1.0 / page.getSize());
+        if (page.getCurrent() > totalPages) {
+            page.setCurrent(totalPages);
+        }
+        if(page.getCurrent()<=0){
+            page.setCurrent(1);
+        }
+        page.setPages(totalPages);
+
+        //查询分页数据
+        List<UserAndDeptAndPostAndRole> list = sysUserDao.selUserlistByDeptS((page.getCurrent() - 1) * page.getSize(), page.getSize(), userAndDeptAndPostAndRole);
+        page.setRecords(list);
+        return page;
+    }
+
+    @Override
+    public List<String> getByDeptId(Long deptId) {
+        return sysUserDao.getByDeptId(deptId);
+    }
+
 
     @Override
     public List<SysRole> getAllRole() {

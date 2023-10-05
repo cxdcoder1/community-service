@@ -47,5 +47,7 @@ public interface SysDeptService extends IService<SysDept> {
 
     Integer updateDeptlis(String status,long id);
 
+    SysDept getByDept(String deptId);
+
 }
 

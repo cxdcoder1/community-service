@@ -361,6 +361,86 @@
         ON u.user_id = up.user_id LEFT JOIN sys_post p
         ON up.post_id = p.post_id WHERE u.user_id = #{id}
     </select>
+    <select id="getByDeptId" resultType="java.lang.String">
+        select dept_id from sys_dept where ancestors like concat('%', #{deptId}, '%')
+    </select>
+    <select id="countByDepts" resultType="java.lang.Long">
+        select count(sys_user.user_id) from sys_user
+        <where>
+            sys_user.user_id != 1 and sys_user.del_flag =0 and sys_user.dept_id in
+            <foreach collection="deptIds" item="num" index="index" open="(" close=")" separator=",">
+                #{num}
+            </foreach>
+            <if test="userId != null and userId !=''">
+                and sys_user.user_id =#{sysUser.userId}
+            </if>
+            <if test="userName != null and userName !=''">
+                and sys_user.user_name like concat('%', #{userName}, '%')
+            </if>
+            <if test="nickName != null and nickName !=''">
+                and sys_user.nick_name = #{nickName}
+            </if>
+
+            <if test="phonenumber != null and phonenumber !=''">
+                and sys_user.phonenumber like concat('%', #{phonenumber}, '%')
+            </if>
+            <if test="status != null and status !=''">
+                and sys_user.status = #{status}
+            </if>
+            <if test="createTime != null and createTime !=''">
+                and DATE_FORMAT(sys_user.create_time, '%y%m%d') &gt; DATE_FORMAT(#{createTime}, '%y%m%d')
+            </if>
+        </where>
+    </select>
+    <select id="selUserlistByDeptS" resultMap="Userlist" >
+        select
+        sys_user.user_id,
+        sys_user.dept_id,
+        sys_user.user_name,
+        sys_user.nick_name,
+        sys_user.sex,
+        sys_user.email,
+        sys_user.remark,
+        sys_dept.dept_name,
+        sys_user.phonenumber,
+        sys_user.status,
+        sys_user.create_time,
+        sys_post.post_id,
+        sys_role.role_id
+        from sys_user
+        left join sys_dept on sys_user.dept_id = sys_dept.dept_id
+        left join sys_user_role on sys_user_role.user_id = sys_user.user_id
+        left join sys_role on sys_user_role.role_id = sys_role.role_id
+        left join sys_user_post on sys_user_post.user_id = sys_user.user_id
+        left join sys_post on sys_post.post_id = sys_user_post.post_id =sys_post.post_id
+        <where>
+            sys_user.user_id != 1 and sys_user.del_flag =0 and sys_user.dept_id in
+            <foreach collection="sysUser.deptIds" item="num" index="index" open="(" close=")" separator=",">
+                #{num}
+            </foreach>
+            <if test="sysUser.userId != null and sysUser.userId !=''">
+                and sys_user.user_id =#{sysUser.userId}
+            </if>
+            <if test="sysUser.userName != null and sysUser.userName !=''">
+                and sys_user.user_name like concat('%', #{sysUser.userName}, '%')
+            </if>
+            <if test="sysUser.nickName != null and sysUser.nickName !=''">
+                and sys_user.nick_name = #{sysUser.nickName}
+            </if>
+            <if test="sysUser.phonenumber != null and sysUser.phonenumber !=''">
+                and sys_user.phonenumber like concat('%', #{sysUser.phonenumber}, '%')
+            </if>
+            <if test="sysUser.status != null and sysUser.status !=''">
+                and sys_user.status = #{sysUser.status}
+            </if>
+            <if test="sysUser.createTime != null and sysUser.createTime !=''">
+                and DATE_FORMAT(sys_user.create_time, '%y%m%d') &gt; DATE_FORMAT(#{sysUser.createTime}, '%y%m%d')
+            </if>
+        </where>
+        <if test="size != 0">
+            limit #{index},#{size}
+        </if>
+    </select>
 
 
 </mapper>
