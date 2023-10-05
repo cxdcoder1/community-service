@@ -188,10 +188,12 @@ public class ZyCommunityController extends ApiController {
 
         zyCommunity.setCreateTime(new Date());
 
-        if (zyCommunities1.size() > 0 && zyCommunities.size() > 0) {
-            map.put("msg", "重复");
-            map.put("status", 201);
-            return map;
+        if (zyCommunities1.size() > 0) {
+            if(zyCommunities.size() > 0){
+                map.put("msg", "重复");
+                map.put("status", 201);
+                return map;
+            }
         }
         zyCommunityService.insCommunit(zyCommunity);
         map.put("msg", "新增成功");

@@ -8,6 +8,7 @@ import com.baomidou.mybatisplus.extension.api.R;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.community.entity.SysDept;
 import com.example.community.service.SysDeptService;
+import com.example.community.service.SysDictDataService;
 import com.example.community.utils.DeptTree;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,6 +33,17 @@ public class SysDeptController extends ApiController {
      */
     @Resource
     private SysDeptService sysDeptService;
+
+
+    @Resource
+    private SysDictDataService sysDictDataService;
+
+    //状态
+    @GetMapping("/deptStatusOption")
+    public R statusOption() {
+        return success(this.sysDictDataService.deptStatusOption());
+    }
+
 
     /**
      * 分页查询所有数据

@@ -232,15 +232,16 @@
     </select>
 
     <select id="selCommunityCity" resultType="com.example.community.entity.ZyCommunity">
-        select * from zy_community
-        <where>
+    select * from zy_community
+    <where>
         community_provence_code=#{communityProvenceCode} and
         community_city_code=#{communityCityCode}
         <if test="communityCode !=null and communityCode !='' ">
-        and  community_town_code = #{communityTownCode}
+            and  community_town_code = #{communityTownCode}
         </if>
-        </where>
-    </select>
+            and  community_name = #{communityName}
+    </where>
+</select>
 
 </mapper>
 

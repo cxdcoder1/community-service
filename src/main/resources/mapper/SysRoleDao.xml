@@ -186,8 +186,6 @@
     </select>
 
 
-
-
     <select id="count" resultType="java.lang.Long">
         select count(*) from sys_role
         <where>

@@ -35,6 +35,16 @@ public class SysDictTypeController extends ApiController {
     @Resource
     private SysDictTypeService sysDictTypeService;
 
+    @Resource
+    private SysDictDataService sysDictDataService;
+
+    //状态
+    @GetMapping("/dictStatusOption")
+    public R statusOption() {
+        return success(this.sysDictDataService.dictStatusOption());
+    }
+
+
 
     //获取字典类型集合
     @GetMapping("getDictOptionselect")
@@ -45,9 +55,6 @@ public class SysDictTypeController extends ApiController {
 
         return map;
     }
-
-    @Resource
-    private SysDictDataService sysDictDataService;
 
     /**
      * 删除数据

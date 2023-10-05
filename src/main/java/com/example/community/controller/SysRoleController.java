@@ -11,6 +11,7 @@ import com.example.community.entity.SysMenu;
 import com.example.community.entity.SysRole;
 import com.example.community.entity.SysRoleMenu;
 import com.example.community.entity.SysUserRole;
+import com.example.community.service.SysDictDataService;
 import com.example.community.service.SysRoleService;
 import com.example.community.service.SysUserRoleService;
 import com.example.community.utils.MenuTree;
@@ -45,6 +46,8 @@ public class SysRoleController extends ApiController {
     private SysUserRoleService sysUserRoleService;
 
 
+    @Resource
+    private SysDictDataService sysDictDataService;
     /**
      * 状态
      *
@@ -242,11 +245,10 @@ public class SysRoleController extends ApiController {
         return menuIds;
     }
 
-    //状态下拉框
-    @GetMapping("/statusOption")
+    //状态
+    @GetMapping("/roleStatusOption")
     public R statusOption() {
-        System.err.println();
-        return success(this.sysRoleService.statusOption());
+        return success(this.sysDictDataService.roleStatusOption());
     }
 }
 

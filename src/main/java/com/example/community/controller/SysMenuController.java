@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.extension.api.ApiController;
 import com.baomidou.mybatisplus.extension.api.R;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.community.entity.SysMenu;
+import com.example.community.service.SysDictDataService;
 import com.example.community.service.SysMenuService;
 import com.example.community.utils.MenuTree;
 import org.springframework.web.bind.annotation.*;
@@ -32,6 +33,20 @@ public class SysMenuController extends ApiController {
     @Resource
     private SysMenuService sysMenuService;
 
+    @Resource
+    private SysDictDataService sysDictDataService;
+
+    //状态
+    @GetMapping("/menuStatusOption")
+    public R statusOption() {
+        return success(this.sysDictDataService.menuStatusOption());
+    }
+
+    //显示
+    @GetMapping("/menuShowsOption")
+    public R menuShowsOption() {
+        return success(this.sysDictDataService.menuShowOption());
+    }
 
     @PostMapping("/menuList")
     public R menuList(@RequestBody SysMenu sysMenu) {

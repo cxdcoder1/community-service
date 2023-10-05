@@ -68,5 +68,45 @@ public class SysDictDataServiceImpl extends ServiceImpl<SysDictDataDao, SysDictD
         return sysDictDataDao.statusList();
     }
 
+    @Override
+    public List<SysDictData> userStatusOption() {
+        return sysDictDataDao.userStatusOption();
+    }
+
+    @Override
+    public List<SysDictData> roleStatusOption() {
+        return sysDictDataDao.roleStatusOption();
+    }
+
+    @Override
+    public List<SysDictData> menuStatusOption() {
+        return sysDictDataDao.menuStatusOption();
+    }
+
+    @Override
+    public List<SysDictData> postStatusOption() {
+        return sysDictDataDao.postStatusOption();
+    }
+
+    @Override
+    public List<SysDictData> dictStatusOption() {
+        return sysDictDataDao.dictStatusOption();
+    }
+
+    @Override
+    public List<SysDictData> deptStatusOption() {
+        return sysDictDataDao.deptStatusOption();
+    }
+
+    @Override
+    public List<SysDictData> menuShowOption() {
+        return sysDictDataDao.menuShowOption();
+    }
+
+    @Override
+    public List<SysDictData> userInfoSex() {
+        return sysDictDataDao.userInfoSex();
+    }
+
 }
 

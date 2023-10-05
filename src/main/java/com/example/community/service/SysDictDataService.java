@@ -30,5 +30,20 @@ public interface SysDictDataService extends IService<SysDictData> {
 
     List<SysDictData>statusList();
 
+    List<SysDictData> userStatusOption();
+
+    List<SysDictData> roleStatusOption();
+
+    List<SysDictData> menuStatusOption();
+
+    List<SysDictData> postStatusOption();
+
+    List<SysDictData> dictStatusOption();
+
+    List<SysDictData> deptStatusOption();
+
+    List<SysDictData> menuShowOption();
+
+    List<SysDictData> userInfoSex();
 }
 

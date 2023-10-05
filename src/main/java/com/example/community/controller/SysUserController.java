@@ -14,6 +14,7 @@ import com.example.community.entity.SysPost;
 import com.example.community.entity.SysRole;
 import com.example.community.entity.SysUser;
 import com.example.community.service.SysDeptService;
+import com.example.community.service.SysDictDataService;
 import com.example.community.service.SysUserService;
 import com.example.community.utils.DeptTree;
 import com.example.community.utils.JwtUtil;
@@ -46,6 +47,15 @@ public class SysUserController extends ApiController {
     private SysUserService sysUserService;
     @Resource
     private SysDeptService sysDeptService;
+    @Resource
+    private SysDictDataService sysDictDataService;
+
+    //状态
+    @GetMapping("userInfoSex")
+    public R userInfoSex() {
+        return success(this.sysDictDataService.userInfoSex());
+    }
+
 
     /**
      * 分页查询所有数据
@@ -328,11 +338,10 @@ public class SysUserController extends ApiController {
     ;
 
     //状态下拉框
-    @GetMapping("/statusOption")
+    @GetMapping("/userStatusOption")
     public R statusOption() {
-        return success(this.sysUserService.statusOption());
+        return success(this.sysDictDataService.userStatusOption());
     }
-
 
 
     @PostMapping("deleteUsers")

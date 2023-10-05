@@ -142,5 +142,38 @@
     </select>
 
 
+
+    <select id="userStatusOption" resultType="com.example.community.entity.SysDictData">
+       select * from sys_dict_data dd join sys_dict_type dt on dd.dict_type = dt.dict_type where dt.dict_id = 28 and dt.status = "0"
+    </select>
+
+    <select id="roleStatusOption" resultType="com.example.community.entity.SysDictData">
+       select * from sys_dict_data dd join sys_dict_type dt on dd.dict_type = dt.dict_type where dt.dict_id = 29 and dt.status = "0"
+    </select>
+
+    <select id="menuStatusOption" resultType="com.example.community.entity.SysDictData">
+       select * from sys_dict_data dd join sys_dict_type dt on dd.dict_type = dt.dict_type where dt.dict_id = 30 and dt.status = "0"
+    </select>
+
+    <select id="deptStatusOption" resultType="com.example.community.entity.SysDictData">
+       select * from sys_dict_data dd join sys_dict_type dt on dd.dict_type = dt.dict_type where dt.dict_id = 32 and dt.status = "0"
+    </select>
+
+    <select id="postStatusOption" resultType="com.example.community.entity.SysDictData">
+       select * from sys_dict_data dd join sys_dict_type dt on dd.dict_type = dt.dict_type where dt.dict_id = 26 and dt.status = "0"
+    </select>
+
+    <select id="dictStatusOption" resultType="com.example.community.entity.SysDictData">
+       select * from sys_dict_data dd join sys_dict_type dt on dd.dict_type = dt.dict_type where dt.dict_id = 31 and dt.status = "0"
+    </select>
+
+    <select id="menuShowOption" resultType="com.example.community.entity.SysDictData">
+       select * from sys_dict_data dd join sys_dict_type dt on dd.dict_type = dt.dict_type where dt.dict_id = 2 and dt.status = "0"
+    </select>
+
+    <select id="userInfoSex" resultType="com.example.community.entity.SysDictData">
+    SELECT * FROM sys_dict_data where dict_type = 1
+    </select>
+
 </mapper>
 

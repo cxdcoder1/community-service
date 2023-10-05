@@ -8,6 +8,7 @@ import com.baomidou.mybatisplus.extension.api.R;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.community.entity.SysDept;
 import com.example.community.entity.SysPost;
+import com.example.community.service.SysDictDataService;
 import com.example.community.service.SysPostService;
 import com.example.community.service.SysUserPostService;
 import org.springframework.web.bind.annotation.*;
@@ -37,6 +38,15 @@ public class SysPostController extends ApiController {
 
     @Resource
     private SysUserPostService sysUserPostService;
+
+    @Resource
+    private SysDictDataService sysDictDataService;
+
+    //状态
+    @GetMapping("/postStatusOption")
+    public R statusOption() {
+        return success(this.sysDictDataService.postStatusOption());
+    }
     /**
      * 分页查询所有数据
      *
