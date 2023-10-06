@@ -10,6 +10,8 @@ import com.example.community.entity.SysDept;
 import com.example.community.service.SysDeptService;
 import com.example.community.service.SysDictDataService;
 import com.example.community.utils.DeptTree;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -24,6 +26,7 @@ import java.util.Map;
  * @author makejava
  * @since 2023-09-14 09:53:01
  */
+@Api(tags = "部门管理")
 @RestController
 @RequestMapping("sysDept")
 @CrossOrigin
@@ -52,6 +55,7 @@ public class SysDeptController extends ApiController {
      * @param sysDept 查询实体
      * @return 所有数据
      */
+
     @GetMapping("selectAll")
     public R selectAll(Page<SysDept> page, SysDept sysDept) {
         return success(this.sysDeptService.page(page, new QueryWrapper<>(sysDept)));
@@ -65,6 +69,7 @@ public class SysDeptController extends ApiController {
      * @param id 主键
      * @return 单条数据
      */
+    @ApiOperation(value = "查询单个部门接口",notes = "查询单个部门接口的说明")
     @GetMapping("{id}")
     public R selectOne(@PathVariable Serializable id) {
         return success(this.sysDeptService.getById(id));
@@ -97,7 +102,7 @@ public class SysDeptController extends ApiController {
      * @param deptId
      * @return
      */
-
+    @ApiOperation(value = "删除部门接口",notes = "删除部门接口的说明")
     @DeleteMapping("/delete/{deptId}")
     public Map<String,Object> deleteDept(@PathVariable String deptId){
         Map<String, Object> map = new HashMap<>();
@@ -141,6 +146,7 @@ public class SysDeptController extends ApiController {
      * @param sysDept
      * @return
      */
+    @ApiOperation(value = "部门列表分页接口",notes = "部门列表分页接口的说明")
     @PostMapping("getDeptList")
     public Map<String,Object> getMenuList(@RequestBody SysDept sysDept){
         Map<String,Object> result = new HashMap<>();
@@ -167,6 +173,7 @@ public class SysDeptController extends ApiController {
     };
 
     //表单中的部门列表
+    @ApiOperation(value = "获取树状部门接口",notes = "获取树状部门接口的说明")
     @PostMapping("treeDeptList")
     public Map<String,Object> treeMenuList(@RequestBody SysDept sysDept){
         Map<String,Object> result = new HashMap<>();
@@ -192,6 +199,7 @@ public class SysDeptController extends ApiController {
     }
 
     //表单中的部门列表
+    @ApiOperation(value = "获取树状部门接口",notes = "获取树状部门接口的说明")
     @PostMapping("treeDeptLists")
     public Map<String,Object> treeMenuLists(@RequestBody SysDept sysDept){
         Map<String,Object> result = new HashMap<>();
@@ -216,7 +224,7 @@ public class SysDeptController extends ApiController {
         return result;
     }
 
-
+    @ApiOperation(value = "新增部门接口",notes = "新增部门接口的说明")
     @PostMapping("addDept")
     public Map<String,Object>insertDept(@RequestBody SysDept sysDept){
         Map<String, Object> result = new HashMap<>();
@@ -245,6 +253,7 @@ public class SysDeptController extends ApiController {
         result.put("success", true);
         return result;
     }
+    @ApiOperation(value = "修改部门接口",notes = "修改部门接口的说明")
     @PutMapping("updateDept")
     public Map<String, Object> update(@RequestBody SysDept sysDept) {
         Map<String, Object> result = new HashMap<>();

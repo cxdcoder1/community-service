@@ -9,6 +9,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.community.entity.SysRoleDept;
 import com.example.community.service.SysRoleDeptService;
 import org.springframework.web.bind.annotation.*;
+import springfox.documentation.annotations.ApiIgnore;
 
 import javax.annotation.Resource;
 import java.io.Serializable;
@@ -20,6 +21,7 @@ import java.util.List;
  * @author makejava
  * @since 2023-09-14 09:53:02
  */
+@ApiIgnore
 @RestController
 @RequestMapping("sysRoleDept")
 public class SysRoleDeptController extends ApiController {

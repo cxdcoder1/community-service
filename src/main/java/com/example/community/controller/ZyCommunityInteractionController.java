@@ -8,6 +8,7 @@ import com.baomidou.mybatisplus.extension.api.R;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.community.entity.ZyCommunityInteraction;
 import com.example.community.service.ZyCommunityInteractionService;
+import io.swagger.annotations.Api;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -20,6 +21,7 @@ import java.util.List;
  * @author makejava
  * @since 2023-09-14 09:53:03
  */
+@Api(tags = "社区互动")
 @RestController
 @RequestMapping("zyCommunityInteraction")
 public class ZyCommunityInteractionController extends ApiController {

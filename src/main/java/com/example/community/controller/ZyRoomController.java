@@ -5,6 +5,8 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.community.dto.RoomDto;
 import com.example.community.entity.*;
 import com.example.community.service.ZyRoomService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -17,6 +19,7 @@ import java.util.List;
  * @author makejava
  * @since 2023-09-14 09:53:04
  */
+@Api(tags = "房屋管理")
 @RestController
 @RequestMapping("zyRoom")
 @CrossOrigin
@@ -25,6 +28,7 @@ public class ZyRoomController extends ApiController {
     @Resource
     private ZyRoomService zyRoomService;
 
+    @ApiOperation(value = "获取房屋列表接口",notes = "获取房屋列表接口的说明")
     @GetMapping("getRoomList")
     public HashMap<String, Object> getRoomList(Page<RoomDto> page, RoomDto roomDto) {
         HashMap<String, Object> map = new HashMap<>();
@@ -38,6 +42,7 @@ public class ZyRoomController extends ApiController {
         return map;
     }
 
+    @ApiOperation(value = "获取楼栋列表接口",notes = "获取楼栋列表接口的说明")
     @GetMapping("getBuilding")
     public HashMap<String, Object> getBuilding(ZyRoom zyRoom) {
         HashMap<String, Object> map = new HashMap<>();
@@ -50,6 +55,7 @@ public class ZyRoomController extends ApiController {
         return map;
     }
 
+    @ApiOperation(value = "获取单元列表接口",notes = "获取单元列表接口的说明")
     @GetMapping("getUnit")
     public HashMap<String, Object> getUnit( ZyRoom zyRoom) {
         HashMap<String, Object> map = new HashMap<>();
@@ -76,6 +82,7 @@ public class ZyRoomController extends ApiController {
         return map;
     }
 
+    @ApiOperation(value = "添加房屋接口",notes = "添加房屋接口的说明")
     @PutMapping("addRoom")
     public HashMap<String, Object> getaddRoom(@RequestBody ZyRoom zyRoom) {
         HashMap<String, Object> map = new HashMap<>();
@@ -99,6 +106,7 @@ public class ZyRoomController extends ApiController {
         return map;
     }
 
+    @ApiOperation(value = "修改房屋接口",notes = "修改房屋接口的说明")
     @PutMapping("editRoom")
     public HashMap<String, Object> editRoom(@RequestBody ZyRoom zyRoom) {
         HashMap<String, Object> map = new HashMap<>();
@@ -123,6 +131,7 @@ public class ZyRoomController extends ApiController {
 
     }
 
+    @ApiOperation(value = "删除房屋接口",notes = "删除房屋接口的说明")
     @DeleteMapping("deleteRoom/{roomId}")
     public HashMap<String, Object> deleteRoom(@PathVariable Long roomId) {
         HashMap<String, Object> map = new HashMap<>();
@@ -142,6 +151,7 @@ public class ZyRoomController extends ApiController {
 
     }
 
+    @ApiOperation(value = "批量删除房屋接口",notes = "批量删除房屋接口的说明")
     @PostMapping("deleteRooms")
     public HashMap<String, Object> deleteRooms(@RequestBody List<String> list) {
         HashMap<String, Object> map = new HashMap<>();

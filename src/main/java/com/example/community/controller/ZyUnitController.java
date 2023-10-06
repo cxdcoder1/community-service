@@ -12,6 +12,8 @@ import com.example.community.entity.ZyCommunity;
 import com.example.community.entity.ZyRoom;
 import com.example.community.entity.ZyUnit;
 import com.example.community.service.ZyUnitService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -27,6 +29,7 @@ import java.util.Map;
  * @author makejava
  * @since 2023-09-14 09:53:04
  */
+@Api(tags = "单元管理")
 @RestController
 @RequestMapping("zyUnit")
 @CrossOrigin
@@ -44,6 +47,7 @@ public class ZyUnitController extends ApiController {
      *
      * @return 所有数据
      */
+    @ApiOperation(value = "获取单元列表接口",notes = "获取单元列表接口的说明")
     @GetMapping("getUnits")
     public R selectAll(Page<UnitAndCommunityAndBuilding> page, UnitAndCommunityAndBuilding unitAndCommunityAndBuilding) {
 
@@ -56,6 +60,7 @@ public class ZyUnitController extends ApiController {
      * @param zyUnit
      * @return
      */
+    @ApiOperation(value = "添加单元接口",notes = "添加单元接口的说明")
     @PostMapping("addUnit")
     public Map<String, Object> addUnit(@RequestBody ZyUnit zyUnit) {
         HashMap<String, Object> result = new HashMap<>();
@@ -88,6 +93,7 @@ public class ZyUnitController extends ApiController {
         }
     }
 
+    @ApiOperation(value = "修改单元接口",notes = "修改单元接口的说明")
     @PostMapping("updateUnit")
     public Map<String, Object> updateUnit(@RequestBody ZyUnit zyUnit) {
         HashMap<String, Object> result = new HashMap<>();
@@ -124,6 +130,7 @@ public class ZyUnitController extends ApiController {
      * @param id
      * @return
      */
+    @ApiOperation(value = "删除单元接口",notes = "删除单元接口的说明")
     @GetMapping("delUnit/{id}")
     public Map<String, Object> delUnit(@PathVariable("id") String id) {
         HashMap<String, Object> result = new HashMap<>();
@@ -153,6 +160,7 @@ public class ZyUnitController extends ApiController {
      * @param list
      * @return
      */
+    @ApiOperation(value = "批量删除单元接口",notes = "批量删除单元接口的说明")
     @PostMapping("delUnits")
     public HashMap<String, Object> delUnits(@RequestBody List<String> list) {
         HashMap<String, Object> map = new HashMap<>();
@@ -183,6 +191,7 @@ public class ZyUnitController extends ApiController {
      * @param id
      * @return
      */
+    @ApiOperation(value = "获取电梯状态字典接口",notes = "获取电梯状态字典接口的说明")
     @GetMapping("getElevatorStatus/{id}")
     public HashMap<String, Object> getElevatorStatus(@PathVariable("id") String id) {
         HashMap<String, Object> result = new HashMap<>();

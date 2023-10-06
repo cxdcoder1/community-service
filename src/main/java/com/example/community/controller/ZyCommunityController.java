@@ -11,6 +11,8 @@ import com.example.community.entity.ZyCommunity;
 import com.example.community.service.ZyBuildingService;
 import com.example.community.service.ZyCommunityService;
 import com.example.community.service.impl.ZyBuildingServiceImpl;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -27,6 +29,7 @@ import java.util.Map;
  * @author makejava
  * @since 2023-09-14 09:53:03
  */
+@Api(tags = "小区管理")
 @RestController
 @RequestMapping("zyCommunity")
 @CrossOrigin
@@ -47,6 +50,7 @@ public class ZyCommunityController extends ApiController {
      * @param zyCommunity 查询实体
      * @return 所有数据
      */
+    @ApiOperation(value = "获取小区列表接口",notes = "获取小区列表接口的说明")
     @GetMapping("getCommunityAll")
     public R getcommunityAll(Page<CommunityAndDeptDto> page, CommunityAndDeptDto zyCommunity) {
 
@@ -90,6 +94,7 @@ public class ZyCommunityController extends ApiController {
      * @param id 主键结合
      * @return 删除结果
      */
+    @ApiOperation(value = "删除小区接口",notes = "删除小区接口的说明")
     @DeleteMapping("delCummunity")
     public Map<String, Object> delCummunity(@RequestParam("id") String id) {
         System.err.println(id);
@@ -171,6 +176,7 @@ public class ZyCommunityController extends ApiController {
      * @param zyCommunity 实体对象
      * @return 新增结果
      */
+    @ApiOperation(value = "新增小区接口",notes = "新增小区接口的说明")
     @PostMapping("insCommunity")
     public Map<String, Object> insCommunity(@RequestBody ZyCommunity zyCommunity) {
 //        System.err.println(zyCommunity.toString());
@@ -207,6 +213,7 @@ public class ZyCommunityController extends ApiController {
      * @param zyCommunity 实体对象
      * @return 新增结果
      */
+    @ApiOperation(value = "修改小区接口",notes = "修改小区接口的说明")
     @PutMapping("updCommunity")
     public Map<String, Object> updCommunity(@RequestBody ZyCommunity zyCommunity) {
         System.err.println(zyCommunity.toString());
@@ -243,6 +250,7 @@ public class ZyCommunityController extends ApiController {
      * @param communityId deptId 实体对象
      * @return 新增结果
      */
+    @ApiOperation(value = "修改物业接口",notes = "修改物业接口的说明")
     @PutMapping("replacement")
     public Map<String, Object> replacement(@PathParam("communityId") String communityId, @PathParam("deptId") String deptId) {
 
@@ -264,6 +272,7 @@ public class ZyCommunityController extends ApiController {
      *
      * @return
      */
+    @ApiOperation(value = "获取小区集合接口",notes = "获取小区集合接口的说明")
     @GetMapping("getUCommunity")
     public Map<String, Object> getUCommunity() {
         HashMap<String, Object> result = new HashMap<>();

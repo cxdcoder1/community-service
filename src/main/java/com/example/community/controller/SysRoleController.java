@@ -15,6 +15,8 @@ import com.example.community.service.SysDictDataService;
 import com.example.community.service.SysRoleService;
 import com.example.community.service.SysUserRoleService;
 import com.example.community.utils.MenuTree;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -30,6 +32,7 @@ import java.util.Map;
  * @author makejava
  * @since 2023-09-14 09:53:02
  */
+@Api(tags = "角色管理")
 @RestController
 @RequestMapping("sysRole")
 @CrossOrigin
@@ -53,6 +56,7 @@ public class SysRoleController extends ApiController {
      *
      * @param
      */
+    @ApiOperation(value = "修改角色状态接口",notes = "修改角色状态接口的说明")
     @PutMapping("upDataStatus")
     public R upDataStatus(@RequestParam("status") String status, @RequestParam("roleId") int roleId) {
         return success(this.sysRoleService.upDataStatus(roleId,status));
@@ -63,6 +67,7 @@ public class SysRoleController extends ApiController {
      * @param
      * @return
      */
+    @ApiOperation(value = "新增角色接口",notes = "新增角色接口的说明")
     @PostMapping("insertRole")
     public Map<String, Object> insertRole(@RequestBody RolesAndMenuIds rolesAndMenuIds){
         Map<String, Object> map = new HashMap<>();
@@ -87,6 +92,7 @@ public class SysRoleController extends ApiController {
 
     }
 
+    @ApiOperation(value = "获取角色列表接口",notes = "获取角色列表接口的说明")
     @GetMapping("list")
     public R selectPageAll(Page<SysRole> page, SysRole sysRole) {
 //        System.err.println("角色类"+sysRole);
@@ -156,6 +162,7 @@ public class SysRoleController extends ApiController {
     /**
      * 修改保存角色
      */
+    @ApiOperation(value = "修改角色接口",notes = "修改角色接口的说明")
     @PutMapping("edit")
     public Map<String, Object> edit(@RequestBody RolesAndMenuIds rolesAndMenuIds) {
         Map<String, Object> map = new HashMap<>();
@@ -209,6 +216,7 @@ public class SysRoleController extends ApiController {
      * @param roleId
      * @return
      */
+    @ApiOperation(value = "删除角色接口",notes = "删除角色接口的说明")
     @DeleteMapping("delete/{roleId}")
     public Map<String, Object> deleteRole(@PathVariable String roleId){
         Map<String, Object> map = new HashMap<>();

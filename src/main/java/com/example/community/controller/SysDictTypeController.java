@@ -9,6 +9,8 @@ import com.example.community.entity.SysDictData;
 import com.example.community.entity.SysDictType;
 import com.example.community.service.SysDictDataService;
 import com.example.community.service.SysDictTypeService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -25,6 +27,7 @@ import java.util.Map;
  * @author makejava
  * @since 2023-09-14 09:53:01
  */
+@Api(tags = "字典类型管理")
 @RestController
 @RequestMapping("sysDictType")
 @CrossOrigin
@@ -47,6 +50,7 @@ public class SysDictTypeController extends ApiController {
 
 
     //获取字典类型集合
+    @ApiOperation(value = "获取字典类型集合接口",notes = "获取字典类型集合接口的说明")
     @GetMapping("getDictOptionselect")
     public HashMap<String, Object> getDictOptionselect() {
         List<SysDictType> dictOptionselect = sysDictTypeService.getDictOptionselect(null);
@@ -62,6 +66,7 @@ public class SysDictTypeController extends ApiController {
      * @param
      * @return 删除
      */
+    @ApiOperation(value = "删除字典类型接口",notes = "删除字典类型接口的说明")
     @DeleteMapping("delType")
     public Map<String, Object> delType(@RequestBody List<Long> id, @RequestParam("type") List<String> type) {
 
@@ -86,6 +91,7 @@ public class SysDictTypeController extends ApiController {
     }
 
     //修改
+    @ApiOperation(value = "修改字典类型接口",notes = "修改字典类型接口的说明")
     @PutMapping("updType")
     public Map<String, Object> updType(@RequestBody SysDictType sysDictType, @RequestParam("type") String type, @RequestParam("type2") String type2) {
 
@@ -150,6 +156,7 @@ public class SysDictTypeController extends ApiController {
      * @param sysDictType 实体对象
      * @return 新增结果
      */
+    @ApiOperation(value = "新增字典类型接口",notes = "新增字典类型接口的说明")
     @PostMapping("insDictType")
     public Map<String, Object> insert(@RequestBody SysDictType sysDictType) {
 

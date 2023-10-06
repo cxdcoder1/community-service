@@ -11,6 +11,8 @@ import com.example.community.entity.SysPost;
 import com.example.community.service.SysDictDataService;
 import com.example.community.service.SysPostService;
 import com.example.community.service.SysUserPostService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -25,6 +27,7 @@ import java.util.Map;
  * @author makejava
  * @since 2023-09-14 09:53:02
  */
+@Api(tags = "岗位管理")
 @RestController
 @RequestMapping("sysPost")
 @CrossOrigin
@@ -65,6 +68,7 @@ public class SysPostController extends ApiController {
      * @param sysPost
      * @return
      */
+    @ApiOperation(value = "获取岗位列表接口",notes = "获取岗位列表接口的说明")
     @GetMapping("postList")
     public R selectPost(Page<SysPost>page,SysPost sysPost){
         return success(this.sysPostService.postList(page,sysPost));
@@ -87,6 +91,7 @@ public class SysPostController extends ApiController {
      * @param sysPost 实体对象
      * @return 新增结果
      */
+    @ApiOperation(value = "新增岗位接口",notes = "新增岗位接口的说明")
     @PostMapping
     public R insert(@RequestBody SysPost sysPost) {
         return success(this.sysPostService.save(sysPost));
@@ -98,6 +103,7 @@ public class SysPostController extends ApiController {
      * @param sysPost 实体对象
      * @return 修改结果
      */
+
     @PutMapping
     public R updatea(@RequestBody SysPost sysPost) {
         return success(this.sysPostService.updateById(sysPost));
@@ -120,6 +126,7 @@ public class SysPostController extends ApiController {
      * @return
      * @throws Exception
      */
+    @ApiOperation(value = "新增岗位接口",notes = "新增岗位接口的说明")
     @GetMapping("insertPost")
     public Map<String, Object>insertPost(SysPost sysPost) throws Exception {
         Map<String, Object> map = new HashMap<>();
@@ -142,6 +149,7 @@ public class SysPostController extends ApiController {
      * @param sysPost
      * @return
      */
+    @ApiOperation(value = "修改岗位接口",notes = "修改岗位接口的说明")
     @PutMapping("updatePosts")
     public Map<String, Object> update(@RequestBody SysPost sysPost) {
         Map<String, Object> map = new HashMap<>();
@@ -164,6 +172,7 @@ public class SysPostController extends ApiController {
      * @param postId
      * @return
      */
+    @ApiOperation(value = "删除岗位接口",notes = "删除岗位接口的说明")
     @DeleteMapping("delPost/{postId}")
     public Map<String ,Object> delPost(@PathVariable Integer postId){
         Map<String, Object> map = new HashMap<>();
@@ -186,6 +195,7 @@ public class SysPostController extends ApiController {
      * @param
      * @return
      */
+    @ApiOperation(value = "批量删除岗位接口",notes = "批量删除岗位接口的说明")
     @PostMapping("deletes")
     public Map<String,Object> deletes(@RequestBody int[] ids){
         Map<String,Object> result = new HashMap<>();

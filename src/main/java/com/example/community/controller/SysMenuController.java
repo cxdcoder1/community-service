@@ -9,6 +9,8 @@ import com.example.community.entity.SysMenu;
 import com.example.community.service.SysDictDataService;
 import com.example.community.service.SysMenuService;
 import com.example.community.utils.MenuTree;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -23,6 +25,7 @@ import java.util.Map;
  * @author makejava
  * @since 2023-09-14 09:53:02
  */
+@Api(tags = "菜单管理")
 @RestController
 @RequestMapping("sysMenu")
 @CrossOrigin
@@ -48,6 +51,7 @@ public class SysMenuController extends ApiController {
         return success(this.sysDictDataService.menuShowOption());
     }
 
+    @ApiOperation(value = "获取菜单列表接口",notes = "获取菜单列表接口的说明")
     @PostMapping("/menuList")
     public R menuList(@RequestBody SysMenu sysMenu) {
         List<SysMenu> menus = sysMenuService.getMenuList(sysMenu.getMenuName(), sysMenu.getStatus());
@@ -68,6 +72,7 @@ public class SysMenuController extends ApiController {
 //        return success(this.sysMenuService.getMenuList(sysMenu.getMenuName(),sysMenu.getStatus()));
 //    }
 
+    @ApiOperation(value = "获取树形菜单列表接口",notes = "获取树形菜单列表接口的说明")
     @GetMapping("getTreeMenu/{id}")
     public R MenuTreeList(@PathVariable int id) {
         if (id == 1) {
@@ -90,6 +95,7 @@ public class SysMenuController extends ApiController {
     }
 
 
+    @ApiOperation(value = "删除菜单接口",notes = "删除菜单接口的说明")
     @RequestMapping("deleteMenu")
     public Map<String, Object> deleteMenu(@RequestBody SysMenu sysMenu) {
         Map<String, Object> map = new HashMap<>();
@@ -106,6 +112,7 @@ public class SysMenuController extends ApiController {
      * @param sysMenu 实体对象
      * @return 新增结果
      */
+    @ApiOperation(value = "新增菜单接口",notes = "新增菜单接口的说明")
     @PostMapping("addMenu")
     public Map<String, Object> insert(@RequestBody SysMenu sysMenu) {
         Map<String, Object> result = new HashMap<>();
@@ -256,6 +263,7 @@ public class SysMenuController extends ApiController {
      * @param sysMenu 实体对象
      * @return 修改结果
      */
+    @ApiOperation(value = "修改菜单接口",notes = "修改菜单接口的说明")
     @PutMapping("updateMenu")
     public Map<String, Object> update(@RequestBody SysMenu sysMenu) {
         Map<String, Object> result = new HashMap<>();

@@ -11,6 +11,8 @@ import com.example.community.entity.ZyBuilding;
 import com.example.community.entity.ZyCommunity;
 import com.example.community.service.ZyBuildingService;
 import com.example.community.service.ZyCommunityService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -25,6 +27,7 @@ import java.util.Map;
  * @author makejava
  * @since 2023-09-14 09:53:03
  */
+@Api(tags = "楼栋管理")
 @RestController
 @RequestMapping("zyBuilding")
 @CrossOrigin
@@ -98,17 +101,20 @@ public class ZyBuildingController extends ApiController {
      * 获取小区列表
      * @return
      */
+    @ApiOperation(value = "获取小区列表接口",notes = "获取小区列表接口的说明")
     @GetMapping("getCommunityList")
     public R getCommunityList(){
         System.err.println(this.zyCommunityService.getCommunityList());
         return success(this.zyCommunityService.getCommunityList());
     }
 
+    @ApiOperation(value = "获取楼栋列表接口",notes = "获取楼栋列表接口的说明")
     @GetMapping("buildingList")
     public R selectPageAll(Page<ZyBuilding> page, ZyBuilding zyBuilding,long communityId) {
         return success(this.zyBuildingService.buildingList(page,zyBuilding,communityId));
     }
 
+    @ApiOperation(value = "添加楼栋接口",notes = "添加楼栋接口的说明")
     @GetMapping("insertBuilding")
     public  Map<String, Object> insertBuilding(ZyBuilding zyBuilding){
         Map<String, Object> map = new HashMap<>();
@@ -125,6 +131,8 @@ public class ZyBuildingController extends ApiController {
         map.put("success", true);
         return map;
     }
+
+    @ApiOperation(value = "修改楼栋接口",notes = "修改楼栋接口的说明")
     @PutMapping("updateBuilding")
     public Map<String, Object> updateBuilding(@RequestBody ZyBuilding zyBuilding){
         Map<String, Object> map = new HashMap<>();
@@ -142,6 +150,8 @@ public class ZyBuildingController extends ApiController {
         map.put("success", false);
         return map;
     }
+
+    @ApiOperation(value = "删除楼栋接口",notes = "删除楼栋接口的说明")
     @DeleteMapping("delBuilding/{id}")
     public Map<String, Object> delBuilding(@PathVariable Long id){
         Map<String, Object> map = new HashMap<>();
@@ -159,6 +169,7 @@ public class ZyBuildingController extends ApiController {
         return map;
     }
 
+    @ApiOperation(value = "批量删除楼栋接口",notes = "批量删除楼栋接口的说明")
     @PostMapping("deletes")
     public Map<String,Object> deletes(@RequestBody Long[] ids){
         Map<String,Object> result = new HashMap<>();
@@ -177,6 +188,7 @@ public class ZyBuildingController extends ApiController {
      * 根据小区id获取楼栋信息
      * @return
      */
+    @ApiOperation(value = "根据小区id获取楼栋接口",notes = "根据小区id获取楼栋接口的说明")
     @GetMapping("getUBuild/{communityId}")
     public Map<String, Object> getUBuild(@PathVariable("communityId") String communityId) {
         HashMap<String, Object> result = new HashMap<>();

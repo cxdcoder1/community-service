@@ -19,6 +19,8 @@ import com.example.community.service.SysUserService;
 import com.example.community.utils.DeptTree;
 import com.example.community.utils.JwtUtil;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -35,8 +37,10 @@ import java.util.Map;
  * @author makejava
  * @since 2023-09-14 09:53:02
  */
-@Api(tags = "用户管理") //  tags：你可以当作是这个组的名字。
+//@Api(tags = "用户管理") //  tags：你可以当作是这个组的名字。
+@Api(tags = "用户管理")
 @RestController
+@Controller
 @RequestMapping("sysUser")
 @CrossOrigin
 public class SysUserController extends ApiController {
@@ -64,6 +68,7 @@ public class SysUserController extends ApiController {
      * @param sysUser 查询实体
      * @return 所有数据
      */
+    @ApiOperation(value = "获取用户列表接口",notes = "获取用户列表接口的说明")
     @GetMapping("/selectAll")
     public R selectAll(Page<SysUser> page, SysUser sysUser) {
 
@@ -92,6 +97,7 @@ public class SysUserController extends ApiController {
      * @param user
      * @return
      */
+    @ApiOperation(value = "用户登录接口",notes = "用户登录接口的说明")
     @RequestMapping("login")
     public Map<String,Object> login(@RequestBody SysUser user, HttpServletRequest request) throws Exception {
         Map<String,Object> result = new HashMap<>();
@@ -180,6 +186,7 @@ public class SysUserController extends ApiController {
 //    public R update(SysUser sysUser) {
 //        return success(this.sysUserService.updateById(sysUser));
 //    }
+    @ApiOperation(value = "修改用户接口",notes = "修改用户接口的说明")
     @PutMapping("updataUser")
     public R update(@RequestBody SysUser sysUser) {
 //        System.err.println(sysUser);
@@ -238,6 +245,7 @@ public class SysUserController extends ApiController {
         return map;
     }
 
+    @ApiOperation(value = "修改用户接口",notes = "修改用户接口的说明")
     @PutMapping("updateUser")
     public HashMap<String, Object> updateUser(@RequestBody UserAndPostIdAndRoleId userAndPostIdAndRoleId) {
         HashMap<String, Object> map = new HashMap<>();
@@ -269,6 +277,7 @@ public class SysUserController extends ApiController {
         return map;
     }
 
+    @ApiOperation(value = "新增用户接口",notes = "新增用户接口的说明")
     @PutMapping("addUser")
     public HashMap<String, Object> addUser(@RequestBody UserAndPostIdAndRoleId userAndPostIdAndRoleId) {
         HashMap<String, Object> map = new HashMap<>();
@@ -299,6 +308,7 @@ public class SysUserController extends ApiController {
         return map;
     }
     //密码重置
+    @ApiOperation(value = "用户重置密码接口",notes = "用户重置密码接口的说明")
     @PutMapping("resetPwd")
     public R resetPwd(@RequestParam("id") int id,@RequestParam("pwd") Long pwd) {
 
@@ -344,6 +354,7 @@ public class SysUserController extends ApiController {
     }
 
 
+    @ApiOperation(value = "批量删除用户接口",notes = "批量删除用户接口的说明")
     @PostMapping("deleteUsers")
     public HashMap<String, Object> deleteUsers(@RequestBody List<String> list) {
         HashMap<String, Object> map = new HashMap<>();
@@ -358,6 +369,7 @@ public class SysUserController extends ApiController {
         return map;
     }
 
+    @ApiOperation(value = "删除用户接口",notes = "删除用户接口的说明")
     @DeleteMapping("delUser/{id}")
     public HashMap<String, Object> deleteUsers(@PathVariable String id) {
         HashMap<String, Object> map = new HashMap<>();

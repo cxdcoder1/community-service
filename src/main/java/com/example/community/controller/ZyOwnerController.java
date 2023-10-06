@@ -8,6 +8,8 @@ import com.baomidou.mybatisplus.extension.api.R;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.community.entity.ZyOwner;
 import com.example.community.service.ZyOwnerService;
+import io.swagger.annotations.Api;
+import org.checkerframework.checker.units.qual.A;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -20,6 +22,7 @@ import java.util.List;
  * @author makejava
  * @since 2023-09-14 09:53:03
  */
+@Api(tags = "业主管理")
 @RestController
 @RequestMapping("zyOwner")
 public class ZyOwnerController extends ApiController {

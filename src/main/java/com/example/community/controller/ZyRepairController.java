@@ -8,6 +8,7 @@ import com.baomidou.mybatisplus.extension.api.R;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.community.entity.ZyRepair;
 import com.example.community.service.ZyRepairService;
+import io.swagger.annotations.Api;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -20,6 +21,7 @@ import java.util.List;
  * @author makejava
  * @since 2023-09-14 09:53:04
  */
+@Api(tags = "保修管理")
 @RestController
 @RequestMapping("zyRepair")
 public class ZyRepairController extends ApiController {

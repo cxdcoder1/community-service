@@ -9,6 +9,8 @@ import com.example.community.entity.*;
 import com.example.community.listener.DemoDataListener;
 import com.example.community.service.*;
 import com.example.community.utils.easyexcel.StyleUtils;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -19,6 +21,7 @@ import java.util.*;
 /**
  * Excel表格导出
  */
+@Api(tags = "Excel表格导入导出")
 @RestController
 @RequestMapping("excel")
 @CrossOrigin
@@ -186,6 +189,7 @@ public class ExcelController {
      * 导入用户
      */
     @PostMapping("into")
+    @ApiOperation(value = "用户导入接口",notes = "用户导入接口的说明")
     public Map<String,Object> simpleRead(@RequestParam("file") MultipartFile file) {
         Map<String,Object> result = new HashMap<>();
 //        String fileName = "F:\\rdtext.xls";
@@ -294,6 +298,7 @@ public class ExcelController {
      * @param lists
      * @return
      */
+    @ApiOperation(value = "小区导出接口",notes = "小区导出接口的说明")
     @PostMapping("Communitylist")
     public Map<String, Object> Communitylist(@RequestBody List<String> lists) {
         Map<String, Object> result = new HashMap<>();
@@ -341,6 +346,7 @@ public class ExcelController {
      * @param lists
      * @return
      */
+    @ApiOperation(value = "用户导出接口",notes = "用户导出接口的说明")
     @PostMapping("userList")
     public Map<String, Object> UserList(@RequestBody List<String> lists) {
         Map<String, Object> result = new HashMap<>();
@@ -364,6 +370,7 @@ public class ExcelController {
      * @param lists
      * @return
      */
+    @ApiOperation(value = "单元导出接口",notes = "单元导出接口的说明")
     @PostMapping("unitList")
     public Map<String, Object> UnitList(@RequestBody List<String> lists) {
         Map<String, Object> result = new HashMap<>();
@@ -386,6 +393,7 @@ public class ExcelController {
      * 用户导入模板
      * @return
      */
+    @ApiOperation(value = "用户导入接口",notes = "用户导入接口的说明")
     @PostMapping("template")
     public Map<String, Object> template() {
         Map<String, Object> result = new HashMap<>();
@@ -426,6 +434,7 @@ public class ExcelController {
      * @param lists
      * @return
      */
+    @ApiOperation(value = "角色导出接口",notes = "角色导出接口的说明")
     @PostMapping("DictList")
     public Map<String, Object> DictList(@RequestBody List<String> lists) {
         Map<String, Object> result = new HashMap<>();
@@ -458,6 +467,7 @@ public class ExcelController {
         return result;
     }
 
+    @ApiOperation(value = "楼栋导出接口",notes = "楼栋导出接口的说明")
     @PostMapping("buildingList")
     public Map<String, Object> buildingList(@RequestBody List<String> lists) {
         Map<String, Object> result = new HashMap<>();
@@ -472,7 +482,7 @@ public class ExcelController {
         result.put("path",path);
         return result;
     }
-
+    @ApiOperation(value = "房屋导出接口",notes = "房屋导出接口的说明")
     @PostMapping("roomList")
     public Map<String, Object> roomList(@RequestBody List<String> lists) {
         Map<String, Object> result = new HashMap<>();
