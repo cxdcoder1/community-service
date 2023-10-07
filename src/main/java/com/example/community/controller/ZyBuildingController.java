@@ -6,14 +6,15 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.api.ApiController;
 import com.baomidou.mybatisplus.extension.api.R;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.example.community.entity.SysRole;
 import com.example.community.entity.ZyBuilding;
-import com.example.community.entity.ZyCommunity;
+import com.example.community.log.BusinessType;
+import com.example.community.log.Log;
 import com.example.community.service.ZyBuildingService;
 import com.example.community.service.ZyCommunityService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.annotation.ApplicationScope;
 
 import javax.annotation.Resource;
 import java.io.Serializable;
@@ -28,6 +29,7 @@ import java.util.Map;
  * @since 2023-09-14 09:53:03
  */
 @Api(tags = "楼栋管理")
+
 @RestController
 @RequestMapping("zyBuilding")
 @CrossOrigin
@@ -82,6 +84,7 @@ public class ZyBuildingController extends ApiController {
      * @param zyBuilding 实体对象
      * @return 修改结果
      */
+
     @PutMapping
     public R update(@RequestBody ZyBuilding zyBuilding) {
         return success(this.zyBuildingService.updateById(zyBuilding));
@@ -115,24 +118,27 @@ public class ZyBuildingController extends ApiController {
     }
 
     @ApiOperation(value = "添加楼栋接口",notes = "添加楼栋接口的说明")
+    @Log(title = "楼栋管理", businessType = BusinessType.INSERT)
     @GetMapping("insertBuilding")
     public  Map<String, Object> insertBuilding(ZyBuilding zyBuilding){
         Map<String, Object> map = new HashMap<>();
         Boolean aBoolean = zyBuildingService.addBuilding(zyBuilding);
         System.err.println(zyBuilding);
-        if (!aBoolean){
-            map.put("msg","楼栋名重复");
-            map.put("status", 201);
-            map.put("success", false);
+        if (aBoolean){
+            map.put("msg","新增成功");
+            map.put("status", 200);
+            map.put("success", true);
             return map;
         }
-        map.put("msg","新增成功");
-        map.put("status", 200);
-        map.put("success", true);
+
+        map.put("msg","楼栋名重复");
+        map.put("status", 201);
+        map.put("success", false);
         return map;
     }
 
     @ApiOperation(value = "修改楼栋接口",notes = "修改楼栋接口的说明")
+    @Log(title = "楼栋管理", businessType = BusinessType.UPDATE)
     @PutMapping("updateBuilding")
     public Map<String, Object> updateBuilding(@RequestBody ZyBuilding zyBuilding){
         Map<String, Object> map = new HashMap<>();
@@ -152,11 +158,12 @@ public class ZyBuildingController extends ApiController {
     }
 
     @ApiOperation(value = "删除楼栋接口",notes = "删除楼栋接口的说明")
+    @Log(title = "删除楼栋", businessType = BusinessType.DELETE)
     @DeleteMapping("delBuilding/{id}")
     public Map<String, Object> delBuilding(@PathVariable Long id){
         Map<String, Object> map = new HashMap<>();
         Long unitName = zyBuildingService.getUnitName(id);
-        if (unitName==null){
+        if (unitName==0){
             zyBuildingService.delBuilding(id);
             map.put("msg","删除成功");
             map.put("status", 200);
@@ -170,6 +177,7 @@ public class ZyBuildingController extends ApiController {
     }
 
     @ApiOperation(value = "批量删除楼栋接口",notes = "批量删除楼栋接口的说明")
+    @Log(title = "删除楼栋", businessType = BusinessType.DELETE)
     @PostMapping("deletes")
     public Map<String,Object> deletes(@RequestBody Long[] ids){
         Map<String,Object> result = new HashMap<>();
@@ -178,7 +186,7 @@ public class ZyBuildingController extends ApiController {
             result.put("status",200);
             result.put("msg","删除成功");
         }else{
-            result.put("status",400);
+            result.put("status",201);
             result.put("msg","删除的楼栋下绑定了单元,删除失败");
         }
         return result;

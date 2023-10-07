@@ -8,6 +8,8 @@ import com.baomidou.mybatisplus.extension.api.R;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.community.entity.SysDept;
 import com.example.community.entity.SysPost;
+import com.example.community.log.BusinessType;
+import com.example.community.log.Log;
 import com.example.community.service.SysDictDataService;
 import com.example.community.service.SysPostService;
 import com.example.community.service.SysUserPostService;
@@ -126,6 +128,7 @@ public class SysPostController extends ApiController {
      * @return
      * @throws Exception
      */
+    @Log(title = "岗位管理", businessType = BusinessType.INSERT)
     @ApiOperation(value = "新增岗位接口",notes = "新增岗位接口的说明")
     @GetMapping("insertPost")
     public Map<String, Object>insertPost(SysPost sysPost) throws Exception {
@@ -149,6 +152,7 @@ public class SysPostController extends ApiController {
      * @param sysPost
      * @return
      */
+    @Log(title = "岗位管理", businessType = BusinessType.UPDATE)
     @ApiOperation(value = "修改岗位接口",notes = "修改岗位接口的说明")
     @PutMapping("updatePosts")
     public Map<String, Object> update(@RequestBody SysPost sysPost) {
@@ -172,12 +176,13 @@ public class SysPostController extends ApiController {
      * @param postId
      * @return
      */
+    @Log(title = "岗位管理", businessType = BusinessType.DELETE)
     @ApiOperation(value = "删除岗位接口",notes = "删除岗位接口的说明")
     @DeleteMapping("delPost/{postId}")
     public Map<String ,Object> delPost(@PathVariable Integer postId){
         Map<String, Object> map = new HashMap<>();
         Integer integer = sysUserPostService.setUserPost(postId);
-        if (integer!=null){
+        if (integer!=0){
             map.put("status", 201);
             map.put("success", false);
             map.put("msg", "该岗位下有员工不能删除");
@@ -195,6 +200,7 @@ public class SysPostController extends ApiController {
      * @param
      * @return
      */
+    @Log(title = "岗位管理", businessType = BusinessType.DELETE)
     @ApiOperation(value = "批量删除岗位接口",notes = "批量删除岗位接口的说明")
     @PostMapping("deletes")
     public Map<String,Object> deletes(@RequestBody int[] ids){

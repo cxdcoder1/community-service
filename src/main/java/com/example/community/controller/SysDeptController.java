@@ -7,6 +7,8 @@ import com.baomidou.mybatisplus.extension.api.ApiController;
 import com.baomidou.mybatisplus.extension.api.R;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.community.entity.SysDept;
+import com.example.community.log.BusinessType;
+import com.example.community.log.Log;
 import com.example.community.service.SysDeptService;
 import com.example.community.service.SysDictDataService;
 import com.example.community.utils.DeptTree;
@@ -102,6 +104,7 @@ public class SysDeptController extends ApiController {
      * @param deptId
      * @return
      */
+    @Log(title = "部门管理", businessType = BusinessType.DELETE)
     @ApiOperation(value = "删除部门接口",notes = "删除部门接口的说明")
     @DeleteMapping("/delete/{deptId}")
     public Map<String,Object> deleteDept(@PathVariable String deptId){
@@ -224,6 +227,7 @@ public class SysDeptController extends ApiController {
         return result;
     }
 
+    @Log(title = "部门管理", businessType = BusinessType.INSERT)
     @ApiOperation(value = "新增部门接口",notes = "新增部门接口的说明")
     @PostMapping("addDept")
     public Map<String,Object>insertDept(@RequestBody SysDept sysDept){
@@ -253,6 +257,8 @@ public class SysDeptController extends ApiController {
         result.put("success", true);
         return result;
     }
+
+    @Log(title = "部门管理", businessType = BusinessType.UPDATE)
     @ApiOperation(value = "修改部门接口",notes = "修改部门接口的说明")
     @PutMapping("updateDept")
     public Map<String, Object> update(@RequestBody SysDept sysDept) {

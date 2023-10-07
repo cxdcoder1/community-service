@@ -37,9 +37,9 @@ public interface ZyBuildingDao extends BaseMapper<ZyBuilding> {
     List<ZyBuilding> selectNames(@Param("id") List<String> id);
 
 
-List<ZyBuilding> selectBuild(@Param("index") Long index, @Param("size") Long size , @Param("zyBuilding") ZyBuilding zyBuilding,@Param("id")long id);
+    List<ZyBuilding> selectBuild(@Param("index") Long index, @Param("size") Long size , @Param("zyBuilding") ZyBuilding zyBuilding,@Param("id")long id);
 
-long count(ZyBuilding zyBuilding,long id);
+    long count(ZyBuilding zyBuilding,long id);
 
     /**
      * 新增

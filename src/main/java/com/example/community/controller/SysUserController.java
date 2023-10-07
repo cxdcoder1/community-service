@@ -15,6 +15,8 @@ import com.example.community.entity.SysDept;
 import com.example.community.entity.SysPost;
 import com.example.community.entity.SysRole;
 import com.example.community.entity.SysUser;
+import com.example.community.log.BusinessType;
+import com.example.community.log.Log;
 import com.example.community.service.SysDeptService;
 import com.example.community.service.SysDictDataService;
 import com.example.community.service.SysUserService;
@@ -150,7 +152,9 @@ public class SysUserController extends ApiController {
                 //将用户信息存储到Session  //登入成功
                 HttpSession session = request.getSession();
                 AsyncManager.me().execute(AsyncFactory.recordLogininfor(user1.getUserName(), Constants.LOGIN_SUCCESS,"登录成功"));
-                session.setAttribute("userInfo", user1);  //1.用于拦截器的判断  2.界面显示用户信息
+                session.setAttribute("userInfo", user1);
+
+                //1.用于拦截器的判断  2.界面显示用户信息
                 result.put("user", user1);
                 //把token返回给客户端-->客户端保存至localStorage-->客户端每次请求附带localStorage参数
                 //SystemConstant.JWT_TTL：token有效时间
@@ -194,6 +198,7 @@ public class SysUserController extends ApiController {
 //    public R update(SysUser sysUser) {
 //        return success(this.sysUserService.updateById(sysUser));
 //    }
+
     @ApiOperation(value = "修改用户接口",notes = "修改用户接口的说明")
     @PutMapping("updataUser")
     public R update(@RequestBody SysUser sysUser) {
@@ -253,6 +258,7 @@ public class SysUserController extends ApiController {
         return map;
     }
 
+    @Log(title = "用户管理", businessType = BusinessType.UPDATE)
     @ApiOperation(value = "修改用户接口",notes = "修改用户接口的说明")
     @PutMapping("updateUser")
     public HashMap<String, Object> updateUser(@RequestBody UserAndPostIdAndRoleId userAndPostIdAndRoleId) {
@@ -284,7 +290,7 @@ public class SysUserController extends ApiController {
         map.put("data", 0);
         return map;
     }
-
+    @Log(title = "用户管理", businessType = BusinessType.INSERT)
     @ApiOperation(value = "新增用户接口",notes = "新增用户接口的说明")
     @PutMapping("addUser")
     public HashMap<String, Object> addUser(@RequestBody UserAndPostIdAndRoleId userAndPostIdAndRoleId) {
@@ -316,6 +322,7 @@ public class SysUserController extends ApiController {
         return map;
     }
     //密码重置
+    @Log(title = "用户管理", businessType = BusinessType.UPDATE)
     @ApiOperation(value = "用户重置密码接口",notes = "用户重置密码接口的说明")
     @PutMapping("resetPwd")
     public R resetPwd(@RequestParam("id") int id,@RequestParam("pwd") Long pwd) {
@@ -324,6 +331,7 @@ public class SysUserController extends ApiController {
     }
 
     //状态
+    @Log(title = "用户管理", businessType = BusinessType.UPDATE)
     @PutMapping("updateUserStatus")
     public R updateUser(@RequestParam("id") int id,@RequestParam("status") String status) {
         return success(this.sysUserService.upDataStatus(id,status));
@@ -362,6 +370,7 @@ public class SysUserController extends ApiController {
     }
 
 
+    @Log(title = "用户管理", businessType = BusinessType.DELETE)
     @ApiOperation(value = "批量删除用户接口",notes = "批量删除用户接口的说明")
     @PostMapping("deleteUsers")
     public HashMap<String, Object> deleteUsers(@RequestBody List<String> list) {
@@ -377,6 +386,7 @@ public class SysUserController extends ApiController {
         return map;
     }
 
+    @Log(title = "用户管理", businessType = BusinessType.DELETE)
     @ApiOperation(value = "删除用户接口",notes = "删除用户接口的说明")
     @DeleteMapping("delUser/{id}")
     public HashMap<String, Object> deleteUsers(@PathVariable String id) {

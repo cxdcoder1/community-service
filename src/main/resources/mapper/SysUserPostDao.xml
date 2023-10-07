@@ -27,7 +27,7 @@
 
 
     <select id="selUserPost" resultType="java.lang.Integer">
-        select * from sys_user_post where post_id=#{postId}
+        select count(*) from sys_user_post where post_id=#{postId}
     </select>
 
 

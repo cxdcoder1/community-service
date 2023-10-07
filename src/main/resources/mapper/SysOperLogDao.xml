@@ -39,5 +39,177 @@
         on duplicate key update
          title = values(title) , business_type = values(business_type) , method = values(method) , request_method = values(request_method) , operator_type = values(operator_type) , oper_name = values(oper_name) , dept_name = values(dept_name) , oper_url = values(oper_url) , oper_ip = values(oper_ip) , oper_location = values(oper_location) , oper_param = values(oper_param) , json_result = values(json_result) , status = values(status) , error_msg = values(error_msg) , oper_time = values(oper_time)     </insert>
 
+    <insert id="insertSysOperLog"  parameterType="com.example.community.entity.SysOperLog">
+        INSERT INTO sys_oper_log
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="title != null">
+                title,
+            </if>
+            <if test="businessType != null">
+                business_type,
+            </if>
+            <if test="method != null">
+                method,
+            </if>
+            <if test="requestMethod != null">
+                request_method,
+            </if>
+            <if test="operatorType != null">
+                operator_type,
+            </if>
+            <if test="operName != null">
+                oper_name,
+            </if>
+            <if test="deptName != null">
+                dept_name,
+            </if>
+            <if test="operUrl != null">
+                oper_url,
+            </if>
+            <if test="operIp != null">
+                oper_ip,
+            </if>
+            <if test="operLocation != null">
+                oper_location,
+            </if>
+            <if test="operParam != null">
+                oper_param,
+            </if>
+            <if test="jsonResult != null">
+                json_result,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="errorMsg != null">
+                error_msg,
+            </if>
+            <if test="operTime != null">
+                oper_time,
+            </if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="title != null">
+                #{title},
+            </if>
+            <if test="businessType != null">
+                #{businessType},
+            </if>
+            <if test="method != null">
+                #{method},
+            </if>
+            <if test="requestMethod != null">
+                #{requestMethod},
+            </if>
+            <if test="operatorType != null">
+                #{operatorType},
+            </if>
+            <if test="operName != null">
+                #{operName},
+            </if>
+            <if test="deptName != null">
+                #{deptName},
+            </if>
+            <if test="operUrl != null">
+                #{operUrl},
+            </if>
+            <if test="operIp != null">
+                #{operIp},
+            </if>
+            <if test="operLocation != null">
+                #{operLocation},
+            </if>
+            <if test="operParam != null">
+                #{operParam},
+            </if>
+            <if test="jsonResult != null">
+                #{jsonResult},
+            </if>
+            <if test="status != null">
+                #{status},
+            </if>
+            <if test="errorMsg != null">
+                #{errorMsg},
+            </if>
+            <if test="operTime != null">
+                #{operTime},
+            </if>
+        </trim>
+    </insert>
+    <delete id="deletesOperLog">
+        delete from sys_oper_log where oper_id in
+        <foreach collection="ids" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
+    <delete id="dels">
+        delete from sys_oper_log
+    </delete>
+
+    <select id="selectSysoperLog" resultType="com.example.community.dto.OperLogDto">
+        select * from sys_oper_log
+        <where>
+            <if test="operLogDto.title != null and operLogDto.title !=''">
+                and title like concat('%',#{operLogDto.title},'%')
+            </if>
+            <if test="operLogDto.operName != null and operLogDto.operName !=''">
+                and oper_name like concat('%',#{operLogDto.operName},'%')
+            </if>
+            <if test="operLogDto.businessType != null and operLogDto.businessType !=''">
+                and business_type like concat('%',#{operLogDto.businessType},'%')
+            </if>
+            <if test="operLogDto.status != null and operLogDto.status !=''">
+                and status =#{operLogDto.status}
+            </if>
+            <if test="operLogDto.createTime !=null and  operLogDto.createTime!='' and operLogDto.operTime!=null and operLogDto.operTime!=''">
+                and oper_time &gt;= #{operLogDto.createTime}
+                and oper_time &lt;=#{operLogDto.operTime}
+            </if>
+        </where>
+        order by oper_id desc
+        limit #{index},#{size}
+    </select>
+    <select id="count" resultType="java.lang.Integer">
+        select  count(*)  from sys_oper_log
+        <where>
+            <if test="title != null and title !=''">
+                and title like concat('%',#{title},'%')
+            </if>
+            <if test="operName != null and operName !=''">
+                and oper_name like concat('%',#{operName},'%')
+            </if>
+            <if test="businessType != null and businessType !=''">
+                and business_type like concat('%',#{businessType},'%')
+            </if>
+            <if test="status != null and status !=''">
+                and status = #{status}
+            </if>
+            <if test="createTime !=null and  createTime!='' and operTime!=null and operTime!=''">
+                and oper_time &gt;= #{createTime}
+                and oper_time &lt;=#{operTime}
+            </if>
+        </where>
+    </select>
+    <select id="statusOption" resultType="com.example.community.entity.SysDictData">
+        select * from sys_dict_data dd join sys_dict_type dt on dd.dict_type = dt.dict_type where dt.dict_id = 10 and dt.status = "0"
+    </select>
+    <select id="operTypeList" resultType="com.example.community.entity.SysDictData">
+        select * from sys_dict_data dd join sys_dict_type dt on dd.dict_type = dt.dict_type where dt.dict_id = 9 and dt.status = "0"
+    </select>
+    <select id="getOperLog" resultType="com.example.community.entity.SysOperLog">
+        select * from sys_oper_log where oper_id=#{id}
+    </select>
+    <select id="getOperLogList" resultType="com.example.community.entity.SysOperLog">
+        SELECT * FROM sys_oper_log WHERE oper_id != 1
+        <if test="list!=null">
+            and
+            oper_id in
+            <foreach collection="list" item="num" index="index" open="(" close=")" separator=",">
+                #{num}
+            </foreach>
+        </if>
+    </select>
+
 </mapper>
 

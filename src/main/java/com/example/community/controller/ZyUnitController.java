@@ -11,6 +11,8 @@ import com.example.community.entity.SysDictData;
 import com.example.community.entity.ZyCommunity;
 import com.example.community.entity.ZyRoom;
 import com.example.community.entity.ZyUnit;
+import com.example.community.log.BusinessType;
+import com.example.community.log.Log;
 import com.example.community.service.ZyUnitService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -60,6 +62,8 @@ public class ZyUnitController extends ApiController {
      * @param zyUnit
      * @return
      */
+
+    @Log(title = "单元管理", businessType = BusinessType.INSERT)
     @ApiOperation(value = "添加单元接口",notes = "添加单元接口的说明")
     @PostMapping("addUnit")
     public Map<String, Object> addUnit(@RequestBody ZyUnit zyUnit) {
@@ -93,6 +97,7 @@ public class ZyUnitController extends ApiController {
         }
     }
 
+    @Log(title = "单元管理", businessType = BusinessType.UPDATE)
     @ApiOperation(value = "修改单元接口",notes = "修改单元接口的说明")
     @PostMapping("updateUnit")
     public Map<String, Object> updateUnit(@RequestBody ZyUnit zyUnit) {
@@ -130,6 +135,7 @@ public class ZyUnitController extends ApiController {
      * @param id
      * @return
      */
+    @Log(title = "单元管理", businessType = BusinessType.DELETE)
     @ApiOperation(value = "删除单元接口",notes = "删除单元接口的说明")
     @GetMapping("delUnit/{id}")
     public Map<String, Object> delUnit(@PathVariable("id") String id) {
@@ -160,6 +166,7 @@ public class ZyUnitController extends ApiController {
      * @param list
      * @return
      */
+    @Log(title = "单元管理", businessType = BusinessType.DELETE)
     @ApiOperation(value = "批量删除单元接口",notes = "批量删除单元接口的说明")
     @PostMapping("delUnits")
     public HashMap<String, Object> delUnits(@RequestBody List<String> list) {

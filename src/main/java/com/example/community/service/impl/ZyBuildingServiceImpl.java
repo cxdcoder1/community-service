@@ -84,7 +84,7 @@ public class ZyBuildingServiceImpl extends ServiceImpl<ZyBuildingDao, ZyBuilding
     @Override
     public boolean deletesBuilding(Long [] ids) {
         for (int i=0;i<ids.length;i++){
-            if (zyBuildingDao.getUnitName(ids[i])!=null){
+            if (zyBuildingDao.getUnitName(ids[i])!=0){
                 return false;
             }
         }

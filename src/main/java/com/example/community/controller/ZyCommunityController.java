@@ -8,6 +8,8 @@ import com.example.community.dto.CommunityAndDeptDto;
 import com.example.community.entity.ZyBuilding;
 import com.example.community.dto.RolesAndMenuIds;
 import com.example.community.entity.ZyCommunity;
+import com.example.community.log.BusinessType;
+import com.example.community.log.Log;
 import com.example.community.service.ZyBuildingService;
 import com.example.community.service.ZyCommunityService;
 import com.example.community.service.impl.ZyBuildingServiceImpl;
@@ -63,6 +65,7 @@ public class ZyCommunityController extends ApiController {
      * @param
      * @return 删除
      */
+    @Log(title = "小区管理", businessType = BusinessType.DELETE)
     @DeleteMapping("delCommunity")
     public Map<String, Object> delCommunity(@RequestBody List<String> id) {
 
@@ -94,6 +97,7 @@ public class ZyCommunityController extends ApiController {
      * @param id 主键结合
      * @return 删除结果
      */
+    @Log(title = "小区管理", businessType = BusinessType.DELETE)
     @ApiOperation(value = "删除小区接口",notes = "删除小区接口的说明")
     @DeleteMapping("delCummunity")
     public Map<String, Object> delCummunity(@RequestParam("id") String id) {
@@ -176,6 +180,7 @@ public class ZyCommunityController extends ApiController {
      * @param zyCommunity 实体对象
      * @return 新增结果
      */
+    @Log(title = "小区管理", businessType = BusinessType.INSERT)
     @ApiOperation(value = "新增小区接口",notes = "新增小区接口的说明")
     @PostMapping("insCommunity")
     public Map<String, Object> insCommunity(@RequestBody ZyCommunity zyCommunity) {
@@ -213,20 +218,27 @@ public class ZyCommunityController extends ApiController {
      * @param zyCommunity 实体对象
      * @return 新增结果
      */
+    @Log(title = "小区管理", businessType = BusinessType.UPDATE)
     @ApiOperation(value = "修改小区接口",notes = "修改小区接口的说明")
     @PutMapping("updCommunity")
     public Map<String, Object> updCommunity(@RequestBody ZyCommunity zyCommunity) {
         System.err.println(zyCommunity.toString());
 
         Map<String, Object> map = new HashMap<>();
-        List<ZyCommunity> zyCommunities = zyCommunityService.selCommunityDerive(zyCommunity);
-        if (zyCommunities.size() == 0) {
+
+
+        List<ZyCommunity> zyCommunities1 = zyCommunityService.selCommunityCity(zyCommunity);
+        System.out.println(zyCommunities1);
+//        List<ZyCommunity> zyCommunities = zyCommunityService.selCommunityDerive(zyCommunity);
+//        System.out.println(zyCommunities);
+        if (zyCommunities1.size() == 0) {
             zyCommunityService.updCommunityDerive(zyCommunity);
             map.put("msg", "修改成功");
             map.put("status", 200);
             return map;
         } else {
-            ZyCommunity zyCommunity1 = zyCommunities.get(0);
+
+            ZyCommunity zyCommunity1 = zyCommunities1.get(0);
 
             String a = zyCommunity1.getCommunityId();
             String b = zyCommunity.getCommunityId();
@@ -250,6 +262,7 @@ public class ZyCommunityController extends ApiController {
      * @param communityId deptId 实体对象
      * @return 新增结果
      */
+    @Log(title = "小区管理", businessType = BusinessType.UPDATE)
     @ApiOperation(value = "修改物业接口",notes = "修改物业接口的说明")
     @PutMapping("replacement")
     public Map<String, Object> replacement(@PathParam("communityId") String communityId, @PathParam("deptId") String deptId) {

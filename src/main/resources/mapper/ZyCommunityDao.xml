@@ -236,7 +236,7 @@
     <where>
         community_provence_code=#{communityProvenceCode} and
         community_city_code=#{communityCityCode}
-        <if test="communityCode !=null and communityCode !='' ">
+        <if test="communityTownCode !=null and communityTownCode !='' ">
             and  community_town_code = #{communityTownCode}
         </if>
             and  community_name = #{communityName}

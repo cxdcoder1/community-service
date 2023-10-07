@@ -6,6 +6,8 @@ import com.baomidou.mybatisplus.extension.api.ApiController;
 import com.baomidou.mybatisplus.extension.api.R;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.community.entity.SysMenu;
+import com.example.community.log.BusinessType;
+import com.example.community.log.Log;
 import com.example.community.service.SysDictDataService;
 import com.example.community.service.SysMenuService;
 import com.example.community.utils.MenuTree;
@@ -95,6 +97,8 @@ public class SysMenuController extends ApiController {
     }
 
 
+
+    @Log(title = "菜单管理", businessType = BusinessType.DELETE)
     @ApiOperation(value = "删除菜单接口",notes = "删除菜单接口的说明")
     @RequestMapping("deleteMenu")
     public Map<String, Object> deleteMenu(@RequestBody SysMenu sysMenu) {
@@ -112,6 +116,7 @@ public class SysMenuController extends ApiController {
      * @param sysMenu 实体对象
      * @return 新增结果
      */
+    @Log(title = "菜单管理", businessType = BusinessType.INSERT)
     @ApiOperation(value = "新增菜单接口",notes = "新增菜单接口的说明")
     @PostMapping("addMenu")
     public Map<String, Object> insert(@RequestBody SysMenu sysMenu) {
@@ -263,6 +268,7 @@ public class SysMenuController extends ApiController {
      * @param sysMenu 实体对象
      * @return 修改结果
      */
+    @Log(title = "菜单管理", businessType = BusinessType.UPDATE)
     @ApiOperation(value = "修改菜单接口",notes = "修改菜单接口的说明")
     @PutMapping("updateMenu")
     public Map<String, Object> update(@RequestBody SysMenu sysMenu) {

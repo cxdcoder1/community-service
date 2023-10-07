@@ -3,6 +3,10 @@ package com.example.community.dao;
 import java.util.List;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.example.community.dto.OperLogDto;
+import com.example.community.entity.SysDictData;
+import com.example.community.entity.SysRole;
+import com.example.community.entity.ZyBuilding;
 import org.apache.ibatis.annotations.Param;
 import com.example.community.entity.SysOperLog;
 
@@ -31,5 +35,27 @@ int insertBatch(@Param("entities") List<SysOperLog> entities);
 */
 int insertOrUpdateBatch(@Param("entities") List<SysOperLog> entities);
 
+
+
+    List<OperLogDto> selectSysoperLog(@Param("index") Long index, @Param("size") Long size , @Param("operLogDto") OperLogDto operLogDto);
+
+
+    Integer count(OperLogDto operLogDto);
+
+    List<SysDictData> statusOption();
+
+    List<SysDictData>operTypeList();
+
+    SysOperLog  getOperLog(int id);
+
+    Integer insertSysOperLog(SysOperLog sysOperLog);
+
+    Long deletesOperLog(@Param("ids") Long [] ids);
+
+
+    List<SysOperLog> getOperLogList(List<String> list);
+
+
+    Integer dels();
 }
 

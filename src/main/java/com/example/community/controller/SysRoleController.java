@@ -11,6 +11,8 @@ import com.example.community.entity.SysMenu;
 import com.example.community.entity.SysRole;
 import com.example.community.entity.SysRoleMenu;
 import com.example.community.entity.SysUserRole;
+import com.example.community.log.BusinessType;
+import com.example.community.log.Log;
 import com.example.community.service.SysDictDataService;
 import com.example.community.service.SysRoleService;
 import com.example.community.service.SysUserRoleService;
@@ -56,6 +58,7 @@ public class SysRoleController extends ApiController {
      *
      * @param
      */
+    @Log(title = "角色管理", businessType = BusinessType.UPDATE)
     @ApiOperation(value = "修改角色状态接口",notes = "修改角色状态接口的说明")
     @PutMapping("upDataStatus")
     public R upDataStatus(@RequestParam("status") String status, @RequestParam("roleId") int roleId) {
@@ -67,6 +70,7 @@ public class SysRoleController extends ApiController {
      * @param
      * @return
      */
+    @Log(title = "角色管理", businessType = BusinessType.INSERT)
     @ApiOperation(value = "新增角色接口",notes = "新增角色接口的说明")
     @PostMapping("insertRole")
     public Map<String, Object> insertRole(@RequestBody RolesAndMenuIds rolesAndMenuIds){
@@ -162,6 +166,7 @@ public class SysRoleController extends ApiController {
     /**
      * 修改保存角色
      */
+    @Log(title = "角色管理", businessType = BusinessType.UPDATE)
     @ApiOperation(value = "修改角色接口",notes = "修改角色接口的说明")
     @PutMapping("edit")
     public Map<String, Object> edit(@RequestBody RolesAndMenuIds rolesAndMenuIds) {
@@ -216,6 +221,7 @@ public class SysRoleController extends ApiController {
      * @param roleId
      * @return
      */
+    @Log(title = "角色管理", businessType = BusinessType.DELETE)
     @ApiOperation(value = "删除角色接口",notes = "删除角色接口的说明")
     @DeleteMapping("delete/{roleId}")
     public Map<String, Object> deleteRole(@PathVariable String roleId){

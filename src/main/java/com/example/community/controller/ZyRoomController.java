@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.extension.api.ApiController;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.community.dto.RoomDto;
 import com.example.community.entity.*;
+import com.example.community.log.BusinessType;
+import com.example.community.log.Log;
 import com.example.community.service.ZyRoomService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -27,6 +29,8 @@ public class ZyRoomController extends ApiController {
 
     @Resource
     private ZyRoomService zyRoomService;
+
+
 
     @ApiOperation(value = "获取房屋列表接口",notes = "获取房屋列表接口的说明")
     @GetMapping("getRoomList")
@@ -82,6 +86,7 @@ public class ZyRoomController extends ApiController {
         return map;
     }
 
+    @Log(title = "房屋管理", businessType = BusinessType.INSERT)
     @ApiOperation(value = "添加房屋接口",notes = "添加房屋接口的说明")
     @PutMapping("addRoom")
     public HashMap<String, Object> getaddRoom(@RequestBody ZyRoom zyRoom) {
@@ -106,6 +111,7 @@ public class ZyRoomController extends ApiController {
         return map;
     }
 
+    @Log(title = "房屋管理", businessType = BusinessType.UPDATE)
     @ApiOperation(value = "修改房屋接口",notes = "修改房屋接口的说明")
     @PutMapping("editRoom")
     public HashMap<String, Object> editRoom(@RequestBody ZyRoom zyRoom) {
@@ -131,6 +137,7 @@ public class ZyRoomController extends ApiController {
 
     }
 
+    @Log(title = "房屋管理", businessType = BusinessType.DELETE)
     @ApiOperation(value = "删除房屋接口",notes = "删除房屋接口的说明")
     @DeleteMapping("deleteRoom/{roomId}")
     public HashMap<String, Object> deleteRoom(@PathVariable Long roomId) {
@@ -151,6 +158,7 @@ public class ZyRoomController extends ApiController {
 
     }
 
+    @Log(title = "房屋管理", businessType = BusinessType.DELETE)
     @ApiOperation(value = "批量删除房屋接口",notes = "批量删除房屋接口的说明")
     @PostMapping("deleteRooms")
     public HashMap<String, Object> deleteRooms(@RequestBody List<String> list) {

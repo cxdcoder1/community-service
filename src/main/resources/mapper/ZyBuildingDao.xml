@@ -124,7 +124,7 @@
     <select id="selBuildingName" resultType="java.lang.Long">
         select count(building_id) from zy_building
         <where>
-            (building_name=#{buildingName })
+            (building_name=#{buildingName})
             <if test="buildingId != null and buildingId != ''">
                 and building_id!=#{buildingId}
             </if>
@@ -132,7 +132,7 @@
     </select>
 
     <select id="getUnitName" resultType="java.lang.Long">
-        select * from zy_unit where building_id=#{id}
+        select COUNT(*) from zy_unit where building_id=#{id}
     </select>
 
     <select id="getBuildingList" resultType="com.example.community.entity.ZyBuilding">

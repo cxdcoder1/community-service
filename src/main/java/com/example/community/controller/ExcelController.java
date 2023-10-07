@@ -3,11 +3,14 @@ package com.example.community.controller;
 import com.alibaba.excel.EasyExcel;
 import com.alibaba.excel.write.style.HorizontalCellStyleStrategy;
 import com.example.community.dao.SysLogininforDao;
+import com.example.community.dao.SysOperLogDao;
 import com.example.community.dao.ZyCommunityDao;
 import com.example.community.dao.ZyRoomDao;
 import com.example.community.dto.UserAndDeptImport;
 import com.example.community.entity.*;
 import com.example.community.listener.DemoDataListener;
+import com.example.community.log.BusinessType;
+import com.example.community.log.Log;
 import com.example.community.service.*;
 import com.example.community.utils.easyexcel.StyleUtils;
 import io.swagger.annotations.Api;
@@ -48,6 +51,8 @@ public class ExcelController {
     private ZyRoomDao zyRoomDao;
     @Resource
     private SysLogininforDao sysLogininforDao;
+    @Resource
+    private SysOperLogDao sysOperLogDao;
 
     /**
      * 生成随机文件名 并返回固定路径
@@ -301,6 +306,22 @@ public class ExcelController {
                 .registerWriteHandler(horizontalCellStyleStrategy)
                 .doWrite(dataList);
     }
+    public static void simpleOper(String fileName,List<SysOperLog> list){
+        //"E:\\lx.xls"
+        List<SysOperLog> dataList = new ArrayList<>();
+
+        for (SysOperLog sysOperLog : list) {
+            dataList.add(sysOperLog);
+        }
+
+        // 设置单元格样式
+        HorizontalCellStyleStrategy horizontalCellStyleStrategy = new HorizontalCellStyleStrategy( StyleUtils.getHeadStyle(),StyleUtils.getContentStyle());
+
+        EasyExcel.write(fileName, SysOperLog.class)
+                .sheet(0)
+                .registerWriteHandler(horizontalCellStyleStrategy)
+                .doWrite(dataList);
+    }
 
     //Dictexcel
     public static void Dictexcel(String fileName,List<SysDictType> userList){
@@ -323,6 +344,8 @@ public class ExcelController {
      * @param lists
      * @return
      */
+
+    @Log(title = "小区管理", businessType = BusinessType.EXPORT)
     @ApiOperation(value = "小区导出接口",notes = "小区导出接口的说明")
     @PostMapping("Communitylist")
     public Map<String, Object> Communitylist(@RequestBody List<String> lists) {
@@ -345,6 +368,8 @@ public class ExcelController {
     }
 
 
+
+    @Log(title = "角色管理", businessType = BusinessType.EXPORT)
     @PostMapping("list")
     public Map<String, Object> menuList(@RequestBody List<String> lists) {
         Map<String, Object> result = new HashMap<>();
@@ -371,6 +396,7 @@ public class ExcelController {
      * @param lists
      * @return
      */
+    @Log(title = "用户管理", businessType = BusinessType.EXPORT)
     @ApiOperation(value = "用户导出接口",notes = "用户导出接口的说明")
     @PostMapping("userList")
     public Map<String, Object> UserList(@RequestBody List<String> lists) {
@@ -395,6 +421,7 @@ public class ExcelController {
      * @param lists
      * @return
      */
+    @Log(title = "单元管理", businessType = BusinessType.EXPORT)
     @ApiOperation(value = "单元导出接口",notes = "单元导出接口的说明")
     @PostMapping("unitList")
     public Map<String, Object> UnitList(@RequestBody List<String> lists) {
@@ -418,6 +445,7 @@ public class ExcelController {
      * 用户导入模板
      * @return
      */
+    @Log(title = "用户管理", businessType = BusinessType.IMPORT)
     @ApiOperation(value = "用户导入接口",notes = "用户导入接口的说明")
     @PostMapping("template")
     public Map<String, Object> template() {
@@ -459,6 +487,7 @@ public class ExcelController {
      * @param lists
      * @return
      */
+    @Log(title = "字典管理", businessType = BusinessType.EXPORT)
     @ApiOperation(value = "角色导出接口",notes = "角色导出接口的说明")
     @PostMapping("DictList")
     public Map<String, Object> DictList(@RequestBody List<String> lists) {
@@ -477,6 +506,7 @@ public class ExcelController {
         return result;
     }
 
+    @Log(title = "岗位管理", businessType = BusinessType.EXPORT)
     @PostMapping("postListS")
     public Map<String, Object> postList(@RequestBody List<String> lists) {
         Map<String, Object> result = new HashMap<>();
@@ -492,6 +522,7 @@ public class ExcelController {
         return result;
     }
 
+    @Log(title = "楼栋管理", businessType = BusinessType.EXPORT)
     @ApiOperation(value = "楼栋导出接口",notes = "楼栋导出接口的说明")
     @PostMapping("buildingList")
     public Map<String, Object> buildingList(@RequestBody List<String> lists) {
@@ -507,6 +538,8 @@ public class ExcelController {
         result.put("path",path);
         return result;
     }
+
+    @Log(title = "房屋管理", businessType = BusinessType.EXPORT)
     @ApiOperation(value = "房屋导出接口",notes = "房屋导出接口的说明")
     @PostMapping("roomList")
     public Map<String, Object> roomList(@RequestBody List<String> lists) {
@@ -523,6 +556,7 @@ public class ExcelController {
         return result;
     }
 
+    @Log(title = "登录日志", businessType = BusinessType.EXPORT)
     @PostMapping("loginList")
     public Map<String, Object> loginList(@RequestBody List<String> lists) {
         Map<String, Object> result = new HashMap<>();
@@ -532,6 +566,24 @@ public class ExcelController {
         List<SysLogininfor> loginListExcel = sysLogininforDao.getLoginListExcel(lists);
         String path="D:\\lx.xls";
         loginList(path,loginListExcel);
+        result.put("msg","导出成功");
+        result.put("status","200");
+        result.put("path",path);
+        return result;
+    }
+
+
+
+    @Log(title = "操作日志", businessType = BusinessType.EXPORT)
+    @PostMapping("operlist")
+    public Map<String, Object> operlist(@RequestBody List<String> list) {
+        Map<String, Object> result = new HashMap<>();
+        if (list.size()==0){
+            list=null;
+        }
+        List<SysOperLog> operlist = sysOperLogDao.getOperLogList(list);
+        String path="D:\\lx.xls";
+        simpleOper(path,operlist);
         result.put("msg","导出成功");
         result.put("status","200");
         result.put("path",path);

@@ -7,6 +7,7 @@ import com.example.community.entity.SysUser;
 import com.example.community.entity.CheckResult;
 import com.sun.org.apache.xerces.internal.impl.dv.util.Base64;
 import io.jsonwebtoken.*;
+import org.apache.maven.surefire.shade.org.apache.commons.lang3.StringUtils;
 
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
@@ -87,5 +88,15 @@ public class JwtUtil {
                   .parseClaimsJws(jwt)
                   .getBody();
       }
+//    //根据token字符串得到用户名称
+//    public static String getUserName(String token) {
+//        if(StringUtils.isEmpty(token)) {
+//            return "";
+//        }
+//        Jws<Claims> claimsJws = Jwts.parser().setSigningKey(token).parseClaimsJws(token);
+//        Claims claims = claimsJws.getBody();
+//        return (String)claims.get("userName");
+//    }
+
 
  }
