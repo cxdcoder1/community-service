@@ -106,7 +106,7 @@ public class SysMenuController extends ApiController {
         System.err.println(sysMenu.toString());
         String s = sysMenuService.deleteMenu(sysMenu.getMenuId(), null);
         map.put("data", s);
-        System.out.println(map);
+        map.put("msg", s);
         return map;
     }
 

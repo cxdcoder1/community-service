@@ -97,9 +97,6 @@ public class SysLogAspect {
         String requestURI = request.getRequestURI();
         sysLog.setOperUrl(requestURI);
 
-
-
-
         //获取执行方法后的返回参数
         sysLog.setJsonResult(returning.toString());
 
@@ -109,8 +106,12 @@ public class SysLogAspect {
         // 将 JSON 字符串解析为一个 JsonNode 对象
         JsonNode jsonNode = mapper.readTree(returnings);
         // 获取 status 键对应的值
-        int status = jsonNode.get("status").asInt();
-        if (status!=200){
+        String msg = jsonNode.get("msg").asText();
+        System.err.println(msg);
+//        if (status!=200 || returnings.length()>0 ){
+//            sysLog.setStatus(1);
+//        }
+        if (!msg.contains("成功")){
             sysLog.setStatus(1);
         }
 

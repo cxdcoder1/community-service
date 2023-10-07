@@ -103,7 +103,6 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuDao, SysMenu> impleme
     @Override
     public String deleteMenu(Long menuId, Long parentId) {
         List<SysMenu> menu = sysMenuDao.getMenuByParentId(menuId);
-//        System.err.println(menu);
         if (menu.size()!=0){
             return "该菜单有子菜单,不能删除!";
         }else {

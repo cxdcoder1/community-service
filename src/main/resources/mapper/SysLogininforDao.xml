@@ -40,6 +40,7 @@
         </where>
 
         <if test="size!=0">
+            order by info_id desc
             limit #{index},#{size}
         </if>
 

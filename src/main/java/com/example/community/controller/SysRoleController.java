@@ -58,7 +58,6 @@ public class SysRoleController extends ApiController {
      *
      * @param
      */
-    @Log(title = "角色管理", businessType = BusinessType.UPDATE)
     @ApiOperation(value = "修改角色状态接口",notes = "修改角色状态接口的说明")
     @PutMapping("upDataStatus")
     public R upDataStatus(@RequestParam("status") String status, @RequestParam("roleId") int roleId) {

@@ -275,7 +275,7 @@ public class ZyCommunityController extends ApiController {
 
         zyCommunityService.updCommunity(communityId, deptId);
 
-
+        map.put("msg","成功");
         return map;
     }
 

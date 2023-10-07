@@ -49,7 +49,7 @@ public class OperLogDto {
     private String jsonResult;
     //操作状态（0正常 1异常）
 
-    private Integer status;
+    private String status;
     //错误消息
 
     private String errorMsg;
@@ -170,11 +170,11 @@ public class OperLogDto {
         this.jsonResult = jsonResult;
     }
 
-    public Integer getStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(Integer status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 

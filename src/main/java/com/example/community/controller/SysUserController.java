@@ -284,10 +284,12 @@ public class SysUserController extends ApiController {
             sysUserService.updateRole(userAndPostIdAndRoleId.getUserId(), userAndPostIdAndRoleId.getRoleIds());
 
             map.put("data", 1);
+            map.put("msg", "执行成功");
 
             return map;
         }
         map.put("data", 0);
+        map.put("msg", "执行失败");
         return map;
     }
     @Log(title = "用户管理", businessType = BusinessType.INSERT)
@@ -316,16 +318,19 @@ public class SysUserController extends ApiController {
             sysUserService.insertRole(sysUser.getUserId(), userAndPostIdAndRoleId.getRoleIds());
 
             map.put("data", 1);
+            map.put("msg", "执行成功");
             return map;
         }
         map.put("data", 0);
+        map.put("msg", "执行失败");
         return map;
     }
     //密码重置
-    @Log(title = "用户管理", businessType = BusinessType.UPDATE)
     @ApiOperation(value = "用户重置密码接口",notes = "用户重置密码接口的说明")
     @PutMapping("resetPwd")
     public R resetPwd(@RequestParam("id") int id,@RequestParam("pwd") Long pwd) {
+
+
 
         return success(this.sysUserService.restUserPwd(id,pwd));
     }
