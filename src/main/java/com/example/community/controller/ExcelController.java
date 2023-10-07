@@ -2,6 +2,7 @@ package com.example.community.controller;
 
 import com.alibaba.excel.EasyExcel;
 import com.alibaba.excel.write.style.HorizontalCellStyleStrategy;
+import com.example.community.dao.SysLogininforDao;
 import com.example.community.dao.ZyCommunityDao;
 import com.example.community.dao.ZyRoomDao;
 import com.example.community.dto.UserAndDeptImport;
@@ -45,6 +46,8 @@ public class ExcelController {
     private ZyCommunityDao zyCommunityDao;
     @Resource
     private ZyRoomDao zyRoomDao;
+    @Resource
+    private SysLogininforDao sysLogininforDao;
 
     /**
      * 生成随机文件名 并返回固定路径
@@ -114,6 +117,28 @@ public class ExcelController {
         HorizontalCellStyleStrategy horizontalCellStyleStrategy = new HorizontalCellStyleStrategy( StyleUtils.getHeadStyle(),StyleUtils.getContentStyle());
 
         EasyExcel.write(fileName, ZyRoom.class)
+                .sheet(0)
+                .registerWriteHandler(horizontalCellStyleStrategy)
+                .doWrite(dataList);
+    }
+
+    /**
+     * 登录日志表
+     * @param fileName
+     * @param list
+     */
+    public static void loginList(String fileName,List<SysLogininfor> list){
+        //"E:\\lx.xls"
+        List<SysLogininfor> dataList = new ArrayList<>();
+
+        for (SysLogininfor sysLogininfor : list) {
+            dataList.add(sysLogininfor);
+        }
+
+        // 设置单元格样式
+        HorizontalCellStyleStrategy horizontalCellStyleStrategy = new HorizontalCellStyleStrategy( StyleUtils.getHeadStyle(),StyleUtils.getContentStyle());
+
+        EasyExcel.write(fileName, SysLogininfor.class)
                 .sheet(0)
                 .registerWriteHandler(horizontalCellStyleStrategy)
                 .doWrite(dataList);
@@ -492,6 +517,21 @@ public class ExcelController {
         List<ZyRoom> roomListExcel = zyRoomDao.getRoomListExcel(lists);
         String path="D:\\lx.xls";
         roomLists(path,roomListExcel);
+        result.put("msg","导出成功");
+        result.put("status","200");
+        result.put("path",path);
+        return result;
+    }
+
+    @PostMapping("loginList")
+    public Map<String, Object> loginList(@RequestBody List<String> lists) {
+        Map<String, Object> result = new HashMap<>();
+        if (lists.size()==0){
+            lists=null;
+        }
+        List<SysLogininfor> loginListExcel = sysLogininforDao.getLoginListExcel(lists);
+        String path="D:\\lx.xls";
+        loginList(path,loginListExcel);
         result.put("msg","导出成功");
         result.put("status","200");
         result.put("path",path);

@@ -1,18 +1,17 @@
 package com.example.community.controller;
 
 
-
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.api.ApiController;
-import com.baomidou.mybatisplus.extension.api.R;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.example.community.dto.LogDto;
+import com.example.community.entity.SysDictData;
 import com.example.community.entity.SysLogininfor;
 import com.example.community.service.SysLogininforService;
 import io.swagger.annotations.Api;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import java.io.Serializable;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -24,67 +23,74 @@ import java.util.List;
 @Api(tags = "系统访问记录")
 @RestController
 @RequestMapping("sysLogininfor")
+@CrossOrigin
 public class SysLogininforController extends ApiController {
     /**
      * 服务对象
      */
     @Resource
-    private SysLogininforService sysLogininforService;
+    private SysLogininforService logininforService;
 
-    /**
-     * 分页查询所有数据
-     *
-     * @param page 分页对象
-     * @param sysLogininfor 查询实体
-     * @return 所有数据
-     */
-    @GetMapping
-    public R selectAll(Page<SysLogininfor> page, SysLogininfor sysLogininfor) {
-        return success(this.sysLogininforService.page(page, new QueryWrapper<>(sysLogininfor)));
+    // @PreAuthorize("@ss.hasPermi('monitor:logininfor:list')")
+    @GetMapping("/list")
+    public HashMap<String, Object> list(LogDto logDto, Page<LogDto> page) {
+        HashMap<String, Object> map = new HashMap<>();
+        System.err.println(logDto);
+
+        List<SysLogininfor> list = logininforService.selectLogininforList(logDto, (page.getCurrent() - 1) * page.getSize(), page.getSize());
+        int total = logininforService.selectLogininforList(logDto, 0, 0).size();
+
+        map.put("data", list);
+        map.put("total", total);
+
+        return map;
     }
 
-    /**
-     * 通过主键查询单条数据
-     *
-     * @param id 主键
-     * @return 单条数据
-     */
-    @GetMapping("{id}")
-    public R selectOne(@PathVariable Serializable id) {
-        return success(this.sysLogininforService.getById(id));
+    @GetMapping("getStatus")
+    public HashMap getStatus(){
+        HashMap<String, Object> map = new HashMap<>();
+
+        List<SysDictData> status = logininforService.getStatus();
+
+        map.put("data",status);
+
+        return map;
     }
 
-    /**
-     * 新增数据
-     *
-     * @param sysLogininfor 实体对象
-     * @return 新增结果
-     */
-    @PostMapping
-    public R insert(@RequestBody SysLogininfor sysLogininfor) {
-        return success(this.sysLogininforService.save(sysLogininfor));
+    // @Log(title = "登录日志", businessType = BusinessType.EXPORT)
+    // @PreAuthorize("@ss.hasPermi('monitor:logininfor:export')")
+    // @PostMapping("/export")
+    // public void export(HttpServletResponse response, SysLogininfor logininfor) {
+    //     List<SysLogininfor> list = logininforService.selectLogininforList(logininfor);
+    //     ExcelUtil<SysLogininfor> util = new ExcelUtil<SysLogininfor>(SysLogininfor.class);
+    //     util.exportExcel(response, list, "登录日志");
+    // }
+
+    // @PreAuthorize("@ss.hasPermi('monitor:logininfor:remove')")
+    // @Log(title = "登录日志", businessType = BusinessType.DELETE)
+    @DeleteMapping("/{infoIds}")
+    public int remove(@PathVariable Long[] infoIds) {
+        int i = logininforService.deleteLogininforByIds(infoIds);
+        return i;
     }
 
-    /**
-     * 修改数据
-     *
-     * @param sysLogininfor 实体对象
-     * @return 修改结果
-     */
-    @PutMapping
-    public R update(@RequestBody SysLogininfor sysLogininfor) {
-        return success(this.sysLogininforService.updateById(sysLogininfor));
+    // @PreAuthorize("@ss.hasPermi('monitor:logininfor:remove')")
+    // @Log(title = "登录日志", businessType = BusinessType.CLEAN)
+    @DeleteMapping("/clean")
+    public String clean() {
+        logininforService.cleanLogininfor();
+        return "11";
     }
+    //
+    // @PreAuthorize("@ss.hasPermi('monitor:logininfor:unlock')")
+    // @Log(title = "账户解锁", businessType = BusinessType.OTHER)
+    // @GetMapping("/unlock/{userName}")
+    // public AjaxResult unlock(@PathVariable("userName") String userName)
+    // {
+    //     passwordService.clearLoginRecordCache(userName);
+    //     return success();
+    // }
 
-    /**
-     * 删除数据
-     *
-     * @param idList 主键结合
-     * @return 删除结果
-     */
-    @DeleteMapping
-    public R delete(@RequestParam("idList") List<Long> idList) {
-        return success(this.sysLogininforService.removeByIds(idList));
-    }
+
 }
 

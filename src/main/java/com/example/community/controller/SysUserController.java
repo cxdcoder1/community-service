@@ -5,6 +5,8 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.api.ApiController;
 import com.baomidou.mybatisplus.extension.api.R;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.example.community.constant.AsyncFactory;
+import com.example.community.constant.AsyncManager;
 import com.example.community.constant.SystemConstant;
 import com.example.community.dto.UserAndDeptAndPostAndRole;
 import com.example.community.dto.UserAndDeptAndRole;
@@ -16,6 +18,7 @@ import com.example.community.entity.SysUser;
 import com.example.community.service.SysDeptService;
 import com.example.community.service.SysDictDataService;
 import com.example.community.service.SysUserService;
+import com.example.community.utils.Constants;
 import com.example.community.utils.DeptTree;
 import com.example.community.utils.JwtUtil;
 import io.swagger.annotations.Api;
@@ -116,6 +119,7 @@ public class SysUserController extends ApiController {
                     result. put("success", false);
                     result. put("msg", "用户已被停用!");
                     result.put("status","201");
+                    AsyncManager.me().execute(AsyncFactory.recordLogininfor(user1.getUserName(), Constants.LOGIN_FAIL,"用户已被停用"));
                     return result;
                 }
                 //校验部门是否被停用
@@ -126,6 +130,7 @@ public class SysUserController extends ApiController {
                         result. put("success", false);
                         result. put("msg", "该用户所属部门已被停用!");
                         result.put("status","201");
+                        AsyncManager.me().execute(AsyncFactory.recordLogininfor(user1.getUserName(), Constants.LOGIN_FAIL,"该用户所属部门已被停用"));
                         return result;
                     }
                 }
@@ -137,12 +142,14 @@ public class SysUserController extends ApiController {
                         result. put("success", false);
                         result. put("msg", "该用户所属岗位已被停用!");
                         result.put("status","201");
+                        AsyncManager.me().execute(AsyncFactory.recordLogininfor(user1.getUserName(), Constants.LOGIN_FAIL,"该用户所属岗位已被停用"));
                         return result;
                     }
                 }
 
                 //将用户信息存储到Session  //登入成功
                 HttpSession session = request.getSession();
+                AsyncManager.me().execute(AsyncFactory.recordLogininfor(user1.getUserName(), Constants.LOGIN_SUCCESS,"登录成功"));
                 session.setAttribute("userInfo", user1);  //1.用于拦截器的判断  2.界面显示用户信息
                 result.put("user", user1);
                 //把token返回给客户端-->客户端保存至localStorage-->客户端每次请求附带localStorage参数
@@ -159,6 +166,7 @@ public class SysUserController extends ApiController {
 //            return result;
         }
         //登录失败，用户名错误或不存在
+        AsyncManager.me().execute(AsyncFactory.recordLogininfor(user1.getUserName(), Constants.LOGIN_FAIL,"登录失败，账号密码或验证码错误"));
         result.put("success", false);
         result.put("msg", "用户名或密码错误!");
         result.put("status", "201");

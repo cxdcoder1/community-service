@@ -14,23 +14,61 @@
         <result property="loginTime" column="login_time" jdbcType="TIMESTAMP"/>
     </resultMap>
 
-    <!-- 批量插入 -->
-    <insert id="insertBatch" keyProperty="infoId" useGeneratedKeys="true">
-        insert into zy-community.sys_logininfor(user_name, ipaddr, login_location, browser, os, status, msg, login_time)
-        values
-        <foreach collection="entities" item="entity" separator=",">
-        (#{entity.userName}, #{entity.ipaddr}, #{entity.loginLocation}, #{entity.browser}, #{entity.os}, #{entity.status}, #{entity.msg}, #{entity.loginTime})
-        </foreach>
-    </insert>
-    <!-- 批量插入或按主键更新 -->
-    <insert id="insertOrUpdateBatch" keyProperty="infoId" useGeneratedKeys="true">
-        insert into zy-community.sys_logininfor(user_name, ipaddr, login_location, browser, os, status, msg, login_time)
-        values
-        <foreach collection="entities" item="entity" separator=",">
-            (#{entity.userName}, #{entity.ipaddr}, #{entity.loginLocation}, #{entity.browser}, #{entity.os}, #{entity.status}, #{entity.msg}, #{entity.loginTime})
-        </foreach>
-        on duplicate key update
-         user_name = values(user_name) , ipaddr = values(ipaddr) , login_location = values(login_location) , browser = values(browser) , os = values(os) , status = values(status) , msg = values(msg) , login_time = values(login_time)     </insert>
+    <insert id="insertLogininfor" parameterType="com.example.community.entity.SysLogininfor">
+		insert into sys_logininfor (user_name, status, ipaddr, login_location, browser, os, msg, login_time)
+		values (#{userName}, #{status}, #{ipaddr}, #{loginLocation}, #{browser}, #{os}, #{msg}, sysdate())
+	</insert>
 
+    <select id="selectLogininforList" resultType="com.example.community.entity.SysLogininfor">
+        select info_id, user_name, ipaddr, login_location, browser, os, status, msg, login_time from sys_logininfor
+        <where>
+            <if test="logDto.ipaddr != null and logDto.ipaddr != ''">
+                AND ipaddr like concat('%', #{logDto.ipaddr}, '%')
+            </if>
+            <if test="logDto.status != null and logDto.status != ''">
+                AND status = #{logDto.status}
+            </if>
+            <if test="logDto.userName != null and logDto.userName != ''">
+                AND user_name like concat('%', #{logDto.userName}, '%')
+            </if>
+            <if test="logDto.createTime != null and  logDto.createTime!= ''"><!-- 开始时间检索 -->
+                AND login_time &gt;= #{logDto.createTime}
+            </if>
+            <if test="logDto.updateTime != null and logDto.updateTime != ''"><!-- 结束时间检索 -->
+                AND login_time &lt;= #{logDto.updateTime}
+            </if>
+        </where>
+
+        <if test="size!=0">
+            limit #{index},#{size}
+        </if>
+
+    </select>
+
+    <select id="getStatus" resultType="com.example.community.entity.SysDictData">
+        select * from sys_dict_data where dict_type='sys_common_status'
+    </select>
+
+    <select id="getLoginListExcel" resultType="com.example.community.entity.SysLogininfor">
+        SELECT * FROM sys_logininfor WHERE info_id != 1
+        <if test="list!=null">
+            and
+            info_id in
+            <foreach collection="list" item="num" index="index" open="(" close=")" separator=",">
+                #{num}
+            </foreach>
+        </if>
+    </select>
+
+    <delete id="deleteLogininforByIds" parameterType="Long">
+        delete from sys_logininfor where info_id in
+        <foreach collection="array" item="infoId" open="(" separator="," close=")">
+            #{infoId}
+        </foreach>
+    </delete>
+
+    <update id="cleanLogininfor">
+        truncate table sys_logininfor
+    </update>
 </mapper>
 

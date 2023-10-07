@@ -1,9 +1,6 @@
 package com.example.community.entity;
 
 
-import com.baomidou.mybatisplus.extension.activerecord.Model;
-
-import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -13,7 +10,7 @@ import java.util.Date;
  * @since 2023-09-14 09:53:02
  */
 @SuppressWarnings("serial")
-public class SysLogininfor extends Model<SysLogininfor> {
+public class SysLogininfor {
     //访问ID
     private Long infoId;
     //用户账号
@@ -32,7 +29,6 @@ public class SysLogininfor extends Model<SysLogininfor> {
     private String msg;
     //访问时间
     private Date loginTime;
-
 
     public Long getInfoId() {
         return infoId;
@@ -105,15 +101,5 @@ public class SysLogininfor extends Model<SysLogininfor> {
     public void setLoginTime(Date loginTime) {
         this.loginTime = loginTime;
     }
-
-    /**
-     * 获取主键值
-     *
-     * @return 主键值
-     */
-    @Override
-    protected Serializable pkVal() {
-        return this.infoId;
-    }
-    }
+}
 
