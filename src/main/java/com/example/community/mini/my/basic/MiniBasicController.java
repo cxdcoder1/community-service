@@ -21,6 +21,7 @@ public class MiniBasicController {
 
     @PostMapping("/edit")
     public ZyResult<MiniUserDto> editBasicInfo(@RequestBody UserBasicDto userBasicDto){
+        System.out.println("修改信息"+userBasicDto.toString());
         return miniBasicService.editBasicInfo(userBasicDto);
     }
 }

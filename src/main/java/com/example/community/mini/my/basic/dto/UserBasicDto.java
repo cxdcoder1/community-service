@@ -7,7 +7,8 @@ import java.io.Serializable;
  * 基础用户信息维护
  */
 public class UserBasicDto implements Serializable {
-    @NotEmpty(message = "头像不能为空")
+
+    private String openId;
     private String avatar;
     @NotEmpty(message = "昵称不能为空")
     private String nickName;
@@ -16,6 +17,13 @@ public class UserBasicDto implements Serializable {
     @NotEmpty(message = "生日不能为空")
     private String birthday;
 
+    public String getOpenId() {
+        return openId;
+    }
+
+    public void setOpenId(String openId) {
+        this.openId = openId;
+    }
 
     public String getAvatar() {
         return avatar;
@@ -49,5 +57,14 @@ public class UserBasicDto implements Serializable {
         this.birthday = birthday;
     }
 
-
+    @Override
+    public String toString() {
+        return "UserBasicDto{" +
+                "openId='" + openId + '\'' +
+                ", avatar='" + avatar + '\'' +
+                ", nickName='" + nickName + '\'' +
+                ", gender='" + gender + '\'' +
+                ", birthday='" + birthday + '\'' +
+                '}';
+    }
 }

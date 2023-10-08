@@ -26,6 +26,7 @@ public class MiniContextUtils implements Serializable {
      */
     public static String getOpenId() {
         String userInfo = miniUserInfo.get();
+        System.out.println("getOpenId" + userInfo);
         try {
             return objectMapper.readTree(userInfo).get("openId").asText();
         } catch (IOException e) {

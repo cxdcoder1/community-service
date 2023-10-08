@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 
 /**
  * 登录、注册、发送验证码
@@ -23,12 +24,14 @@ public class MiniLoginController {
      * @return 登录结果
      */
     @PostMapping("/login")
-    public ZyResult<MiniUserDto> weChatLogin(@RequestBody LoginDto loginDto) {
+    public ZyResult<MiniUserDto> weChatLogin(@RequestBody LoginDto loginDto,HttpSession session) {
         System.out.println(loginDto.toString());
         if (loginDto == null) {
             return ZyResult.fail(400, "传递参数不能为空");
         }
-        return miniLoginService.weChatLogin(loginDto.getCode());
+        ZyResult<MiniUserDto> miniUserDtoZyResult = miniLoginService.weChatLogin(loginDto.getCode());
+        // session.setAttribute("openId",miniUserDtoZyResult);
+        return miniUserDtoZyResult;
     }
 
     // /**

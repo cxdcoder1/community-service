@@ -54,5 +54,24 @@
         select * from zy_owner where owner_open_id = #{openId}
     </select>
 
+    <update id="updateOwnerById">
+        update zy_owner
+        <set>
+            <if test="ownerNickname != null">
+                owner_nickname = #{ownerNickname},
+            </if>
+            <if test="ownerGender != null">
+                owner_gender = #{ownerGender},
+            </if>
+            <if test="ownerBirthday != null">
+                owner_birthday = #{ownerBirthday},
+            </if>
+            <if test="ownerPortrait != null">
+                owner_portrait = #{ownerPortrait},
+            </if>
+        </set>
+        where owner_id = #{ownerId}
+    </update>
+
 </mapper>
 

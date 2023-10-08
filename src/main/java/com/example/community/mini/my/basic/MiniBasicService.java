@@ -24,10 +24,9 @@ public class MiniBasicService {
     @Resource
     private OwnerFactory ownerFactory;
 
-
     @Transactional
     public ZyResult<MiniUserDto> editBasicInfo(UserBasicDto dto) {
-        String openId = MiniContextUtils.getOpenId();
+        String openId = dto.getOpenId();
         if (StringUtils.isEmpty(openId)) {
             return ZyResult.fail(401,"用户未认证");
         }
@@ -37,7 +36,7 @@ public class MiniBasicService {
         }
         zyOwner.setUpdateTime(new Date());
         ownerFactory.transFromBasicDtoWithZyOwner(dto, zyOwner);
-        zyOwnerMapper.updateById(zyOwner);
+        zyOwnerMapper.updateOwnerById(zyOwner);
         return ZyResult.data(ownerFactory.transFromZyOwner(zyOwner));
     }
 
