@@ -161,6 +161,8 @@
     <!--        </association>-->
     <!--    </resultMap>-->
 
+
+
     <select id="getCommunity" resultMap="ZyCommunityMap">
         select
         zc.community_id,
@@ -232,13 +234,13 @@
     </select>
 
     <select id="selCommunityCity" resultType="com.example.community.entity.ZyCommunity">
-    select * from zy_community
-    <where>
-        community_provence_code=#{communityProvenceCode} and
-        community_city_code=#{communityCityCode}
-        <if test="communityTownCode !=null and communityTownCode !='' ">
-            and  community_town_code = #{communityTownCode}
-        </if>
+        select * from zy_community
+        <where>
+            community_provence_code=#{communityProvenceCode} and
+            community_city_code=#{communityCityCode}
+            <if test="communityTownCode !=null and communityTownCode !='' ">
+                and  community_town_code = #{communityTownCode}
+            </if>
             and  community_name = #{communityName}
     </where>
 </select>

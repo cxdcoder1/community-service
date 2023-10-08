@@ -3,6 +3,7 @@ package com.example.community.dao;
 import java.util.List;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.example.community.dto.OwnerRoomAndZyOwner;
 import org.apache.ibatis.annotations.Param;
 import com.example.community.entity.ZyOwnerRoomRecord;
 
@@ -31,5 +32,8 @@ int insertBatch(@Param("entities") List<ZyOwnerRoomRecord> entities);
 */
 int insertOrUpdateBatch(@Param("entities") List<ZyOwnerRoomRecord> entities);
 
+    List<OwnerRoomAndZyOwner> getRoomRecordList(@Param("name") String name);
+
+    int insetRoomRecordAll(ZyOwnerRoomRecord zyOwnerRoomRecord);
 }
 

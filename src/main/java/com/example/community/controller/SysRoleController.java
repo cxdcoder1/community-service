@@ -165,7 +165,7 @@ public class SysRoleController extends ApiController {
     /**
      * 修改保存角色
      */
-    @Log(title = "角色管理", businessType = BusinessType.UPDATE)
+
     @ApiOperation(value = "修改角色接口",notes = "修改角色接口的说明")
     @PutMapping("edit")
     public Map<String, Object> edit(@RequestBody RolesAndMenuIds rolesAndMenuIds) {
