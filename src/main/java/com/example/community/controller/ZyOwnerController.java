@@ -9,7 +9,6 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.community.entity.ZyOwner;
 import com.example.community.service.ZyOwnerService;
 import io.swagger.annotations.Api;
-import org.checkerframework.checker.units.qual.A;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -87,5 +86,14 @@ public class ZyOwnerController extends ApiController {
     public R delete(@RequestParam("idList") List<Long> idList) {
         return success(this.zyOwnerService.removeByIds(idList));
     }
+
+    @GetMapping("login")
+    public String login(){
+
+
+        return "1";
+    }
+
+
 }
 

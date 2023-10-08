@@ -35,6 +35,25 @@ minio:
   secretKey: minioadmin
   bucketName: community-img
 
+## 短信配置
+sms:
+  ## 短信服务的key
+  accessKey: xxxx
+  ## 短息服务的密钥
+  accessSecret: xxxx
+  ## 短信模板code
+  loginTemplateCode: xxxx
+  ## 短信模板签名
+  loginTemplateSign: xxxx
+
+## 微信开发配置
+weChat:
+  ## 微信开发者appId
+  appId: wx172579a9fba7f528
+  ## 微信开发者 appSecret
+  appSecret: 1a040654db8353ec1eadc639b2dc8739
+
+
 
 
 

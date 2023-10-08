@@ -1,10 +1,11 @@
 package com.example.community.dao;
 
-import java.util.List;
-
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import org.apache.ibatis.annotations.Param;
 import com.example.community.entity.ZyOwner;
+import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
+
+import java.util.List;
 
 /**
  * 业主 (ZyOwner)表数据库访问层
@@ -30,6 +31,9 @@ int insertBatch(@Param("entities") List<ZyOwner> entities);
 * @throws org.springframework.jdbc.BadSqlGrammarException 入参是空List的时候会抛SQL语句错误的异常，请自行校验入参
 */
 int insertOrUpdateBatch(@Param("entities") List<ZyOwner> entities);
+
+    @Select("select owner_id from zy_owner where owner_open_id=#{openId}")
+    Long findOwnerIdByOpenId(@Param("openId") String openId);
 
 }
 

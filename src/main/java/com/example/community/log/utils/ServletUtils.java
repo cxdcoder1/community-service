@@ -1,7 +1,7 @@
 package com.example.community.log.utils;
 
 
-import org.apache.maven.surefire.shade.org.apache.commons.lang3.StringUtils;
+import com.example.community.utils.StringUtils;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
