@@ -49,9 +49,9 @@ sms:
 ## 微信开发配置
 weChat:
   ## 微信开发者appId
-  appId: wx172579a9fba7f528
+  appId: wx1ed9ec0c4696b2ac
   ## 微信开发者 appSecret
-  appSecret: 1a040654db8353ec1eadc639b2dc8739
+  appSecret: 66f548e8099ddfa9f4f1945e6cc0b380
 
 
 

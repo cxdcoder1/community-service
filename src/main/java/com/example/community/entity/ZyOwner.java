@@ -60,6 +60,34 @@ public class ZyOwner extends Model<ZyOwner> {
     private String remark;
 
 
+    @Override
+    public String toString() {
+        return "ZyOwner{" +
+                "ownerId=" + ownerId +
+                ", ownerNickname='" + ownerNickname + '\'' +
+                ", ownerRealName='" + ownerRealName + '\'' +
+                ", ownerGender='" + ownerGender + '\'' +
+                ", ownerAge=" + ownerAge +
+                ", ownerIdCard='" + ownerIdCard + '\'' +
+                ", ownerPhoneNumber='" + ownerPhoneNumber + '\'' +
+                ", ownerOpenId='" + ownerOpenId + '\'' +
+                ", ownerWechatId='" + ownerWechatId + '\'' +
+                ", ownerQqNumber='" + ownerQqNumber + '\'' +
+                ", ownerBirthday=" + ownerBirthday +
+                ", ownerPortrait='" + ownerPortrait + '\'' +
+                ", ownerSignature='" + ownerSignature + '\'' +
+                ", ownerStatus='" + ownerStatus + '\'' +
+                ", ownerLogonMode='" + ownerLogonMode + '\'' +
+                ", ownerType='" + ownerType + '\'' +
+                ", ownerPassword='" + ownerPassword + '\'' +
+                ", createBy='" + createBy + '\'' +
+                ", createTime=" + createTime +
+                ", updateBy='" + updateBy + '\'' +
+                ", updateTime=" + updateTime +
+                ", remark='" + remark + '\'' +
+                '}';
+    }
+
     public Long getOwnerId() {
         return ownerId;
     }
