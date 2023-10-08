@@ -67,8 +67,8 @@ public class ZyBuildingServiceImpl extends ServiceImpl<ZyBuildingDao, ZyBuilding
     }
 
     @Override
-    public Long selName(ZyBuilding zyBuilding) {
-        return zyBuildingDao.selBuildingName(zyBuilding);
+    public Long selName(long communityId,ZyBuilding zyBuilding) {
+        return zyBuildingDao.selBuildingName(communityId,zyBuilding);
     }
 
     @Override

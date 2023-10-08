@@ -2,6 +2,8 @@ package com.example.community.service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.example.community.dto.ZyOwnerRoomDto;
+import com.example.community.entity.ZyBuilding;
 import com.example.community.dto.CommunityAndDeptDto;
 import com.example.community.dto.OwnerRoomList;
 import com.example.community.entity.ZyOwnerRoom;

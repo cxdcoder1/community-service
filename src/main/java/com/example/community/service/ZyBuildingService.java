@@ -26,7 +26,7 @@ public interface ZyBuildingService extends IService<ZyBuilding> {
 
     Integer updateBuilding(ZyBuilding zyBuilding);
 
-    Long selName(ZyBuilding zyBuilding);
+    Long selName(long communityId,ZyBuilding zyBuilding);
 
     Long delBuilding(long id);
 

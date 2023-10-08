@@ -44,6 +44,9 @@
         </foreach>
         on duplicate key update
          owner_nickname = values(owner_nickname) , owner_real_name = values(owner_real_name) , owner_gender = values(owner_gender) , owner_age = values(owner_age) , owner_id_card = values(owner_id_card) , owner_phone_number = values(owner_phone_number) , owner_open_id = values(owner_open_id) , owner_wechat_id = values(owner_wechat_id) , owner_qq_number = values(owner_qq_number) , owner_birthday = values(owner_birthday) , owner_portrait = values(owner_portrait) , owner_signature = values(owner_signature) , owner_status = values(owner_status) , owner_logon_mode = values(owner_logon_mode) , owner_type = values(owner_type) , owner_password = values(owner_password) , create_by = values(create_by) , create_time = values(create_time) , update_by = values(update_by) , update_time = values(update_time) , remark = values(remark)     </insert>
+    <update id="updateStatus">
+        update   zy_owner_room  set room_status='3' where owner_room_id=#{ownerId}
+    </update>
     <update id="updateIdCard">
         UPDATE zy_owner SET owner_real_name = #{ownerRealName} , owner_id_card = #{ownerIdCard} where owner_open_id = #{ownerOpenId};
     </update>
@@ -73,5 +76,79 @@
         where owner_id = #{ownerId}
     </update>
 
+
+    <select id="selectOwnerRoom" resultType="com.example.community.dto.ZyOwnerRoomDto">
+        select zo.owner_nickname,zo.owner_real_name,zo.owner_gender,zor.owner_id,zor.owner_room_id,
+        zo.owner_age,zo.owner_id_card,zc.community_id,zu.unit_id,zr.room_id,zb.building_id,
+        zo.owner_phone_number,zc.community_name,
+        zu.unit_name,zb.building_name,
+        zr.room_name,zo.owner_birthday,zor.owner_type
+        from zy_owner_room zor
+        left JOIN zy_owner zo on zor.owner_id=zo.owner_id
+        left JOIN zy_community zc on zc.community_id= zor.community_id
+        left JOIN zy_building zb on zb.building_id= zor.building_id
+        left JOIN zy_unit zu on zu.unit_id= zor.unit_id
+        left JOIN zy_room zr on zr.room_id= zor.room_id
+        <where>
+            <if test="zyOwnerRoomDto.ownerNickname!=null and zyOwnerRoomDto.ownerNickname!=''">
+                and zo.owner_nickname LIKE CONCAT('%',#{zyOwnerRoomDto.ownerNickname},'%')
+            </if>
+            <if test="zyOwnerRoomDto.ownerRealName!=null and zyOwnerRoomDto.ownerRealName!=''">
+                and zo.owner_real_name LIKE CONCAT('%', #{zyOwnerRoomDto.ownerRealName},'%')
+            </if>
+            <if test="zyOwnerRoomDto.ownerIdCard!=null and zyOwnerRoomDto.ownerIdCard!=''">
+                and zo.owner_id_card=#{zyOwnerRoomDto.ownerIdCard}
+            </if>
+            <if test="zyOwnerRoomDto.ownerPhoneNumber!=null and zyOwnerRoomDto.ownerPhoneNumber!=''">
+                and zo.owner_phone_number  LIKE CONCAT('%',#{zyOwnerRoomDto.ownerPhoneNumber},'%')
+            </if>
+            AND   zor.community_id=#{id} and  zor.room_status='1'
+        </where>
+        limit #{index},#{size}
+    </select>
+    <select id="count" resultType="java.lang.Long">
+        select COUNT(*) from zy_owner_room zor
+        left JOIN zy_owner zo on zor.owner_id=zo.owner_id
+        left JOIN zy_community zc on zc.community_id= zor.community_id
+        left JOIN zy_building zb on zb.building_id= zor.building_id
+        left JOIN zy_unit zu on zu.unit_id= zor.unit_id
+        left JOIN zy_room zr on zr.room_id= zor.room_id
+        <where>
+            <if test="zyOwnerRoomDto.ownerNickname!=null and zyOwnerRoomDto.ownerNickname!=''">
+                and zo.owner_nickname LIKE CONCAT('%',#{zyOwnerRoomDto.ownerNickname},'%')
+            </if>
+            <if test="zyOwnerRoomDto.ownerRealName!=null and zyOwnerRoomDto.ownerRealName!=''">
+                and zo.owner_real_name LIKE CONCAT('%', #{zyOwnerRoomDto.ownerRealName},'%')
+            </if>
+            <if test="zyOwnerRoomDto.ownerIdCard!=null and zyOwnerRoomDto.ownerIdCard!=''">
+                and zo.owner_id_card=#{zyOwnerRoomDto.ownerIdCard}
+            </if>
+            <if test="zyOwnerRoomDto.ownerPhoneNumber!=null and zyOwnerRoomDto.ownerPhoneNumber!=''">
+                and zo.owner_phone_number  LIKE CONCAT('%',#{zyOwnerRoomDto.ownerPhoneNumber},'%')
+            </if>
+            AND   zor.community_id=#{id} and  zor.room_status='1'
+        </where>
+    </select>
+    <select id="getzyOwnerRoomDtoList" resultType="com.example.community.dto.ZyOwnerRoomDto">
+        select zo.owner_nickname,zo.owner_real_name,zo.owner_gender,zor.owner_id,zor.owner_room_id,
+        zo.owner_age,zo.owner_id_card,
+        zo.owner_phone_number,zc.community_name,
+        zu.unit_name,zb.building_name,
+        zr.room_name,zo.owner_birthday,zor.owner_type
+        from zy_owner_room zor
+        left JOIN zy_owner zo on zor.owner_id=zo.owner_id
+        left JOIN zy_community zc on zc.community_id= zor.community_id
+        left JOIN zy_building zb on zb.building_id= zor.building_id
+        left JOIN zy_unit zu on zu.unit_id= zor.unit_id
+        left JOIN zy_room zr on zr.room_id= zor.room_id
+        where zo.owner_id !=1 and  zor.room_status='1'
+        <if test="list!=null">
+            and
+            zo.owner_id in
+            <foreach collection="list" item="num" index="index" open="(" close=")" separator=",">
+                #{num}
+            </foreach>
+        </if>
+    </select>
 </mapper>
 

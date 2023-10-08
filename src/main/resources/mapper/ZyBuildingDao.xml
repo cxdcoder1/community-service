@@ -124,10 +124,11 @@
     <select id="selBuildingName" resultType="java.lang.Long">
         select count(building_id) from zy_building
         <where>
-            (building_name=#{buildingName})
-            <if test="buildingId != null and buildingId != ''">
-                and building_id!=#{buildingId}
+            building_name = #{zyBuilding.buildingName}
+            <if test="zyBuilding.buildingId != null and zyBuilding.buildingId != ''">
+                and building_id != #{zyBuilding.buildingId}
             </if>
+            and community_id = #{communityId}
         </where>
     </select>
 

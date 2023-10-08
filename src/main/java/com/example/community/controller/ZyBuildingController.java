@@ -29,7 +29,6 @@ import java.util.Map;
  * @since 2023-09-14 09:53:03
  */
 @Api(tags = "楼栋管理")
-
 @RestController
 @RequestMapping("zyBuilding")
 @CrossOrigin
@@ -139,10 +138,12 @@ public class ZyBuildingController extends ApiController {
 
     @ApiOperation(value = "修改楼栋接口",notes = "修改楼栋接口的说明")
     @Log(title = "楼栋管理", businessType = BusinessType.UPDATE)
-    @PutMapping("updateBuilding")
-    public Map<String, Object> updateBuilding(@RequestBody ZyBuilding zyBuilding){
+    @PutMapping("updateBuilding/{communityId}")
+    public Map<String, Object> updateBuilding(@PathVariable long communityId,@RequestBody ZyBuilding zyBuilding){
+        System.err.println(communityId);
+        System.err.println(zyBuilding);
         Map<String, Object> map = new HashMap<>();
-        Long aLong = zyBuildingService.selName(zyBuilding);
+        Long aLong = zyBuildingService.selName(communityId,zyBuilding);
         System.err.println(zyBuilding.toString());
         if (aLong==0){
             int i=zyBuildingService.updateBuilding(zyBuilding);

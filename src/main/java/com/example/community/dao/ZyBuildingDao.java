@@ -50,7 +50,7 @@ public interface ZyBuildingDao extends BaseMapper<ZyBuilding> {
 
     Long getBuildingName(String buildingName,long communityId );
 
-    Long selBuildingName(ZyBuilding zyBuilding);
+    Long selBuildingName(@Param("communityId")long communityId,@Param("zyBuilding")ZyBuilding zyBuilding);
 
     /**
      * 修改
