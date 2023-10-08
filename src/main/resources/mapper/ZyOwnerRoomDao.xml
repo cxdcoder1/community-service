@@ -20,21 +20,88 @@
 
     <!-- 批量插入 -->
     <insert id="insertBatch" keyProperty="ownerRoomId" useGeneratedKeys="true">
-        insert into zy-community.zy_owner_room(community_id, building_id, unit_id, room_id, owner_id, owner_type, room_status, create_by, create_time, update_by, update_time, remark)
+        insert into zy-community.zy_owner_room(community_id, building_id, unit_id, room_id, owner_id, owner_type,
+        room_status, create_by, create_time, update_by, update_time, remark)
         values
         <foreach collection="entities" item="entity" separator=",">
-        (#{entity.communityId}, #{entity.buildingId}, #{entity.unitId}, #{entity.roomId}, #{entity.ownerId}, #{entity.ownerType}, #{entity.roomStatus}, #{entity.createBy}, #{entity.createTime}, #{entity.updateBy}, #{entity.updateTime}, #{entity.remark})
+            (#{entity.communityId}, #{entity.buildingId}, #{entity.unitId}, #{entity.roomId}, #{entity.ownerId},
+            #{entity.ownerType}, #{entity.roomStatus}, #{entity.createBy}, #{entity.createTime}, #{entity.updateBy},
+            #{entity.updateTime}, #{entity.remark})
         </foreach>
     </insert>
     <!-- 批量插入或按主键更新 -->
     <insert id="insertOrUpdateBatch" keyProperty="ownerRoomId" useGeneratedKeys="true">
-        insert into zy-community.zy_owner_room(community_id, building_id, unit_id, room_id, owner_id, owner_type, room_status, create_by, create_time, update_by, update_time, remark)
+        insert into zy-community.zy_owner_room(community_id, building_id, unit_id, room_id, owner_id, owner_type,
+        room_status, create_by, create_time, update_by, update_time, remark)
         values
         <foreach collection="entities" item="entity" separator=",">
-            (#{entity.communityId}, #{entity.buildingId}, #{entity.unitId}, #{entity.roomId}, #{entity.ownerId}, #{entity.ownerType}, #{entity.roomStatus}, #{entity.createBy}, #{entity.createTime}, #{entity.updateBy}, #{entity.updateTime}, #{entity.remark})
+            (#{entity.communityId}, #{entity.buildingId}, #{entity.unitId}, #{entity.roomId}, #{entity.ownerId},
+            #{entity.ownerType}, #{entity.roomStatus}, #{entity.createBy}, #{entity.createTime}, #{entity.updateBy},
+            #{entity.updateTime}, #{entity.remark})
         </foreach>
         on duplicate key update
-         community_id = values(community_id) , building_id = values(building_id) , unit_id = values(unit_id) , room_id = values(room_id) , owner_id = values(owner_id) , owner_type = values(owner_type) , room_status = values(room_status) , create_by = values(create_by) , create_time = values(create_time) , update_by = values(update_by) , update_time = values(update_time) , remark = values(remark)     </insert>
+        community_id = values(community_id) , building_id = values(building_id) , unit_id = values(unit_id) , room_id =
+        values(room_id) , owner_id = values(owner_id) , owner_type = values(owner_type) , room_status =
+        values(room_status) , create_by = values(create_by) , create_time = values(create_time) , update_by =
+        values(update_by) , update_time = values(update_time) , remark = values(remark)
+    </insert>
+
+    <update id="updOwnerRoom">
+        update zy_owner_room set room_status = #{status} where owner_room_id=#{id}
+    </update>
+
+
+    <select id="getRoomAll" resultType="com.example.community.dto.OwnerRoomList">
+        SELECT
+        zt.community_name,
+        zb.building_name,
+        zu.unit_name,
+        zm.room_name,
+        zo.owner_real_name,
+        zr.owner_room_id,
+        zr.community_id,
+        zr.building_id,
+        zr.unit_id,
+        zr.room_id,
+        zr.owner_id,
+        zr.owner_type,
+        zr.room_status,
+        zr.create_by,
+        zr.create_time,
+        zr.update_by,
+        zr.update_time,
+        zr.remark
+        FROM zy_owner_room zr
+        LEFT JOIN zy_community zt ON zr.community_id = zt.community_id
+        LEFT JOIN zy_building zb ON zr.building_id = zb.building_id
+        left join zy_unit zu on zr.unit_id = zu.unit_id
+        LEFT join zy_room zm on zr.room_id = zm.room_id
+        left Join zy_owner zo on zr.owner_id = zo.owner_id
+        <where>
+            <if test="zyOwnerRoom.roomStatus != null and zyOwnerRoom.roomStatus != ''">
+                and zr.room_status like concat('%', #{zyOwnerRoom.roomStatus}, '%')
+            </if>
+        </where>
+        <if test="size != 0">
+            limit #{index},#{size}
+        </if>
+    </select>
+
+    <select id="getCount" resultType="java.lang.Long">
+        SELECT
+        COUNT(*)
+        FROM zy_owner_room zr
+        LEFT JOIN zy_community zt ON zr.community_id = zt.community_id
+        LEFT JOIN zy_building zb ON zr.building_id = zb.building_id
+        left join zy_unit zu on zr.unit_id = zu.unit_id
+        LEFT join zy_room zm on zr.room_id = zm.room_id
+        left Join zy_owner zo on zr.owner_id = zo.owner_id
+        <where>
+            <if test="roomStatus != null and roomStatus != ''">
+                and zr.room_status like concat('%', #{roomStatus}, '%')
+            </if>
+        </where>
+    </select>
 
 </mapper>
 

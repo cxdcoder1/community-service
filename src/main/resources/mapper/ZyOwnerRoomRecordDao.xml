@@ -24,21 +24,162 @@
 
     <!-- 批量插入 -->
     <insert id="insertBatch" keyProperty="recordId" useGeneratedKeys="true">
-        insert into zy-community.zy_owner_room_record(owner_room_id, community_id, building_id, unit_id, room_id, owner_id, owner_type, room_status, record_audit_opinion, record_audit_type, create_by_id, create_by, create_time, update_by, update_time, remark)
+        insert into zy-community.zy_owner_room_record(owner_room_id, community_id, building_id, unit_id, room_id,
+        owner_id, owner_type, room_status, record_audit_opinion, record_audit_type, create_by_id, create_by,
+        create_time, update_by, update_time, remark)
         values
         <foreach collection="entities" item="entity" separator=",">
-        (#{entity.ownerRoomId}, #{entity.communityId}, #{entity.buildingId}, #{entity.unitId}, #{entity.roomId}, #{entity.ownerId}, #{entity.ownerType}, #{entity.roomStatus}, #{entity.recordAuditOpinion}, #{entity.recordAuditType}, #{entity.createById}, #{entity.createBy}, #{entity.createTime}, #{entity.updateBy}, #{entity.updateTime}, #{entity.remark})
+            (#{entity.ownerRoomId}, #{entity.communityId}, #{entity.buildingId}, #{entity.unitId}, #{entity.roomId},
+            #{entity.ownerId}, #{entity.ownerType}, #{entity.roomStatus}, #{entity.recordAuditOpinion},
+            #{entity.recordAuditType}, #{entity.createById}, #{entity.createBy}, #{entity.createTime},
+            #{entity.updateBy}, #{entity.updateTime}, #{entity.remark})
         </foreach>
     </insert>
     <!-- 批量插入或按主键更新 -->
     <insert id="insertOrUpdateBatch" keyProperty="recordId" useGeneratedKeys="true">
-        insert into zy-community.zy_owner_room_record(owner_room_id, community_id, building_id, unit_id, room_id, owner_id, owner_type, room_status, record_audit_opinion, record_audit_type, create_by_id, create_by, create_time, update_by, update_time, remark)
+        insert into zy-community.zy_owner_room_record(owner_room_id, community_id, building_id, unit_id, room_id,
+        owner_id, owner_type, room_status, record_audit_opinion, record_audit_type, create_by_id, create_by,
+        create_time, update_by, update_time, remark)
         values
         <foreach collection="entities" item="entity" separator=",">
-            (#{entity.ownerRoomId}, #{entity.communityId}, #{entity.buildingId}, #{entity.unitId}, #{entity.roomId}, #{entity.ownerId}, #{entity.ownerType}, #{entity.roomStatus}, #{entity.recordAuditOpinion}, #{entity.recordAuditType}, #{entity.createById}, #{entity.createBy}, #{entity.createTime}, #{entity.updateBy}, #{entity.updateTime}, #{entity.remark})
+            (#{entity.ownerRoomId}, #{entity.communityId}, #{entity.buildingId}, #{entity.unitId}, #{entity.roomId},
+            #{entity.ownerId}, #{entity.ownerType}, #{entity.roomStatus}, #{entity.recordAuditOpinion},
+            #{entity.recordAuditType}, #{entity.createById}, #{entity.createBy}, #{entity.createTime},
+            #{entity.updateBy}, #{entity.updateTime}, #{entity.remark})
         </foreach>
         on duplicate key update
-         owner_room_id = values(owner_room_id) , community_id = values(community_id) , building_id = values(building_id) , unit_id = values(unit_id) , room_id = values(room_id) , owner_id = values(owner_id) , owner_type = values(owner_type) , room_status = values(room_status) , record_audit_opinion = values(record_audit_opinion) , record_audit_type = values(record_audit_type) , create_by_id = values(create_by_id) , create_by = values(create_by) , create_time = values(create_time) , update_by = values(update_by) , update_time = values(update_time) , remark = values(remark)     </insert>
+        owner_room_id = values(owner_room_id) , community_id = values(community_id) , building_id = values(building_id)
+        , unit_id = values(unit_id) , room_id = values(room_id) , owner_id = values(owner_id) , owner_type =
+        values(owner_type) , room_status = values(room_status) , record_audit_opinion = values(record_audit_opinion) ,
+        record_audit_type = values(record_audit_type) , create_by_id = values(create_by_id) , create_by =
+        values(create_by) , create_time = values(create_time) , update_by = values(update_by) , update_time =
+        values(update_time) , remark = values(remark)
+    </insert>
+
+
+    <insert id="insetRoomRecordAll">
+        insert into zy_owner_room_record
+        (
+        record_id
+        <if test="ownerRoomId != null and ownerRoomId != ''">
+            ,owner_room_id
+        </if>
+        <if test="communityId != null and communityId != ''">
+            ,community_id
+        </if>
+        <if test="buildingId != null and buildingId != ''">
+            ,building_id
+        </if>
+        <if test="unitId != null and unitId != ''">
+            ,unit_id
+        </if>
+        <if test="roomId != null and roomId != ''">
+            ,room_id
+        </if>
+        <if test="ownerId != null and ownerId != ''">
+            ,owner_id
+        </if>
+        <if test="ownerType != null and ownerType != ''">
+            , owner_type
+        </if>
+        <if test="roomStatus != null and roomStatus != ''">
+            ,room_status
+        </if>
+        <if test="recordAuditOpinion != null and recordAuditOpinion != ''">
+            ,record_audit_opinion
+        </if>
+        <if test="recordAuditType != null and recordAuditType != ''">
+            ,record_audit_type
+        </if>
+        <if test="createById != null and createById != ''">
+            ,create_by_id
+        </if>
+        <if test="createBy != null and createBy != ''">
+            ,create_by
+        </if>
+        <if test="createTime != null and createTime != ''">
+            ,create_time
+        </if>
+        <if test="updateBy != null and updateBy != ''">
+            ,update_by
+        </if>
+        <if test="updateTime != null and updateTime != ''">
+            ,update_time
+        </if>
+        <if test="remark != null and remark != ''">
+            ,remark
+        </if>
+        )
+        values
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            #{recordId}
+            <if test="ownerRoomId != null and ownerRoomId != ''">
+                ,#{ownerRoomId}
+            </if>
+            <if test="communityId != null and communityId != ''">
+                ,#{communityId}
+            </if>
+            <if test="buildingId != null and buildingId != ''">
+                ,#{buildingId}
+            </if>
+            <if test="unitId != null and unitId != ''">
+                ,#{unitId}
+            </if>
+            <if test="roomId != null and roomId != ''">
+                ,#{roomId}
+            </if>
+            <if test="ownerId != null and ownerId != ''">
+                ,#{ownerId}
+            </if>
+            <if test="ownerType != null and ownerType != ''">
+                ,#{ownerType}
+            </if>
+            <if test="roomStatus != null and roomStatus != ''">
+                ,#{roomStatus}
+            </if>
+            <if test="recordAuditOpinion != null and recordAuditOpinion != ''">
+                ,#{recordAuditOpinion}
+            </if>
+            <if test="recordAuditType != null and recordAuditType != ''">
+                ,#{recordAuditType}
+            </if>
+            <if test="createById != null and createById != ''">
+                ,#{createById}
+            </if>
+            <if test="createBy != null and createBy != ''">
+                ,#{createBy}
+            </if>
+            <if test="createTime != null and createTime != ''">
+                ,#{createTime}
+            </if>
+            <if test="updateBy != null and updateBy != ''">
+                ,#{updateBy}
+            </if>
+            <if test="updateTime != null and updateTime != ''">
+                ,#{updateTime}
+            </if>
+            <if test="remark != null and remark != ''">
+                ,#{remark}
+            </if>
+        </trim>
+    </insert>
+
+    <select id="getRoomRecordList" resultType="com.example.community.dto.OwnerRoomAndZyOwner">
+        select
+        zy_owner.owner_real_name,
+        zy_owner_room_record.owner_type,
+        zy_owner_room_record.room_status,
+        zy_owner_room_record.record_audit_opinion,
+        zy_owner_room_record.record_audit_type,
+        zy_owner_room_record.create_by,
+        zy_owner_room_record.remark
+        from zy_owner_room_record,zy_owner
+        where zy_owner_room_record.owner_id = zy_owner.owner_id
+        and zy_owner.owner_real_name = #{name}
+        ORDER BY
+        zy_owner.owner_real_name DESC;
+    </select>
+
 
 </mapper>
 

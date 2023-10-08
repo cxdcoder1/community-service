@@ -3,6 +3,8 @@ package com.example.community.dao;
 import java.util.List;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.example.community.dto.CommunityAndDeptDto;
+import com.example.community.dto.OwnerRoomList;
 import org.apache.ibatis.annotations.Param;
 import com.example.community.entity.ZyOwnerRoom;
 
@@ -30,6 +32,13 @@ int insertBatch(@Param("entities") List<ZyOwnerRoom> entities);
 * @throws org.springframework.jdbc.BadSqlGrammarException 入参是空List的时候会抛SQL语句错误的异常，请自行校验入参
 */
 int insertOrUpdateBatch(@Param("entities") List<ZyOwnerRoom> entities);
+
+
+    List<OwnerRoomList> getRoomAll(@Param("index") Long index, @Param("size") Long size, @Param("zyOwnerRoom") OwnerRoomList ownerRoomList);
+
+    Long getCount(OwnerRoomList ownerRoomList);
+
+    int updOwnerRoom(@Param("status") String status,@Param("id") String id);
 
 }
 

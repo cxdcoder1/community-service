@@ -1,24 +1,18 @@
-package com.example.community.entity;
+package com.example.community.dto;
 
-
-import com.baomidou.mybatisplus.extension.activerecord.Model;
-import org.springframework.format.annotation.DateTimeFormat;
-
-import java.io.Serializable;
 import java.util.Date;
 
-/**
- * 房屋绑定记录表 (ZyOwnerRoomRecord)表实体类
- *
- * @author makejava
- * @since 2023-09-14 09:53:03
- */
-@SuppressWarnings("serial")
-public class ZyOwnerRoomRecord extends Model<ZyOwnerRoomRecord> {
-
-
-    //房屋绑定记录id
-    private Long recordId;
+public class OwnerRoomList {
+    //小区名称
+    private String communityName;
+    //楼栋名称
+    private String buildingName;
+    //单元名称
+    private String unitName;
+    //房间号
+    private String roomName;
+    //业主姓名
+    private String ownerRealName;
     //房屋绑定id
     private String ownerRoomId;
     //小区id
@@ -33,33 +27,29 @@ public class ZyOwnerRoomRecord extends Model<ZyOwnerRoomRecord> {
     private Long ownerId;
     //业主类型
     private String ownerType;
-    //绑定状态（0审核中 1绑定 2审核失败,3解绑）
+    //绑定状态（0审核中 1绑定 2审核失败）
     private String roomStatus;
-    //审核意见
-    private String recordAuditOpinion;
-    //审核人类型
-    private String recordAuditType;
-    //创建人id
-    private Long createById;
     //创建者
     private String createBy;
     //创建时间
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private String createTime;
+    private Date createTime;
     //更新者
     private String updateBy;
     //更新时间
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private String updateTime;
+    private Date updateTime;
     //备注
     private String remark;
 
 
-    public ZyOwnerRoomRecord() {
+    public OwnerRoomList() {
     }
 
-    public ZyOwnerRoomRecord(Long recordId, String ownerRoomId, Long communityId, Long buildingId, Long unitId, Long roomId, Long ownerId, String ownerType, String roomStatus, String recordAuditOpinion, String recordAuditType, Long createById, String createBy, String createTime, String updateBy, String updateTime, String remark) {
-        this.recordId = recordId;
+    public OwnerRoomList(String communityName, String buildingName, String unitName, String roomName, String ownerRealName, String ownerRoomId, Long communityId, Long buildingId, Long unitId, Long roomId, Long ownerId, String ownerType, String roomStatus, String createBy, Date createTime, String updateBy, Date updateTime, String remark) {
+        this.communityName = communityName;
+        this.buildingName = buildingName;
+        this.unitName = unitName;
+        this.roomName = roomName;
+        this.ownerRealName = ownerRealName;
         this.ownerRoomId = ownerRoomId;
         this.communityId = communityId;
         this.buildingId = buildingId;
@@ -68,9 +58,6 @@ public class ZyOwnerRoomRecord extends Model<ZyOwnerRoomRecord> {
         this.ownerId = ownerId;
         this.ownerType = ownerType;
         this.roomStatus = roomStatus;
-        this.recordAuditOpinion = recordAuditOpinion;
-        this.recordAuditType = recordAuditType;
-        this.createById = createById;
         this.createBy = createBy;
         this.createTime = createTime;
         this.updateBy = updateBy;
@@ -80,18 +67,82 @@ public class ZyOwnerRoomRecord extends Model<ZyOwnerRoomRecord> {
 
     /**
      * 获取
-     * @return recordId
+     * @return communityName
      */
-    public Long getRecordId() {
-        return recordId;
+    public String getCommunityName() {
+        return communityName;
     }
 
     /**
      * 设置
-     * @param recordId
+     * @param communityName
      */
-    public void setRecordId(Long recordId) {
-        this.recordId = recordId;
+    public void setCommunityName(String communityName) {
+        this.communityName = communityName;
+    }
+
+    /**
+     * 获取
+     * @return buildingName
+     */
+    public String getBuildingName() {
+        return buildingName;
+    }
+
+    /**
+     * 设置
+     * @param buildingName
+     */
+    public void setBuildingName(String buildingName) {
+        this.buildingName = buildingName;
+    }
+
+    /**
+     * 获取
+     * @return unitName
+     */
+    public String getUnitName() {
+        return unitName;
+    }
+
+    /**
+     * 设置
+     * @param unitName
+     */
+    public void setUnitName(String unitName) {
+        this.unitName = unitName;
+    }
+
+    /**
+     * 获取
+     * @return roomName
+     */
+    public String getRoomName() {
+        return roomName;
+    }
+
+    /**
+     * 设置
+     * @param roomName
+     */
+    public void setRoomName(String roomName) {
+        this.roomName = roomName;
+    }
+
+    /**
+     * 获取
+     * @return ownerRealName
+     */
+    public String getOwnerRealName() {
+        return ownerRealName;
+    }
+
+    /**
+     * 设置
+     * @param ownerRealName
+     */
+    public void setOwnerRealName(String ownerRealName) {
+        this.ownerRealName = ownerRealName;
     }
 
     /**
@@ -224,54 +275,6 @@ public class ZyOwnerRoomRecord extends Model<ZyOwnerRoomRecord> {
 
     /**
      * 获取
-     * @return recordAuditOpinion
-     */
-    public String getRecordAuditOpinion() {
-        return recordAuditOpinion;
-    }
-
-    /**
-     * 设置
-     * @param recordAuditOpinion
-     */
-    public void setRecordAuditOpinion(String recordAuditOpinion) {
-        this.recordAuditOpinion = recordAuditOpinion;
-    }
-
-    /**
-     * 获取
-     * @return recordAuditType
-     */
-    public String getRecordAuditType() {
-        return recordAuditType;
-    }
-
-    /**
-     * 设置
-     * @param recordAuditType
-     */
-    public void setRecordAuditType(String recordAuditType) {
-        this.recordAuditType = recordAuditType;
-    }
-
-    /**
-     * 获取
-     * @return createById
-     */
-    public Long getCreateById() {
-        return createById;
-    }
-
-    /**
-     * 设置
-     * @param createById
-     */
-    public void setCreateById(Long createById) {
-        this.createById = createById;
-    }
-
-    /**
-     * 获取
      * @return createBy
      */
     public String getCreateBy() {
@@ -290,7 +293,7 @@ public class ZyOwnerRoomRecord extends Model<ZyOwnerRoomRecord> {
      * 获取
      * @return createTime
      */
-    public String getCreateTime() {
+    public Date getCreateTime() {
         return createTime;
     }
 
@@ -298,7 +301,7 @@ public class ZyOwnerRoomRecord extends Model<ZyOwnerRoomRecord> {
      * 设置
      * @param createTime
      */
-    public void setCreateTime(String createTime) {
+    public void setCreateTime(Date createTime) {
         this.createTime = createTime;
     }
 
@@ -322,7 +325,7 @@ public class ZyOwnerRoomRecord extends Model<ZyOwnerRoomRecord> {
      * 获取
      * @return updateTime
      */
-    public String getUpdateTime() {
+    public Date getUpdateTime() {
         return updateTime;
     }
 
@@ -330,7 +333,7 @@ public class ZyOwnerRoomRecord extends Model<ZyOwnerRoomRecord> {
      * 设置
      * @param updateTime
      */
-    public void setUpdateTime(String updateTime) {
+    public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
     }
 
@@ -351,6 +354,6 @@ public class ZyOwnerRoomRecord extends Model<ZyOwnerRoomRecord> {
     }
 
     public String toString() {
-        return "ZyOwnerRoomRecord{recordId = " + recordId + ", ownerRoomId = " + ownerRoomId + ", communityId = " + communityId + ", buildingId = " + buildingId + ", unitId = " + unitId + ", roomId = " + roomId + ", ownerId = " + ownerId + ", ownerType = " + ownerType + ", roomStatus = " + roomStatus + ", recordAuditOpinion = " + recordAuditOpinion + ", recordAuditType = " + recordAuditType + ", createById = " + createById + ", createBy = " + createBy + ", createTime = " + createTime + ", updateBy = " + updateBy + ", updateTime = " + updateTime + ", remark = " + remark + "}";
+        return "OwnerRoomList{communityName = " + communityName + ", buildingName = " + buildingName + ", unitName = " + unitName + ", roomName = " + roomName + ", ownerRealName = " + ownerRealName + ", ownerRoomId = " + ownerRoomId + ", communityId = " + communityId + ", buildingId = " + buildingId + ", unitId = " + unitId + ", roomId = " + roomId + ", ownerId = " + ownerId + ", ownerType = " + ownerType + ", roomStatus = " + roomStatus + ", createBy = " + createBy + ", createTime = " + createTime + ", updateBy = " + updateBy + ", updateTime = " + updateTime + ", remark = " + remark + "}";
     }
 }
