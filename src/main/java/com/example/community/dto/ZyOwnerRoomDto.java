@@ -28,7 +28,6 @@ public class ZyOwnerRoomDto {
     //年龄
     @ExcelProperty(index = 4, value = {"年龄"})
     private Integer ownerAge;
-
     private Long ownerRoomId;
     //身份证号码
     @ExcelProperty(index = 5, value = {"身份证号码"})

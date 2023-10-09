@@ -2,6 +2,7 @@ package com.example.community.service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.example.community.dto.ExZyOwnerRoom;
 import com.example.community.dto.ZyOwnerRoomDto;
 import com.example.community.entity.ZyOwner;
 
@@ -41,6 +42,6 @@ public interface ZyOwnerService extends IService<ZyOwner> {
 
     Integer updateStatus(long ownerId);
 
-    List<ZyOwnerRoomDto> getzyOwnerRoomDtoList(List<String> list);
+    List<ExZyOwnerRoom> getzyOwnerRoomDtoList(List<String> list);
 }
 

@@ -45,7 +45,7 @@
         on duplicate key update
          owner_nickname = values(owner_nickname) , owner_real_name = values(owner_real_name) , owner_gender = values(owner_gender) , owner_age = values(owner_age) , owner_id_card = values(owner_id_card) , owner_phone_number = values(owner_phone_number) , owner_open_id = values(owner_open_id) , owner_wechat_id = values(owner_wechat_id) , owner_qq_number = values(owner_qq_number) , owner_birthday = values(owner_birthday) , owner_portrait = values(owner_portrait) , owner_signature = values(owner_signature) , owner_status = values(owner_status) , owner_logon_mode = values(owner_logon_mode) , owner_type = values(owner_type) , owner_password = values(owner_password) , create_by = values(create_by) , create_time = values(create_time) , update_by = values(update_by) , update_time = values(update_time) , remark = values(remark)     </insert>
     <update id="updateStatus">
-        update   zy_owner_room  set room_status='3' where owner_room_id=#{ownerId}
+        update   zy_owner_room  set room_status='0' where owner_room_id=#{ownerId}
     </update>
     <update id="updateIdCard">
         UPDATE zy_owner SET owner_real_name = #{ownerRealName} , owner_id_card = #{ownerIdCard} where owner_open_id = #{ownerOpenId};
@@ -129,7 +129,7 @@
             AND   zor.community_id=#{id} and  zor.room_status='1'
         </where>
     </select>
-    <select id="getzyOwnerRoomDtoList" resultType="com.example.community.dto.ZyOwnerRoomDto">
+    <select id="getzyOwnerRoomDtoList" resultType="com.example.community.dto.ExZyOwnerRoom">
         select zo.owner_nickname,zo.owner_real_name,zo.owner_gender,zor.owner_id,zor.owner_room_id,
         zo.owner_age,zo.owner_id_card,
         zo.owner_phone_number,zc.community_name,

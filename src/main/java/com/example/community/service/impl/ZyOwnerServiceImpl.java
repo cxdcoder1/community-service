@@ -3,6 +3,7 @@ package com.example.community.service.impl;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.community.dao.ZyOwnerDao;
+import com.example.community.dto.ExZyOwnerRoom;
 import com.example.community.dto.ZyOwnerRoomDto;
 import com.example.community.entity.ZyOwner;
 import com.example.community.service.ZyOwnerService;
@@ -46,7 +47,7 @@ public class ZyOwnerServiceImpl extends ServiceImpl<ZyOwnerDao, ZyOwner> impleme
     }
 
     @Override
-    public List<ZyOwnerRoomDto> getzyOwnerRoomDtoList(List<String> list) {
+    public List<ExZyOwnerRoom> getzyOwnerRoomDtoList(List<String> list) {
         return zyOwnerDao.getzyOwnerRoomDtoList(list);
     }
 

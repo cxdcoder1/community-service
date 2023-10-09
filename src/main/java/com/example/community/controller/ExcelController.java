@@ -3,6 +3,7 @@ package com.example.community.controller;
 import com.alibaba.excel.EasyExcel;
 import com.alibaba.excel.write.style.HorizontalCellStyleStrategy;
 import com.example.community.dao.*;
+import com.example.community.dto.ExZyOwnerRoom;
 import com.example.community.dto.UserAndDeptImport;
 import com.example.community.dto.ZyOwnerRoomDto;
 import com.example.community.entity.*;
@@ -594,18 +595,18 @@ public class ExcelController {
      * @param fileName
      * @param list
      */
-    public static void ownerList(String fileName,List<ZyOwnerRoomDto> list){
+    public static void ownerList(String fileName,List<ExZyOwnerRoom> list){
         //"E:\\lx.xls"
-        List<ZyOwnerRoomDto> dataList = new ArrayList<>();
+        List<ExZyOwnerRoom> dataList = new ArrayList<>();
 
-        for (ZyOwnerRoomDto zyOwnerRoomDto : list) {
+        for (ExZyOwnerRoom zyOwnerRoomDto : list) {
             dataList.add(zyOwnerRoomDto);
         }
 
         // 设置单元格样式
         HorizontalCellStyleStrategy horizontalCellStyleStrategy = new HorizontalCellStyleStrategy( StyleUtils.getHeadStyle(),StyleUtils.getContentStyle());
 
-        EasyExcel.write(fileName, ZyOwnerRoomDto.class)
+        EasyExcel.write(fileName, ExZyOwnerRoom.class)
                 .sheet(0)
                 .registerWriteHandler(horizontalCellStyleStrategy)
                 .doWrite(dataList);
@@ -618,7 +619,7 @@ public class ExcelController {
         if (list.size()==0){
             list=null;
         }
-        List<ZyOwnerRoomDto> zyOwnerRoomDtos = zyOwnerDao.getzyOwnerRoomDtoList(list);
+        List<ExZyOwnerRoom> zyOwnerRoomDtos = zyOwnerDao.getzyOwnerRoomDtoList(list);
         String path="D:\\lx.xls";
         ownerList(path,zyOwnerRoomDtos);
         result.put("msg","导出成功");

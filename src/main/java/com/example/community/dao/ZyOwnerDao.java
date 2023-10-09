@@ -1,6 +1,7 @@
 package com.example.community.dao;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.example.community.dto.ExZyOwnerRoom;
 import com.example.community.dto.ZyOwnerRoomDto;
 import com.example.community.entity.SysOperLog;
 import org.apache.ibatis.annotations.Param;
@@ -42,7 +43,7 @@ int insertOrUpdateBatch(@Param("entities") List<ZyOwner> entities);
 
     Integer updateStatus(long ownerId);
 
-    List<ZyOwnerRoomDto> getzyOwnerRoomDtoList(List<String> list);
+    List<ExZyOwnerRoom> getzyOwnerRoomDtoList(List<String> list);
 
     @Select("select owner_id from zy_owner where owner_open_id=#{openId}")
     Long findOwnerIdByOpenId(@Param("openId") String openId);
