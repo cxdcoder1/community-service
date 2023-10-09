@@ -46,6 +46,21 @@
         values(update_by) , update_time = values(update_time) , remark = values(remark)
     </insert>
 
+    <insert id="insertRoom">
+        INSERT INTO zy_owner_room (community_id, building_id, unit_id, room_id, owner_id, owner_type, room_status)
+        VALUES
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="communityId != null">#{communityId},</if>
+            <if test="buildingId != null">#{buildingId},</if>
+            <if test="unitId != null">#{unitId},</if>
+            <if test="roomId != null">#{roomId},</if>
+            <if test="ownerId != null">#{ownerId},</if>
+            <if test="ownerType != null">#{ownerType},</if>
+            <if test="roomStatus != null">#{roomStatus},</if>
+            <if test="createTime != null">#{createTime}</if>
+        </trim>
+    </insert>
+
     <update id="updOwnerRoom">
         update zy_owner_room set room_status = #{status} where owner_room_id=#{id}
     </update>

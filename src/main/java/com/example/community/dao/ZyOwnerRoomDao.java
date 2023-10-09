@@ -1,12 +1,11 @@
 package com.example.community.dao;
 
-import java.util.List;
-
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.example.community.dto.CommunityAndDeptDto;
 import com.example.community.dto.OwnerRoomList;
-import org.apache.ibatis.annotations.Param;
 import com.example.community.entity.ZyOwnerRoom;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
  * 房屋绑定表 (ZyOwnerRoom)表数据库访问层
@@ -39,6 +38,8 @@ int insertOrUpdateBatch(@Param("entities") List<ZyOwnerRoom> entities);
     Long getCount(OwnerRoomList ownerRoomList);
 
     int updOwnerRoom(@Param("status") String status,@Param("id") String id);
+
+    int insertRoom(ZyOwnerRoom zyOwnerRoom);
 
 }
 
