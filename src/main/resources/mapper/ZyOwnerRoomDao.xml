@@ -97,6 +97,7 @@
                 and zr.room_status like concat('%', #{zyOwnerRoom.roomStatus}, '%')
             </if>
         </where>
+        ORDER BY zr.create_time DESC
         <if test="size != 0">
             limit #{index},#{size}
         </if>
@@ -118,12 +119,13 @@
         </where>
     </select>
     <select id="getRoomsByCommunityId" resultType="com.example.community.mini.dto.OwnerRecordDto">
-        select zr.*,zb.building_name , zu.unit_name , zro.room_name
+        select zr.*,zb.building_name , zu.unit_name , zro.room_name ,zor.create_time as create_timeT
         from zy_owner_room_record zr
         join zy_building zb on zr.building_id = zb.building_id
         join zy_unit zu on zu.unit_id = zr.unit_id
         join zy_room zro on zro.room_id = zr.room_id
-        join zy_owner_room zor on zor.owner_id = zr.owner_id
+        join zy_owner_room zor on
+        zor.owner_id = zr.owner_id and zor.room_status = zr.room_status and zor.update_time = zr.create_time
         where zr.community_id = #{communityId} and zr.owner_id=#{ownerId}
     </select>
 

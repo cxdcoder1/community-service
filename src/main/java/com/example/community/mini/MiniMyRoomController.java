@@ -56,6 +56,7 @@ public class MiniMyRoomController {
                 rejectList.add(zyOwnerRoom);
             }
         }
+        System.err.println(applyList);
         result.put("status",200);
         result.put("msg","获取业主房屋信息成功");
         result.put("applyList",applyList);

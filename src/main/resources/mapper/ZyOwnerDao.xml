@@ -104,6 +104,8 @@
             </if>
             AND   zor.community_id=#{id} and  zor.room_status='1'
         </where>
+        ORDER BY
+        zor.create_time desc
         limit #{index},#{size}
     </select>
     <select id="count" resultType="java.lang.Long">

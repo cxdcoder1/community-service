@@ -37,6 +37,9 @@ public class OwnerRecordDto {
     //创建时间
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private String createTime;
+    //绑定信息创建时间
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private String createTimeT;
     //更新者
     private String updateBy;
     //更新时间
@@ -44,58 +47,6 @@ public class OwnerRecordDto {
     private String updateTime;
     //备注
     private String remark;
-
-    public OwnerRecordDto() {
-    }
-
-    public OwnerRecordDto(Long recordId, String ownerRoomId, Long communityId, Long buildingId, Long unitId, Long roomId, Long ownerId, String buildingName, String unitName, String roomName, String ownerType, String roomStatus, String recordAuditOpinion, String recordAuditType, Long createById, String createBy, String createTime, String updateBy, String updateTime, String remark) {
-        this.recordId = recordId;
-        this.ownerRoomId = ownerRoomId;
-        this.communityId = communityId;
-        this.buildingId = buildingId;
-        this.unitId = unitId;
-        this.roomId = roomId;
-        this.ownerId = ownerId;
-        this.buildingName = buildingName;
-        this.unitName = unitName;
-        this.roomName = roomName;
-        this.ownerType = ownerType;
-        this.roomStatus = roomStatus;
-        this.recordAuditOpinion = recordAuditOpinion;
-        this.recordAuditType = recordAuditType;
-        this.createById = createById;
-        this.createBy = createBy;
-        this.createTime = createTime;
-        this.updateBy = updateBy;
-        this.updateTime = updateTime;
-        this.remark = remark;
-    }
-
-    @Override
-    public String toString() {
-        return "OwnerRecordDto{" +
-                "recordId=" + recordId +
-                ", ownerRoomId='" + ownerRoomId + '\'' +
-                ", communityId=" + communityId +
-                ", buildingId=" + buildingId +
-                ", unitId=" + unitId +
-                ", roomId=" + roomId +
-                ", ownerId=" + ownerId +
-                ", buildingName='" + buildingName + '\'' +
-                ", unitName='" + unitName + '\'' +
-                ", roomName='" + roomName + '\'' +
-                ", ownerType='" + ownerType + '\'' +
-                ", roomStatus='" + roomStatus + '\'' +
-                ", recordAuditOpinion='" + recordAuditOpinion + '\'' +
-                ", recordAuditType='" + recordAuditType + '\'' +
-                ", createById=" + createById +
-                ", createBy='" + createBy + '\'' +
-                ", createTime='" + createTime + '\'' +
-                ", updateBy='" + updateBy + '\'' +
-                ", updateTime='" + updateTime + '\'' +
-                ", remark='" + remark + '\'' +
-                '}';
-    }
 
     public Long getRecordId() {
         return recordId;
@@ -233,6 +184,14 @@ public class OwnerRecordDto {
         this.createTime = createTime;
     }
 
+    public String getCreateTimeT() {
+        return createTimeT;
+    }
+
+    public void setCreateTimeT(String createTimeT) {
+        this.createTimeT = createTimeT;
+    }
+
     public String getUpdateBy() {
         return updateBy;
     }
@@ -255,5 +214,59 @@ public class OwnerRecordDto {
 
     public void setRemark(String remark) {
         this.remark = remark;
+    }
+
+    public OwnerRecordDto() {
+    }
+
+    public OwnerRecordDto(Long recordId, String ownerRoomId, Long communityId, Long buildingId, Long unitId, Long roomId, Long ownerId, String buildingName, String unitName, String roomName, String ownerType, String roomStatus, String recordAuditOpinion, String recordAuditType, Long createById, String createBy, String createTime, String createTimeT, String updateBy, String updateTime, String remark) {
+        this.recordId = recordId;
+        this.ownerRoomId = ownerRoomId;
+        this.communityId = communityId;
+        this.buildingId = buildingId;
+        this.unitId = unitId;
+        this.roomId = roomId;
+        this.ownerId = ownerId;
+        this.buildingName = buildingName;
+        this.unitName = unitName;
+        this.roomName = roomName;
+        this.ownerType = ownerType;
+        this.roomStatus = roomStatus;
+        this.recordAuditOpinion = recordAuditOpinion;
+        this.recordAuditType = recordAuditType;
+        this.createById = createById;
+        this.createBy = createBy;
+        this.createTime = createTime;
+        this.createTimeT = createTimeT;
+        this.updateBy = updateBy;
+        this.updateTime = updateTime;
+        this.remark = remark;
+    }
+
+    @Override
+    public String toString() {
+        return "OwnerRecordDto{" +
+                "recordId=" + recordId +
+                ", ownerRoomId='" + ownerRoomId + '\'' +
+                ", communityId=" + communityId +
+                ", buildingId=" + buildingId +
+                ", unitId=" + unitId +
+                ", roomId=" + roomId +
+                ", ownerId=" + ownerId +
+                ", buildingName='" + buildingName + '\'' +
+                ", unitName='" + unitName + '\'' +
+                ", roomName='" + roomName + '\'' +
+                ", ownerType='" + ownerType + '\'' +
+                ", roomStatus='" + roomStatus + '\'' +
+                ", recordAuditOpinion='" + recordAuditOpinion + '\'' +
+                ", recordAuditType='" + recordAuditType + '\'' +
+                ", createById=" + createById +
+                ", createBy='" + createBy + '\'' +
+                ", createTime='" + createTime + '\'' +
+                ", createTimeT='" + createTimeT + '\'' +
+                ", updateBy='" + updateBy + '\'' +
+                ", updateTime='" + updateTime + '\'' +
+                ", remark='" + remark + '\'' +
+                '}';
     }
 }

@@ -165,19 +165,21 @@
     </insert>
 
     <select id="getRoomRecordList" resultType="com.example.community.dto.OwnerRoomAndZyOwner">
-        select
-        zy_owner.owner_real_name,
-        zy_owner_room_record.owner_type,
-        zy_owner_room_record.room_status,
-        zy_owner_room_record.record_audit_opinion,
-        zy_owner_room_record.record_audit_type,
-        zy_owner_room_record.create_by,
-        zy_owner_room_record.remark
-        from zy_owner_room_record,zy_owner
-        where zy_owner_room_record.owner_id = zy_owner.owner_id
-        and zy_owner.owner_real_name = #{name}
-        ORDER BY
-        zy_owner_room_record.create_time asc;
+
+    select
+    zy_owner.owner_real_name,
+    zy_owner_room_record.owner_type,
+    zy_owner_room_record.room_status,
+    zy_owner_room_record.record_audit_opinion,
+    zy_owner_room_record.record_audit_type,
+    zy_owner_room_record.create_by,
+    zy_owner_room_record.remark
+    from zy_owner_room_record,zy_owner
+    where zy_owner_room_record.owner_id = zy_owner.owner_id
+    and zy_owner.owner_real_name = #{name}
+    ORDER BY
+    zy_owner_room_record.create_time desc;
+
     </select>
 
 
