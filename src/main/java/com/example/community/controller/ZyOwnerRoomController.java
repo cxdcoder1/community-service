@@ -8,6 +8,8 @@ import com.baomidou.mybatisplus.extension.api.R;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.community.dto.OwnerRoomAndZyOwner;
 import com.example.community.dto.OwnerRoomList;
+import com.example.community.dto.ZyOwnerRoomDto;
+import com.example.community.entity.ZyBuilding;
 import com.example.community.entity.ZyOwnerRoom;
 import com.example.community.entity.ZyOwnerRoomRecord;
 import com.example.community.service.ZyOwnerRoomRecordService;
@@ -125,5 +127,7 @@ public class ZyOwnerRoomController extends ApiController {
     public R delete(@RequestParam("idList") List<Long> idList) {
         return success(this.zyOwnerRoomService.removeByIds(idList));
     }
+
+
 }
 

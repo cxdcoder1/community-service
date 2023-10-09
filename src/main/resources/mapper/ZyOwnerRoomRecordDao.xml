@@ -177,7 +177,7 @@
         where zy_owner_room_record.owner_id = zy_owner.owner_id
         and zy_owner.owner_real_name = #{name}
         ORDER BY
-        zy_owner.owner_real_name DESC;
+        zy_owner_room_record.create_time asc;
     </select>
 
 

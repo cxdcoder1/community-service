@@ -2,11 +2,10 @@ package com.example.community.controller;
 
 import com.alibaba.excel.EasyExcel;
 import com.alibaba.excel.write.style.HorizontalCellStyleStrategy;
-import com.example.community.dao.SysLogininforDao;
-import com.example.community.dao.SysOperLogDao;
-import com.example.community.dao.ZyCommunityDao;
-import com.example.community.dao.ZyRoomDao;
+import com.example.community.dao.*;
+import com.example.community.dto.ExZyOwnerRoom;
 import com.example.community.dto.UserAndDeptImport;
+import com.example.community.dto.ZyOwnerRoomDto;
 import com.example.community.entity.*;
 import com.example.community.listener.DemoDataListener;
 import com.example.community.log.BusinessType;
@@ -53,7 +52,8 @@ public class ExcelController {
     private SysLogininforDao sysLogininforDao;
     @Resource
     private SysOperLogDao sysOperLogDao;
-
+    @Resource
+    private ZyOwnerDao zyOwnerDao;
     /**
      * 生成随机文件名 并返回固定路径
      * @return
@@ -589,4 +589,43 @@ public class ExcelController {
         result.put("path",path);
         return result;
     }
+
+    /**
+     * 业主信息
+     * @param fileName
+     * @param list
+     */
+    public static void ownerList(String fileName,List<ExZyOwnerRoom> list){
+        //"E:\\lx.xls"
+        List<ExZyOwnerRoom> dataList = new ArrayList<>();
+
+        for (ExZyOwnerRoom zyOwnerRoomDto : list) {
+            dataList.add(zyOwnerRoomDto);
+        }
+
+        // 设置单元格样式
+        HorizontalCellStyleStrategy horizontalCellStyleStrategy = new HorizontalCellStyleStrategy( StyleUtils.getHeadStyle(),StyleUtils.getContentStyle());
+
+        EasyExcel.write(fileName, ExZyOwnerRoom.class)
+                .sheet(0)
+                .registerWriteHandler(horizontalCellStyleStrategy)
+                .doWrite(dataList);
+    }
+
+    @Log(title = "业主信息管理", businessType = BusinessType.EXPORT)
+    @PostMapping("ownerList")
+    public Map<String, Object> getOwnerList(@RequestBody List<String> list) {
+        Map<String, Object> result = new HashMap<>();
+        if (list.size()==0){
+            list=null;
+        }
+        List<ExZyOwnerRoom> zyOwnerRoomDtos = zyOwnerDao.getzyOwnerRoomDtoList(list);
+        String path="D:\\lx.xls";
+        ownerList(path,zyOwnerRoomDtos);
+        result.put("msg","导出成功");
+        result.put("status","200");
+        result.put("path",path);
+        return result;
+    }
+
 }

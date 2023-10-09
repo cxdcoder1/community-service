@@ -1,7 +1,12 @@
 package com.example.community.service;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.example.community.dto.ExZyOwnerRoom;
+import com.example.community.dto.ZyOwnerRoomDto;
 import com.example.community.entity.ZyOwner;
+
+import java.util.List;
 
 /**
  * 业主 (ZyOwner)表服务接口
@@ -31,5 +36,12 @@ public interface ZyOwnerService extends IService<ZyOwner> {
      * @return
      */
     ZyOwner getByOpenId(String openId);
+
+    Page<ZyOwnerRoomDto> zyOwnerRoomList(Page<ZyOwnerRoomDto> page, ZyOwnerRoomDto zyOwnerRoomDto, long id);
+
+
+    Integer updateStatus(long ownerId);
+
+    List<ExZyOwnerRoom> getzyOwnerRoomDtoList(List<String> list);
 }
 

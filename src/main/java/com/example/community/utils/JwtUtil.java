@@ -39,7 +39,7 @@ public class JwtUtil {
           }
           return builder.compact();
       }
- 
+
       /**
        * 验证JWT
        * @param jwtStr
