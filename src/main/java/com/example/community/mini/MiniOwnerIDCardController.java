@@ -31,7 +31,6 @@ public class MiniOwnerIDCardController {
     public Map<String, Object> authenticated(@RequestBody ZyOwner zyOwner) {
         HashMap<String, Object> result = new HashMap<>();
 
-        System.err.println(zyOwner);
 
         //验重
         ZyOwner owner = zyOwnerService.getByIdCard(zyOwner.getOwnerIdCard());

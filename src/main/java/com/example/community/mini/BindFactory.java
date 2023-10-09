@@ -26,7 +26,7 @@ public class BindFactory {
         zyOwnerRoom.setRoomId(dto.getRoomId());
         zyOwnerRoom.setOwnerId(dto.getOwnerId());
         zyOwnerRoom.setOwnerType(dto.getOwnerType());
-        zyOwnerRoom.setRoomStatus(RoomStatus.Auditing+"");
+        zyOwnerRoom.setRoomStatus("0");
         zyOwnerRoom.setCreateTime(null);
         return zyOwnerRoom;
     }

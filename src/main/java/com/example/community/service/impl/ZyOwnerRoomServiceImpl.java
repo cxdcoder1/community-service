@@ -4,7 +4,9 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.community.dao.ZyOwnerRoomDao;
 import com.example.community.dto.OwnerRoomList;
+import com.example.community.dto.ZyOwnerRoomDto;
 import com.example.community.entity.ZyOwnerRoom;
+import com.example.community.mini.dto.OwnerRecordDto;
 import com.example.community.service.ZyOwnerRoomService;
 import org.springframework.stereotype.Service;
 
@@ -49,6 +51,11 @@ public class ZyOwnerRoomServiceImpl extends ServiceImpl<ZyOwnerRoomDao, ZyOwnerR
     @Override
     public int updOwnerRoom(String status,String id) {
         return zyOwnerRoomDao.updOwnerRoom(status,id);
+    }
+
+    @Override
+    public List<OwnerRecordDto> getRoomsByCommunityId(String communityId, String ownerId) {
+        return zyOwnerRoomDao.getRoomsByCommunityId(communityId,ownerId);
     }
 }
 
