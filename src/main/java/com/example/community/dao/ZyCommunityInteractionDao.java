@@ -3,6 +3,8 @@ package com.example.community.dao;
 import java.util.List;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.example.community.dto.InterCationAndOwner;
+import com.example.community.dto.OwnerRoomList;
 import org.apache.ibatis.annotations.Param;
 import com.example.community.entity.ZyCommunityInteraction;
 
@@ -31,5 +33,12 @@ int insertBatch(@Param("entities") List<ZyCommunityInteraction> entities);
 */
 int insertOrUpdateBatch(@Param("entities") List<ZyCommunityInteraction> entities);
 
+    List<InterCationAndOwner> getInterCationAll(@Param("index") Long index, @Param("size") Long size, @Param("interCationAndOwner") InterCationAndOwner interCationAndOwner);
+
+    List<InterCationAndOwner> getInterCationList(@Param("interactionId") String interactionId);
+
+    Long getCount(InterCationAndOwner interCationAndOwner);
+
+    int deleteByUserId(@Param("id") String id,@Param("type") String type);
 }
 

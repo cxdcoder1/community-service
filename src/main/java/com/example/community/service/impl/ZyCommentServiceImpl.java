@@ -6,6 +6,8 @@ import com.example.community.entity.ZyComment;
 import com.example.community.service.ZyCommentService;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
+
 /**
  * 评论表(ZyComment)表服务实现类
  *
@@ -15,5 +17,12 @@ import org.springframework.stereotype.Service;
 @Service("zyCommentService")
 public class ZyCommentServiceImpl extends ServiceImpl<ZyCommentDao, ZyComment> implements ZyCommentService {
 
+    @Resource
+    private ZyCommentDao zyCommentDao;
+
+    @Override
+    public int updDelFlag(String id) {
+        return zyCommentDao.updDelFlag(id);
+    }
 }
 
