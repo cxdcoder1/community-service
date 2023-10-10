@@ -19,21 +19,73 @@
 
     <!-- 批量插入 -->
     <insert id="insertBatch" keyProperty="visitorId" useGeneratedKeys="true">
-        insert into zy-community.zy_visitor(community_id, visitor_name, visitor_phone_number, visitor_date, create_by_id, create_by_open_id, create_by, create_time, update_by, update_time, remark)
+        insert into zy-community.zy_visitor(community_id, visitor_name, visitor_phone_number, visitor_date,
+        create_by_id, create_by_open_id, create_by, create_time, update_by, update_time, remark)
         values
         <foreach collection="entities" item="entity" separator=",">
-        (#{entity.communityId}, #{entity.visitorName}, #{entity.visitorPhoneNumber}, #{entity.visitorDate}, #{entity.createById}, #{entity.createByOpenId}, #{entity.createBy}, #{entity.createTime}, #{entity.updateBy}, #{entity.updateTime}, #{entity.remark})
+            (#{entity.communityId}, #{entity.visitorName}, #{entity.visitorPhoneNumber}, #{entity.visitorDate},
+            #{entity.createById}, #{entity.createByOpenId}, #{entity.createBy}, #{entity.createTime},
+            #{entity.updateBy}, #{entity.updateTime}, #{entity.remark})
         </foreach>
     </insert>
     <!-- 批量插入或按主键更新 -->
     <insert id="insertOrUpdateBatch" keyProperty="visitorId" useGeneratedKeys="true">
-        insert into zy-community.zy_visitor(community_id, visitor_name, visitor_phone_number, visitor_date, create_by_id, create_by_open_id, create_by, create_time, update_by, update_time, remark)
+        insert into zy-community.zy_visitor(community_id, visitor_name, visitor_phone_number, visitor_date,
+        create_by_id, create_by_open_id, create_by, create_time, update_by, update_time, remark)
         values
         <foreach collection="entities" item="entity" separator=",">
-            (#{entity.communityId}, #{entity.visitorName}, #{entity.visitorPhoneNumber}, #{entity.visitorDate}, #{entity.createById}, #{entity.createByOpenId}, #{entity.createBy}, #{entity.createTime}, #{entity.updateBy}, #{entity.updateTime}, #{entity.remark})
+            (#{entity.communityId}, #{entity.visitorName}, #{entity.visitorPhoneNumber}, #{entity.visitorDate},
+            #{entity.createById}, #{entity.createByOpenId}, #{entity.createBy}, #{entity.createTime},
+            #{entity.updateBy}, #{entity.updateTime}, #{entity.remark})
         </foreach>
         on duplicate key update
-         community_id = values(community_id) , visitor_name = values(visitor_name) , visitor_phone_number = values(visitor_phone_number) , visitor_date = values(visitor_date) , create_by_id = values(create_by_id) , create_by_open_id = values(create_by_open_id) , create_by = values(create_by) , create_time = values(create_time) , update_by = values(update_by) , update_time = values(update_time) , remark = values(remark)     </insert>
+        community_id = values(community_id) , visitor_name = values(visitor_name) , visitor_phone_number =
+        values(visitor_phone_number) , visitor_date = values(visitor_date) , create_by_id = values(create_by_id) ,
+        create_by_open_id = values(create_by_open_id) , create_by = values(create_by) , create_time =
+        values(create_time) , update_by = values(update_by) , update_time = values(update_time) , remark =
+        values(remark)
+    </insert>
+    <insert id="insertByV" useGeneratedKeys="true" keyProperty="visitorId">
+        INSERT INTO zy_visitor
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="visitorId != null">visitor_id,</if>
+            <if test="communityId != null">community_id,</if>
+            <if test="visitorName != null">visitor_name,</if>
+            <if test="visitorPhoneNumber != null">visitor_phone_number,</if>
+            <if test="visitorDate != null">visitor_date,</if>
+            <if test="createById != null">create_by_id,</if>
+            <if test="createByOpenId != null">create_by_open_id,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remark != null">remark,</if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="visitorId != null">#{visitorId},</if>
+            <if test="communityId != null">#{communityId},</if>
+            <if test="visitorName != null">#{visitorName},</if>
+            <if test="visitorPhoneNumber != null">#{visitorPhoneNumber},</if>
+            <if test="visitorDate != null">#{visitorDate},</if>
+            <if test="createById != null">#{createById},</if>
+            <if test="createByOpenId != null">#{createByOpenId},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remark != null">#{remark},</if>
+        </trim>
+    </insert>
+    <select id="getByCommunityId" resultType="com.example.community.entity.ZyVisitor">
+        select * from zy_visitor where community_id = #{communityId} and create_by_id = #{ownerId}
+        ORDER BY create_time DESC
+        limit 0,3
+    </select>
+    <select id="getByComS" resultType="com.example.community.entity.ZyVisitor">
+        select * from zy_visitor where community_id = #{communityId} and create_by_id = #{ownerId}
+        ORDER BY visitor_date DESC
+    </select>
 
 </mapper>
 

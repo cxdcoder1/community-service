@@ -2,6 +2,8 @@ package com.example.community.entity;
 
 
 import com.baomidou.mybatisplus.extension.activerecord.Model;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -23,6 +25,8 @@ public class ZyVisitor extends Model<ZyVisitor> {
     //访客手机号
     private String visitorPhoneNumber;
     //到访时间
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(shape=JsonFormat. Shape.STRING,pattern="yyyy-MM-dd",timezone="GMT+8")
     private Date visitorDate;
     //创建人id
     private Long createById;
@@ -31,10 +35,12 @@ public class ZyVisitor extends Model<ZyVisitor> {
     //创建者
     private String createBy;
     //创建时间
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date createTime;
     //更新者
     private String updateBy;
     //更新时间
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date updateTime;
     //备注
     private String remark;
