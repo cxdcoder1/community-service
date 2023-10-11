@@ -36,6 +36,22 @@ public class ZyComplaintSuggest extends Model<ZyComplaintSuggest> {
     private Long userId;
 
 
+    @Override
+    public String toString() {
+        return "ZyComplaintSuggest{" +
+                "complaintSuggestId=" + complaintSuggestId +
+                ", communityId=" + communityId +
+                ", complaintSuggestType='" + complaintSuggestType + '\'' +
+                ", complaintSuggestContent='" + complaintSuggestContent + '\'' +
+                ", createBy='" + createBy + '\'' +
+                ", createTime=" + createTime +
+                ", updateBy='" + updateBy + '\'' +
+                ", updateTime=" + updateTime +
+                ", remark='" + remark + '\'' +
+                ", userId=" + userId +
+                '}';
+    }
+
     public Long getComplaintSuggestId() {
         return complaintSuggestId;
     }

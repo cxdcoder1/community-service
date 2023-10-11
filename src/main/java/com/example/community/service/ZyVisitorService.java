@@ -14,5 +14,7 @@ import com.example.community.entity.ZyVisitor;
 public interface ZyVisitorService extends IService<ZyVisitor> {
 
     Page<ZyVisitor> zyVisitorList(Page<ZyVisitor> page, ZyVisitor zyVisitor, long id);
+
+    Integer updateRemark(long id);
 }
 

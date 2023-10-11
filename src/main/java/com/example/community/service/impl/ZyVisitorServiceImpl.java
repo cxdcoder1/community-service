@@ -37,5 +37,10 @@ public class ZyVisitorServiceImpl extends ServiceImpl<ZyVisitorDao, ZyVisitor> i
         page.setRecords(zyVisitorDao.selectZyVisitor((page.getCurrent()-1)*page.getSize(),page.getSize(),zyVisitor,id));
         return page;
     }
+
+    @Override
+    public Integer updateRemark(long id) {
+        return zyVisitorDao.updateRemark(id);
+    }
 }
 

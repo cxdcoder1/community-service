@@ -42,6 +42,7 @@ public interface ZyComplaintSuggestDao extends BaseMapper<ZyComplaintSuggest> {
     List<ExSuggest> getExSuggestList(List<String> list);
 
     Integer updateRemark(String remark,long id);
+
     Integer insertBySuggest(SuggestAndOwnerDto suggestAndOwnerDto);
 
     Integer insertFiles(List<ZyFiles> files);

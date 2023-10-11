@@ -34,12 +34,8 @@
          community_id = values(community_id) , complaint_suggest_type = values(complaint_suggest_type) , complaint_suggest_content = values(complaint_suggest_content) , create_by = values(create_by) , create_time = values(create_time) , update_by = values(update_by) , update_time = values(update_time) , remark = values(remark) , user_id = values(user_id)     </insert>
     <update id="updateRemark">
         UPDATE zy_complaint_suggest
-        <set>
-            <if test="remark != null">
-                remark=#{remark},
-            </if>
-        </set>
-        WHERE complaint_suggest_Id=#{id}
+        SET remark = #{remark}
+        WHERE complaint_suggest_Id = #{id}
     </update>
     <select id="count" resultType="java.lang.Long">
         select count(*) from zy_complaint_suggest zcs
