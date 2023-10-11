@@ -6,14 +6,23 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.api.ApiController;
 import com.baomidou.mybatisplus.extension.api.R;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.example.community.dto.InterCationAndOwner;
+import com.example.community.entity.ZyComment;
 import com.example.community.entity.ZyCommunityInteraction;
+import com.example.community.service.ZyCommentService;
 import com.example.community.service.ZyCommunityInteractionService;
+import com.example.community.service.ZyOwnerService;
 import io.swagger.annotations.Api;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.websocket.server.PathParam;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 社区互动表(ZyCommunityInteraction)表控制层
@@ -24,12 +33,75 @@ import java.util.List;
 @Api(tags = "社区互动")
 @RestController
 @RequestMapping("zyCommunityInteraction")
+@CrossOrigin
 public class ZyCommunityInteractionController extends ApiController {
     /**
      * 服务对象
      */
     @Resource
     private ZyCommunityInteractionService zyCommunityInteractionService;
+
+    @Resource
+    private ZyCommentService zyCommentService;
+
+    @Resource
+    private ZyOwnerService zyOwnerService;
+
+    @GetMapping("getParentIds")
+    public Map<String,Object> getParentIds(@PathParam("id") String id) {
+
+        Map<String, Object> map = new HashMap<>();
+        List<InterCationAndOwner> parentIds = zyCommentService.getParentIds(id);
+        List<String> objectsName = new ArrayList<>();
+        for(InterCationAndOwner parentId:parentIds){
+            System.err.println(parentId);
+            String zyOwnerName = zyCommunityInteractionService.getUserName(parentId.getParentId());
+            objectsName.add(zyOwnerName);
+        }
+        System.err.println(objectsName);
+        map.put("objectsName",objectsName);
+        return map;
+    }
+
+
+
+
+
+//    @GetMapping("getUserName")
+//    public R getUserName(@PathParam("id") String id) {
+//        System.err.println(id);
+//        return success(this.zyCommunityInteractionService.getUserName(id));
+//    }
+
+
+    @DeleteMapping("updDelFlag")
+    public Map<String,Object> update(@PathParam("id") String id) {
+        Map<String, Object> map = new HashMap<>();
+        zyCommentService.updDelFlag(id);
+        map.put("msg", "删除成功");
+        map.put("status", 200);
+        return map;
+    }
+
+    @GetMapping("getInteractionService")
+    public R selectAll(Page<InterCationAndOwner> page, InterCationAndOwner interCationAndOwner) {
+        return success(this.zyCommunityInteractionService.getInterCationAll(page,interCationAndOwner));
+    }
+
+    @GetMapping("getInteractionList")
+    public R selectAll(String  interactionId) {
+        return success(this.zyCommunityInteractionService.getInterCationList(interactionId));
+    }
+
+
+    @PutMapping("delInteraction")
+    public Map<String,Object> update(@PathParam("id") String id, @PathParam("type") String type) {
+        Map<String, Object> map = new HashMap<>();
+        zyCommunityInteractionService.deleteByUserId(id,type);
+        map.put("msg", "删除成功");
+        map.put("status", 200);
+        return map;
+    }
 
     /**
      * 分页查询所有数据
@@ -62,8 +134,12 @@ public class ZyCommunityInteractionController extends ApiController {
      */
     @PostMapping
     public R insert(@RequestBody ZyCommunityInteraction zyCommunityInteraction) {
+        System.err.println(zyCommunityInteraction);
         return success(this.zyCommunityInteractionService.save(zyCommunityInteraction));
     }
+
+
+
 
     /**
      * 修改数据

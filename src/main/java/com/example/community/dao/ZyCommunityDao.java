@@ -67,5 +67,6 @@ public interface ZyCommunityDao extends BaseMapper<ZyCommunity> {
 
     List<ZyCommunity> getUCommunity();
 
+
 }
 

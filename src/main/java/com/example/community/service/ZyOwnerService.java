@@ -3,8 +3,10 @@ package com.example.community.service;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.example.community.dto.ExZyOwnerRoom;
+import com.example.community.dto.InterCationAndOwner;
 import com.example.community.dto.ZyOwnerRoomDto;
 import com.example.community.entity.ZyOwner;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -43,5 +45,7 @@ public interface ZyOwnerService extends IService<ZyOwner> {
     Integer updateStatus(long ownerId);
 
     List<ExZyOwnerRoom> getzyOwnerRoomDtoList(List<String> list);
+
+    InterCationAndOwner selectCommentByInteractionId(InterCationAndOwner interCationAndOwner);
 }
 
