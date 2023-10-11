@@ -32,6 +32,79 @@
         </foreach>
         on duplicate key update
          community_id = values(community_id) , complaint_suggest_type = values(complaint_suggest_type) , complaint_suggest_content = values(complaint_suggest_content) , create_by = values(create_by) , create_time = values(create_time) , update_by = values(update_by) , update_time = values(update_time) , remark = values(remark) , user_id = values(user_id)     </insert>
+    <insert id="insertBySuggest">
+        INSERT INTO zy_complaint_suggest
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="complaintSuggestId != null">complaint_suggest_id,</if>
+            <if test="communityId != null">community_id,</if>
+            <if test="complaintSuggestType != null">complaint_suggest_type,</if>
+            <if test="complaintSuggestContent != null">complaint_suggest_content,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remark != null">remark,</if>
+            <if test="userId != null">user_id,</if>
+        </trim>
+        <trim prefix="VALUES (" suffix=")" suffixOverrides=",">
+            <if test="complaintSuggestId != null">#{complaintSuggestId},</if>
+            <if test="communityId != null">#{communityId},</if>
+            <if test="complaintSuggestType != null">#{complaintSuggestType},</if>
+            <if test="complaintSuggestContent != null">#{complaintSuggestContent},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="userId != null">#{userId},</if>
+        </trim>
+    </insert>
+    <insert id="insertFiles">
+        insert into zy_files
+
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+                files_id,files_url,source,user_id,parent_id,remark
+            </trim>
+
+        values
+        <foreach collection="files" item="entity" separator=",">
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+                #{entity.filesId},
+                <if test="entity.filesUrl != null and entity.filesUrl != ''">
+                    #{entity.filesUrl},
+                </if>
+                <if test="entity.updateBy != null and entity.updateBy != ''">
+                    #{entity.updateBy},
+                </if>
+                <if test="entity.createBy != null and entity.createBy != ''">
+                    #{entity.createBy},
+                </if>
+                <if test="entity.delFlag != null and entity.delFlag != ''">
+                    #{entity.delFlag},
+                </if>
+                <if test="entity.source != null ">
+                    #{entity.source},
+                </if>
+                <if test="entity.userId != null and entity.userId != ''">
+                    #{entity.userId},
+                </if>
+                <if test="entity.parentId != null and entity.parentId != ''">
+                    #{entity.parentId},
+                </if>
+                <if test="entity.remark != null and entity.remark != ''">
+                    #{entity.remark},
+                </if>
+
+
+                <if test="entity.createTime != null ">
+                    #{entity.createTime},
+                </if>
+            </trim>
+        </foreach>
+    </insert>
+    <select id="getSuggestions" resultType="com.example.community.entity.ZyComplaintSuggest">
+        SELECT * from zy_complaint_suggest where community_id = #{communityId} and user_id = #{userId}
+    </select>
 
 </mapper>
 

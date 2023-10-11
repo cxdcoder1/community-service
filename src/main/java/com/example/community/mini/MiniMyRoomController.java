@@ -46,7 +46,7 @@ public class MiniMyRoomController {
         List<OwnerRecordDto> rejectList = new ArrayList();
         //给房屋信息分类
         for (OwnerRecordDto zyOwnerRoom : roomList) {
-            if (zyOwnerRoom.getRoomStatus().equals("0")){
+            if (zyOwnerRoom.getRoomStatus().equals("0")||zyOwnerRoom.getRoomStatus().equals("3")){
                 applyList.add(zyOwnerRoom);
             }
             if (zyOwnerRoom.getRoomStatus().equals("1")){
