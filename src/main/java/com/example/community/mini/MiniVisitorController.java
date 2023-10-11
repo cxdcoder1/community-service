@@ -63,6 +63,7 @@ public class MiniVisitorController {
             result.put("msg", "保存成功");
             result.put("status", 200);
             result.put("data", zyVisitor.getVisitorId());
+            result.put("remark",zyVisitor.getRemark());
             return result;
         }
         result.put("msg", "保存失败");

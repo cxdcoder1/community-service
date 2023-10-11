@@ -17,21 +17,31 @@
 
     <!-- 批量插入 -->
     <insert id="insertBatch" keyProperty="complaintSuggestId" useGeneratedKeys="true">
-        insert into zy-community.zy_complaint_suggest(community_id, complaint_suggest_type, complaint_suggest_content, create_by, create_time, update_by, update_time, remark, user_id)
+        insert into zy-community.zy_complaint_suggest(community_id, complaint_suggest_type, complaint_suggest_content,
+        create_by, create_time, update_by, update_time, remark, user_id)
         values
         <foreach collection="entities" item="entity" separator=",">
-        (#{entity.communityId}, #{entity.complaintSuggestType}, #{entity.complaintSuggestContent}, #{entity.createBy}, #{entity.createTime}, #{entity.updateBy}, #{entity.updateTime}, #{entity.remark}, #{entity.userId})
+            (#{entity.communityId}, #{entity.complaintSuggestType}, #{entity.complaintSuggestContent},
+            #{entity.createBy}, #{entity.createTime}, #{entity.updateBy}, #{entity.updateTime}, #{entity.remark},
+            #{entity.userId})
         </foreach>
     </insert>
     <!-- 批量插入或按主键更新 -->
     <insert id="insertOrUpdateBatch" keyProperty="complaintSuggestId" useGeneratedKeys="true">
-        insert into zy-community.zy_complaint_suggest(community_id, complaint_suggest_type, complaint_suggest_content, create_by, create_time, update_by, update_time, remark, user_id)
+        insert into zy-community.zy_complaint_suggest(community_id, complaint_suggest_type, complaint_suggest_content,
+        create_by, create_time, update_by, update_time, remark, user_id)
         values
         <foreach collection="entities" item="entity" separator=",">
-            (#{entity.communityId}, #{entity.complaintSuggestType}, #{entity.complaintSuggestContent}, #{entity.createBy}, #{entity.createTime}, #{entity.updateBy}, #{entity.updateTime}, #{entity.remark}, #{entity.userId})
+            (#{entity.communityId}, #{entity.complaintSuggestType}, #{entity.complaintSuggestContent},
+            #{entity.createBy}, #{entity.createTime}, #{entity.updateBy}, #{entity.updateTime}, #{entity.remark},
+            #{entity.userId})
         </foreach>
         on duplicate key update
-         community_id = values(community_id) , complaint_suggest_type = values(complaint_suggest_type) , complaint_suggest_content = values(complaint_suggest_content) , create_by = values(create_by) , create_time = values(create_time) , update_by = values(update_by) , update_time = values(update_time) , remark = values(remark) , user_id = values(user_id)     </insert>
+        community_id = values(community_id) , complaint_suggest_type = values(complaint_suggest_type) ,
+        complaint_suggest_content = values(complaint_suggest_content) , create_by = values(create_by) , create_time =
+        values(create_time) , update_by = values(update_by) , update_time = values(update_time) , remark =
+        values(remark) , user_id = values(user_id)
+    </insert>
     <update id="updateRemark">
         UPDATE zy_complaint_suggest
         SET remark = #{remark}
@@ -40,16 +50,18 @@
     <select id="count" resultType="java.lang.Long">
         select count(*) from zy_complaint_suggest zcs
         JOIN zy_owner zy on zcs.user_id=zy.owner_id
-        join zy_files zf on zcs.user_id=zf.user_id
+        join zy_files zf on zcs.complaint_suggest_id=zf.parent_id
         <where>
             <if test="zyComplaintSuggestDto.complaintSuggestType!=null and zyComplaintSuggestDto.complaintSuggestType !=''">
                 and zcs.complaint_suggest_type=#{zyComplaintSuggestDto.complaintSuggestType}
             </if>
-                and zcs.community_id=#{id}
+            and zcs.community_id=#{id}
         </where>
     </select>
     <select id="selectzyComplaintSuggestDto" resultType="com.example.community.dto.ZyComplaintSuggestDto">
-        select zcs.complaint_suggest_id,zcs.complaint_suggest_type,zcs.complaint_suggest_content,zcs.create_by,zy.owner_phone_number,zcs.create_time ,zcs.remark
+        select
+        zcs.complaint_suggest_id,zcs.complaint_suggest_type,zcs.complaint_suggest_content,zcs.create_by,zy.owner_phone_number,zcs.create_time
+        ,zcs.remark
         ,zf.files_url
         from zy_complaint_suggest zcs
         LEFT JOIN zy_owner zy on zcs.user_id=zy.owner_id
@@ -63,8 +75,10 @@
         limit #{index},#{size}
     </select>
     <select id="getExSuggestList" resultType="com.example.community.dto.ExSuggest">
-        select zcs.complaint_suggest_id,zcs.complaint_suggest_type,zcs.complaint_suggest_content,zcs.create_by,zy.owner_phone_number,zcs.create_time ,zcs.remark
-             ,zf.files_url
+        select
+        zcs.complaint_suggest_id,zcs.complaint_suggest_type,zcs.complaint_suggest_content,zcs.create_by,zy.owner_phone_number,zcs.create_time
+        ,zcs.remark
+        ,zf.files_url
         from zy_complaint_suggest zcs
         LEFT JOIN zy_owner zy on zcs.user_id=zy.owner_id
         LEFT join zy_files zf on zcs.complaint_suggest_id=zf.parent_id
@@ -107,10 +121,9 @@
     <insert id="insertFiles">
         insert into zy_files
 
-            <trim prefix="(" suffix=")" suffixOverrides=",">
-                files_id,files_url,source,user_id,parent_id,remark
-            </trim>
-
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            files_id,files_url,source,user_id,parent_id,remark
+        </trim>
         values
         <foreach collection="files" item="entity" separator=",">
             <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -139,8 +152,6 @@
                 <if test="entity.remark != null and entity.remark != ''">
                     #{entity.remark},
                 </if>
-
-
                 <if test="entity.createTime != null ">
                     #{entity.createTime},
                 </if>
