@@ -42,5 +42,10 @@ public class ZyVisitorServiceImpl extends ServiceImpl<ZyVisitorDao, ZyVisitor> i
     public Integer updateRemark(long id) {
         return zyVisitorDao.updateRemark(id);
     }
+
+    @Override
+    public Integer updateRemarks(long id) {
+        return zyVisitorDao.updateRemarks(id);
+    }
 }
 

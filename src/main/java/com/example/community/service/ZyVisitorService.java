@@ -16,5 +16,7 @@ public interface ZyVisitorService extends IService<ZyVisitor> {
     Page<ZyVisitor> zyVisitorList(Page<ZyVisitor> page, ZyVisitor zyVisitor, long id);
 
     Integer updateRemark(long id);
+
+    Integer updateRemarks(long id);
 }
 

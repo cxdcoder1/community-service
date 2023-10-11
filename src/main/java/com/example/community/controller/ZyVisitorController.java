@@ -110,5 +110,21 @@ public class ZyVisitorController extends ApiController {
         return map;
     }
 
+    @PutMapping("updateRemarks/{id}")
+    public Map<String, Object> updateRemarks(@PathVariable long id){
+        Map<String, Object> map = new HashMap<>();
+        Integer integer = zyVisitorService.updateRemarks(id);
+        if (integer>0){
+            map.put("msg","操作成功");
+            map.put("status", 200);
+            map.put("success", true);
+            return map;
+        }
+        map.put("msg","操作失败");
+        map.put("status", 201);
+        map.put("success", false);
+        return map;
+    }
+
 }
 
