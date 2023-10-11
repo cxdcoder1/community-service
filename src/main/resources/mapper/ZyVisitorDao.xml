@@ -132,5 +132,11 @@
         </if>
     </select>
 
+    <update id="updateRemark">
+    UPDATE zy_visitor
+    SET remark = IF(remark = 0, 1, 0)
+    WHERE visitor_Id =#{id}
+</update>
+
 </mapper>
 
