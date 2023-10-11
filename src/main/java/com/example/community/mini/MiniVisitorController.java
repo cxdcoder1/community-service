@@ -57,6 +57,7 @@ public class MiniVisitorController {
         ZyOwner zyOwner = zyOwnerMapper.selectOne(new QueryWrapper<ZyOwner>().eq("owner_open_id", zyVisitor.getCreateByOpenId()));
         zyVisitor.setCreateById(zyOwner.getOwnerId());
         zyVisitor.setUpdateBy(zyOwner.getOwnerRealName());
+        zyVisitor.setRemark("2");
         Integer integer = miniVisitorService.insertByV(zyVisitor);
         if (integer.equals(1)) {
             result.put("msg", "保存成功");
