@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.api.ApiController;
 import com.baomidou.mybatisplus.extension.api.R;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.example.community.dto.ZyOwnerRoomDto;
 import com.example.community.entity.ZyVisitor;
 import com.example.community.service.ZyVisitorService;
 import io.swagger.annotations.Api;
@@ -24,6 +25,7 @@ import java.util.List;
 @Api(tags = "访客邀请")
 @RestController
 @RequestMapping("zyVisitor")
+@CrossOrigin
 public class ZyVisitorController extends ApiController {
     /**
      * 服务对象
@@ -85,6 +87,10 @@ public class ZyVisitorController extends ApiController {
     @DeleteMapping
     public R delete(@RequestParam("idList") List<Long> idList) {
         return success(this.zyVisitorService.removeByIds(idList));
+    }
+    @GetMapping("zyVisitorList")
+    public R zyVisitorList(Page<ZyVisitor> page, ZyVisitor zyVisitor, long communityId) {
+        return success(this.zyVisitorService.zyVisitorList(page,zyVisitor,communityId));
     }
 }
 

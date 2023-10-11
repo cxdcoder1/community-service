@@ -3,6 +3,9 @@ package com.example.community.dao;
 import java.util.List;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.example.community.dto.ExVisitor;
+import com.example.community.dto.ExZyOwnerRoom;
+import com.example.community.dto.ZyOwnerRoomDto;
 import org.apache.ibatis.annotations.Param;
 import com.example.community.entity.ZyVisitor;
 
@@ -36,6 +39,12 @@ public interface ZyVisitorDao extends BaseMapper<ZyVisitor> {
     List<ZyVisitor> getByCommunityId(@Param("communityId") Long communityId,@Param("ownerId") Long ownerId);
 
     List<ZyVisitor> getByComS(@Param("communityId") Long communityId,@Param("ownerId") Long ownerId);
+
+    long count(ZyVisitor zyVisitor, long id);
+
+    List<ZyVisitor> selectZyVisitor(@Param("index") Long index, @Param("size") Long size , @Param("zyVisitor") ZyVisitor zyVisitor, @Param("id")long id);
+
+    List<ExVisitor> getZyVisitorList(List<String> list);
 
 }
 

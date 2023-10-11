@@ -1,7 +1,11 @@
 package com.example.community.entity;
 
 
+import com.alibaba.excel.annotation.ExcelProperty;
+import com.alibaba.excel.annotation.write.style.ColumnWidth;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
+import lombok.Getter;
+import org.springframework.format.annotation.DateTimeFormat;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -15,19 +19,28 @@ import java.util.Date;
  * @since 2023-09-14 09:53:04
  */
 @SuppressWarnings("serial")
+@Getter
 public class ZyVisitor extends Model<ZyVisitor> {
+    @ColumnWidth(8)//单独设置列宽
+    @ExcelProperty(index = 0, value = {"ID"})
     //id
     private Long visitorId;
     //小区id
     private Long communityId;
+    //小区名字
+    @ExcelProperty(index = 4, value = {"小区名字"})
+    private String communityName;
     //访客姓名
+    @ExcelProperty(index = 2, value = {"访客姓名"})
     private String visitorName;
     //访客手机号
+    @ExcelProperty(index = 3, value = {"访客手机号"})
     private String visitorPhoneNumber;
     //到访时间
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @JsonFormat(shape=JsonFormat. Shape.STRING,pattern="yyyy-MM-dd",timezone="GMT+8")
-    private Date visitorDate;
+    @ColumnWidth(19)//单独设置列宽
+    @ExcelProperty(index = 5, value = {"到访时间"})
+    private String visitorDate;
     //创建人id
     private Long createById;
     //创建人openid
@@ -36,6 +49,8 @@ public class ZyVisitor extends Model<ZyVisitor> {
     private String createBy;
     //创建时间
     @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @ColumnWidth(19)//单独设置列宽
+    @ExcelProperty(index = 6, value = {"创建时间"})
     private Date createTime;
     //更新者
     private String updateBy;
@@ -45,6 +60,13 @@ public class ZyVisitor extends Model<ZyVisitor> {
     //备注
     private String remark;
 
+    public String getCommunityName() {
+        return communityName;
+    }
+
+    public void setCommunityName(String communityName) {
+        this.communityName = communityName;
+    }
 
     public Long getVisitorId() {
         return visitorId;
@@ -78,11 +100,11 @@ public class ZyVisitor extends Model<ZyVisitor> {
         this.visitorPhoneNumber = visitorPhoneNumber;
     }
 
-    public Date getVisitorDate() {
+    public String getVisitorDate() {
         return visitorDate;
     }
 
-    public void setVisitorDate(Date visitorDate) {
+    public void setVisitorDate(String visitorDate) {
         this.visitorDate = visitorDate;
     }
 

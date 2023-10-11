@@ -87,5 +87,50 @@
         ORDER BY visitor_date DESC
     </select>
 
+    <select id="count" resultType="java.lang.Long">
+        select count(*) from zy_visitor zv JOIN zy_community zc on zv.community_id=zv.community_id
+        <where>
+            <if test="zyVisitor.visitorName !=null and zyVisitor.visitorName !=''">
+                and   zv.visitor_name=#{zyVisitor.visitorName}
+            </if>
+            <if test="zyVisitor.visitorPhoneNumber !=null and zyVisitor.visitorPhoneNumber !=''">
+                and   zv.visitor_phone_number=#{zyVisitor.visitorPhoneNumber}
+            </if>
+            <if test="zyVisitor.visitorDate !=null and zyVisitor.visitorDate !=''">
+                and   zv.visitor_date=#{zyVisitor.visitorDate}
+            </if>
+            and  zv.community_id=#{id}
+        </where>
+
+    </select>
+    <select id="selectZyVisitor" resultType="com.example.community.entity.ZyVisitor">
+        select * from zy_visitor zv JOIN zy_community zc on zv.community_id=zv.community_id
+        <where>
+            <if test="zyVisitor.visitorName !=null and zyVisitor.visitorName !=''">
+                and   zv.visitor_name=#{zyVisitor.visitorName}
+            </if>
+            <if test="zyVisitor.visitorPhoneNumber !=null and zyVisitor.visitorPhoneNumber !=''">
+                and   zv.visitor_phone_number=#{zyVisitor.visitorPhoneNumber}
+            </if>
+            <if test="zyVisitor.visitorDate !=null and zyVisitor.visitorDate !=''">
+                and   zv.visitor_date=#{zyVisitor.visitorDate}
+            </if>
+                and  zv.community_id=#{id}
+        </where>
+                order by visitor_date desc
+                limit #{index},#{size}
+    </select>
+    <select id="getZyVisitorList" resultType="com.example.community.dto.ExVisitor">
+        select * from zy_visitor zv JOIN zy_community zc on zv.community_id=zv.community_id
+        where   zv.visitor_id!=1
+        <if test="list!=null">
+            and
+            zv.visitor_id in
+            <foreach collection="list" item="num" index="index" open="(" close=")" separator=",">
+                #{num}
+            </foreach>
+        </if>
+    </select>
+
 </mapper>
 

@@ -3,6 +3,8 @@ package com.example.community.dao;
 import java.util.List;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.example.community.dto.ZyRepairDto;
+import com.example.community.entity.ZyVisitor;
 import org.apache.ibatis.annotations.Param;
 import com.example.community.entity.ZyRepair;
 
@@ -30,6 +32,10 @@ int insertBatch(@Param("entities") List<ZyRepair> entities);
 * @throws org.springframework.jdbc.BadSqlGrammarException 入参是空List的时候会抛SQL语句错误的异常，请自行校验入参
 */
 int insertOrUpdateBatch(@Param("entities") List<ZyRepair> entities);
+
+    long count(@Param("zyRepairDto") ZyRepairDto zyRepairDto,@Param("id")long id);
+
+    List<ZyRepairDto> selectZyRepairDto(@Param("index") Long index, @Param("size") Long size , @Param("zyRepairDto") ZyRepairDto zyRepairDto, @Param("id")long id);
 
 }
 

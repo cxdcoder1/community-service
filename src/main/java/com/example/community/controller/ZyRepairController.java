@@ -6,7 +6,9 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.api.ApiController;
 import com.baomidou.mybatisplus.extension.api.R;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.example.community.dto.ZyRepairDto;
 import com.example.community.entity.ZyRepair;
+import com.example.community.entity.ZyVisitor;
 import com.example.community.service.ZyRepairService;
 import io.swagger.annotations.Api;
 import org.springframework.web.bind.annotation.*;
@@ -24,6 +26,7 @@ import java.util.List;
 @Api(tags = "保修管理")
 @RestController
 @RequestMapping("zyRepair")
+@CrossOrigin
 public class ZyRepairController extends ApiController {
     /**
      * 服务对象
@@ -85,6 +88,12 @@ public class ZyRepairController extends ApiController {
     @DeleteMapping
     public R delete(@RequestParam("idList") List<Long> idList) {
         return success(this.zyRepairService.removeByIds(idList));
+    }
+
+    @GetMapping("zyRepairDtoList")
+    public R zyRepair(Page<ZyRepairDto> page, ZyRepairDto zyRepairDto, Long communityId) {
+        System.err.println(zyRepairDto);
+        return success(this.zyRepairService.zyRepairDtoList(page,zyRepairDto,communityId));
     }
 }
 

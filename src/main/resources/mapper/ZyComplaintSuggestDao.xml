@@ -32,6 +32,55 @@
         </foreach>
         on duplicate key update
          community_id = values(community_id) , complaint_suggest_type = values(complaint_suggest_type) , complaint_suggest_content = values(complaint_suggest_content) , create_by = values(create_by) , create_time = values(create_time) , update_by = values(update_by) , update_time = values(update_time) , remark = values(remark) , user_id = values(user_id)     </insert>
+    <update id="updateRemark">
+        UPDATE zy_complaint_suggest
+        <set>
+            <if test="remark != null">
+                remark=#{remark},
+            </if>
+        </set>
+        WHERE complaint_suggest_Id=#{id}
+    </update>
+    <select id="count" resultType="java.lang.Long">
+        select count(*) from zy_complaint_suggest zcs
+        JOIN zy_owner zy on zcs.user_id=zy.owner_id
+        join zy_files zf on zcs.user_id=zf.user_id
+        <where>
+            <if test="zyComplaintSuggestDto.complaintSuggestType!=null and zyComplaintSuggestDto.complaintSuggestType !=''">
+                and zcs.complaint_suggest_type=#{zyComplaintSuggestDto.complaintSuggestType}
+            </if>
+                and zcs.community_id=#{id}
+        </where>
+    </select>
+    <select id="selectzyComplaintSuggestDto" resultType="com.example.community.dto.ZyComplaintSuggestDto">
+        select zcs.complaint_suggest_id,zcs.complaint_suggest_type,zcs.complaint_suggest_content,zcs.create_by,zy.owner_phone_number,zcs.create_time ,zcs.remark
+        ,zf.files_url
+        from zy_complaint_suggest zcs
+        JOIN zy_owner zy on zcs.user_id=zy.owner_id
+        join zy_files zf on zcs.user_id=zf.user_id
+        <where>
+            <if test="zyComplaintSuggestDto.complaintSuggestType!=null and zyComplaintSuggestDto.complaintSuggestType !=''">
+                and zcs.complaint_suggest_type=#{zyComplaintSuggestDto.complaintSuggestType}
+            </if>
+            and zcs.community_id=#{id}
+        </where>
+        limit #{index},#{size}
+    </select>
+    <select id="getExSuggestList" resultType="com.example.community.dto.ExSuggest">
+        select zcs.complaint_suggest_id,zcs.complaint_suggest_type,zcs.complaint_suggest_content,zcs.create_by,zy.owner_phone_number,zcs.create_time ,zcs.remark
+             ,zf.files_url
+        from zy_complaint_suggest zcs
+                 JOIN zy_owner zy on zcs.user_id=zy.owner_id
+                 join zy_files zf on zcs.user_id=zf.user_id
+        where zcs.complaint_suggest_id!=1
+        <if test="list!=null">
+            and
+            zcs.complaint_suggest_id in
+            <foreach collection="list" item="num" index="index" open="(" close=")" separator=",">
+                #{num}
+            </foreach>
+        </if>
+    </select>
     <insert id="insertBySuggest">
         INSERT INTO zy_complaint_suggest
         <trim prefix="(" suffix=")" suffixOverrides=",">

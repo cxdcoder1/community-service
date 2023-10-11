@@ -3,9 +3,7 @@ package com.example.community.controller;
 import com.alibaba.excel.EasyExcel;
 import com.alibaba.excel.write.style.HorizontalCellStyleStrategy;
 import com.example.community.dao.*;
-import com.example.community.dto.ExZyOwnerRoom;
-import com.example.community.dto.UserAndDeptImport;
-import com.example.community.dto.ZyOwnerRoomDto;
+import com.example.community.dto.*;
 import com.example.community.entity.*;
 import com.example.community.listener.DemoDataListener;
 import com.example.community.log.BusinessType;
@@ -54,6 +52,10 @@ public class ExcelController {
     private SysOperLogDao sysOperLogDao;
     @Resource
     private ZyOwnerDao zyOwnerDao;
+    @Resource
+    private ZyVisitorDao zyVisitorDao;
+    @Resource
+    private ZyComplaintSuggestDao zyComplaintSuggestDao;
     /**
      * 生成随机文件名 并返回固定路径
      * @return
@@ -622,6 +624,76 @@ public class ExcelController {
         List<ExZyOwnerRoom> zyOwnerRoomDtos = zyOwnerDao.getzyOwnerRoomDtoList(list);
         String path="D:\\lx.xls";
         ownerList(path,zyOwnerRoomDtos);
+        result.put("msg","导出成功");
+        result.put("status","200");
+        result.put("path",path);
+        return result;
+    }
+
+    //访客管理
+    public static void zyVisitorList(String fileName,List<ExVisitor> list){
+        //"E:\\lx.xls"
+        List<ExVisitor> dataList = new ArrayList<>();
+
+        for (ExVisitor zyVisitor : list) {
+            dataList.add(zyVisitor);
+        }
+
+        // 设置单元格样式
+        HorizontalCellStyleStrategy horizontalCellStyleStrategy = new HorizontalCellStyleStrategy( StyleUtils.getHeadStyle(),StyleUtils.getContentStyle());
+
+        EasyExcel.write(fileName, ExVisitor.class)
+                .sheet(0)
+                .registerWriteHandler(horizontalCellStyleStrategy)
+                .doWrite(dataList);
+    }
+
+    @Log(title = "访客管理", businessType = BusinessType.EXPORT)
+    @PostMapping("zyVisitorList")
+    public Map<String, Object> getzyVisitorList(@RequestBody List<String> list) {
+        Map<String, Object> result = new HashMap<>();
+        if (list.size()==0){
+            list=null;
+        }
+        List<ExVisitor> zyVisitorList = zyVisitorDao.getZyVisitorList(list);
+        String path="D:\\lx.xls";
+        zyVisitorList(path,zyVisitorList);
+        result.put("msg","导出成功");
+        result.put("status","200");
+        result.put("path",path);
+        return result;
+    }
+    /**
+     * 投诉建议导出
+     * @param fileName
+     * @param list
+     */
+    public static void suggestList(String fileName,List<ExSuggest> list){
+        //"E:\\lx.xls"
+        List<ExSuggest> dataList = new ArrayList<>();
+
+        for (ExSuggest exSuggest : list) {
+            dataList.add(exSuggest);
+        }
+
+        // 设置单元格样式
+        HorizontalCellStyleStrategy horizontalCellStyleStrategy = new HorizontalCellStyleStrategy( StyleUtils.getHeadStyle(),StyleUtils.getContentStyle());
+
+        EasyExcel.write(fileName, ExSuggest.class)
+                .sheet(0)
+                .registerWriteHandler(horizontalCellStyleStrategy)
+                .doWrite(dataList);
+    }
+    @Log(title = "投诉建议管理", businessType = BusinessType.EXPORT)
+    @PostMapping("suggestList")
+    public Map<String, Object> getsuggestList(@RequestBody List<String> list) {
+        Map<String, Object> result = new HashMap<>();
+        if (list.size()==0){
+            list=null;
+        }
+        List<ExSuggest> exSuggestList = zyComplaintSuggestDao.getExSuggestList(list);
+        String path="D:\\lx.xls";
+        suggestList(path,exSuggestList);
         result.put("msg","导出成功");
         result.put("status","200");
         result.put("path",path);

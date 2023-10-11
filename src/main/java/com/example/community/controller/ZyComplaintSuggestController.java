@@ -6,14 +6,19 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.api.ApiController;
 import com.baomidou.mybatisplus.extension.api.R;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.example.community.dto.ZyComplaintSuggestDto;
+import com.example.community.dto.ZyRepairDto;
 import com.example.community.entity.ZyComplaintSuggest;
 import com.example.community.service.ZyComplaintSuggestService;
 import io.swagger.annotations.Api;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 投诉建议 (ZyComplaintSuggest)表控制层
@@ -24,6 +29,7 @@ import java.util.List;
 @Api(tags = "投诉建议")
 @RestController
 @RequestMapping("zyComplaintSuggest")
+@CrossOrigin
 public class ZyComplaintSuggestController extends ApiController {
     /**
      * 服务对象
@@ -86,5 +92,22 @@ public class ZyComplaintSuggestController extends ApiController {
     public R delete(@RequestParam("idList") List<Long> idList) {
         return success(this.zyComplaintSuggestService.removeByIds(idList));
     }
+
+    @GetMapping("zyComplaintSuggestDtoList")
+    public R zyComplaintSuggest(Page<ZyComplaintSuggestDto> page, ZyComplaintSuggestDto zyComplaintSuggestDto, Long communityId) {
+        return success(this.zyComplaintSuggestService.zyComplaintSuggestDtoList(page,zyComplaintSuggestDto,communityId));
+    }
+
+    @PutMapping("remark/{id}")
+    public Map<String, Object>updateremark(@PathVariable long id, @RequestBody String remark){
+        System.err.println(remark);
+        Map<String, Object> map = new HashMap<>();
+        Integer integer = zyComplaintSuggestService.updateRemark(remark, id);
+        map.put("msg","回复成功");
+        map.put("status", 200);
+        map.put("success", true);
+        return map;
+    }
+
 }
 

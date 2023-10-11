@@ -1,6 +1,8 @@
 package com.example.community.service;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.example.community.dto.ZyOwnerRoomDto;
 import com.example.community.entity.ZyVisitor;
 
 /**
@@ -11,5 +13,6 @@ import com.example.community.entity.ZyVisitor;
  */
 public interface ZyVisitorService extends IService<ZyVisitor> {
 
+    Page<ZyVisitor> zyVisitorList(Page<ZyVisitor> page, ZyVisitor zyVisitor, long id);
 }
 
