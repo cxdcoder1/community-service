@@ -98,11 +98,10 @@ public class ZyComplaintSuggestController extends ApiController {
         return success(this.zyComplaintSuggestService.zyComplaintSuggestDtoList(page,zyComplaintSuggestDto,communityId));
     }
 
-    @PutMapping("remark/{id}")
-    public Map<String, Object>updateremark(@PathVariable long id, @RequestBody String remark){
-        System.err.println(remark);
+    @PostMapping("remark")
+    public Map<String, Object>updateremark(@RequestBody ZyComplaintSuggest zyComplaintSuggest){
         Map<String, Object> map = new HashMap<>();
-        Integer integer = zyComplaintSuggestService.updateRemark(remark, id);
+        Integer integer = zyComplaintSuggestService.updateRemark(zyComplaintSuggest.getRemark(), zyComplaintSuggest.getComplaintSuggestId());
         map.put("msg","回复成功");
         map.put("status", 200);
         map.put("success", true);

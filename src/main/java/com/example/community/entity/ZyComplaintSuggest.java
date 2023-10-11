@@ -2,6 +2,8 @@ package com.example.community.entity;
 
 
 import com.baomidou.mybatisplus.extension.activerecord.Model;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -25,16 +27,36 @@ public class ZyComplaintSuggest extends Model<ZyComplaintSuggest> {
     //创建者
     private String createBy;
     //创建时间
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(shape=JsonFormat. Shape.STRING,pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     private Date createTime;
     //更新者
     private String updateBy;
     //更新时间
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(shape=JsonFormat. Shape.STRING,pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     private Date updateTime;
     //备注
     private String remark;
     //投诉人ID
     private Long userId;
 
+
+    @Override
+    public String toString() {
+        return "ZyComplaintSuggest{" +
+                "complaintSuggestId=" + complaintSuggestId +
+                ", communityId=" + communityId +
+                ", complaintSuggestType='" + complaintSuggestType + '\'' +
+                ", complaintSuggestContent='" + complaintSuggestContent + '\'' +
+                ", createBy='" + createBy + '\'' +
+                ", createTime=" + createTime +
+                ", updateBy='" + updateBy + '\'' +
+                ", updateTime=" + updateTime +
+                ", remark='" + remark + '\'' +
+                ", userId=" + userId +
+                '}';
+    }
 
     public Long getComplaintSuggestId() {
         return complaintSuggestId;
