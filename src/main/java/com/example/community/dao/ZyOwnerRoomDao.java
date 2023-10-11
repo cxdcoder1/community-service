@@ -46,5 +46,7 @@ public interface ZyOwnerRoomDao extends BaseMapper<ZyOwnerRoom> {
 
     List<OwnerRecordDto> getRoomsByCommunityId(@Param("communityId") String communityId, @Param("ownerId") String ownerId);
 
+
+
 }
 

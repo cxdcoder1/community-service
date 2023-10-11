@@ -14,6 +14,7 @@ import com.example.community.entity.ZyOwnerRoom;
 import com.example.community.entity.ZyOwnerRoomRecord;
 import com.example.community.service.ZyOwnerRoomRecordService;
 import com.example.community.service.ZyOwnerRoomService;
+import com.example.community.service.ZyRoomService;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
@@ -46,17 +47,19 @@ public class ZyOwnerRoomController extends ApiController {
     @Resource
     private ZyOwnerRoomRecordService zyOwnerRoomRecordService;
 
+    @Resource
+    private ZyRoomService zyRoomService;
 
     @PostMapping("insetRoomRecordList")
-    @Transactional
     public Map<String,Object> insetAll(@RequestBody ZyOwnerRoomRecord zyOwnerRoomRecord) {
         System.err.println(zyOwnerRoomRecord);
         Map<String, Object> map = new HashMap<>();
+        System.err.println(zyOwnerRoomRecord.getRoomId());
         zyOwnerRoomRecordService.insetRoomRecordAll(zyOwnerRoomRecord);
         zyOwnerRoomService.updOwnerRoom(zyOwnerRoomRecord.getRoomStatus(), zyOwnerRoomRecord.getOwnerRoomId());
+        zyRoomService.updRooms(zyOwnerRoomRecord.getRoomId());
         map.put("msg", "审核成功");
         map.put("status", 200);
-
         return map;
     }
 

@@ -48,6 +48,7 @@ public class ZyOwnerRoomServiceImpl extends ServiceImpl<ZyOwnerRoomDao, ZyOwnerR
         return page.setRecords(roomAll);
     }
 
+
     @Override
     public int updOwnerRoom(String status,String id) {
         return zyOwnerRoomDao.updOwnerRoom(status,id);

@@ -41,6 +41,7 @@ public interface ZyRoomDao extends BaseMapper<ZyRoom> {
 
     int delRooms(List<String> list);
 
+    int updRooms(long id);
 
 }
 

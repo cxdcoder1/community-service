@@ -114,7 +114,7 @@
         left Join zy_owner zo on zr.owner_id = zo.owner_id
         <where>
             <if test="roomStatus != null and roomStatus != ''">
-                and zr.room_status like concat('%', #{roomStatus}, '%')
+                and zr.room_status like concat('%', #{roomStatus},'%')
             </if>
         </where>
     </select>
@@ -128,6 +128,8 @@
         zor.owner_id = zr.owner_id  and zor.update_time = zr.create_time
         where zr.community_id = #{communityId} and zr.owner_id=#{ownerId}
     </select>
+
+
 
 
 </mapper>

@@ -74,7 +74,7 @@ public class ZyCommunityInteractionController extends ApiController {
 //    }
 
 
-    @DeleteMapping("updDelFlag")
+    @PutMapping("updDelFlag")
     public Map<String,Object> update(@PathParam("id") String id) {
         Map<String, Object> map = new HashMap<>();
         zyCommentService.updDelFlag(id);

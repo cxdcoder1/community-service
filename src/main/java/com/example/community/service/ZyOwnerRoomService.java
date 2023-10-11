@@ -22,6 +22,8 @@ public interface ZyOwnerRoomService extends IService<ZyOwnerRoom> {
 
     Page<OwnerRoomList> getRoomAll(Page<OwnerRoomList> page, OwnerRoomList ownerRoomList);
 
+
+
     int updOwnerRoom(String status,String id);
 
     /**
