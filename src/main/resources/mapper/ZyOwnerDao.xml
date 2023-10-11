@@ -72,6 +72,7 @@
             <if test="ownerPortrait != null">
                 owner_portrait = #{ownerPortrait},
             </if>
+
         </set>
         where owner_id = #{ownerId}
     </update>

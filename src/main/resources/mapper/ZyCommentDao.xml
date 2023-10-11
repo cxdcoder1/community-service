@@ -37,7 +37,7 @@
 
 
     <update id="updDelFlag">
-        	update zy_comment set del_flag=3 where comment_id=#{id}
+        	update zy_comment set del_flag=1 where comment_id=#{id}
     </update>
 
     <select id="getParentIds" resultType="com.example.community.dto.InterCationAndOwner">

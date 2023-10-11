@@ -1,7 +1,6 @@
 package com.example.community.config;
 
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.ParameterBuilder;
@@ -41,6 +40,7 @@ public class SwaggerConfig {
 
     /**
      * 用于定义API主界面的信息，比如可以声明所有的API的总标题、描述、版本
+     *
      * @return
      */
     private ApiInfo apiInfo() {
