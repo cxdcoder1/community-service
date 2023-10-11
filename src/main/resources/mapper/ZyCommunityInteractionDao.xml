@@ -45,10 +45,10 @@
         LEFT JOIN zy_comment ON zy_community_interaction.interaction_id = zy_comment.interaction_id
         LEFT JOIN zy_files ON zy_community_interaction.interaction_id = zy_files.parent_id
         SET zy_community_interaction.del_flag = #{type},
-        zy_comment.del_flag = #{type},
-        zy_files.del_flag = #{type}
+        zy_comment.del_flag = #{type}
         WHERE zy_community_interaction.interaction_id = #{id};
     </delete>
+
 
 
     <select id="getInterCationAll" resultType="com.example.community.dto.InterCationAndOwner">
@@ -59,8 +59,9 @@
         zi.create_time,
         zo.owner_phone_number,
         zi.content,
-        zi.community_id
-        <!--    zf.files_url-->
+        zi.community_id,
+        zo.owner_portrait as ownerPortrait
+
         from zy_owner zo
         LEFT JOIN zy_community_interaction zi on zo.owner_id = zi.user_id
         <!--    LEFT JOIN  zy_files zf on zf.user_id = zi.user_id-->
@@ -79,6 +80,7 @@
                 and zi.community_id like concat('%', #{interCationAndOwner.communityId}, '%')
             </if>
         </where>
+        order by zi.create_time desc
         limit #{index},#{size}
     </select>
 
@@ -117,17 +119,21 @@
     zco.create_time as commentCreateTime,
     zco.owner_nickname AS commentOwnerNickname,
     zc.comment_id AS commentId,
-    zc.parent_id as parentId
+    zc.parent_id as parentId,
+    zco.owner_portrait as ownerPortrait
 FROM
     zy_owner zo
     LEFT JOIN zy_community_interaction zi ON zo.owner_id = zi.user_id
     LEFT JOIN zy_comment zc ON zc.interaction_id = zi.interaction_id
     LEFT JOIN zy_owner zco ON zco.owner_id = zc.user_id
 WHERE
-     zi.del_flag != 1 and
-    zi.interaction_id = #{interactionId};
-    </select>
+    zi.del_flag != 1 and
+    zi.interaction_id = #{interactionId}
 
+    </select>
+    <select id="getUserName" resultType="java.lang.String">
+        select zy_owner.owner_real_name from zy_comment left join zy_owner on zy_owner.owner_id = zy_comment.user_id  where comment_id = #{parentId}
+    </select>
 
 
 </mapper>

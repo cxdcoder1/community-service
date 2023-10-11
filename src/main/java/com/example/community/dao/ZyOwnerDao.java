@@ -2,6 +2,7 @@ package com.example.community.dao;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.example.community.dto.ExZyOwnerRoom;
+import com.example.community.dto.InterCationAndOwner;
 import com.example.community.dto.ZyOwnerRoomDto;
 import com.example.community.entity.SysOperLog;
 import org.apache.ibatis.annotations.Param;
@@ -40,6 +41,7 @@ int insertOrUpdateBatch(@Param("entities") List<ZyOwner> entities);
 
     long count(ZyOwnerRoomDto zyOwnerRoomDto,long id);
 
+    InterCationAndOwner selectCommentByInteractionId(@Param("id") String id);
 
     Integer updateStatus(long ownerId);
 

@@ -58,6 +58,11 @@ public class ZyCommunityInteractionServiceImpl extends ServiceImpl<ZyCommunityIn
     }
 
     @Override
+    public String getUserName(String parentId) {
+        return zyCommunityInteractionDao.getUserName(parentId);
+    }
+
+    @Override
     public List<InterCationAndOwner> getInterCationList(String interactionId) {
         return zyCommunityInteractionDao.getInterCationList(interactionId);
     }

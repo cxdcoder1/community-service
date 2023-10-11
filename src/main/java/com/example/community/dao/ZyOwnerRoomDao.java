@@ -35,6 +35,7 @@ public interface ZyOwnerRoomDao extends BaseMapper<ZyOwnerRoom> {
     int insertOrUpdateBatch(@Param("entities") List<ZyOwnerRoom> entities);
 
 
+
     List<OwnerRoomList> getRoomAll(@Param("index") Long index, @Param("size") Long size, @Param("zyOwnerRoom") OwnerRoomList ownerRoomList);
 
     Long getCount(OwnerRoomList ownerRoomList);

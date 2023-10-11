@@ -40,6 +40,10 @@
         delete from zy_comment where comment_id=#{id}
     </update>
 
+    <select id="getParentIds" resultType="com.example.community.dto.InterCationAndOwner">
+    select parent_id from zy_comment where interaction_id=#{id};
+    </select>
+
 
 </mapper>
 

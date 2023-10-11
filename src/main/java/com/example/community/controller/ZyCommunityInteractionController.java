@@ -11,6 +11,7 @@ import com.example.community.entity.ZyComment;
 import com.example.community.entity.ZyCommunityInteraction;
 import com.example.community.service.ZyCommentService;
 import com.example.community.service.ZyCommunityInteractionService;
+import com.example.community.service.ZyOwnerService;
 import io.swagger.annotations.Api;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import javax.websocket.server.PathParam;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -42,9 +44,38 @@ public class ZyCommunityInteractionController extends ApiController {
     @Resource
     private ZyCommentService zyCommentService;
 
+    @Resource
+    private ZyOwnerService zyOwnerService;
+
+    @GetMapping("getParentIds")
+    public Map<String,Object> getParentIds(@PathParam("id") String id) {
+
+        Map<String, Object> map = new HashMap<>();
+        List<InterCationAndOwner> parentIds = zyCommentService.getParentIds(id);
+        List<String> objectsName = new ArrayList<>();
+        for(InterCationAndOwner parentId:parentIds){
+            System.err.println(parentId);
+            String zyOwnerName = zyCommunityInteractionService.getUserName(parentId.getParentId());
+            objectsName.add(zyOwnerName);
+        }
+        System.err.println(objectsName);
+        map.put("objectsName",objectsName);
+        return map;
+    }
+
+
+
+
+
+//    @GetMapping("getUserName")
+//    public R getUserName(@PathParam("id") String id) {
+//        System.err.println(id);
+//        return success(this.zyCommunityInteractionService.getUserName(id));
+//    }
+
+
     @DeleteMapping("updDelFlag")
     public Map<String,Object> update(@PathParam("id") String id) {
-        System.err.println(id);
         Map<String, Object> map = new HashMap<>();
         zyCommentService.updDelFlag(id);
         map.put("msg", "删除成功");

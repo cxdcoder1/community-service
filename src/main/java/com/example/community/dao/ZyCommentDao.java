@@ -3,6 +3,7 @@ package com.example.community.dao;
 import java.util.List;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.example.community.dto.InterCationAndOwner;
 import org.apache.ibatis.annotations.Param;
 import com.example.community.entity.ZyComment;
 
@@ -31,6 +32,7 @@ int insertBatch(@Param("entities") List<ZyComment> entities);
 */
     int insertOrUpdateBatch(@Param("entities") List<ZyComment> entities);
 
+    List<InterCationAndOwner> getParentIds(@Param("id") String id);
 
     int updDelFlag(@Param("id") String id);
 }

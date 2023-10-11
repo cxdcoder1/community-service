@@ -47,10 +47,13 @@ public class InterCationAndOwner {
 
     private String parentId;
 
+    private String ownerPortrait;
+
+
     public InterCationAndOwner() {
     }
 
-    public InterCationAndOwner(Long interactionId, Long communityId, String createBy, String updateBy, Date createTime, Date updateTime, String content, Integer delFlag, String remark, Long userId, String ownerNickname, String ownerRealName, String ownerPhoneNumber, String filesUrl, String commentContent, String commentOwnerNickname, String commentId, String commentCreateTime, String parentId) {
+    public InterCationAndOwner(Long interactionId, Long communityId, String createBy, String updateBy, Date createTime, Date updateTime, String content, Integer delFlag, String remark, Long userId, String ownerNickname, String ownerRealName, String ownerPhoneNumber, String filesUrl, String commentContent, String commentOwnerNickname, String commentId, String commentCreateTime, String parentId, String ownerPortrait) {
         this.interactionId = interactionId;
         this.communityId = communityId;
         this.createBy = createBy;
@@ -70,6 +73,7 @@ public class InterCationAndOwner {
         this.commentId = commentId;
         this.commentCreateTime = commentCreateTime;
         this.parentId = parentId;
+        this.ownerPortrait = ownerPortrait;
     }
 
     /**
@@ -376,7 +380,23 @@ public class InterCationAndOwner {
         this.parentId = parentId;
     }
 
+    /**
+     * 获取
+     * @return ownerPortrait
+     */
+    public String getOwnerPortrait() {
+        return ownerPortrait;
+    }
+
+    /**
+     * 设置
+     * @param ownerPortrait
+     */
+    public void setOwnerPortrait(String ownerPortrait) {
+        this.ownerPortrait = ownerPortrait;
+    }
+
     public String toString() {
-        return "InterCationAndOwner{interactionId = " + interactionId + ", communityId = " + communityId + ", createBy = " + createBy + ", updateBy = " + updateBy + ", createTime = " + createTime + ", updateTime = " + updateTime + ", content = " + content + ", delFlag = " + delFlag + ", remark = " + remark + ", userId = " + userId + ", ownerNickname = " + ownerNickname + ", ownerRealName = " + ownerRealName + ", ownerPhoneNumber = " + ownerPhoneNumber + ", filesUrl = " + filesUrl + ", commentContent = " + commentContent + ", commentOwnerNickname = " + commentOwnerNickname + ", commentId = " + commentId + ", commentCreateTime = " + commentCreateTime + ", parentId = " + parentId + "}";
+        return "InterCationAndOwner{interactionId = " + interactionId + ", communityId = " + communityId + ", createBy = " + createBy + ", updateBy = " + updateBy + ", createTime = " + createTime + ", updateTime = " + updateTime + ", content = " + content + ", delFlag = " + delFlag + ", remark = " + remark + ", userId = " + userId + ", ownerNickname = " + ownerNickname + ", ownerRealName = " + ownerRealName + ", ownerPhoneNumber = " + ownerPhoneNumber + ", filesUrl = " + filesUrl + ", commentContent = " + commentContent + ", commentOwnerNickname = " + commentOwnerNickname + ", commentId = " + commentId + ", commentCreateTime = " + commentCreateTime + ", parentId = " + parentId + ", ownerPortrait = " + ownerPortrait + "}";
     }
 }

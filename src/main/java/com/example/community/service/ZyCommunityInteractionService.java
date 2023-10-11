@@ -21,6 +21,8 @@ public interface ZyCommunityInteractionService extends IService<ZyCommunityInter
 
     int deleteByUserId(String id,String type);
 
+    String getUserName(String parentId);
+
     List<InterCationAndOwner> getInterCationList(String interactionId);
 }
 

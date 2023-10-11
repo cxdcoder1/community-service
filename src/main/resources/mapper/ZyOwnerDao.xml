@@ -152,5 +152,14 @@
             </foreach>
         </if>
     </select>
+
+
+    <select id="selectCommentByInteractionId" resultType="com.example.community.dto.InterCationAndOwner">
+               select * from zy_comment zc
+                left join zy_community_interaction zci on zc.interaction_id = zci.interaction_id
+                left join zy_owner zo on zo.owner_id = zc.user_id
+                where zci.del_flag = 0 and zc.del_flag = 0 and zci.interaction_id = #{id}
+
+    </select>
 </mapper>
 

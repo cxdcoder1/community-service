@@ -37,6 +37,8 @@ int insertOrUpdateBatch(@Param("entities") List<ZyCommunityInteraction> entities
 
     List<InterCationAndOwner> getInterCationList(@Param("interactionId") String interactionId);
 
+    String getUserName(String parentId);
+
     Long getCount(InterCationAndOwner interCationAndOwner);
 
     int deleteByUserId(@Param("id") String id,@Param("type") String type);
