@@ -54,6 +54,17 @@
         values(del_flag) , remark = values(remark) , user_id = values(user_id)
     </insert>
 
+
+    <update id="updCommentId">
+        UPDATE zy_comment SET del_flag = 1
+        WHERE comment_id IN (
+        <foreach collection="id" item="id" index="index" open="" close="" separator="," >
+            #{id}
+        </foreach>
+        )
+    </update>
+
+
     <delete id="deleteByUserId">
        UPDATE zy_community_interaction
         LEFT JOIN zy_comment ON zy_community_interaction.interaction_id = zy_comment.interaction_id
@@ -77,6 +88,7 @@
 
 
 
+
     <select id="getInterCationAll" resultType="com.example.community.dto.InterCationAndOwner">
         select
         zi.interaction_id,
@@ -89,7 +101,6 @@
         zo.owner_portrait as ownerPortrait
         from zy_owner zo
         LEFT JOIN zy_community_interaction zi on zo.owner_id = zi.user_id
-        <!--    LEFT JOIN  zy_files zf on zf.user_id = zi.user_id-->
         <where>
             zi.del_flag != 1
             <if test="interCationAndOwner.ownerNickname != null and interCationAndOwner.ownerNickname != ''">
@@ -156,6 +167,10 @@ WHERE
     zi.interaction_id = #{interactionId}
 
     </select>
+
+
+
+
     <select id="getUserName" resultType="java.lang.String">
         select zy_owner.owner_real_name from zy_comment left join zy_owner on zy_owner.owner_id = zy_comment.user_id  where comment_id = #{parentId}
     </select>
@@ -171,6 +186,22 @@ WHERE
         ) c
         LEFT JOIN zy_files d on d.parent_id = c.interaction_id
     </select>
+
+    <select id="getFeilsUrl" resultType="com.example.community.dto.FeilsImgs">
+        select zf.files_url,zf.parent_id from zy_files zf LEFT JOIN zy_community_interaction zci on zf.parent_id = zci.interaction_id where zf.parent_id = #{id}
+    </select>
+
+
+    <select id="getRoomParentIds" resultType="java.lang.String">
+        SELECT comment_id
+        FROM zy_comment
+        WHERE parent_id IN
+        <foreach collection="parentId" item="parentId" open="(" close=")" separator=",">
+            #{parentId}
+        </foreach>
+    </select>
+
+
 
 
     <insert id="insertInteraction">

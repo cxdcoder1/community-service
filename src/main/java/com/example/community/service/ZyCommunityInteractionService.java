@@ -3,8 +3,10 @@ package com.example.community.service;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.example.community.dto.CommunityAndDeptDto;
+import com.example.community.dto.FeilsImgs;
 import com.example.community.dto.InterCationAndOwner;
 import com.example.community.entity.ZyCommunityInteraction;
+import com.example.community.entity.ZyFiles;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -24,5 +26,11 @@ public interface ZyCommunityInteractionService extends IService<ZyCommunityInter
     String getUserName(String parentId);
 
     List<InterCationAndOwner> getInterCationList(String interactionId);
+
+    List<FeilsImgs> getFeilsUrl(String id);
+
+    List<String> getRoomParentIds(List<String> id);
+
+    int updCommentId(List<String> id);
 }
 

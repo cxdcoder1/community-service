@@ -1,7 +1,11 @@
 package com.example.community.dao;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.example.community.dto.FeilsImgs;
 import com.example.community.dto.InterCationAndOwner;
+import com.example.community.dto.OwnerRoomList;
+import com.example.community.entity.ZyFiles;
+import org.apache.ibatis.annotations.Param;
 import com.example.community.entity.ZyCommunityInteraction;
 import com.example.community.mini.ZyCommunityInteractionDto;
 import com.example.community.mini.dto.dto.InteractionDetailDto;
@@ -124,6 +128,12 @@ public interface ZyCommunityInteractionDao extends BaseMapper<ZyCommunityInterac
     Long getCount(InterCationAndOwner interCationAndOwner);
 
     int deleteByUserId(@Param("id") String id,@Param("type") String type);
+
+    List<FeilsImgs> getFeilsUrl(String id);
+
+    List<String> getRoomParentIds(List<String> parentId);
+
+    int updCommentId(List<String> id);
 
     int delCom(String comId);
 

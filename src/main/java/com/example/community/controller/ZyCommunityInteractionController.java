@@ -6,23 +6,23 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.api.ApiController;
 import com.baomidou.mybatisplus.extension.api.R;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.example.community.dto.FeilsImgs;
 import com.example.community.dto.InterCationAndOwner;
 import com.example.community.entity.ZyComment;
 import com.example.community.entity.ZyCommunityInteraction;
+import com.example.community.entity.ZyFiles;
 import com.example.community.service.ZyCommentService;
 import com.example.community.service.ZyCommunityInteractionService;
 import com.example.community.service.ZyOwnerService;
 import io.swagger.annotations.Api;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
+import sun.security.util.Length;
 
 import javax.annotation.Resource;
 import javax.websocket.server.PathParam;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * 社区互动表(ZyCommunityInteraction)表控制层
@@ -47,11 +47,45 @@ public class ZyCommunityInteractionController extends ApiController {
     @Resource
     private ZyOwnerService zyOwnerService;
 
+    @PutMapping("getCommentParentIds")
+    public Map<String,Object> getCommentParentIds(@PathParam("id") String id) {
+        System.err.println(id);
+        Map<String, Object> map = new HashMap<>();
+        List<String> resultList = new ArrayList<>();
+        int i = 0;
+        List<String> ids=new ArrayList<>();
+        ids.add(id);
+        resultList.add(id);
+        while (true) {
+            i++;
+            System.err.println(ids);
+            List<String> sel = zyCommunityInteractionService.getRoomParentIds(ids); // 这是我查询的数据
+
+            for(String s:sel){
+                resultList.add(s);
+            }
+
+            if (sel == null || sel.isEmpty()) {
+                break; // 退出循环（查询结果为空）
+            }
+            System.err.println(i + "|" + sel);
+            ids = sel;
+            System.err.println(id);
+        }
+
+        zyCommunityInteractionService.updCommentId(resultList);
+        System.err.println("删除数据" + resultList);
+        map.put("msg","删除成功");
+        return map;
+    }
+
+
     @GetMapping("getParentIds")
     public Map<String,Object> getParentIds(@PathParam("id") String id) {
 
         Map<String, Object> map = new HashMap<>();
         List<InterCationAndOwner> parentIds = zyCommentService.getParentIds(id);
+        System.out.println(parentIds);
         List<String> objectsName = new ArrayList<>();
         for(InterCationAndOwner parentId:parentIds){
             System.err.println(parentId);
@@ -65,6 +99,36 @@ public class ZyCommunityInteractionController extends ApiController {
 
 
 
+    @GetMapping("getFeilsUrl")
+    public Map<String,Object> getFeilsUrl(String id) {
+        Map<String, Object> map = new HashMap<>();
+        List<FeilsImgs> feilsUrl = zyCommunityInteractionService.getFeilsUrl(id);
+        System.err.println(feilsUrl);
+        List<String> ParentId = new ArrayList<>();
+        List<String> FilesUrl = new ArrayList<>();
+        for(FeilsImgs fls:feilsUrl){
+            ParentId.add(fls.getParentId());
+            FilesUrl.add(fls.getFilesUrl());
+        }
+        map.put("ParentId",ParentId);
+        map.put("FilesUrl",FilesUrl);
+        return map;
+    }
+
+//    @GetMapping("getFeilsUrl")
+//    public Map<String,Object> getFeilsUrl(String id) {
+//        Map<String, Object> map = new HashMap<>();
+//        List<ZyFiles> feilsUrl = zyCommunityInteractionService.getFeilsUrl(id);
+//
+//        List<String> feilsUrlsName = new ArrayList<>();
+//        for(ZyFiles fls:feilsUrl){
+//            feilsUrlsName.add(fls.getFilesUrl());
+//            feilsUrlsName.add(String.valueOf(fls.getParentId()));
+//        }
+//        System.err.println(feilsUrl);
+//        map.put("Urls",feilsUrl);
+//        return map;
+//    }
 
 
 //    @GetMapping("getUserName")
@@ -74,7 +138,8 @@ public class ZyCommunityInteractionController extends ApiController {
 //    }
 
 
-    @DeleteMapping("updDelFlag")
+    @PutMapping("updDelFlag")
+    @Transactional
     public Map<String,Object> update(@PathParam("id") String id) {
         Map<String, Object> map = new HashMap<>();
         zyCommentService.updDelFlag(id);

@@ -4,8 +4,10 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.community.dao.ZyCommunityInteractionDao;
 import com.example.community.dto.CommunityAndDeptDto;
+import com.example.community.dto.FeilsImgs;
 import com.example.community.dto.InterCationAndOwner;
 import com.example.community.entity.ZyCommunityInteraction;
+import com.example.community.entity.ZyFiles;
 import com.example.community.service.ZyCommunityInteractionService;
 import org.springframework.stereotype.Service;
 
@@ -65,6 +67,23 @@ public class ZyCommunityInteractionServiceImpl extends ServiceImpl<ZyCommunityIn
     @Override
     public List<InterCationAndOwner> getInterCationList(String interactionId) {
         return zyCommunityInteractionDao.getInterCationList(interactionId);
+    }
+
+    @Override
+    public List<FeilsImgs> getFeilsUrl(String id) {
+        return zyCommunityInteractionDao.getFeilsUrl(id);
+    }
+
+    @Override
+    public List<String> getRoomParentIds(List<String> id) {
+        return zyCommunityInteractionDao.getRoomParentIds(id);
+    }
+
+    @Override
+    public int updCommentId(List<String> id) {
+        int i = zyCommunityInteractionDao.updCommentId(id);
+        System.err.println(zyCommunityInteractionDao.updCommentId(id));
+        return i;
     }
 }
 

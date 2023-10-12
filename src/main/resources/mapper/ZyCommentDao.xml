@@ -36,13 +36,13 @@
          create_by = values(create_by) , update_by = values(update_by) , create_time = values(create_time) , update_time = values(update_time) , content = values(content) , parent_id = values(parent_id) , del_flag = values(del_flag) , interaction_id = values(interaction_id) , user_id = values(user_id) , remark = values(remark) , root_id = values(root_id)     </insert>
 
 
-<!--    <update id="updDelFlag">-->
-<!--        update zy_comment set del_flag=3 where comment_id=#{id}-->
-<!--    </update>-->
-
     <update id="updDelFlag">
-        delete from zy_comment where comment_id=#{id}
+        update zy_comment set del_flag=1 where comment_id=#{id}
     </update>
+
+<!--    <update id="updDelFlag">-->
+<!--        delete from zy_comment where comment_id=#{id}-->
+<!--    </update>-->
 
     <select id="getParentIds" resultType="com.example.community.dto.InterCationAndOwner">
     select parent_id from zy_comment where interaction_id=#{id};
