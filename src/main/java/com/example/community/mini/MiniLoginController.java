@@ -1,5 +1,8 @@
 package com.example.community.mini;
 
+import com.alibaba.fastjson.JSON;
+import com.example.community.constant.SystemConstant;
+import com.example.community.utils.JwtUtil;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -7,6 +10,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 登录、注册、发送验证码
@@ -24,14 +29,22 @@ public class MiniLoginController {
      * @return 登录结果
      */
     @PostMapping("/login")
-    public ZyResult<MiniUserDto> weChatLogin(@RequestBody LoginDto loginDto,HttpSession session) {
+    public Map<String,Object> weChatLogin(@RequestBody LoginDto loginDto, HttpSession session) {
+        Map<String, Object> result = new HashMap<>();
         System.out.println(loginDto.toString());
         if (loginDto == null) {
-            return ZyResult.fail(400, "传递参数不能为空");
+            result.put("status",400);
+            result.put("msg","传递参数不能为空");
+            return result;
         }
         ZyResult<MiniUserDto> miniUserDtoZyResult = miniLoginService.weChatLogin(loginDto.getCode());
         // session.setAttribute("openId",miniUserDtoZyResult);
-        return miniUserDtoZyResult;
+
+        result.put("data",miniUserDtoZyResult.getData());
+        String JWT = JwtUtil.createJWT(miniUserDtoZyResult.getData().getOpenId(), JSON.toJSONString(miniUserDtoZyResult.getData()), SystemConstant.JWT_TTL);
+//                log.info(JWT);
+        result.put("token", JWT);
+        return result;
     }
 
     // /**

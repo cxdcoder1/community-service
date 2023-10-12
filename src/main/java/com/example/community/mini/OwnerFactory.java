@@ -38,6 +38,7 @@ public class OwnerFactory {
             return null;
         }
         MiniUserDto dto = new MiniUserDto();
+        dto.setOwnerId(zyOwner.getOwnerId());
         dto.setGender(transGenderFromEnum(zyOwner.getOwnerGender()));
         dto.setBirthday(Instant.ofEpochMilli(zyOwner.getOwnerBirthday().getTime()).atOffset(ZoneOffset.ofHours(8)).toLocalDate().toString());
         dto.setAvatar(zyOwner.getOwnerPortrait());

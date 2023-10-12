@@ -46,5 +46,9 @@ public interface ZyVisitorDao extends BaseMapper<ZyVisitor> {
 
     List<ExVisitor> getZyVisitorList(List<String> list);
 
+    Integer updateRemark(long id);
+
+    Integer updateRemarks(long id);
+
 }
 

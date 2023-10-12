@@ -8,7 +8,6 @@ import com.example.community.dto.UserAndDeptAndPostAndRole;
 import com.example.community.dto.UserAndDeptAndRole;
 import com.example.community.dto.UserAndDeptImport;
 import com.example.community.entity.*;
-import com.example.community.entity.*;
 import com.example.community.service.SysUserService;
 import org.springframework.stereotype.Service;
 
@@ -62,7 +61,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserDao, SysUser> impleme
         page.setPages(totalPages);
 
         page.setRecords(sysUserDao.selUserlist((page.getCurrent()-1) * page.getSize(), page.getSize(), userAndDeptAndPostAndRole));
-//        sysUserDao.selUserlist(page,sysUser);
+        System.err.println(page.getRecords()+"cccccccccccc");
         return page;
 
     }

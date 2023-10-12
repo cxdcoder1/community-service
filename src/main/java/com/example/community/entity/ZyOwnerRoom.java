@@ -4,9 +4,6 @@ package com.example.community.entity;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import java.io.Serializable;
-import java.util.Date;
-
 /**
  * 房屋绑定表 (ZyOwnerRoom)表实体类
  *
@@ -272,8 +269,23 @@ public class ZyOwnerRoom extends Model<ZyOwnerRoom> {
         this.remark = remark;
     }
 
+    @Override
     public String toString() {
-        return "ZyOwnerRoom{ownerRoomId = " + ownerRoomId + ", communityId = " + communityId + ", buildingId = " + buildingId + ", unitId = " + unitId + ", roomId = " + roomId + ", ownerId = " + ownerId + ", ownerType = " + ownerType + ", roomStatus = " + roomStatus + ", createBy = " + createBy + ", createTime = " + createTime + ", updateBy = " + updateBy + ", updateTime = " + updateTime + ", remark = " + remark + "}";
+        return "ZyOwnerRoom{" +
+                "ownerRoomId='" + ownerRoomId + '\'' +
+                ", communityId=" + communityId +
+                ", buildingId=" + buildingId +
+                ", unitId=" + unitId +
+                ", roomId=" + roomId +
+                ", ownerId=" + ownerId +
+                ", ownerType='" + ownerType + '\'' +
+                ", roomStatus='" + roomStatus + '\'' +
+                ", createBy='" + createBy + '\'' +
+                ", createTime='" + createTime + '\'' +
+                ", updateBy='" + updateBy + '\'' +
+                ", updateTime='" + updateTime + '\'' +
+                ", remark='" + remark + '\'' +
+                '}';
     }
 }
 

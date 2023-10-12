@@ -88,7 +88,7 @@
     </select>
 
     <select id="count" resultType="java.lang.Long">
-        select count(*) from zy_visitor zv JOIN zy_community zc on zv.community_id=zv.community_id
+        select count(*) from zy_visitor zv inner JOIN zy_community zc on zv.community_id=zc.community_id
         <where>
             <if test="zyVisitor.visitorName !=null and zyVisitor.visitorName !=''">
                 and   zv.visitor_name=#{zyVisitor.visitorName}
@@ -104,7 +104,7 @@
 
     </select>
     <select id="selectZyVisitor" resultType="com.example.community.entity.ZyVisitor">
-        select * from zy_visitor zv JOIN zy_community zc on zv.community_id=zv.community_id
+        select * from zy_visitor zv inner JOIN zy_community zc on zv.community_id=zc.community_id
         <where>
             <if test="zyVisitor.visitorName !=null and zyVisitor.visitorName !=''">
                 and   zv.visitor_name=#{zyVisitor.visitorName}
@@ -121,7 +121,7 @@
                 limit #{index},#{size}
     </select>
     <select id="getZyVisitorList" resultType="com.example.community.dto.ExVisitor">
-        select * from zy_visitor zv JOIN zy_community zc on zv.community_id=zv.community_id
+        select * from zy_visitor zv JOIN zy_community zc on zv.community_id=zc.community_id
         where   zv.visitor_id!=1
         <if test="list!=null">
             and
@@ -131,6 +131,17 @@
             </foreach>
         </if>
     </select>
+
+    <update id="updateRemark">
+    UPDATE zy_visitor
+    SET remark ='0'
+    WHERE visitor_Id =#{id}
+</update>
+    <update id="updateRemarks">
+        UPDATE zy_visitor
+        SET remark ='1'
+        WHERE visitor_Id =#{id}
+    </update>
 
 </mapper>
 

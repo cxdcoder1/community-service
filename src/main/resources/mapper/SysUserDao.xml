@@ -242,7 +242,7 @@
         sys_user.phonenumber,
         sys_user.status,
         sys_user.create_time,
-        sys_post.post_id,
+        sys_user_post.post_id,
         sys_role.role_id
         from sys_user
         left join sys_dept on sys_user.dept_id = sys_dept.dept_id
@@ -252,17 +252,8 @@
         left join sys_post on sys_post.post_id = sys_user_post.post_id =sys_post.post_id
         <where>
             sys_user.user_id != 1 and sys_user.del_flag =0
-            <if test="sysUser.userId != null and sysUser.userId !=''">
-                and sys_user.user_id =#{sysUser.userId}
-            </if>
             <if test="sysUser.userName != null and sysUser.userName !=''">
                 and sys_user.user_name like concat('%', #{sysUser.userName}, '%')
-            </if>
-            <if test="sysUser.nickName != null and sysUser.nickName !=''">
-                and sys_user.nick_name = #{sysUser.nickName}
-            </if>
-            <if test="sysUser.deptId != null and sysUser.deptId !=''">
-                and sys_dept.dept_id = #{sysUser.deptId}
             </if>
             <if test="sysUser.phonenumber != null and sysUser.phonenumber !=''">
                 and sys_user.phonenumber like concat('%', #{sysUser.phonenumber}, '%')
@@ -401,7 +392,7 @@
         sys_user.phonenumber,
         sys_user.status,
         sys_user.create_time,
-        sys_post.post_id,
+        sys_user_post.post_id,
         sys_role.role_id
         from sys_user
         left join sys_dept on sys_user.dept_id = sys_dept.dept_id

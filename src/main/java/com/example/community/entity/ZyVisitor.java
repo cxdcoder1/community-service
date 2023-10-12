@@ -24,6 +24,7 @@ public class ZyVisitor extends Model<ZyVisitor> {
     @ColumnWidth(8)//单独设置列宽
     @ExcelProperty(index = 0, value = {"ID"})
     //id
+    @JsonFormat(shape = JsonFormat.Shape.STRING)
     private Long visitorId;
     //小区id
     private Long communityId;

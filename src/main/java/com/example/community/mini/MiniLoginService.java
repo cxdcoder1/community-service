@@ -49,7 +49,7 @@ public class MiniLoginService {
             zyOwner1.setOwnerId(System.currentTimeMillis());
             zyOwner1.setOwnerRealName("whx");
             zyOwner1.setOwnerGender("Male");
-            zyOwner1.setOwnerNickname("哈哈");
+            zyOwner1.setOwnerNickname("默认名");
             zyOwnerMapper.insert(zyOwner1);
             ZyOwner zyOwner2 = zyOwnerMapper.selectOne(new QueryWrapper<ZyOwner>().eq("owner_open_id", openId));
             return ZyResult.data(ownerFactory.transFromZyOwner(zyOwner2));

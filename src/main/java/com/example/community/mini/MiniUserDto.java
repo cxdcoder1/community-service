@@ -6,6 +6,7 @@ import java.io.Serializable;
  * 小程序用户的Dto
  */
 public class MiniUserDto implements Serializable {
+    private Long ownerId;
     //openId
     private String openId;
     //手机号
@@ -23,6 +24,14 @@ public class MiniUserDto implements Serializable {
 
     //令牌
     private String miniToken;
+
+    public Long getOwnerId() {
+        return ownerId;
+    }
+
+    public void setOwnerId(Long ownerId) {
+        this.ownerId = ownerId;
+    }
 
     public String getOpenId() {
         return openId;

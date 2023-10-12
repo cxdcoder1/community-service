@@ -44,7 +44,7 @@ public class MiniBindService {
         if (zyOwner == null) return ZyResult.fail(404, "该用户不存在");
         //校验是否绑定过
         ZyOwnerRoom zyOwnerRoom = zyOwnerRoomMapper.selectOne(new QueryWrapper<ZyOwnerRoom>().eq("room_id", bindDto.getRoomId())
-                .eq("owner_id", zyOwner.getOwnerId()).not(wrapper -> wrapper.eq("room_status",0)));
+                .eq("owner_id", zyOwner.getOwnerId()).not(wrapper -> wrapper.eq("room_status", 0)));
         if (zyOwnerRoom != null) return ZyResult.fail(500, "已经绑定过,请勿重新绑定");
 
         //查看是否是业主绑定

@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 访客邀请 (ZyVisitor)表控制层
@@ -92,5 +94,37 @@ public class ZyVisitorController extends ApiController {
     public R zyVisitorList(Page<ZyVisitor> page, ZyVisitor zyVisitor, long communityId) {
         return success(this.zyVisitorService.zyVisitorList(page,zyVisitor,communityId));
     }
+    @PutMapping("updateRemark/{id}")
+    public Map<String, Object> updateRemark(@PathVariable long id){
+        Map<String, Object> map = new HashMap<>();
+        Integer integer = zyVisitorService.updateRemark(id);
+        if (integer>0){
+            map.put("msg","操作成功");
+            map.put("status", 200);
+            map.put("success", true);
+            return map;
+        }
+        map.put("msg","操作失败");
+        map.put("status", 201);
+        map.put("success", false);
+        return map;
+    }
+
+    @PutMapping("updateRemarks/{id}")
+    public Map<String, Object> updateRemarks(@PathVariable long id){
+        Map<String, Object> map = new HashMap<>();
+        Integer integer = zyVisitorService.updateRemarks(id);
+        if (integer>0){
+            map.put("msg","操作成功");
+            map.put("status", 200);
+            map.put("success", true);
+            return map;
+        }
+        map.put("msg","操作失败");
+        map.put("status", 201);
+        map.put("success", false);
+        return map;
+    }
+
 }
 
