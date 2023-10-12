@@ -93,6 +93,9 @@
             <if test="zyVisitor.visitorName !=null and zyVisitor.visitorName !=''">
                 and   zv.visitor_name=#{zyVisitor.visitorName}
             </if>
+            <if test="zyVisitor.remark !=null and zyVisitor.remark !=''">
+                and   zv.remark=#{zyVisitor.remark}
+            </if>
             <if test="zyVisitor.visitorPhoneNumber !=null and zyVisitor.visitorPhoneNumber !=''">
                 and   zv.visitor_phone_number=#{zyVisitor.visitorPhoneNumber}
             </if>
@@ -108,6 +111,9 @@
         <where>
             <if test="zyVisitor.visitorName !=null and zyVisitor.visitorName !=''">
                 and   zv.visitor_name=#{zyVisitor.visitorName}
+            </if>
+            <if test="zyVisitor.remark !=null and zyVisitor.remark !=''">
+                and   zv.remark=#{zyVisitor.remark}
             </if>
             <if test="zyVisitor.visitorPhoneNumber !=null and zyVisitor.visitorPhoneNumber !=''">
                 and   zv.visitor_phone_number=#{zyVisitor.visitorPhoneNumber}

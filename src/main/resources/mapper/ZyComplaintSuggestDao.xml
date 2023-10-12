@@ -72,6 +72,7 @@
             </if>
             and zcs.community_id=#{id}
         </where>
+        order by create_time desc
         limit #{index},#{size}
     </select>
     <select id="getExSuggestList" resultType="com.example.community.dto.ExSuggest">

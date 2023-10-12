@@ -76,6 +76,7 @@
             </if>
             and  zr.community_id=#{id}
         </where>
+        order by zr.create_time desc
         limit #{index},#{size}
     </select>
 
