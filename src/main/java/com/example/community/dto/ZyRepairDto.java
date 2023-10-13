@@ -1,11 +1,8 @@
 package com.example.community.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import lombok.Getter;
-import org.springframework.format.annotation.DateTimeFormat;
 
-import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -30,7 +27,7 @@ public class ZyRepairDto {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date receivingOrdersTime;
     //处理完成时间
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     private Date completeTime;
     //取消时间
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")

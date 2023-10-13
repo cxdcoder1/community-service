@@ -2,12 +2,12 @@ package com.example.community.mini;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.example.community.dao.ZyOwnerDao;
-import com.example.community.dto.ZyOwnerRoomDto;
 import com.example.community.entity.ZyOwner;
-import com.example.community.entity.ZyOwnerRoom;
 import com.example.community.mini.dto.OwnerRecordDto;
 import com.example.community.service.ZyOwnerRoomService;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
@@ -64,4 +64,5 @@ public class MiniMyRoomController {
         result.put("rejectList",rejectList);
         return result;
     }
+
 }

@@ -91,7 +91,7 @@
                 and zo.owner_phone_number=#{zyRepairDto.ownerPhoneNumber}
             </if>
         </where>
-        and zr.community_id=#{id}
+        and zr.community_id=#{id} and del_flag='0'
     </select>
 
 
@@ -107,7 +107,7 @@
             <if  test="zyRepairDto.ownerPhoneNumber!=null and zyRepairDto.ownerPhoneNumber!=''">
                 and zo.owner_phone_number=#{zyRepairDto.ownerPhoneNumber}
             </if>
-            and  zr.community_id=#{id}
+            and  zr.community_id=#{id} and del_flag='0'
         </where>
         order by zr.create_time desc
         limit #{index},#{size}
@@ -135,7 +135,7 @@
     </select>
     <select id="selectDoorTime" resultType="java.lang.Integer">
         SELECT *
-        FROM
+        FROM zy_repair
         WHERE door_time = STR_TO_DATE(#{time}, '%Y-%m-%d %H:%i:%s');
     </select>
     <select id="getNumber" resultType="java.lang.String">
@@ -145,6 +145,14 @@
         select + from zy_repair where repair_state='1'
     </select>
 
+    <select id="repairHouse" resultType="com.example.community.entity.ValueLabel">
+        SELECT CONCAT(a.community_name,b.building_name,c.unit_name,d.room_name) as label FROM zy_community a
+         INNER JOIN zy_building b on a.community_id= b.community_id
+         INNER JOIN zy_unit c on c.building_id= b.building_id
+         INNER JOIN zy_room d on d.unit_id= c.unit_id
+         INNER JOIN zy_owner_room e on e.room_id= d.room_id
+         WHERE a.community_id=#{communityId} and e.owner_id=#{ownerId} and e.room_status=1
+    </select>
 
 </mapper>
 

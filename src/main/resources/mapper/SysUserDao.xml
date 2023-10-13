@@ -251,7 +251,10 @@
         left join sys_user_post on sys_user_post.user_id = sys_user.user_id
         left join sys_post on sys_post.post_id = sys_user_post.post_id =sys_post.post_id
         <where>
-            sys_user.user_id != 1 and sys_user.del_flag =0 and sys_user.dept_id = #{sysUser.deptId}
+            sys_user.user_id != 1 and sys_user.del_flag =0
+            <if test="sysUser.deptId != null and sysUser.deptId != ''">
+                and sys_user.dept_id = #{sysUser.deptId}
+            </if>
             <if test="sysUser.userName != null and sysUser.userName !=''">
                 and sys_user.user_name like concat('%', #{sysUser.userName}, '%')
             </if>

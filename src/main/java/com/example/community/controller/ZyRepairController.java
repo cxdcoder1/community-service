@@ -1,16 +1,12 @@
 package com.example.community.controller;
 
 
-
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.api.ApiController;
 import com.baomidou.mybatisplus.extension.api.R;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.example.community.dto.RolesAndMenuIds;
 import com.example.community.dto.ZyRepairDto;
-import com.example.community.entity.SysRole;
 import com.example.community.entity.ZyRepair;
-import com.example.community.entity.ZyVisitor;
 import com.example.community.service.ZyRepairService;
 import io.swagger.annotations.Api;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -18,10 +14,14 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import javax.validation.constraints.Pattern;
 import javax.websocket.server.PathParam;
 import java.io.Serializable;
-import java.util.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 报修信息(ZyRepair)表控制层
@@ -124,25 +124,28 @@ public class ZyRepairController extends ApiController {
         return success(this.zyRepairService.getNumber(name));
     }
 
-//    @Scheduled(cron ="*/6 * * * * ?")
-//    public void checkRepairStatus() {
-//        // 查询所有报修信息
-//        List<ZyRepair> zyRepairs = zyRepairService.getZyRepairList();
-//
-//        for (ZyRepair repair : zyRepairs) {
-//            if (repair.getRepairState().equals("1")) {
-//                // 计算报修信息的创建时间与当前时间的差值
-//                long timeDiff = System.currentTimeMillis() - repair.getDoorTime().getTime();
-//                long daysDiff = timeDiff / (24 * 60 * 60 * 1000);
-//
-//                // 如果超过七天，修改状态为完成
-//                if (daysDiff >= 7) {
-//                    repair.setRepairState("2");
-//                    zyRepairService.updateRepair(repair);
-//                }
-//            }
-//        }
-//    }
+    @Scheduled(cron = "0 0 9 * * ?")
+    public void checkRepairStatus() throws ParseException {
+        // 查询所有报修信息
+        List<ZyRepair> zyRepairs = zyRepairService.getZyRepairList();
+        for (ZyRepair repair : zyRepairs) {
+            // 计算报修信息的创建时间与当前时间的差值
+            String doorTimeString = repair.getDoorTime();
+            // 获取 doorTime 字符串
+            String pattern = "yyyy-MM-dd HH:mm:ss";
+            // 根据 doorTime 的实际格式指定匹配模式
+            SimpleDateFormat formatter = new SimpleDateFormat(pattern);
+            Date doorTime = formatter.parse(repair.getDoorTime());
+            long timeDiff = System.currentTimeMillis() -doorTime.getTime();
+            long daysDiff = timeDiff / (24 * 60 * 60 * 1000);
+            // 如果超过七天，修改状态为完成
+            if (daysDiff >= 7) {
+                repair.setRepairState("2");
+                zyRepairService.updateRepair(repair);
+            }
+        }
+
+    }
 
 }
 

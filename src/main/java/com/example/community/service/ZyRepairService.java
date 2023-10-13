@@ -2,13 +2,13 @@ package com.example.community.service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.example.community.dto.RepairPostDto;
 import com.example.community.dto.ZyRepairDto;
 import com.example.community.entity.SysUser;
+import com.example.community.entity.ValueLabel;
 import com.example.community.entity.ZyRepair;
-import com.example.community.entity.ZyVisitor;
+import com.example.community.mini.ZyResult;
 import com.example.community.mini.dto.RepairDto;
-
-import java.util.List;
 
 import java.util.List;
 
@@ -58,5 +58,9 @@ public interface ZyRepairService extends IService<ZyRepair> {
     String  getNumber(String name);
 
     List<ZyRepair>getZyRepairList();
+
+    List<ValueLabel> repairHouse(Long communityId, Long ownerId);
+
+    ZyResult repairPost(RepairPostDto repairPostDto);
 }
 

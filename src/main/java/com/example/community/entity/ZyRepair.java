@@ -5,10 +5,7 @@ package com.example.community.entity;
 
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import org.springframework.format.annotation.DateTimeFormat;
 
-import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -38,8 +35,7 @@ public class ZyRepair extends Model<ZyRepair> {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date cancelTime;
     //期待上门时间
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private Date doorTime;
+    private String doorTime;
     //分派人id
     private Long assignmentId;
     //处理人id
@@ -155,11 +151,11 @@ public class ZyRepair extends Model<ZyRepair> {
         this.cancelTime = cancelTime;
     }
 
-    public Date getDoorTime() {
+    public String getDoorTime() {
         return doorTime;
     }
 
-    public void setDoorTime(Date doorTime) {
+    public void setDoorTime(String doorTime) {
         this.doorTime = doorTime;
     }
 

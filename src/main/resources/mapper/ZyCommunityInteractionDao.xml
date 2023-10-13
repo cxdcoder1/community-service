@@ -178,7 +178,7 @@ WHERE
     <select id="findTop3Interactions" resultMap="interactionDetailMap">
         SELECT c.*,d.files_url as fileUrl FROM (
             SELECT a.interaction_id, a.content FROM zy_community_interaction a
-            INNER JOIN zy_comment b on a.interaction_id = b.interaction_id
+            LEFT JOIN zy_comment b on a.interaction_id = b.interaction_id
             group by a.interaction_id,b.interaction_id,a.community_id,a.del_flag
 	        HAVING a.community_id=#{communityId} and a.del_flag!=1
             ORDER BY COUNT(a.interaction_id) DESC
