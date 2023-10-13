@@ -81,5 +81,10 @@ public class ZyRepairServiceImpl extends ServiceImpl<ZyRepairDao, ZyRepair> impl
     public Integer reRepair(RepairDto repairDto) {
         return zyRepairDao.reRepair(repairDto);
     }
+
+    @Override
+    public List<ZyRepair> getZyRepairList() {
+        return zyRepairDao.getZyRepairList();
+    }
 }
 

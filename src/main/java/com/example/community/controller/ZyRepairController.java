@@ -13,15 +13,15 @@ import com.example.community.entity.ZyRepair;
 import com.example.community.entity.ZyVisitor;
 import com.example.community.service.ZyRepairService;
 import io.swagger.annotations.Api;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.validation.constraints.Pattern;
 import javax.websocket.server.PathParam;
 import java.io.Serializable;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * 报修信息(ZyRepair)表控制层
@@ -33,6 +33,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("zyRepair")
 @CrossOrigin
+@Component
 public class ZyRepairController extends ApiController {
     /**
      * 服务对象
@@ -111,13 +112,6 @@ public class ZyRepairController extends ApiController {
     public Map<String, Object> edit(@RequestBody ZyRepair zyRepair) {
         System.err.println(zyRepair);
         Map<String, Object> map = new HashMap<>();
-        Integer integer1 = zyRepairService.selectDoorTime(zyRepair.getDoorTime().toString());
-        if (integer1!=null){
-            map.put("msg","该师傅没空，请更换师傅");
-            map.put("status", 201);
-            map.put("success", false);
-            return map;
-        }
         Integer integer = zyRepairService.updateRepair(zyRepair);
         map.put("msg","修改成功");
         map.put("status", 200);
@@ -129,5 +123,26 @@ public class ZyRepairController extends ApiController {
         System.err.println(name);
         return success(this.zyRepairService.getNumber(name));
     }
+
+//    @Scheduled(cron ="*/6 * * * * ?")
+//    public void checkRepairStatus() {
+//        // 查询所有报修信息
+//        List<ZyRepair> zyRepairs = zyRepairService.getZyRepairList();
+//
+//        for (ZyRepair repair : zyRepairs) {
+//            if (repair.getRepairState().equals("1")) {
+//                // 计算报修信息的创建时间与当前时间的差值
+//                long timeDiff = System.currentTimeMillis() - repair.getDoorTime().getTime();
+//                long daysDiff = timeDiff / (24 * 60 * 60 * 1000);
+//
+//                // 如果超过七天，修改状态为完成
+//                if (daysDiff >= 7) {
+//                    repair.setRepairState("2");
+//                    zyRepairService.updateRepair(repair);
+//                }
+//            }
+//        }
+//    }
+
 }
 

@@ -1,6 +1,10 @@
 package com.example.community.dto;
 
+import com.example.community.utils.CustomDateDeserializer;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import lombok.Getter;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -21,14 +25,19 @@ public class ZyRepairDto {
     //报修状态
     private String repairState;
     //派单时间
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date assignmentTime;
     //接单时间
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date receivingOrdersTime;
     //处理完成时间
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date completeTime;
     //取消时间
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date cancelTime;
     //期待上门时间
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date doorTime;
     //分派人id
     private Long assignmentId;
@@ -43,10 +52,12 @@ public class ZyRepairDto {
     //创建者
     private String createBy;
     //创建时间
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date createTime;
     //更新者
     private String updateBy;
     //更新时间
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date updateTime;
     //创建人id
     private Long userId;

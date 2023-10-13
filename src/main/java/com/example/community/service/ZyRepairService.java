@@ -56,5 +56,7 @@ public interface ZyRepairService extends IService<ZyRepair> {
     Integer selectDoorTime(String time);
 
     String  getNumber(String name);
+
+    List<ZyRepair>getZyRepairList();
 }
 

@@ -56,5 +56,7 @@ int insertOrUpdateBatch(@Param("entities") List<ZyRepair> entities);
       Integer selectDoorTime(String time);
 
     String  getNumber(String name);
+
+    List<ZyRepair>getZyRepairList();
 }
 
