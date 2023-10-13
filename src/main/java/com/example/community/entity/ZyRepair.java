@@ -59,6 +59,33 @@ public class ZyRepair extends Model<ZyRepair> {
     //详细地址
     private String address;
 
+    @Override
+    public String toString() {
+        return "ZyRepair{" +
+                "repairId=" + repairId +
+                ", repairNum='" + repairNum + '\'' +
+                ", repairState='" + repairState + '\'' +
+                ", assignmentTime=" + assignmentTime +
+                ", receivingOrdersTime=" + receivingOrdersTime +
+                ", completeTime=" + completeTime +
+                ", cancelTime=" + cancelTime +
+                ", doorTime=" + doorTime +
+                ", assignmentId=" + assignmentId +
+                ", completeId=" + completeId +
+                ", completePhone='" + completePhone + '\'' +
+                ", completeName='" + completeName + '\'' +
+                ", remark='" + remark + '\'' +
+                ", createBy='" + createBy + '\'' +
+                ", createTime=" + createTime +
+                ", updateBy='" + updateBy + '\'' +
+                ", updateTime=" + updateTime +
+                ", userId=" + userId +
+                ", delFlag=" + delFlag +
+                ", repairContent='" + repairContent + '\'' +
+                ", communityId=" + communityId +
+                ", address='" + address + '\'' +
+                '}';
+    }
 
     public Long getRepairId() {
         return repairId;

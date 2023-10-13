@@ -45,6 +45,30 @@
         on duplicate key update
          repair_num = values(repair_num) , repair_state = values(repair_state) , assignment_time = values(assignment_time) , receiving_orders_time = values(receiving_orders_time) , complete_time = values(complete_time) , cancel_time = values(cancel_time) , door_time = values(door_time) , assignment_id = values(assignment_id) , complete_id = values(complete_id) , complete_phone = values(complete_phone) , complete_name = values(complete_name) , remark = values(remark) , create_by = values(create_by) , create_time = values(create_time) , update_by = values(update_by) , update_time = values(update_time) , user_id = values(user_id) , del_flag = values(del_flag) , repair_content = values(repair_content) , community_id = values(community_id) , address = values(address)
         </insert>
+    <!-- 根据条件更新数据 -->
+    <update id="updateRepair" parameterType="com.example.community.entity.ZyRepair">
+        UPDATE zy_repair
+        <set>
+            <if test="repairState != null">repair_state = #{repairState},</if>
+            <if test="assignmentTime != null">assignment_time = #{assignmentTime},</if>
+            <if test="receivingOrdersTime != null">receiving_orders_time = #{receivingOrdersTime},</if>
+            <if test="completeTime != null">complete_time = #{completeTime},</if>
+            <if test="cancelTime != null">cancel_time = #{cancelTime},</if>
+            <if test="doorTime != null">door_time = #{doorTime},</if>
+            <if test="assignmentId != null">assignment_id = #{assignmentId},</if>
+            <if test="completeId != null">complete_id = #{completeId},</if>
+            <if test="completePhone != null">complete_phone = #{completePhone},</if>
+            <if test="completeName != null">complete_name = #{completeName},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="delFlag != null">del_flag = #{delFlag},</if>
+            <if test="repairContent != null">repair_content = #{repairContent},</if>
+            <if test="communityId != null">community_id = #{communityId},</if>
+            <if test="address != null">address = #{address},</if>
+        </set>
+        WHERE repair_id = #{repairId}
+    </update>
     <select id="count" resultType="java.lang.Long">
         select count(*) from zy_repair zr join zy_owner zo on zr.user_id=zo.owner_id
         <where>
@@ -79,6 +103,35 @@
         order by zr.create_time desc
         limit #{index},#{size}
     </select>
+    <select id="getUserList" resultType="com.example.community.entity.SysUser">
+        SELECT user_name
+        FROM sys_user
+        WHERE dept_id IN (
+            SELECT dept_id
+            FROM sys_dept
+            WHERE ancestors LIKE CONCAT('%', (SELECT DISTINCT zd.parent_id FROM sys_user su
+                                                                                    JOIN zy_community zc ON su.dept_id = zc.dept_id
+                                                                                    JOIN sys_dept zd ON zd.dept_id = zc.dept_id
+                                              WHERE zc.community_id =#{id}), '%')
+              AND ancestors LIKE CONCAT('%', (SELECT DISTINCT zd.dept_id FROM sys_user su
+                                                                                  JOIN zy_community zc ON su.dept_id = zc.dept_id
+                                                                                  JOIN sys_dept zd ON zd.dept_id = zc.dept_id
+                                              WHERE zc.community_id =#{id}), '%')
+              AND dept_name = '维修部门'
+        )
+
+          AND status = 0
+
+    </select>
+    <select id="selectDoorTime" resultType="java.lang.Integer">
+        SELECT *
+        FROM zy_repair
+        WHERE door_time = STR_TO_DATE(#{time}, '%Y-%m-%d %H:%i:%s');
+    </select>
+    <select id="getNumber" resultType="java.lang.String">
+        select phonenumber from sys_user where user_name=#{name}
+    </select>
+
 
 </mapper>
 

@@ -4,9 +4,12 @@ import java.util.List;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.example.community.dto.ZyRepairDto;
+import com.example.community.entity.SysUser;
 import com.example.community.entity.ZyVisitor;
 import org.apache.ibatis.annotations.Param;
 import com.example.community.entity.ZyRepair;
+
+import javax.xml.crypto.Data;
 
 /**
  * 报修信息(ZyRepair)表数据库访问层
@@ -37,5 +40,13 @@ int insertOrUpdateBatch(@Param("entities") List<ZyRepair> entities);
 
     List<ZyRepairDto> selectZyRepairDto(@Param("index") Long index, @Param("size") Long size , @Param("zyRepairDto") ZyRepairDto zyRepairDto, @Param("id")long id);
 
+
+    List<SysUser> getUserList(long id);
+
+      Integer updateRepair(ZyRepair zyRepair);
+
+      Integer selectDoorTime(String time);
+
+    String  getNumber(String name);
 }
 

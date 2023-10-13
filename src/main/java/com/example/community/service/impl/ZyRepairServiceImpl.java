@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.community.dao.ZyRepairDao;
 import com.example.community.dao.ZyVisitorDao;
 import com.example.community.dto.ZyRepairDto;
+import com.example.community.entity.SysUser;
 import com.example.community.entity.ZyRepair;
 import com.example.community.service.ZyRepairService;
 import jdk.nashorn.internal.ir.annotations.Reference;
@@ -12,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * 报修信息(ZyRepair)表服务实现类
@@ -37,6 +39,26 @@ public class ZyRepairServiceImpl extends ServiceImpl<ZyRepairDao, ZyRepair> impl
         page.setPages(totalPages);
         page.setRecords(zyRepairDao.selectZyRepairDto((page.getCurrent()-1)*page.getSize(),page.getSize(),zyRepairDto,id));
         return page;
+    }
+
+    @Override
+    public List<SysUser> getUserList(long id) {
+        return zyRepairDao.getUserList(id);
+    }
+
+    @Override
+    public Integer updateRepair(ZyRepair zyRepair) {
+        return zyRepairDao.updateRepair(zyRepair);
+    }
+
+    @Override
+    public Integer selectDoorTime(String time) {
+        return zyRepairDao.selectDoorTime(time);
+    }
+
+    @Override
+    public String  getNumber(String name) {
+        return zyRepairDao.getNumber(name);
     }
 }
 

@@ -6,7 +6,9 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.api.ApiController;
 import com.baomidou.mybatisplus.extension.api.R;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.example.community.dto.RolesAndMenuIds;
 import com.example.community.dto.ZyRepairDto;
+import com.example.community.entity.SysRole;
 import com.example.community.entity.ZyRepair;
 import com.example.community.entity.ZyVisitor;
 import com.example.community.service.ZyRepairService;
@@ -14,8 +16,12 @@ import io.swagger.annotations.Api;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.validation.constraints.Pattern;
+import javax.websocket.server.PathParam;
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 报修信息(ZyRepair)表控制层
@@ -94,6 +100,34 @@ public class ZyRepairController extends ApiController {
     public R zyRepair(Page<ZyRepairDto> page, ZyRepairDto zyRepairDto, Long communityId) {
         System.err.println(zyRepairDto);
         return success(this.zyRepairService.zyRepairDtoList(page,zyRepairDto,communityId));
+    }
+
+    @PostMapping("getUserList/{communityId}")
+    public R getUserList(@PathVariable  Long communityId) {
+        return success(this.zyRepairService.getUserList(communityId));
+    }
+
+    @PutMapping("edit")
+    public Map<String, Object> edit(@RequestBody ZyRepair zyRepair) {
+        System.err.println(zyRepair);
+        Map<String, Object> map = new HashMap<>();
+        Integer integer1 = zyRepairService.selectDoorTime(zyRepair.getDoorTime().toString());
+        if (integer1!=null){
+            map.put("msg","该师傅没空，请更换师傅");
+            map.put("status", 201);
+            map.put("success", false);
+            return map;
+        }
+        Integer integer = zyRepairService.updateRepair(zyRepair);
+        map.put("msg","修改成功");
+        map.put("status", 200);
+        map.put("success", true);
+        return map;
+    }
+    @PostMapping("getNumber")
+    public R getNumber(@PathParam("name") String name) {
+        System.err.println(name);
+        return success(this.zyRepairService.getNumber(name));
     }
 }
 
