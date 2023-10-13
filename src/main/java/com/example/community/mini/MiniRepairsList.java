@@ -63,10 +63,11 @@ public class MiniRepairsList {
      * @param repairId
      * @return
      */
-    @GetMapping("/deleteRepair/{repairId}")
-    public Map<String, Object> deleteRepair(@PathVariable("repairId") String repairId) {
+    @GetMapping("/deleteRepair/{repairId}/{openId}")
+    public Map<String, Object> deleteRepair(@PathVariable("repairId") String repairId ,@PathVariable("openId") String openId) {
         HashMap<String, Object> result = new HashMap<>();
-        Integer integer = zyRepairService.deleteRepair(repairId);
+        ZyOwner zyOwner = zyOwnerMapper.selectOne(new QueryWrapper<ZyOwner>().eq("owner_open_id", openId));
+        Integer integer = zyRepairService.deleteRepair(repairId,zyOwner.getOwnerRealName());
         if (integer.equals(1)){
             result.put("status",200);
             result.put("msg","删除成功");
@@ -82,10 +83,11 @@ public class MiniRepairsList {
      * @param repairId
      * @return
      */
-    @GetMapping("/complete/{repairId}")
-    public Map<String, Object> completeRepair(@PathVariable("repairId") String repairId) {
+    @GetMapping("/complete/{repairId}/{openId}")
+    public Map<String, Object> completeRepair(@PathVariable("repairId") String repairId,@PathVariable("openId") String openId) {
         HashMap<String, Object> result = new HashMap<>();
-        Integer integer = zyRepairService.completeRepair(repairId);
+        ZyOwner zyOwner = zyOwnerMapper.selectOne(new QueryWrapper<ZyOwner>().eq("owner_open_id", openId));
+        Integer integer = zyRepairService.completeRepair(repairId,zyOwner.getOwnerRealName());
         if (integer.equals(1)){
             result.put("status",200);
             result.put("msg","修改成功");

@@ -21,6 +21,8 @@ public class RepairDto {
     //接单时间
     private Date receivingOrdersTime;
     //处理完成时间
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(shape=JsonFormat. Shape.STRING,pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     private Date completeTime;
     //取消时间
     private Date cancelTime;

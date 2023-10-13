@@ -33,13 +33,13 @@ public interface ZyRepairService extends IService<ZyRepair> {
      * 删除报修表
      * @return
      */
-    Integer deleteRepair(String repairId);
+    Integer deleteRepair(String repairId,String updateBy);
 
     /**
      * 完成报修单
      * @return
      */
-    Integer completeRepair(String repairId);
+    Integer completeRepair(String repairId,String updateBy);
 
     /**
      * 重新报修

@@ -1,5 +1,6 @@
 package com.example.community.dao;
 
+import java.util.Date;
 import java.util.List;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
@@ -43,9 +44,9 @@ int insertOrUpdateBatch(@Param("entities") List<ZyRepair> entities);
 
     List<RepairDto> selectAllRepairs(@Param("communityId") String communityId,@Param("userId") String userId);
 
-    Integer deleteRepair(String repairId);
+    Integer deleteRepair(@Param("updateBy")String updateBy, @Param("repairId") String repairId,@Param("date") Date date);
 
-    Integer completeRepair(String repairId);
+    Integer completeRepair(@Param("updateBy")String updateBy, @Param("repairId") String repairId,@Param("date") Date date);
 
     Integer reRepair(RepairDto repairDto);
 

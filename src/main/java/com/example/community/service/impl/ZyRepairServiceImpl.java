@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -68,13 +69,15 @@ public class ZyRepairServiceImpl extends ServiceImpl<ZyRepairDao, ZyRepair> impl
     }
 
     @Override
-    public Integer deleteRepair(String repairId) {
-        return zyRepairDao.deleteRepair(repairId);
+    public Integer deleteRepair(String repairId,String updateBy) {
+        Date date = new Date();
+        return zyRepairDao.deleteRepair(updateBy,repairId ,date);
     }
 
     @Override
-    public Integer completeRepair(String repairId) {
-        return zyRepairDao.completeRepair(repairId);
+    public Integer completeRepair(String repairId,String updateBy ) {
+        Date date = new Date();
+        return zyRepairDao.completeRepair(updateBy,repairId,date);
     }
 
     @Override
