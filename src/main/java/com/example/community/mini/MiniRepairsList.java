@@ -35,10 +35,11 @@ public class MiniRepairsList {
     public Map<String, Object> findCurrentUserHasBindInfo(String communityId ,String openId) {
         HashMap<String, Object> result = new HashMap<>();
 
-        //未处理、已派遣、已完成 三个状态的集合
+        //未处理、已派遣、已完成、已取消 四个状态的集合
         List<RepairDto> applyList = new ArrayList();
         List<RepairDto> bindList = new ArrayList();
         List<RepairDto> rejectList = new ArrayList();
+        List<RepairDto> cancelList = new ArrayList();
 
         ZyOwner zyOwner = zyOwnerMapper.selectOne(new QueryWrapper<ZyOwner>().eq("owner_open_id", openId));
         List<RepairDto> repairs = zyRepairService.getRepairByK(communityId, zyOwner.getOwnerId() + "");
@@ -49,11 +50,14 @@ public class MiniRepairsList {
                 bindList.add(repair);
             }else if (repair.getRepairState().equals("2")){
                 rejectList.add(repair);
+            }else if (repair.getRepairState().equals("3")){
+                cancelList.add(repair);
             }
         }
         result.put("applyList",applyList);
         result.put("bindList",bindList);
         result.put("rejectList",rejectList);
+        result.put("cancelList",cancelList);
         result.put("status",200);
         return result;
     }

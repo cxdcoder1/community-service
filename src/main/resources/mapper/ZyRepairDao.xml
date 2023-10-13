@@ -70,7 +70,7 @@
         WHERE repair_id = #{repairId}
     </update>
     <update id="deleteRepair">
-        UPDATE zy_repair SET del_flag = 1,update_by = #{updateBy} ,cancel_time = #{date,jdbcType=TIMESTAMP} WHERE repair_id = #{repairId}
+        UPDATE zy_repair SET repair_state = 3,update_by = #{updateBy} ,cancel_time = #{date,jdbcType=TIMESTAMP} WHERE repair_id = #{repairId}
     </update>
     <update id="completeRepair">
         UPDATE zy_repair SET repair_state = 2 ,update_by = #{updateBy} ,complete_time = #{date,jdbcType=TIMESTAMP} WHERE repair_id = #{repairId}
