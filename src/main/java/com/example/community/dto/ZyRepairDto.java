@@ -1,6 +1,5 @@
 package com.example.community.dto;
 
-import com.example.community.utils.CustomDateDeserializer;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import lombok.Getter;

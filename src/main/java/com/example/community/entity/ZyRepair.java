@@ -4,7 +4,6 @@ package com.example.community.entity;
 
 
 import com.baomidou.mybatisplus.extension.activerecord.Model;
-import com.example.community.utils.CustomDateDeserializer;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import org.springframework.format.annotation.DateTimeFormat;
