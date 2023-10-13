@@ -7,6 +7,7 @@ import com.example.community.dao.ZyVisitorDao;
 import com.example.community.dto.ZyRepairDto;
 import com.example.community.entity.SysUser;
 import com.example.community.entity.ZyRepair;
+import com.example.community.mini.dto.RepairDto;
 import com.example.community.service.ZyRepairService;
 import jdk.nashorn.internal.ir.annotations.Reference;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,6 +60,26 @@ public class ZyRepairServiceImpl extends ServiceImpl<ZyRepairDao, ZyRepair> impl
     @Override
     public String  getNumber(String name) {
         return zyRepairDao.getNumber(name);
+    }
+
+    @Override
+    public List<RepairDto> getRepairByK(String communityId, String userId) {
+        return zyRepairDao.selectAllRepairs(communityId,userId);
+    }
+
+    @Override
+    public Integer deleteRepair(String repairId) {
+        return zyRepairDao.deleteRepair(repairId);
+    }
+
+    @Override
+    public Integer completeRepair(String repairId) {
+        return zyRepairDao.completeRepair(repairId);
+    }
+
+    @Override
+    public Integer reRepair(RepairDto repairDto) {
+        return zyRepairDao.reRepair(repairDto);
     }
 }
 

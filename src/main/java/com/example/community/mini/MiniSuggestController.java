@@ -70,11 +70,18 @@ public class MiniSuggestController {
     }
 
 
+    /**
+     * 投诉列表
+     * @param communityId
+     * @param openId
+     * @return
+     */
     @GetMapping("/suggestions")
     public Map<String, Object> getSuggestions(String communityId ,String openId)  {
         HashMap<String, Object> result = new HashMap<>();
         ZyOwner zyOwner = zyOwnerMapper.selectOne(new QueryWrapper<ZyOwner>().eq("owner_open_id", openId));
-        List<ZyComplaintSuggest> suggestions = miniSuggestService.getSuggestions(communityId, zyOwner.getOwnerId() + "");
+        List<SuggestAndOwnerDto> suggestions = miniSuggestService.getSuggestions(communityId, zyOwner.getOwnerId() + "");
+        System.err.println(suggestions);
         result.put("status",200);
         result.put("msg","获取成功");
         result.put("list",suggestions);

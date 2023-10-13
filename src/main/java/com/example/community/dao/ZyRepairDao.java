@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.example.community.dto.ZyRepairDto;
 import com.example.community.entity.SysUser;
 import com.example.community.entity.ZyVisitor;
+import com.example.community.mini.dto.RepairDto;
 import org.apache.ibatis.annotations.Param;
 import com.example.community.entity.ZyRepair;
 
@@ -40,6 +41,13 @@ int insertOrUpdateBatch(@Param("entities") List<ZyRepair> entities);
 
     List<ZyRepairDto> selectZyRepairDto(@Param("index") Long index, @Param("size") Long size , @Param("zyRepairDto") ZyRepairDto zyRepairDto, @Param("id")long id);
 
+    List<RepairDto> selectAllRepairs(@Param("communityId") String communityId,@Param("userId") String userId);
+
+    Integer deleteRepair(String repairId);
+
+    Integer completeRepair(String repairId);
+
+    Integer reRepair(RepairDto repairDto);
 
     List<SysUser> getUserList(long id);
 

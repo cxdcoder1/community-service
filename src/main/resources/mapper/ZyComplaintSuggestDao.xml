@@ -92,6 +92,47 @@
             </foreach>
         </if>
     </select>
+
+
+    <!--    <resultMap id="SuggestionDto" type="com.example.community.mini.dto.SuggestAndOwnerDto">-->
+    <!--        <id property="complaintSuggestId" column="complaintSuggestId" />-->
+    <!--        <result property="openId" column="openId" />-->
+    <!--        <collection property="imageUrls" ofType="string">-->
+    <!--            <result column="imageUrls" />-->
+    <!--        </collection>-->
+    <!--        <result property="communityId" column="communityId" />-->
+    <!--        <result property="complaintSuggestType" column="complaintSuggestType" />-->
+    <!--        <result property="complaintSuggestContent" column="complaintSuggestContent" />-->
+    <!--        <result property="createBy" column="createBy" />-->
+    <!--        <result property="createTime" column="createTime" />-->
+    <!--        <result property="updateBy" column="updateBy" />-->
+    <!--        <result property="updateTime" column="updateTime" />-->
+    <!--        <result property="remark" column="remark" />-->
+    <!--        <result property="userId" column="userId" />-->
+    <!--    </resultMap>-->
+
+    <resultMap id="SuggestionDto" type="com.example.community.mini.dto.SuggestAndOwnerDto">
+        <id property="complaintSuggestId" column="complaint_suggest_id"></id>
+        <result property="openId" column="openId"/>
+        <result property="communityId" column="community_id"/>
+        <result property="complaintSuggestType" column="complaint_suggest_type"/>
+        <result property="complaintSuggestContent" column="complaint_suggest_content"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="updateBy" column="updateBy" />
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <result property="remark" column="remark"/>
+        <result property="userId" column="user_id"/>
+        <collection property="imageUrls" ofType="string">
+            <result column="files_url"/>
+        </collection>
+
+    </resultMap>
+
+    <select id="getSuggestions" resultMap="SuggestionDto">
+        SELECT zs.*,zf.files_url from zy_complaint_suggest zs JOIN zy_files zf on zf.parent_id = zs.complaint_suggest_id
+        where zs.community_id = #{communityId} and zs.user_id = #{userId}
+    </select>
     <insert id="insertBySuggest">
         INSERT INTO zy_complaint_suggest
         <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -159,9 +200,7 @@
             </trim>
         </foreach>
     </insert>
-    <select id="getSuggestions" resultType="com.example.community.entity.ZyComplaintSuggest">
-        SELECT * from zy_complaint_suggest where community_id = #{communityId} and user_id = #{userId}
-    </select>
+
 
 </mapper>
 

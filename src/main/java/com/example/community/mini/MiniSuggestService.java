@@ -40,7 +40,7 @@ public class MiniSuggestService {
      * @param userId
      * @return
      */
-    public List<ZyComplaintSuggest> getSuggestions(String communityId, String userId){
+    public List<SuggestAndOwnerDto> getSuggestions(String communityId, String userId){
 
         return zyComplaintSuggestDao.getSuggestions(communityId,userId);
     }

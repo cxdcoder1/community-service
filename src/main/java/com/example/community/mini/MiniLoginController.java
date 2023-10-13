@@ -41,6 +41,7 @@ public class MiniLoginController {
         // session.setAttribute("openId",miniUserDtoZyResult);
 
         result.put("data",miniUserDtoZyResult.getData());
+        System.out.println(miniUserDtoZyResult.getData());
         String JWT = JwtUtil.createJWT(miniUserDtoZyResult.getData().getOpenId(), JSON.toJSONString(miniUserDtoZyResult.getData()), SystemConstant.JWT_TTL);
 //                log.info(JWT);
         result.put("token", JWT);

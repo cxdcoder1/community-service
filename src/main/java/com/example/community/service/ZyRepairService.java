@@ -6,6 +6,9 @@ import com.example.community.dto.ZyRepairDto;
 import com.example.community.entity.SysUser;
 import com.example.community.entity.ZyRepair;
 import com.example.community.entity.ZyVisitor;
+import com.example.community.mini.dto.RepairDto;
+
+import java.util.List;
 
 import java.util.List;
 
@@ -17,6 +20,34 @@ import java.util.List;
  */
 public interface ZyRepairService extends IService<ZyRepair> {
     Page<ZyRepairDto> zyRepairDtoList(Page<ZyRepairDto> page, ZyRepairDto zyRepairDto, long id);
+
+    /**
+     * 获取报修列表
+     * @param communityId
+     * @param userId
+     * @return
+     */
+    List<RepairDto> getRepairByK(String communityId ,String userId);
+
+    /**
+     * 删除报修表
+     * @return
+     */
+    Integer deleteRepair(String repairId);
+
+    /**
+     * 完成报修单
+     * @return
+     */
+    Integer completeRepair(String repairId);
+
+    /**
+     * 重新报修
+     * @param repairDto
+     * @return
+     */
+    Integer reRepair(RepairDto repairDto);
+
 
     List<SysUser> getUserList(long id);
 

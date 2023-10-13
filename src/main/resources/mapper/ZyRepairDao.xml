@@ -69,6 +69,15 @@
         </set>
         WHERE repair_id = #{repairId}
     </update>
+    <update id="deleteRepair">
+        UPDATE zy_repair SET del_flag = 1,update_by = #{updateBy} WHERE repair_id = #{repairId}
+    </update>
+    <update id="completeRepair">
+        UPDATE zy_repair SET repair_state = 2 ,update_by = #{updateBy} WHERE repair_id = #{repairId}
+    </update>
+    <update id="reRepair">
+        UPDATE zy_repair SET repair_state = 0 ,door_time = #{doorTime} ,update_by = #{updateBy} WHERE repair_id = #{repairId}
+    </update>
     <select id="count" resultType="java.lang.Long">
         select count(*) from zy_repair zr join zy_owner zo on zr.user_id=zo.owner_id
         <where>
@@ -102,6 +111,9 @@
         </where>
         order by zr.create_time desc
         limit #{index},#{size}
+    </select>
+    <select id="selectAllRepairs" resultType="com.example.community.mini.dto.RepairDto">
+        SELECT * FROM zy_repair where community_id =  #{communityId} and user_id = #{userId} and del_flag = 0
     </select>
     <select id="getUserList" resultType="com.example.community.entity.SysUser">
         SELECT user_name
