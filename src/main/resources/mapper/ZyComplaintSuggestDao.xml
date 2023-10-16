@@ -62,10 +62,10 @@
         select
         zcs.complaint_suggest_id,zcs.complaint_suggest_type,zcs.complaint_suggest_content,zcs.create_by,zy.owner_phone_number,zcs.create_time
         ,zcs.remark
-        ,zf.files_url
+
         from zy_complaint_suggest zcs
         LEFT JOIN zy_owner zy on zcs.user_id=zy.owner_id
-        LEFT join zy_files zf on zcs.complaint_suggest_id=zf.parent_id
+
         <where>
             <if test="zyComplaintSuggestDto.complaintSuggestType!=null and zyComplaintSuggestDto.complaintSuggestType !=''">
                 and zcs.complaint_suggest_type=#{zyComplaintSuggestDto.complaintSuggestType}
