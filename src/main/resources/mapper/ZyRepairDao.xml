@@ -153,6 +153,17 @@
          INNER JOIN zy_owner_room e on e.room_id= d.room_id
          WHERE a.community_id=#{communityId} and e.owner_id=#{ownerId} and e.room_status=1
     </select>
+    <select id="getZyRepairListS" resultType="com.example.community.dto.ExZyRepair">
+        select * from zy_repair zr join zy_owner zo on zr.user_id=zo.owner_id where zr.repair_id !=1
+        <if test="list!=null">
+            and
+            zr.repair_id in
+            <foreach collection="list" item="num" index="index" open="(" close=")" separator=",">
+                #{num}
+            </foreach>
+        </if>
+
+    </select>
 
 </mapper>
 

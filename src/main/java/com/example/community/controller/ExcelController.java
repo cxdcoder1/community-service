@@ -56,6 +56,8 @@ public class ExcelController {
     private ZyVisitorDao zyVisitorDao;
     @Resource
     private ZyComplaintSuggestDao zyComplaintSuggestDao;
+    @Resource
+    private ZyRepairDao zyRepairDao;
     /**
      * 生成随机文件名 并返回固定路径
      * @return
@@ -694,6 +696,44 @@ public class ExcelController {
         List<ExSuggest> exSuggestList = zyComplaintSuggestDao.getExSuggestList(list);
         String path="D:\\lx.xls";
         suggestList(path,exSuggestList);
+        result.put("msg","导出成功");
+        result.put("status","200");
+        result.put("path",path);
+        return result;
+    }
+
+    /**
+     * 报修导出
+     * @param fileName
+     * @param list
+     */
+    public static void getZyRepairListS(String fileName,List<ExZyRepair> list){
+        //"E:\\lx.xls"
+        List<ExZyRepair> dataList = new ArrayList<>();
+
+        for (ExZyRepair exSuggest : list) {
+            dataList.add(exSuggest);
+        }
+
+        // 设置单元格样式
+        HorizontalCellStyleStrategy horizontalCellStyleStrategy = new HorizontalCellStyleStrategy( StyleUtils.getHeadStyle(),StyleUtils.getContentStyle());
+
+        EasyExcel.write(fileName, ExZyRepair.class)
+                .sheet(0)
+                .registerWriteHandler(horizontalCellStyleStrategy)
+                .doWrite(dataList);
+    }
+
+    @Log(title = "报修管理", businessType = BusinessType.EXPORT)
+    @PostMapping("getZyRepairListS")
+    public Map<String, Object> getZyRepairListS(@RequestBody List<String> list) {
+        Map<String, Object> result = new HashMap<>();
+        if (list.size()==0){
+            list=null;
+        }
+        List<ExZyRepair> exSuggestList = zyRepairDao.getZyRepairListS(list);
+        String path="D:\\lx.xls";
+        getZyRepairListS(path,exSuggestList);
         result.put("msg","导出成功");
         result.put("status","200");
         result.put("path",path);

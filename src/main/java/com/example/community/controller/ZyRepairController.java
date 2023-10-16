@@ -99,7 +99,6 @@ public class ZyRepairController extends ApiController {
 
     @GetMapping("zyRepairDtoList")
     public R zyRepair(Page<ZyRepairDto> page, ZyRepairDto zyRepairDto, Long communityId) {
-        System.err.println(zyRepairDto);
         return success(this.zyRepairService.zyRepairDtoList(page,zyRepairDto,communityId));
     }
 
@@ -110,7 +109,6 @@ public class ZyRepairController extends ApiController {
 
     @PutMapping("edit")
     public Map<String, Object> edit(@RequestBody ZyRepair zyRepair) {
-        System.err.println(zyRepair);
         Map<String, Object> map = new HashMap<>();
         Integer integer = zyRepairService.updateRepair(zyRepair);
         map.put("msg","修改成功");
@@ -120,10 +118,13 @@ public class ZyRepairController extends ApiController {
     }
     @PostMapping("getNumber")
     public R getNumber(@PathParam("name") String name) {
-        System.err.println(name);
         return success(this.zyRepairService.getNumber(name));
     }
 
+    /**
+     * 定时任务 每天9点查询七天处理中状态的报修 如果七天后还没有确认完成，自动完成
+     * @throws ParseException
+     */
     @Scheduled(cron = "0 0 9 * * ?")
     public void checkRepairStatus() throws ParseException {
         // 查询所有报修信息

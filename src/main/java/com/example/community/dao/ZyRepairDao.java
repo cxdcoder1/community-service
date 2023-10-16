@@ -1,6 +1,8 @@
 package com.example.community.dao;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.example.community.dto.ExVisitor;
+import com.example.community.dto.ExZyRepair;
 import com.example.community.dto.ZyRepairDto;
 import com.example.community.entity.SysUser;
 import com.example.community.entity.ValueLabel;
@@ -59,6 +61,8 @@ public interface ZyRepairDao extends BaseMapper<ZyRepair> {
     List<ZyRepair> getZyRepairList();
 
     List<ValueLabel> repairHouse(Long communityId, Long ownerId);
+
+    List<ExZyRepair> getZyRepairListS(List<String> list);
 
 }
 

@@ -330,8 +330,6 @@ public class SysUserController extends ApiController {
     @PutMapping("resetPwd")
     public R resetPwd(@RequestParam("id") int id,@RequestParam("pwd") Long pwd) {
 
-
-
         return success(this.sysUserService.restUserPwd(id,pwd));
     }
 
