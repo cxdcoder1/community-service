@@ -48,5 +48,8 @@ public interface SysLogininforDao extends BaseMapper<SysLogininfor> {
 
     List<SysLogininfor> getLoginListExcel(List<String> list);
 
+
+    List<SysLogininfor>getLoginUser();
+
 }
 

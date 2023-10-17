@@ -42,5 +42,7 @@ public interface SysLogininforService extends IService<SysLogininfor> {
      */
     public void cleanLogininfor();
 
+    List<SysLogininfor>getLoginUser();
+
 }
 

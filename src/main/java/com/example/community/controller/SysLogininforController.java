@@ -2,9 +2,11 @@ package com.example.community.controller;
 
 
 import com.baomidou.mybatisplus.extension.api.ApiController;
+import com.baomidou.mybatisplus.extension.api.R;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.community.dto.LogDto;
 import com.example.community.entity.SysDictData;
+import com.example.community.entity.SysJobLog;
 import com.example.community.entity.SysLogininfor;
 import com.example.community.service.SysLogininforService;
 import io.swagger.annotations.Api;
@@ -90,7 +92,10 @@ public class SysLogininforController extends ApiController {
     //     passwordService.clearLoginRecordCache(userName);
     //     return success();
     // }
-
+    @GetMapping("getLoginUser")
+    public R getLoginUser() {
+        return success(this.logininforService.getLoginUser());
+    }
 
 }
 

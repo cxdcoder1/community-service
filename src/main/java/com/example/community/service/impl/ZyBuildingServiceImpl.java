@@ -106,5 +106,7 @@ public class ZyBuildingServiceImpl extends ServiceImpl<ZyBuildingDao, ZyBuilding
 
         return zyBuildingDao.getUBuild(communityId);
     }
+
+
 }
 

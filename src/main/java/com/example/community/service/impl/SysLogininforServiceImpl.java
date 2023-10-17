@@ -65,5 +65,10 @@ public class SysLogininforServiceImpl extends ServiceImpl<SysLogininforDao, SysL
     public void cleanLogininfor() {
         logininforMapper.cleanLogininfor();
     }
+
+    @Override
+    public List<SysLogininfor> getLoginUser() {
+        return logininforMapper.getLoginUser();
+    }
 }
 

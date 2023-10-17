@@ -49,5 +49,7 @@ public interface ZyCommunityService extends IService<ZyCommunity> {
      * @return
      */
     List<ZyCommunity> getUCommunity();
+
+    List<ZyCommunity>getZyCommunityS();
 }
 

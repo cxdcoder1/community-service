@@ -60,6 +60,9 @@
             </foreach>
         </if>
     </select>
+    <select id="getLoginUser" resultType="com.example.community.entity.SysLogininfor">
+        select user_name,login_location,msg  from sys_logininfor
+    </select>
 
     <delete id="deleteLogininforByIds" parameterType="Long">
         delete from sys_logininfor where info_id in
