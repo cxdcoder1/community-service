@@ -23,6 +23,7 @@ public class ZyBuildingServiceImpl extends ServiceImpl<ZyBuildingDao, ZyBuilding
     @Resource
     private ZyBuildingDao zyBuilding;
 
+
     @Override
     public List<ZyBuilding> selectName(String id) {
         return zyBuilding.selectName(id);
