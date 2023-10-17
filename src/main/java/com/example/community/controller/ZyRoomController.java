@@ -1,6 +1,7 @@
 package com.example.community.controller;
 
 import com.baomidou.mybatisplus.extension.api.ApiController;
+import com.baomidou.mybatisplus.extension.api.R;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.community.dto.RoomDto;
 import com.example.community.entity.*;
@@ -183,5 +184,9 @@ public class ZyRoomController extends ApiController {
         return map;
     }
 
+    @GetMapping("getRoomListStatus")
+    public R getRoom() {
+        return success(this.zyRoomService.roomList());
+    }
 }
 

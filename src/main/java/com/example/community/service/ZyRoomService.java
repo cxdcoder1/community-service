@@ -2,6 +2,7 @@ package com.example.community.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.example.community.dto.RoomDto;
+import com.example.community.dto.RoomStatus;
 import com.example.community.entity.*;
 import org.apache.ibatis.annotations.Param;
 
@@ -42,6 +43,8 @@ public interface ZyRoomService extends IService<ZyRoom> {
     int delRooms(List<String> list);
 
     int updRooms(long id);
+
+    List<RoomStatus>roomList();
 
 }
 

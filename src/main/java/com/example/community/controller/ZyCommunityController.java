@@ -136,10 +136,10 @@ public class ZyCommunityController extends ApiController {
      * @param id 主键
      * @return 单条数据
      */
-    @GetMapping("{id}")
-    public R selectOne(@PathVariable Serializable id) {
-        return success(this.zyCommunityService.getById(id));
-    }
+//    @GetMapping("{id}")
+//    public R selectOne(@PathVariable Serializable id) {
+//        return success(this.zyCommunityService.getById(id));
+//    }
 
     /**
      * 新增数据

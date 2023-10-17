@@ -2,6 +2,7 @@ package com.example.community.dao;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.example.community.dto.RoomDto;
+import com.example.community.dto.RoomStatus;
 import com.example.community.entity.*;
 import org.apache.ibatis.annotations.Param;
 
@@ -42,6 +43,8 @@ public interface ZyRoomDao extends BaseMapper<ZyRoom> {
     int delRooms(List<String> list);
 
     int updRooms(long id);
+
+    List<RoomStatus>roomList();
 
 }
 

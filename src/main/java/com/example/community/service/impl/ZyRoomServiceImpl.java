@@ -3,6 +3,7 @@ package com.example.community.service.impl;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.community.dao.ZyRoomDao;
 import com.example.community.dto.RoomDto;
+import com.example.community.dto.RoomStatus;
 import com.example.community.entity.*;
 import com.example.community.service.ZyRoomService;
 import org.springframework.stereotype.Service;
@@ -96,6 +97,10 @@ public class ZyRoomServiceImpl extends ServiceImpl<ZyRoomDao, ZyRoom> implements
         return i;
     }
 
+    @Override
+    public List<RoomStatus> roomList() {
+        return zyRoomDao.roomList();
+    }
 
 
 }

@@ -52,7 +52,6 @@ public class ZyCommunity extends Model<ZyCommunity> {
     //交房数量
     private String roomNum;
 
-
     public ZyCommunity(String communityId, String communityName, String communityCode, String communityProvenceCode, String communityCityCode, String communityTownCode, String communityDetailedAddress, String communityLongitude, String communityLatitude, Long deptId, Integer communitySort, String createBy, Date createTime, String updateBy, Date updateTime, String remark, String roomNum) {
         this.communityId = communityId;
         this.communityName = communityName;

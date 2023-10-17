@@ -214,7 +214,12 @@
             #{num}
         </foreach>
     </select>
-
+    <select id="roomList" resultType="com.example.community.dto.RoomStatus">
+        SELECT IF(zr.room_status = 'has_give', '已交房', IF(zr.room_status = 'none', '未出售', IF(zr.room_status = 'has_stay', '已入住', IF(zr.room_status = 'none_stay', '未入住', zr.room_status)))) AS roomStatus, COUNT(*) as roomNum
+        FROM zy_community AS zc
+        RIGHT JOIN zy_room AS zr ON zc.community_id = zr.community_id
+        GROUP BY room_status
+    </select>
 
 
 </mapper>
