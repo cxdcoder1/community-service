@@ -2,14 +2,9 @@ package com.example.community.service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.example.community.entity.SysPost;
+import com.example.community.dto.CommunityBuild;
 import com.example.community.entity.ZyCommunity;
 import com.example.community.dto.CommunityAndDeptDto;
-import org.apache.ibatis.annotations.Param;
-
-import java.util.List;
-
-import java.util.List;
 
 import java.util.List;
 
@@ -51,5 +46,7 @@ public interface ZyCommunityService extends IService<ZyCommunity> {
     List<ZyCommunity> getUCommunity();
 
     List<ZyCommunity>getZyCommunityS();
+
+    List<CommunityBuild>getBulidNameList();
 }
 

@@ -3,15 +3,11 @@ package com.example.community.dao;
 import java.util.List;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.community.dto.CommunityAndDeptDto;
-import com.example.community.dto.UserAndDeptAndPostAndRole;
-import com.example.community.entity.SysRole;
+import com.example.community.dto.CommunityBuild;
 import org.apache.ibatis.annotations.Param;
 import com.example.community.entity.ZyCommunity;
 import org.apache.ibatis.annotations.Select;
-
-import javax.websocket.server.PathParam;
 
 /**
  * 小区 (ZyCommunity)表数据库访问层
@@ -69,6 +65,9 @@ public interface ZyCommunityDao extends BaseMapper<ZyCommunity> {
 
 
     List<ZyCommunity>getZyCommunityS();
+
+
+    List<CommunityBuild>getBulidNameList();
 
 }
 

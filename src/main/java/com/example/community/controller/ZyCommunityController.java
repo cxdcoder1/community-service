@@ -298,5 +298,10 @@ public class ZyCommunityController extends ApiController {
     public R getRoom() {
         return success(this.zyCommunityService.getZyCommunityS());
     }
+
+    @GetMapping("getBuildList")
+    public R getBuildList() {
+        return success(this.zyCommunityService.getBulidNameList());
+    }
 }
 

@@ -51,6 +51,16 @@ public class ZyCommunity extends Model<ZyCommunity> {
     private String remark;
     //交房数量
     private String roomNum;
+    //楼栋数量
+    private String buildNum;
+
+    public String getBuildNum() {
+        return buildNum;
+    }
+
+    public void setBuildNum(String buildNum) {
+        this.buildNum = buildNum;
+    }
 
     public ZyCommunity(String communityId, String communityName, String communityCode, String communityProvenceCode, String communityCityCode, String communityTownCode, String communityDetailedAddress, String communityLongitude, String communityLatitude, Long deptId, Integer communitySort, String createBy, Date createTime, String updateBy, Date updateTime, String remark, String roomNum) {
         this.communityId = communityId;

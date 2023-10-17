@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.community.dao.ZyCommunityDao;
 import com.example.community.dto.CommunityAndDeptDto;
-import com.example.community.entity.SysPost;
+import com.example.community.dto.CommunityBuild;
 import com.example.community.entity.ZyCommunity;
 import com.example.community.service.ZyCommunityService;
 import org.springframework.stereotype.Service;
@@ -106,6 +106,14 @@ public class ZyCommunityServiceImpl extends ServiceImpl<ZyCommunityDao, ZyCommun
     @Override
     public List<ZyCommunity> getZyCommunityS() {
         return zyCommunityDao.getZyCommunityS();
+    }
+
+    @Override
+    public List<CommunityBuild> getBulidNameList() {
+        List<CommunityBuild> bulidNameList = zyCommunityDao.getBulidNameList();
+
+        System.err.println(bulidNameList);
+        return bulidNameList;
     }
 }
 
