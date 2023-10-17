@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -40,7 +41,6 @@ public class SysDeptController extends ApiController {
     @Resource
     private SysDeptService sysDeptService;
 
-
     @Resource
     private SysDictDataService sysDictDataService;
 
@@ -49,6 +49,8 @@ public class SysDeptController extends ApiController {
     public R statusOption() {
         return success(this.sysDictDataService.deptStatusOption());
     }
+
+
 
 
     /**

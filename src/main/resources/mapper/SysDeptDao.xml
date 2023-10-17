@@ -162,6 +162,5 @@
         select * from sys_user where dept_id = #{deptId}
     </select>
 
-
 </mapper>
 
