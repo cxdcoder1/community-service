@@ -2,6 +2,7 @@ package com.example.community.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.example.community.entity.SysDept;
+import com.example.community.entity.SysUser;
 import com.sun.org.apache.xpath.internal.operations.Bool;
 
 import java.util.List;
@@ -36,6 +37,13 @@ public interface SysDeptService extends IService<SysDept> {
      * @return
      */
     List<SysDept> isChildren(String deptId);
+
+    /**
+     * 是否有用户
+     * @param deptId
+     * @return
+     */
+    List<SysUser> isUser(String deptId);
 
     /**
      * 根据id查询部门信息

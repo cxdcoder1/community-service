@@ -5,6 +5,7 @@ import com.example.community.dao.ZyOwnerDao;
 import com.example.community.entity.ZyComplaintSuggest;
 import com.example.community.entity.ZyFiles;
 import com.example.community.entity.ZyOwner;
+import com.example.community.mini.dto.RepairDto;
 import com.example.community.mini.dto.SuggestAndOwnerDto;
 import org.springframework.web.bind.annotation.*;
 
@@ -81,10 +82,22 @@ public class MiniSuggestController {
         HashMap<String, Object> result = new HashMap<>();
         ZyOwner zyOwner = zyOwnerMapper.selectOne(new QueryWrapper<ZyOwner>().eq("owner_open_id", openId));
         List<SuggestAndOwnerDto> suggestions = miniSuggestService.getSuggestions(communityId, zyOwner.getOwnerId() + "");
-        System.err.println(suggestions);
+        //未处理、已处理 两个状态的集合
+        List<SuggestAndOwnerDto> applyList = new ArrayList();
+        List<SuggestAndOwnerDto> bindList = new ArrayList();
+
+        for (SuggestAndOwnerDto suggestion : suggestions) {
+            if (suggestion.getRemark()!=null){
+                bindList.add(suggestion);
+            }else {
+                applyList.add(suggestion);
+            }
+        }
+
         result.put("status",200);
         result.put("msg","获取成功");
-        result.put("list",suggestions);
+        result.put("applyList",applyList);
+        result.put("bindList",bindList);
         return result;
     }
 }

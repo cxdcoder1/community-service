@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.example.community.entity.SysRole;
+import com.example.community.entity.SysUser;
 import org.apache.ibatis.annotations.Param;
 import com.example.community.entity.SysDept;
 
@@ -46,6 +47,8 @@ public interface SysDeptDao extends BaseMapper<SysDept> {
     Integer deleteDept(String deptId);
 
     List<SysDept> isChildren(String deptId);
+
+    List<SysUser> isUser(String deptId);
 
 
     public List<SysDept> selectRoleName(long id);

@@ -3,6 +3,7 @@ package com.example.community.service.impl;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.community.dao.SysDeptDao;
 import com.example.community.entity.SysDept;
+import com.example.community.entity.SysUser;
 import com.example.community.service.SysDeptService;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -47,6 +48,11 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptDao, SysDept> impleme
     public List<SysDept> isChildren(String deptId) {
 
         return sysDeptDao.isChildren(deptId);
+    }
+
+    @Override
+    public List<SysUser> isUser(String deptId) {
+        return sysDeptDao.isUser(deptId);
     }
 
     @Override

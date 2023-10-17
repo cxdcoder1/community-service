@@ -158,8 +158,9 @@
     <select id="getDept" resultType="com.example.community.entity.SysDept">
        select * from sys_dept where parent_id=100 or parent_id = 0
     </select>
-
-
+    <select id="isUser" resultType="com.example.community.entity.SysUser">
+        select * from sys_user where dept_id = #{deptId}
+    </select>
 
 
 </mapper>

@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.extension.api.ApiController;
 import com.baomidou.mybatisplus.extension.api.R;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.community.entity.SysDept;
+import com.example.community.entity.SysUser;
 import com.example.community.log.BusinessType;
 import com.example.community.log.Log;
 import com.example.community.service.SysDeptService;
@@ -114,6 +115,14 @@ public class SysDeptController extends ApiController {
         if (children.size()!=0){
             //存在子集不能删除
             map.put("msg","删除失败,此类型下有其他部门");
+            map.put("status","201");
+            return map;
+        }
+        //查询是否有用户
+        List<SysUser> user = sysDeptService.isUser(deptId);
+        if (user.size()!=0){
+            //存在员工不能删除
+            map.put("msg","删除失败,此类型下有用户");
             map.put("status","201");
             return map;
         }
