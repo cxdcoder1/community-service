@@ -71,11 +71,11 @@ public class SysUserController extends ApiController {
     /**
      * 分页查询所有数据
      *
-     * @param page 分页对象
+     * @param page    分页对象
      * @param sysUser 查询实体
      * @return 所有数据
      */
-    @ApiOperation(value = "获取用户列表接口",notes = "获取用户列表接口的说明")
+    @ApiOperation(value = "获取用户列表接口", notes = "获取用户列表接口的说明")
     @GetMapping("/selectAll")
     public R selectAll(Page<SysUser> page, SysUser sysUser) {
 
@@ -101,13 +101,14 @@ public class SysUserController extends ApiController {
 
     /**
      * 登录
+     *
      * @param user
      * @return
      */
-    @ApiOperation(value = "用户登录接口",notes = "用户登录接口的说明")
+    @ApiOperation(value = "用户登录接口", notes = "用户登录接口的说明")
     @RequestMapping("login")
-    public Map<String,Object> login(@RequestBody SysUser user, HttpServletRequest request) throws Exception {
-        Map<String,Object> result = new HashMap<>();
+    public Map<String, Object> login(@RequestBody SysUser user, HttpServletRequest request) throws Exception {
+        Map<String, Object> result = new HashMap<>();
         System.out.println(user);
 
         //校验用户名和密码
@@ -115,46 +116,46 @@ public class SysUserController extends ApiController {
         queryWrapper.eq("phonenumber", user.getPhonenumber());
         //根据电话查询用户z
         SysUser user1 = sysUserService.getOne(queryWrapper);
-        if (user1 != null){
-            if (MD5Util.convertMD5(user.getPassword()).equals(user1.getPassword())){
+        if (user1 != null) {
+            if (MD5Util.convertMD5(user.getPassword()).equals(user1.getPassword())) {
                 //校验用户是否被停用
                 String status = user1.getStatus();
-                if (status.equals("1")){
+                if (status.equals("1")) {
                     //账号被停用
-                    result. put("success", false);
-                    result. put("msg", "用户已被停用!");
-                    result.put("status","201");
-                    AsyncManager.me().execute(AsyncFactory.recordLogininfor(user1.getUserName(), Constants.LOGIN_FAIL,"用户已被停用"));
+                    result.put("success", false);
+                    result.put("msg", "用户已被停用!");
+                    result.put("status", "201");
+                    AsyncManager.me().execute(AsyncFactory.recordLogininfor(user1.getUserName(), Constants.LOGIN_FAIL, "用户已被停用"));
                     return result;
                 }
                 //校验部门是否被停用
-                if (user1.getDeptId()!=null){
+                if (user1.getDeptId() != null) {
                     SysDept dept = sysDeptService.getById(user1.getDeptId() + "");
-                    if (dept.getStatus().equals("1")){
+                    if (dept.getStatus().equals("1")) {
                         //用户的部门被停用
-                        result. put("success", false);
-                        result. put("msg", "该用户所属部门已被停用!");
-                        result.put("status","201");
-                        AsyncManager.me().execute(AsyncFactory.recordLogininfor(user1.getUserName(), Constants.LOGIN_FAIL,"该用户所属部门已被停用"));
+                        result.put("success", false);
+                        result.put("msg", "该用户所属部门已被停用!");
+                        result.put("status", "201");
+                        AsyncManager.me().execute(AsyncFactory.recordLogininfor(user1.getUserName(), Constants.LOGIN_FAIL, "该用户所属部门已被停用"));
                         return result;
                     }
                 }
                 //校验岗位是否被禁用
-                SysPost post= sysUserService.getPostStatus(user1.getUserId() + "");
-                if (post!=null){
-                    if (post.getStatus().equals("1")){
+                SysPost post = sysUserService.getPostStatus(user1.getUserId() + "");
+                if (post != null) {
+                    if (post.getStatus().equals("1")) {
                         //岗位被禁用
-                        result. put("success", false);
-                        result. put("msg", "该用户所属岗位已被停用!");
-                        result.put("status","201");
-                        AsyncManager.me().execute(AsyncFactory.recordLogininfor(user1.getUserName(), Constants.LOGIN_FAIL,"该用户所属岗位已被停用"));
+                        result.put("success", false);
+                        result.put("msg", "该用户所属岗位已被停用!");
+                        result.put("status", "201");
+                        AsyncManager.me().execute(AsyncFactory.recordLogininfor(user1.getUserName(), Constants.LOGIN_FAIL, "该用户所属岗位已被停用"));
                         return result;
                     }
                 }
 
                 //将用户信息存储到Session  //登入成功
                 HttpSession session = request.getSession();
-                AsyncManager.me().execute(AsyncFactory.recordLogininfor(user1.getUserName(), Constants.LOGIN_SUCCESS,"登录成功"));
+                AsyncManager.me().execute(AsyncFactory.recordLogininfor(user1.getUserName(), Constants.LOGIN_SUCCESS, "登录成功"));
                 session.setAttribute("userInfo", user1);
                 user1.setPassword(MD5Util.convertMD5(user1.getPassword()));
 
@@ -162,7 +163,7 @@ public class SysUserController extends ApiController {
                 result.put("user", user1);
                 //把token返回给客户端-->客户端保存至localStorage-->客户端每次请求附带localStorage参数
                 //SystemConstant.JWT_TTL：token有效时间
-                String JWT = JwtUtil.createJWT(user1.getUserId()+"", JSON.toJSONString(user1), SystemConstant.JWT_TTL);
+                String JWT = JwtUtil.createJWT(user1.getUserId() + "", JSON.toJSONString(user1), SystemConstant.JWT_TTL);
 //                log.info(JWT);
                 result.put("JWT", JWT);
                 result.put("status", "200");
@@ -174,7 +175,7 @@ public class SysUserController extends ApiController {
 //            return result;
         }
         //登录失败，用户名错误或不存在
-        AsyncManager.me().execute(AsyncFactory.recordLogininfor(user1.getUserName(), Constants.LOGIN_FAIL,"登录失败，账号密码或验证码错误"));
+        AsyncManager.me().execute(AsyncFactory.recordLogininfor(user1.getUserName(), Constants.LOGIN_FAIL, "登录失败，账号密码或验证码错误"));
         result.put("success", false);
         result.put("msg", "用户名或密码错误!");
         result.put("status", "201");
@@ -202,12 +203,11 @@ public class SysUserController extends ApiController {
 //    public R update(SysUser sysUser) {
 //        return success(this.sysUserService.updateById(sysUser));
 //    }
-
-    @ApiOperation(value = "修改用户接口",notes = "修改用户接口的说明")
+    @ApiOperation(value = "修改用户接口", notes = "修改用户接口的说明")
     @PutMapping("updataUser")
     public R update(@RequestBody SysUser sysUser) {
-//        System.err.println(sysUser);
-        if (sysUser.getPassword()!=null){
+        System.err.println(sysUser);
+        if (sysUser.getNickName() == null) {
             sysUser.setPassword(MD5Util.convertMD5(sysUser.getPassword()));
         }
         return success(this.sysUserService.updateUser(sysUser));
@@ -239,12 +239,12 @@ public class SysUserController extends ApiController {
 
         System.err.println(userAndDeptAndPostAndRole);
         List<String> s = new ArrayList<>();
-        s.add(userAndDeptAndPostAndRole.getDeptId()+"");
+        s.add(userAndDeptAndPostAndRole.getDeptId() + "");
         //获取部门的子集
         List<String> ids = sysUserService.getByDeptId(userAndDeptAndPostAndRole.getDeptId());
-        if (ids.size()!=0){
+        if (ids.size() != 0) {
             //说明有子集
-            ids.add(userAndDeptAndPostAndRole.getDeptId()+"");
+            ids.add(userAndDeptAndPostAndRole.getDeptId() + "");
             userAndDeptAndPostAndRole.setDeptIds(ids);
             //根据部门以及子集id查询
             return success(this.sysUserService.selUserListByP(page, userAndDeptAndPostAndRole));
@@ -266,7 +266,7 @@ public class SysUserController extends ApiController {
 
     @CustomAnnotation("system:user:edit")
     @Log(title = "用户管理", businessType = BusinessType.UPDATE)
-    @ApiOperation(value = "修改用户接口",notes = "修改用户接口的说明")
+    @ApiOperation(value = "修改用户接口", notes = "修改用户接口的说明")
     @PutMapping("updateUser")
     public HashMap<String, Object> updateUser(@RequestBody UserAndPostIdAndRoleId userAndPostIdAndRoleId) {
         HashMap<String, Object> map = new HashMap<>();
@@ -302,7 +302,7 @@ public class SysUserController extends ApiController {
 
     @CustomAnnotation("system:user:add")
     @Log(title = "用户管理", businessType = BusinessType.INSERT)
-    @ApiOperation(value = "新增用户接口",notes = "新增用户接口的说明")
+    @ApiOperation(value = "新增用户接口", notes = "新增用户接口的说明")
     @PutMapping("addUser")
     public HashMap<String, Object> addUser(@RequestBody UserAndPostIdAndRoleId userAndPostIdAndRoleId) {
         HashMap<String, Object> map = new HashMap<>();
@@ -334,15 +334,16 @@ public class SysUserController extends ApiController {
         map.put("msg", "执行失败");
         return map;
     }
+
     //密码重置
     @CustomAnnotation("system:user:resetPwd")
-    @ApiOperation(value = "用户重置密码接口",notes = "用户重置密码接口的说明")
+    @ApiOperation(value = "用户重置密码接口", notes = "用户重置密码接口的说明")
     @PutMapping("resetPwd")
-    public HashMap<String, Object> resetPwd(@RequestParam("id") int id,@RequestParam("pwd") long pwd) {
+    public HashMap<String, Object> resetPwd(@RequestParam("id") int id, @RequestParam("pwd") long pwd) {
         HashMap<String, Object> map = new HashMap<>();
         int i = sysUserService.restUserPwd(id, MD5Util.convertMD5(pwd + ""));
 
-        map.put("data",i);
+        map.put("data", i);
 
         return map;
     }
@@ -351,8 +352,8 @@ public class SysUserController extends ApiController {
     @CustomAnnotation("system:user:edit")
     @Log(title = "用户管理", businessType = BusinessType.UPDATE)
     @PutMapping("updateUserStatus")
-    public R updateUser(@RequestParam("id") int id,@RequestParam("status") String status) {
-        return success(this.sysUserService.upDataStatus(id,status));
+    public R updateUser(@RequestParam("id") int id, @RequestParam("status") String status) {
+        return success(this.sysUserService.upDataStatus(id, status));
     }
 
     @PostMapping("getDeptList")
@@ -390,34 +391,34 @@ public class SysUserController extends ApiController {
 
     @CustomAnnotation("system:user:remove")
     @Log(title = "用户管理", businessType = BusinessType.DELETE)
-    @ApiOperation(value = "批量删除用户接口",notes = "批量删除用户接口的说明")
+    @ApiOperation(value = "批量删除用户接口", notes = "批量删除用户接口的说明")
     @PostMapping("deleteUsers")
     public HashMap<String, Object> deleteUsers(@RequestBody List<String> list) {
         HashMap<String, Object> map = new HashMap<>();
         Integer i = sysUserService.deleteUsers(list);
-        if (i!=0){
-            map.put("status","200");
-            map.put("msg","删除成功");
-        }else {
-            map.put("status","201");
-            map.put("msg","删除失败");
+        if (i != 0) {
+            map.put("status", "200");
+            map.put("msg", "删除成功");
+        } else {
+            map.put("status", "201");
+            map.put("msg", "删除失败");
         }
         return map;
     }
 
     @CustomAnnotation("system:user:remove")
     @Log(title = "用户管理", businessType = BusinessType.DELETE)
-    @ApiOperation(value = "删除用户接口",notes = "删除用户接口的说明")
+    @ApiOperation(value = "删除用户接口", notes = "删除用户接口的说明")
     @DeleteMapping("delUser/{id}")
     public HashMap<String, Object> deleteUsers(@PathVariable String id) {
         HashMap<String, Object> map = new HashMap<>();
         Integer i = sysUserService.delById(id);
-        if (i!=0){
-            map.put("status","200");
-            map.put("msg","删除成功");
-        }else {
-            map.put("status","201");
-            map.put("msg","删除失败");
+        if (i != 0) {
+            map.put("status", "200");
+            map.put("msg", "删除成功");
+        } else {
+            map.put("status", "201");
+            map.put("msg", "删除失败");
         }
         return map;
     }

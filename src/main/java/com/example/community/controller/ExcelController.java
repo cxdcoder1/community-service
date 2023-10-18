@@ -373,6 +373,7 @@ public class ExcelController {
         return result;
     }
 
+    @CustomAnnotation("system:role:export")
     @Log(title = "菜单管理", businessType = BusinessType.EXPORT)
     @PostMapping("list")
     public Map<String, Object> menuList(@RequestBody List<String> lists) {
@@ -470,7 +471,7 @@ public class ExcelController {
 
 
 
-    @CustomAnnotation("monitor:operlog:export")
+    @CustomAnnotation("system:config:export")
     @PostMapping("list2")
     public Map<String, Object> menuList1(@RequestBody List<String> lists) {
         Map<String, Object> result = new HashMap<>();
@@ -496,7 +497,7 @@ public class ExcelController {
      */
     @CustomAnnotation("system:dict:export")
     @Log(title = "字典管理", businessType = BusinessType.EXPORT)
-    @ApiOperation(value = "角色导出接口",notes = "角色导出接口的说明")
+    @ApiOperation(value = "字典管理导出接口",notes = "字典管理导出接口的说明")
     @PostMapping("DictList")
     public Map<String, Object> DictList(@RequestBody List<String> lists) {
         Map<String, Object> result = new HashMap<>();

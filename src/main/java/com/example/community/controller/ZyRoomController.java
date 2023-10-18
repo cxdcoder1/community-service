@@ -143,17 +143,15 @@ public class ZyRoomController extends ApiController {
     @DeleteMapping("deleteRoom/{roomId}")
     public HashMap<String, Object> deleteRoom(@PathVariable Long roomId) {
         HashMap<String, Object> map = new HashMap<>();
-
         // System.err.println(zyRoom);
-
         int i = zyRoomService.deleteRoom(roomId);
         if (i==1){
             map.put("data", i);
-
+            map.put("msg","删除成功" );
             return map;
         }else {
             map.put("data",i);
-
+            map.put("msg","删除失败" );
             return map;
         }
 

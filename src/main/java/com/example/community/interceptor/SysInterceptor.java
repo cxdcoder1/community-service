@@ -76,6 +76,7 @@ public class SysInterceptor implements HandlerInterceptor {
                         jwt = JwtUtil.createJWT(id, subject, SystemConstant.JWT_TTL);
                     } else {
                         jwt = JwtUtil.createJWT(id, subject, SystemConstant.JWT_WE_CHAT);
+                        return true;
                     }
                     response.addHeader("token", jwt);
                     response.setHeader("Access-Control-Expose-Headers", "token");
