@@ -1,14 +1,13 @@
 package com.example.community.controller;
 
 
-
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.api.ApiController;
 import com.baomidou.mybatisplus.extension.api.R;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.example.community.config.CustomAnnotation;
 import com.example.community.dto.OperLogDto;
 import com.example.community.entity.SysOperLog;
-import com.example.community.entity.SysRole;
 import com.example.community.log.BusinessType;
 import com.example.community.log.Log;
 import com.example.community.service.SysOperLogService;
@@ -94,6 +93,7 @@ public class SysOperLogController extends ApiController {
         return success(this.sysOperLogService.removeByIds(idList));
     }
 
+    @CustomAnnotation("monitor:operlog:list")
     @GetMapping("operLoglist")
     public R selectPageAll(Page<OperLogDto> page, OperLogDto operLogDto) {
         System.err.println(operLogDto);
@@ -119,6 +119,7 @@ public class SysOperLogController extends ApiController {
         return success(this.sysOperLogService.getOperLog(id));
     }
 
+    @CustomAnnotation("monitor:operlog:remove")
     @Log(title = "操作日志", businessType = BusinessType.DELETE)
     @PostMapping("deletes")
     public Map<String,Object> deletes(@RequestBody Long[] ids){
@@ -134,6 +135,7 @@ public class SysOperLogController extends ApiController {
         return result;
     }
 
+    @CustomAnnotation("monitor:operlog:remove")
     @PostMapping("dels")
     public Map<String,Object> dels(){
         Map<String,Object> result = new HashMap<>();

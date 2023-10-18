@@ -264,6 +264,7 @@ public class SysUserController extends ApiController {
         return map;
     }
 
+    @CustomAnnotation("system:user:edit")
     @Log(title = "用户管理", businessType = BusinessType.UPDATE)
     @ApiOperation(value = "修改用户接口",notes = "修改用户接口的说明")
     @PutMapping("updateUser")
@@ -298,6 +299,8 @@ public class SysUserController extends ApiController {
         map.put("msg", "执行失败");
         return map;
     }
+
+    @CustomAnnotation("system:user:add")
     @Log(title = "用户管理", businessType = BusinessType.INSERT)
     @ApiOperation(value = "新增用户接口",notes = "新增用户接口的说明")
     @PutMapping("addUser")
@@ -332,14 +335,20 @@ public class SysUserController extends ApiController {
         return map;
     }
     //密码重置
+    @CustomAnnotation("system:user:resetPwd")
     @ApiOperation(value = "用户重置密码接口",notes = "用户重置密码接口的说明")
     @PutMapping("resetPwd")
-    public R resetPwd(@RequestParam("id") int id,@RequestParam("pwd") long pwd) {
+    public HashMap<String, Object> resetPwd(@RequestParam("id") int id,@RequestParam("pwd") long pwd) {
+        HashMap<String, Object> map = new HashMap<>();
+        int i = sysUserService.restUserPwd(id, MD5Util.convertMD5(pwd + ""));
 
-        return success(this.sysUserService.restUserPwd(id,MD5Util.convertMD5(pwd+"")));
+        map.put("data",i);
+
+        return map;
     }
 
     //状态
+    @CustomAnnotation("system:user:edit")
     @Log(title = "用户管理", businessType = BusinessType.UPDATE)
     @PutMapping("updateUserStatus")
     public R updateUser(@RequestParam("id") int id,@RequestParam("status") String status) {
@@ -379,6 +388,7 @@ public class SysUserController extends ApiController {
     }
 
 
+    @CustomAnnotation("system:user:remove")
     @Log(title = "用户管理", businessType = BusinessType.DELETE)
     @ApiOperation(value = "批量删除用户接口",notes = "批量删除用户接口的说明")
     @PostMapping("deleteUsers")
@@ -395,6 +405,7 @@ public class SysUserController extends ApiController {
         return map;
     }
 
+    @CustomAnnotation("system:user:remove")
     @Log(title = "用户管理", businessType = BusinessType.DELETE)
     @ApiOperation(value = "删除用户接口",notes = "删除用户接口的说明")
     @DeleteMapping("delUser/{id}")

@@ -4,9 +4,9 @@ package com.example.community.controller;
 import com.baomidou.mybatisplus.extension.api.ApiController;
 import com.baomidou.mybatisplus.extension.api.R;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.example.community.config.CustomAnnotation;
 import com.example.community.dto.LogDto;
 import com.example.community.entity.SysDictData;
-import com.example.community.entity.SysJobLog;
 import com.example.community.entity.SysLogininfor;
 import com.example.community.service.SysLogininforService;
 import io.swagger.annotations.Api;
@@ -35,6 +35,7 @@ public class SysLogininforController extends ApiController {
 
     // @PreAuthorize("@ss.hasPermi('monitor:logininfor:list')")
     @GetMapping("/list")
+    @CustomAnnotation("monitor:logininfor:list")
     public HashMap<String, Object> list(LogDto logDto, Page<LogDto> page) {
         HashMap<String, Object> map = new HashMap<>();
         System.err.println(logDto);
@@ -71,6 +72,7 @@ public class SysLogininforController extends ApiController {
     // @PreAuthorize("@ss.hasPermi('monitor:logininfor:remove')")
     // @Log(title = "登录日志", businessType = BusinessType.DELETE)
     @DeleteMapping("/{infoIds}")
+    @CustomAnnotation("monitor:logininfor:remove")
     public int remove(@PathVariable Long[] infoIds) {
         int i = logininforService.deleteLogininforByIds(infoIds);
         return i;
@@ -79,6 +81,7 @@ public class SysLogininforController extends ApiController {
     // @PreAuthorize("@ss.hasPermi('monitor:logininfor:remove')")
     // @Log(title = "登录日志", businessType = BusinessType.CLEAN)
     @DeleteMapping("/clean")
+    @CustomAnnotation("monitor:logininfor:remove")
     public String clean() {
         logininforService.cleanLogininfor();
         return "11";

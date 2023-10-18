@@ -4,6 +4,7 @@ package com.example.community.controller;
 import com.baomidou.mybatisplus.extension.api.ApiController;
 import com.baomidou.mybatisplus.extension.api.R;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.example.community.config.CustomAnnotation;
 import com.example.community.entity.SysDictData;
 import com.example.community.service.SysDictDataService;
 import io.swagger.annotations.Api;
@@ -61,6 +62,7 @@ public class SysDictDataController extends ApiController {
         return map;
     }
 
+    @CustomAnnotation("system:config:edit")
     @ApiOperation(value = "修改字典数据接口",notes = "修改字典数据接口的说明")
     @RequestMapping("updateData")
     public HashMap<String, Object> updateData(@RequestBody SysDictData sysDictData) {
@@ -77,6 +79,7 @@ public class SysDictDataController extends ApiController {
         return map;
     }
 
+    @CustomAnnotation("system:config:add")
     @ApiOperation(value = "添加字典数据接口",notes = "添加字典数据接口的说明")
     @RequestMapping("addData")
     public HashMap<String, Object> addData(@RequestBody SysDictData sysDictData) {
@@ -93,6 +96,7 @@ public class SysDictDataController extends ApiController {
         return map;
     }
 
+    @CustomAnnotation("system:config:remove")
     @ApiOperation(value = "删除字典数据接口",notes = "删除字典数据接口的说明")
     @DeleteMapping("delete/{id}")
     public HashMap<String, Object> delete(@PathVariable("id") Long id) {

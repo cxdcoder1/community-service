@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -107,6 +106,7 @@ public class SysDeptController extends ApiController {
      * @param deptId
      * @return
      */
+    @CustomAnnotation("system:dept:remove")
     @Log(title = "部门管理", businessType = BusinessType.DELETE)
     @ApiOperation(value = "删除部门接口",notes = "删除部门接口的说明")
     @DeleteMapping("/delete/{deptId}")
@@ -239,6 +239,7 @@ public class SysDeptController extends ApiController {
         return result;
     }
 
+    @CustomAnnotation("system:dept:add")
     @Log(title = "部门管理", businessType = BusinessType.INSERT)
     @ApiOperation(value = "新增部门接口",notes = "新增部门接口的说明")
     @PostMapping("addDept")
@@ -270,6 +271,7 @@ public class SysDeptController extends ApiController {
         return result;
     }
 
+    @CustomAnnotation("system:dept:edit")
     @Log(title = "部门管理", businessType = BusinessType.UPDATE)
     @ApiOperation(value = "修改部门接口",notes = "修改部门接口的说明")
     @PutMapping("updateDept")
@@ -291,9 +293,6 @@ public class SysDeptController extends ApiController {
         result.put("success", true);
         return result;
     }
-
-
-
 
 }
 

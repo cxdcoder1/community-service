@@ -128,6 +128,7 @@ public class SysPostController extends ApiController {
      * @return
      * @throws Exception
      */
+    @CustomAnnotation("system:post:add")
     @Log(title = "岗位管理", businessType = BusinessType.INSERT)
     @ApiOperation(value = "新增岗位接口",notes = "新增岗位接口的说明")
     @GetMapping("insertPost")
@@ -152,6 +153,7 @@ public class SysPostController extends ApiController {
      * @param sysPost
      * @return
      */
+    @CustomAnnotation("system:post:edit")
     @Log(title = "岗位管理", businessType = BusinessType.UPDATE)
     @ApiOperation(value = "修改岗位接口",notes = "修改岗位接口的说明")
     @PutMapping("updatePosts")
@@ -176,6 +178,7 @@ public class SysPostController extends ApiController {
      * @param postId
      * @return
      */
+    @CustomAnnotation("system:post:remove")
     @Log(title = "岗位管理", businessType = BusinessType.DELETE)
     @ApiOperation(value = "删除岗位接口",notes = "删除岗位接口的说明")
     @DeleteMapping("delPost/{postId}")
@@ -200,6 +203,7 @@ public class SysPostController extends ApiController {
      * @param
      * @return
      */
+    @CustomAnnotation("system:post:remove")
     @Log(title = "岗位管理", businessType = BusinessType.DELETE)
     @ApiOperation(value = "批量删除岗位接口",notes = "批量删除岗位接口的说明")
     @PostMapping("deletes")

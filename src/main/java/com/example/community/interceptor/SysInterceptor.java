@@ -98,9 +98,8 @@ public class SysInterceptor implements HandlerInterceptor {
                                 // 在这里添加您的鉴权逻辑
                                 // ...
                                 Set<String> permission = sysMenuService.getMenuPermission(user);
-                                for (String perms : permission) {
-                                    if (value.equals(perms)) {
-                                        return true; // 鉴权通过
+                                if (permission.contains(value)){
+                                    return true;
                                     } else {
                                         //调用自定义方法print
                                         ErrorResponse errorResponse = new ErrorResponse(10,"权限不足,无法访问");
@@ -116,7 +115,7 @@ public class SysInterceptor implements HandlerInterceptor {
                                         response.getWriter().write(json);
                                         return false;
                                     }
-                                }
+
                             }
                         }
                     }

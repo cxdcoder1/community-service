@@ -2,6 +2,7 @@ package com.example.community.controller;
 
 import com.alibaba.excel.EasyExcel;
 import com.alibaba.excel.write.style.HorizontalCellStyleStrategy;
+import com.example.community.config.CustomAnnotation;
 import com.example.community.dao.*;
 import com.example.community.dto.*;
 import com.example.community.entity.*;
@@ -222,6 +223,7 @@ public class ExcelController {
     /**
      * 导入用户
      */
+    @CustomAnnotation("system:user:import")
     @PostMapping("into")
     @ApiOperation(value = "用户导入接口",notes = "用户导入接口的说明")
     public Map<String,Object> simpleRead(@RequestParam("file") MultipartFile file) {
@@ -371,9 +373,7 @@ public class ExcelController {
         return result;
     }
 
-
-
-    @Log(title = "角色管理", businessType = BusinessType.EXPORT)
+    @Log(title = "菜单管理", businessType = BusinessType.EXPORT)
     @PostMapping("list")
     public Map<String, Object> menuList(@RequestBody List<String> lists) {
         Map<String, Object> result = new HashMap<>();
@@ -400,6 +400,7 @@ public class ExcelController {
      * @param lists
      * @return
      */
+    @CustomAnnotation("system:user:export")
     @Log(title = "用户管理", businessType = BusinessType.EXPORT)
     @ApiOperation(value = "用户导出接口",notes = "用户导出接口的说明")
     @PostMapping("userList")
@@ -449,6 +450,7 @@ public class ExcelController {
      * 用户导入模板
      * @return
      */
+
     @Log(title = "用户管理", businessType = BusinessType.IMPORT)
     @ApiOperation(value = "用户导入接口",notes = "用户导入接口的说明")
     @PostMapping("template")
@@ -468,6 +470,7 @@ public class ExcelController {
 
 
 
+    @CustomAnnotation("monitor:operlog:export")
     @PostMapping("list2")
     public Map<String, Object> menuList1(@RequestBody List<String> lists) {
         Map<String, Object> result = new HashMap<>();
@@ -491,6 +494,7 @@ public class ExcelController {
      * @param lists
      * @return
      */
+    @CustomAnnotation("system:dict:export")
     @Log(title = "字典管理", businessType = BusinessType.EXPORT)
     @ApiOperation(value = "角色导出接口",notes = "角色导出接口的说明")
     @PostMapping("DictList")
@@ -510,6 +514,7 @@ public class ExcelController {
         return result;
     }
 
+    @CustomAnnotation("system:post:export")
     @Log(title = "岗位管理", businessType = BusinessType.EXPORT)
     @PostMapping("postListS")
     public Map<String, Object> postList(@RequestBody List<String> lists) {
@@ -560,6 +565,7 @@ public class ExcelController {
         return result;
     }
 
+    @CustomAnnotation("monitor:logininfor:export")
     @Log(title = "登录日志", businessType = BusinessType.EXPORT)
     @PostMapping("loginList")
     public Map<String, Object> loginList(@RequestBody List<String> lists) {
@@ -577,7 +583,7 @@ public class ExcelController {
     }
 
 
-
+    @CustomAnnotation("monitor:operlog:export")
     @Log(title = "操作日志", businessType = BusinessType.EXPORT)
     @PostMapping("operlist")
     public Map<String, Object> operlist(@RequestBody List<String> list) {

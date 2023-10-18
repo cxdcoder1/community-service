@@ -100,7 +100,7 @@ public class SysMenuController extends ApiController {
     }
 
 
-
+    @CustomAnnotation("system:menu:remove")
     @Log(title = "菜单管理", businessType = BusinessType.DELETE)
     @ApiOperation(value = "删除菜单接口",notes = "删除菜单接口的说明")
     @RequestMapping("deleteMenu")
@@ -108,7 +108,7 @@ public class SysMenuController extends ApiController {
         Map<String, Object> map = new HashMap<>();
         System.err.println(sysMenu.toString());
         String s = sysMenuService.deleteMenu(sysMenu.getMenuId(), null);
-        map.put("data", s);
+        map.put("data", 1);
         map.put("msg", s);
         return map;
     }
@@ -119,6 +119,7 @@ public class SysMenuController extends ApiController {
      * @param sysMenu 实体对象
      * @return 新增结果
      */
+    @CustomAnnotation("system:menu:add")
     @Log(title = "菜单管理", businessType = BusinessType.INSERT)
     @ApiOperation(value = "新增菜单接口",notes = "新增菜单接口的说明")
     @PostMapping("addMenu")
@@ -271,6 +272,7 @@ public class SysMenuController extends ApiController {
      * @param sysMenu 实体对象
      * @return 修改结果
      */
+    @CustomAnnotation("system:menu:edit")
     @Log(title = "菜单管理", businessType = BusinessType.UPDATE)
     @ApiOperation(value = "修改菜单接口",notes = "修改菜单接口的说明")
     @PutMapping("updateMenu")

@@ -64,6 +64,7 @@ public class SysDictTypeController extends ApiController {
      * @param
      * @return 删除
      */
+    @CustomAnnotation("system:dict:remove")
     @ApiOperation(value = "删除字典类型接口",notes = "删除字典类型接口的说明")
     @DeleteMapping("delType")
     public Map<String, Object> delType(@RequestBody List<Long> id, @RequestParam("type") List<String> type) {
@@ -89,6 +90,7 @@ public class SysDictTypeController extends ApiController {
     }
 
     //修改
+    @CustomAnnotation("system:dict:edit")
     @ApiOperation(value = "修改字典类型接口",notes = "修改字典类型接口的说明")
     @PutMapping("updType")
     public Map<String, Object> updType(@RequestBody SysDictType sysDictType, @RequestParam("type") String type, @RequestParam("type2") String type2) {
@@ -154,6 +156,7 @@ public class SysDictTypeController extends ApiController {
      * @param sysDictType 实体对象
      * @return 新增结果
      */
+    @CustomAnnotation("system:dict:add")
     @ApiOperation(value = "新增字典类型接口",notes = "新增字典类型接口的说明")
     @PostMapping("insDictType")
     public Map<String, Object> insert(@RequestBody SysDictType sysDictType) {
@@ -204,6 +207,7 @@ public class SysDictTypeController extends ApiController {
      * @param idList 主键结合
      * @return 删除结果
      */
+    @CustomAnnotation("system:dict:remove")
     @DeleteMapping("dleDelete")
     public Map<String, Object> delete(@RequestParam("idList") List<Long> idList, @RequestParam("type") List<String> type) {
 //        System.out.println(type);

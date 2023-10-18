@@ -58,6 +58,7 @@ public class SysRoleController extends ApiController {
      *
      * @param
      */
+    @CustomAnnotation("system:role:edit")
     @ApiOperation(value = "修改角色状态接口",notes = "修改角色状态接口的说明")
     @PutMapping("upDataStatus")
     public R upDataStatus(@RequestParam("status") String status, @RequestParam("roleId") int roleId) {
@@ -69,6 +70,7 @@ public class SysRoleController extends ApiController {
      * @param
      * @return
      */
+    @CustomAnnotation("system:role:add")
     @Log(title = "角色管理", businessType = BusinessType.INSERT)
     @ApiOperation(value = "新增角色接口",notes = "新增角色接口的说明")
     @PostMapping("insertRole")
@@ -167,7 +169,7 @@ public class SysRoleController extends ApiController {
      * 修改保存角色
      */
 
-
+    @CustomAnnotation("system:role:edit")
     @ApiOperation(value = "修改角色接口",notes = "修改角色接口的说明")
     @PutMapping("edit")
     public Map<String, Object> edit(@RequestBody RolesAndMenuIds rolesAndMenuIds) {
@@ -222,6 +224,7 @@ public class SysRoleController extends ApiController {
      * @param roleId
      * @return
      */
+    @CustomAnnotation("system:role:remove")
     @Log(title = "角色管理", businessType = BusinessType.DELETE)
     @ApiOperation(value = "删除角色接口",notes = "删除角色接口的说明")
     @DeleteMapping("delete/{roleId}")
