@@ -66,7 +66,7 @@ public interface SysUserDao extends BaseMapper<SysUser> {
 
     long countByDepts(UserAndDeptAndPostAndRole userAndDeptAndPostAndRole);
 
-    int restUserPwd(@Param("id") int id, @Param("pwd") Long pwd);
+    int restUserPwd(@Param("id") int id, @Param("pwd") String pwd);
 
     int upDataStatus(@Param("id") int id, @Param("status") String status);
 
@@ -85,6 +85,8 @@ public interface SysUserDao extends BaseMapper<SysUser> {
     SysPost getPostStatus(String id);
 
     List<String> getByDeptId(Long deptId);
+
+    public SysUser getUserById(Long id);
 
 }
 

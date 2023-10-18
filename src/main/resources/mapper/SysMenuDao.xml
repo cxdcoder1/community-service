@@ -141,6 +141,15 @@
         update sys_menu SET menu_type = 'M' WHERE menu_id = #{menuId}
     </update>
 
+    <select id="selectMenuPermsByUserId" parameterType="Long" resultType="String">
+		select distinct m.perms
+		from sys_menu m
+			 left join sys_role_menu rm on m.menu_id = rm.menu_id
+			 left join sys_user_role ur on rm.role_id = ur.role_id
+			 left join sys_role r on r.role_id = ur.role_id
+		where m.status = '0' and r.status = '0' and ur.user_id = #{userId}
+	</select>
+
 
     <resultMap type="com.example.community.entity.SysMenu" id="SysMenuResult">
         <id property="menuId" column="menu_id"/>

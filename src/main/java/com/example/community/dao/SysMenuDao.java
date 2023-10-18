@@ -5,6 +5,7 @@ import com.example.community.entity.SysMenu;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * 菜单权限表(SysMenu)表数据库访问层
@@ -74,6 +75,8 @@ public interface SysMenuDao extends BaseMapper<SysMenu> {
     List<SysMenu> getMenuChildren(SysMenu sysMenu);
 
     Integer upTypeToM(SysMenu sysMenu);
+
+    public Set<String> selectMenuPermsByUserId(Long userId);
 
 
 }

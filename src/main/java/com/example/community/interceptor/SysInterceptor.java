@@ -1,30 +1,44 @@
 package com.example.community.interceptor;
 
+import com.example.community.config.CustomAnnotation;
+import com.example.community.config.ErrorResponse;
 import com.example.community.constant.SystemConstant;
 import com.example.community.entity.CheckResult;
 import com.example.community.entity.R;
+import com.example.community.entity.SysUser;
+import com.example.community.service.SysMenuService;
+import com.example.community.service.SysUserService;
 import com.example.community.utils.JwtUtil;
-import com.example.community.utils.redis.RedisUtil;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.Claims;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpStatus;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.time.temporal.ChronoUnit;
 import java.util.Date;
+import java.util.Set;
 
+@Service
 public class SysInterceptor implements HandlerInterceptor {
     //日志对象
     private final static Logger logger = LoggerFactory.getLogger(SysInterceptor.class);
+
+    @Autowired
+    private SysMenuService sysMenuService;
+
+    @Resource
+    private SysUserService sysUserService;
 
     //拦截的核心方法
     @Override
@@ -52,20 +66,62 @@ public class SysInterceptor implements HandlerInterceptor {
                     Claims claims = JwtUtil.parseJWT(authHeader);
                     String subject = claims.getSubject();
                     String id = claims.getId();
+                    System.err.println(id);
                     Date d1 = claims.getIssuedAt();
                     Date d2 = claims.getExpiration();
-                    long between = d2.getTime()-d1.getTime();
-                    String jwt="";
-                    if (between==SystemConstant.JWT_TTL){
+                    long between = d2.getTime() - d1.getTime();
+                    System.err.println(between);
+                    String jwt = "";
+                    if (between == SystemConstant.JWT_TTL) {
                         jwt = JwtUtil.createJWT(id, subject, SystemConstant.JWT_TTL);
-                    }else {
+                    } else {
                         jwt = JwtUtil.createJWT(id, subject, SystemConstant.JWT_WE_CHAT);
                     }
-                    response.addHeader("token",jwt);
+                    response.addHeader("token", jwt);
                     response.setHeader("Access-Control-Expose-Headers", "token");
 
                     logger.info("签名验证通过");
-                    return true;
+
+                    SysUser user = sysUserService.getUserById(Long.parseLong(id));
+                    System.out.println(user);
+                    // SysUser sysUser = new SysUser();
+                    // sysUser.setUserId();
+                    // Set<String> menuPermission = sysMenuService.getMenuPermission(sysUser);
+                    if (!"admin".equals(user.getUserName())) {
+                        // 判断拦截的处理器方法是否有 CustomAnnotation 注解
+                        if (handler instanceof HandlerMethod) {
+                            HandlerMethod handlerMethod = (HandlerMethod) handler;
+                            CustomAnnotation annotation = handlerMethod.getMethodAnnotation(CustomAnnotation.class);
+                            // 如果有 CustomAnnotation 注解，则执行鉴权逻辑
+                            if (annotation != null) {
+                                String value = annotation.value();
+                                // 在这里添加您的鉴权逻辑
+                                // ...
+                                Set<String> permission = sysMenuService.getMenuPermission(user);
+                                for (String perms : permission) {
+                                    if (value.equals(perms)) {
+                                        return true; // 鉴权通过
+                                    } else {
+                                        //调用自定义方法print
+                                        ErrorResponse errorResponse = new ErrorResponse(10,"权限不足,无法访问");
+
+                                        // 初始化ObjectMapper
+                                        ObjectMapper objectMapper = new ObjectMapper();
+
+                                        // 将错误响应对象转换为JSON字符串
+                                        String json = objectMapper.writeValueAsString(errorResponse);
+
+                                        // 将JSON字符串设置为响应的正文
+                                        response.setContentType("application/json");
+                                        response.getWriter().write(json);
+                                        return false;
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    return true;//token和鉴权都成功
                 } else {
                     switch (checkResult.getErrCode()) {
                         // 签名验证不通过

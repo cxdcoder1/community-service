@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.api.ApiController;
 import com.baomidou.mybatisplus.extension.api.R;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.example.community.config.CustomAnnotation;
 import com.example.community.entity.SysDictData;
 import com.example.community.entity.SysDictType;
 import com.example.community.service.SysDictDataService;
@@ -14,9 +15,6 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import javax.xml.crypto.Data;
-import java.io.Serializable;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -48,7 +46,7 @@ public class SysDictTypeController extends ApiController {
     }
 
 
-
+    @CustomAnnotation("system:dict:list")
     //获取字典类型集合
     @ApiOperation(value = "获取字典类型集合接口",notes = "获取字典类型集合接口的说明")
     @GetMapping("getDictOptionselect")

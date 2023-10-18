@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.api.ApiController;
 import com.baomidou.mybatisplus.extension.api.R;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.example.community.config.CustomAnnotation;
 import com.example.community.entity.SysMenu;
 import com.example.community.log.BusinessType;
 import com.example.community.log.Log;
@@ -53,6 +54,7 @@ public class SysMenuController extends ApiController {
         return success(this.sysDictDataService.menuShowOption());
     }
 
+    @CustomAnnotation("system:menu:list")
     @ApiOperation(value = "获取菜单列表接口",notes = "获取菜单列表接口的说明")
     @PostMapping("/menuList")
     public R menuList(@RequestBody SysMenu sysMenu) {
@@ -74,6 +76,7 @@ public class SysMenuController extends ApiController {
 //        return success(this.sysMenuService.getMenuList(sysMenu.getMenuName(),sysMenu.getStatus()));
 //    }
 
+    @CustomAnnotation("system:menu:list")
     @ApiOperation(value = "获取树形菜单列表接口",notes = "获取树形菜单列表接口的说明")
     @GetMapping("getTreeMenu/{id}")
     public R MenuTreeList(@PathVariable int id) {

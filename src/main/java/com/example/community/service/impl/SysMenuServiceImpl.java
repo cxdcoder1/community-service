@@ -3,14 +3,17 @@ package com.example.community.service.impl;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.community.dao.SysMenuDao;
 import com.example.community.entity.SysMenu;
+import com.example.community.entity.SysUser;
 import com.example.community.service.SysMenuService;
-//import com.example.community.utils.MenuTree;
 import com.example.community.utils.MenuTree;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.Comparator;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+
+//import com.example.community.utils.MenuTree;
 
 /**
  * 菜单权限表(SysMenu)表服务实现类
@@ -130,5 +133,15 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuDao, SysMenu> impleme
 //        List<SysMenu> sysMenuList1 = menuTree.builTree();
 //        return sysMenuList1;
 //    }
+
+    @Override
+    public Set<String> getMenuPermission(SysUser user)
+    {
+        Set<String> perms = new HashSet<String>();
+
+        perms.addAll(sysMenuDao.selectMenuPermsByUserId(user.getUserId()));
+
+        return perms;
+    }
 }
 

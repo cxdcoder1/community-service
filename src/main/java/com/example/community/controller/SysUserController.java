@@ -5,6 +5,8 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.api.ApiController;
 import com.baomidou.mybatisplus.extension.api.R;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.example.community.config.CustomAnnotation;
+import com.example.community.config.MD5Util;
 import com.example.community.constant.AsyncFactory;
 import com.example.community.constant.AsyncManager;
 import com.example.community.constant.SystemConstant;
@@ -106,6 +108,7 @@ public class SysUserController extends ApiController {
     @RequestMapping("login")
     public Map<String,Object> login(@RequestBody SysUser user, HttpServletRequest request) throws Exception {
         Map<String,Object> result = new HashMap<>();
+        System.out.println(user);
 
         //校验用户名和密码
         QueryWrapper queryWrapper = new QueryWrapper<SysUser>();
@@ -113,7 +116,7 @@ public class SysUserController extends ApiController {
         //根据电话查询用户z
         SysUser user1 = sysUserService.getOne(queryWrapper);
         if (user1 != null){
-            if (user1.getPassword().equals(user.getPassword())){
+            if (MD5Util.convertMD5(user.getPassword()).equals(user1.getPassword())){
                 //校验用户是否被停用
                 String status = user1.getStatus();
                 if (status.equals("1")){
@@ -153,12 +156,13 @@ public class SysUserController extends ApiController {
                 HttpSession session = request.getSession();
                 AsyncManager.me().execute(AsyncFactory.recordLogininfor(user1.getUserName(), Constants.LOGIN_SUCCESS,"登录成功"));
                 session.setAttribute("userInfo", user1);
+                user1.setPassword(MD5Util.convertMD5(user1.getPassword()));
 
                 //1.用于拦截器的判断  2.界面显示用户信息
                 result.put("user", user1);
                 //把token返回给客户端-->客户端保存至localStorage-->客户端每次请求附带localStorage参数
                 //SystemConstant.JWT_TTL：token有效时间
-                String JWT = JwtUtil.createJWT("1", JSON.toJSONString(user1), SystemConstant.JWT_TTL);
+                String JWT = JwtUtil.createJWT(user1.getUserId()+"", JSON.toJSONString(user1), SystemConstant.JWT_TTL);
 //                log.info(JWT);
                 result.put("JWT", JWT);
                 result.put("status", "200");
@@ -203,6 +207,9 @@ public class SysUserController extends ApiController {
     @PutMapping("updataUser")
     public R update(@RequestBody SysUser sysUser) {
 //        System.err.println(sysUser);
+        if (sysUser.getPassword()!=null){
+            sysUser.setPassword(MD5Util.convertMD5(sysUser.getPassword()));
+        }
         return success(this.sysUserService.updateUser(sysUser));
     }
 
@@ -226,6 +233,7 @@ public class SysUserController extends ApiController {
 //        return map;
 //    }
 
+    @CustomAnnotation("system:user:list")
     @GetMapping("sysUserList")
     public R selectPageAll(Page<UserAndDeptAndPostAndRole> page, UserAndDeptAndPostAndRole userAndDeptAndPostAndRole) {
 
@@ -241,8 +249,6 @@ public class SysUserController extends ApiController {
             //根据部门以及子集id查询
             return success(this.sysUserService.selUserListByP(page, userAndDeptAndPostAndRole));
         }
-
-
         return success(this.sysUserService.selUserlist(page, userAndDeptAndPostAndRole));
     }
 
@@ -303,7 +309,7 @@ public class SysUserController extends ApiController {
         sysUser.setDeptId(userAndPostIdAndRoleId.getDeptId());
         sysUser.setUserName(userAndPostIdAndRoleId.getUserName());
         sysUser.setEmail(userAndPostIdAndRoleId.getEmail());
-        sysUser.setPassword(userAndPostIdAndRoleId.getPassword());
+        sysUser.setPassword(MD5Util.convertMD5(userAndPostIdAndRoleId.getPassword()));
         sysUser.setStatus(userAndPostIdAndRoleId.getStatus());
         sysUser.setRemark(userAndPostIdAndRoleId.getRemark());
         sysUser.setNickName(userAndPostIdAndRoleId.getNickName());
@@ -328,9 +334,9 @@ public class SysUserController extends ApiController {
     //密码重置
     @ApiOperation(value = "用户重置密码接口",notes = "用户重置密码接口的说明")
     @PutMapping("resetPwd")
-    public R resetPwd(@RequestParam("id") int id,@RequestParam("pwd") Long pwd) {
+    public R resetPwd(@RequestParam("id") int id,@RequestParam("pwd") long pwd) {
 
-        return success(this.sysUserService.restUserPwd(id,pwd));
+        return success(this.sysUserService.restUserPwd(id,MD5Util.convertMD5(pwd+"")));
     }
 
     //状态

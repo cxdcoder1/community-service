@@ -142,7 +142,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserDao, SysUser> impleme
     }
 
     @Override
-    public int restUserPwd(int id, Long pwd) {
+    public int restUserPwd(int id, String pwd) {
         return sysUserDao.restUserPwd(id,pwd);
     }
 
@@ -245,6 +245,11 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserDao, SysUser> impleme
     public SysPost getPostStatus(String id) {
 
         return sysUserDao.getPostStatus(id);
+    }
+
+    @Override
+    public SysUser getUserById(Long id) {
+        return sysUserDao.getUserById(id);
     }
 
 

@@ -1,11 +1,11 @@
 package com.example.community.controller;
 
 
-
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.api.ApiController;
 import com.baomidou.mybatisplus.extension.api.R;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.example.community.config.CustomAnnotation;
 import com.example.community.dto.RolesAndMenuIds;
 import com.example.community.entity.SysMenu;
 import com.example.community.entity.SysRole;
@@ -95,6 +95,7 @@ public class SysRoleController extends ApiController {
 
     }
 
+    @CustomAnnotation("system:role:list")
     @ApiOperation(value = "获取角色列表接口",notes = "获取角色列表接口的说明")
     @GetMapping("list")
     public R selectPageAll(Page<SysRole> page, SysRole sysRole) {

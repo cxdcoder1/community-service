@@ -431,6 +431,9 @@
             limit #{index},#{size}
         </if>
     </select>
+    <select id="getUserById" resultType="com.example.community.entity.SysUser">
+        select * from sys_user where user_id=#{id}
+    </select>
 
 
 </mapper>

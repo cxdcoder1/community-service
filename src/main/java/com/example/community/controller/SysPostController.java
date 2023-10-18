@@ -1,12 +1,11 @@
 package com.example.community.controller;
 
 
-
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.api.ApiController;
 import com.baomidou.mybatisplus.extension.api.R;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.example.community.entity.SysDept;
+import com.example.community.config.CustomAnnotation;
 import com.example.community.entity.SysPost;
 import com.example.community.log.BusinessType;
 import com.example.community.log.Log;
@@ -70,6 +69,7 @@ public class SysPostController extends ApiController {
      * @param sysPost
      * @return
      */
+    @CustomAnnotation("system:post:list")
     @ApiOperation(value = "获取岗位列表接口",notes = "获取岗位列表接口的说明")
     @GetMapping("postList")
     public R selectPost(Page<SysPost>page,SysPost sysPost){

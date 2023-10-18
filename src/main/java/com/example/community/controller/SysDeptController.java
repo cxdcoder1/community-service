@@ -1,11 +1,11 @@
 package com.example.community.controller;
 
 
-
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.api.ApiController;
 import com.baomidou.mybatisplus.extension.api.R;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.example.community.config.CustomAnnotation;
 import com.example.community.entity.SysDept;
 import com.example.community.entity.SysUser;
 import com.example.community.log.BusinessType;
@@ -160,6 +160,7 @@ public class SysDeptController extends ApiController {
      * @param sysDept
      * @return
      */
+    @CustomAnnotation("system:dept:list")
     @ApiOperation(value = "部门列表分页接口",notes = "部门列表分页接口的说明")
     @PostMapping("getDeptList")
     public Map<String,Object> getMenuList(@RequestBody SysDept sysDept){

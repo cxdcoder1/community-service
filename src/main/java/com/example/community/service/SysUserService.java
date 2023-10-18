@@ -4,8 +4,6 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.example.community.dto.UserAndDeptAndPostAndRole;
 import com.example.community.dto.UserAndDeptAndRole;
-import com.example.community.entity.*;
-import org.apache.ibatis.annotations.Param;
 import com.example.community.dto.UserAndDeptImport;
 import com.example.community.entity.*;
 
@@ -58,7 +56,7 @@ public interface SysUserService extends IService<SysUser> {
     //获取用户选择的部门列表
     List<SysDept> selAllDept(SysDept sysDept);
 
-    int restUserPwd(int id,Long pwd);
+    int restUserPwd(int id,String pwd);
 
     int upDataStatus( int id, String status);
 
@@ -95,6 +93,8 @@ public interface SysUserService extends IService<SysUser> {
     void batchInsert(List<UserAndDeptImport> list) throws Exception;
 
     SysPost getPostStatus(String id);
+
+    SysUser getUserById(Long id);
 
 }
 

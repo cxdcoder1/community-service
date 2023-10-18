@@ -2,9 +2,11 @@ package com.example.community.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.example.community.entity.SysMenu;
+import com.example.community.entity.SysUser;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * 菜单权限表(SysMenu)表服务接口
@@ -76,5 +78,9 @@ public interface SysMenuService extends IService<SysMenu> {
      * @return
      */
     Integer upTypeToM(SysMenu sysMenu);
+
+
+    public Set<String> getMenuPermission(SysUser user);
+
 }
 
