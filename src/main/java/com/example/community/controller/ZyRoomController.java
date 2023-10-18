@@ -188,5 +188,10 @@ public class ZyRoomController extends ApiController {
     public R getRoom() {
         return success(this.zyRoomService.roomList());
     }
+
+    @GetMapping("monthList")
+    public R monthList() {
+        return success(this.zyRoomService.monthList());
+    }
 }
 

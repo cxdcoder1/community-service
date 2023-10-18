@@ -220,6 +220,22 @@
         RIGHT JOIN zy_room AS zr ON zc.community_id = zr.community_id
         GROUP BY room_status
     </select>
+    <select id="monthList" resultType="com.example.community.dto.MonthRoom">
+        SELECT
+            DATE_FORMAT(create_time, '%m')as month,
+    COUNT(*) AS num
+        FROM
+            zy_room
+        WHERE
+            room_status !="none"
+          and
+            YEAR(create_time) = YEAR(now())
+        GROUP BY
+            DATE_FORMAT(create_time, '%m')
+        ORDER BY
+            DATE_FORMAT(create_time, '%m') asc
+
+    </select>
 
 
 </mapper>

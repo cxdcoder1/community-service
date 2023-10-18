@@ -133,6 +133,14 @@
         SELECT zs.*,zf.files_url from zy_complaint_suggest zs JOIN zy_files zf on zf.parent_id = zs.complaint_suggest_id
         where zs.community_id = #{communityId} and zs.user_id = #{userId}
     </select>
+    <select id="getZyComplaintSuggest" resultType="com.example.community.entity.ZyComplaintSuggest">
+
+        select zo.owner_nickname as ownerNickname ,zci.content as complaintSuggestContent,COUNT(*) as count from
+            zy_community_interaction zci
+            left join zy_comment zc on zci.interaction_id = zc.interaction_id
+            left join zy_owner zo on zci.user_id = zo.owner_id
+        GROUP BY zci.content,zo.owner_nickname ORDER BY count desc limit 6
+        </select>
     <insert id="insertBySuggest">
         INSERT INTO zy_complaint_suggest
         <trim prefix="(" suffix=")" suffixOverrides=",">

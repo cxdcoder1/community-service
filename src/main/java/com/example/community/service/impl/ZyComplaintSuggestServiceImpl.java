@@ -9,6 +9,7 @@ import com.example.community.service.ZyComplaintSuggestService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * 投诉建议 (ZyComplaintSuggest)表服务实现类
@@ -41,5 +42,13 @@ public class ZyComplaintSuggestServiceImpl extends ServiceImpl<ZyComplaintSugges
     public Integer updateRemark(String remark, long id) {
         return zyComplaintSuggestDao.updateRemark(remark,id);
     }
+
+    @Override
+    public List<ZyComplaintSuggest> getZyComplaintSuggest() {
+        List<ZyComplaintSuggest> zyComplaintSuggest = zyComplaintSuggestDao.getZyComplaintSuggest();
+        return zyComplaintSuggest;
+    }
+
+
 }
 

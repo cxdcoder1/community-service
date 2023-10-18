@@ -2,6 +2,7 @@ package com.example.community.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.community.dao.ZyRoomDao;
+import com.example.community.dto.MonthRoom;
 import com.example.community.dto.RoomDto;
 import com.example.community.dto.RoomStatus;
 import com.example.community.entity.*;
@@ -100,6 +101,11 @@ public class ZyRoomServiceImpl extends ServiceImpl<ZyRoomDao, ZyRoom> implements
     @Override
     public List<RoomStatus> roomList() {
         return zyRoomDao.roomList();
+    }
+
+    @Override
+    public List<MonthRoom> monthList() {
+        return zyRoomDao.monthList();
     }
 
 

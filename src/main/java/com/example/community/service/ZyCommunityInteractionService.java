@@ -6,6 +6,7 @@ import com.example.community.dto.CommunityAndDeptDto;
 import com.example.community.dto.FeilsImgs;
 import com.example.community.dto.InterCationAndOwner;
 import com.example.community.entity.ZyCommunityInteraction;
+import com.example.community.entity.ZyComplaintSuggest;
 import com.example.community.entity.ZyFiles;
 import org.apache.ibatis.annotations.Param;
 
@@ -32,5 +33,7 @@ public interface ZyCommunityInteractionService extends IService<ZyCommunityInter
     List<String> getRoomParentIds(List<String> id);
 
     int updCommentId(List<String> id);
+
+
 }
 

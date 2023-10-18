@@ -16,6 +16,7 @@ import java.util.Date;
  */
 @SuppressWarnings("serial")
 public class ZyComplaintSuggest extends Model<ZyComplaintSuggest> {
+    private  String ownerNickname;
     //id
     private Long complaintSuggestId;
     //小区id
@@ -41,6 +42,13 @@ public class ZyComplaintSuggest extends Model<ZyComplaintSuggest> {
     //投诉人ID
     private Long userId;
 
+    public String getOwnerNickname() {
+        return ownerNickname;
+    }
+
+    public void setOwnerNickname(String ownerNickname) {
+        this.ownerNickname = ownerNickname;
+    }
 
     @Override
     public String toString() {

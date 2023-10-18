@@ -48,5 +48,7 @@ public interface ZyComplaintSuggestDao extends BaseMapper<ZyComplaintSuggest> {
     Integer insertFiles(List<ZyFiles> files);
 
     List<SuggestAndOwnerDto> getSuggestions(@Param("communityId") String communityId,@Param("userId") String userId);
+
+    List<ZyComplaintSuggest> getZyComplaintSuggest();
 }
 

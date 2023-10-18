@@ -7,6 +7,7 @@ import com.example.community.dto.CommunityAndDeptDto;
 import com.example.community.dto.FeilsImgs;
 import com.example.community.dto.InterCationAndOwner;
 import com.example.community.entity.ZyCommunityInteraction;
+import com.example.community.entity.ZyComplaintSuggest;
 import com.example.community.entity.ZyFiles;
 import com.example.community.service.ZyCommunityInteractionService;
 import org.springframework.stereotype.Service;
@@ -85,5 +86,7 @@ public class ZyCommunityInteractionServiceImpl extends ServiceImpl<ZyCommunityIn
         System.err.println(zyCommunityInteractionDao.updCommentId(id));
         return i;
     }
+
+
 }
 

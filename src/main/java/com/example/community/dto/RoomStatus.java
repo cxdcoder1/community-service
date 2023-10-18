@@ -10,7 +10,7 @@ public class RoomStatus {
 
     private  String roomStatus;
 
-    private String roomNum;
+    private Integer roomNum;
 
     public String getRoomStatus() {
         return roomStatus;
@@ -20,11 +20,11 @@ public class RoomStatus {
         this.roomStatus = roomStatus;
     }
 
-    public String getRoomNum() {
+    public Integer getRoomNum() {
         return roomNum;
     }
 
-    public void setRoomNum(String roomNum) {
+    public void setRoomNum(Integer roomNum) {
         this.roomNum = roomNum;
     }
 }

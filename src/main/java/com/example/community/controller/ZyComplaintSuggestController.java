@@ -108,5 +108,9 @@ public class ZyComplaintSuggestController extends ApiController {
         return map;
     }
 
+    @GetMapping("getZyComplaintSuggest")
+    public R getZyComplaintSuggest() {
+        return success(this.zyComplaintSuggestService.getZyComplaintSuggest());
+    }
 }
 
