@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.extension.api.ApiController;
 import com.baomidou.mybatisplus.extension.api.R;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.community.config.CustomAnnotation;
+import com.example.community.dto.sysUserAndDepts;
 import com.example.community.entity.SysDept;
 import com.example.community.entity.SysUser;
 import com.example.community.log.BusinessType;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -49,6 +51,19 @@ public class SysDeptController extends ApiController {
         return success(this.sysDictDataService.deptStatusOption());
     }
 
+
+    @GetMapping("getDeptLis")
+    public List<sysUserAndDepts> getDeptLis() {
+        System.out.println("qwe");
+        List<String> byIds = sysDeptService.getByIds();
+        List<sysUserAndDepts> list = new ArrayList<>();
+        for(String b:byIds){
+            sysUserAndDepts deptLis = sysDeptService.getDeptLis(b);
+            list.add(deptLis);
+        }
+        System.err.println(list);
+        return list;
+    }
 
 
 

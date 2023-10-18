@@ -162,5 +162,16 @@
         select * from sys_user where dept_id = #{deptId} and del_flag = 0
     </select>
 
+    <select id="getByIds" resultType="java.lang.String">
+		select dept_id from sys_dept where parent_id = 100
+    </select>
+    <select id="getDeptLis" resultType="com.example.community.dto.sysUserAndDepts">
+       	SELECT sd2.dept_name as deptName ,COUNT(*) as deptNum from sys_user su
+        LEFT JOIN sys_dept sd1 on su.dept_id = sd1.dept_id
+        LEFT JOIN sys_dept sd2 on sd1.parent_id = sd2.dept_id
+        WHERE sd2.dept_id = #{id} GROUP BY sd2.dept_name
+    </select>
+
+
 </mapper>
 

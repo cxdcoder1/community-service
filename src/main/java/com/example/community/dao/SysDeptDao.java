@@ -3,6 +3,7 @@ package com.example.community.dao;
 import java.util.List;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.example.community.dto.sysUserAndDepts;
 import com.example.community.entity.SysRole;
 import com.example.community.entity.SysUser;
 import org.apache.ibatis.annotations.Param;
@@ -50,7 +51,6 @@ public interface SysDeptDao extends BaseMapper<SysDept> {
 
     List<SysUser> isUser(String deptId);
 
-
     public List<SysDept> selectRoleName(long id);
 
     Integer insetDept(SysDept sysDept);
@@ -63,6 +63,10 @@ public interface SysDeptDao extends BaseMapper<SysDept> {
 
     SysDept getById(String deptId);
 
+    //折线图
+    List<String> getByIds();
+
+    sysUserAndDepts getDeptLis(String id);
 
 }
 

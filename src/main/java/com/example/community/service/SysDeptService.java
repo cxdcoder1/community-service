@@ -1,6 +1,7 @@
 package com.example.community.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.example.community.dto.sysUserAndDepts;
 import com.example.community.entity.SysDept;
 import com.example.community.entity.SysUser;
 import com.sun.org.apache.xpath.internal.operations.Bool;
@@ -57,6 +58,9 @@ public interface SysDeptService extends IService<SysDept> {
 
     SysDept getByDept(String deptId);
 
+    List<String> getByIds();
+
+    sysUserAndDepts getDeptLis(String id);
 
 
 }

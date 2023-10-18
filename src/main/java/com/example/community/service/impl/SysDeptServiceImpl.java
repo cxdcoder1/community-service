@@ -2,6 +2,7 @@ package com.example.community.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.community.dao.SysDeptDao;
+import com.example.community.dto.sysUserAndDepts;
 import com.example.community.entity.SysDept;
 import com.example.community.entity.SysUser;
 import com.example.community.service.SysDeptService;
@@ -73,7 +74,15 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptDao, SysDept> impleme
         return sysDeptDao.getById(deptId);
     }
 
+    @Override
+    public List<String> getByIds() {
+        return sysDeptDao.getByIds();
+    }
 
+    @Override
+    public sysUserAndDepts getDeptLis(String id) {
+        return sysDeptDao.getDeptLis(id);
+    }
 
 
     @Override

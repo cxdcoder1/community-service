@@ -165,11 +165,7 @@ FROM
 WHERE
     zi.del_flag != 1 and zc.del_flag != 1 and
     zi.interaction_id = #{interactionId}
-
     </select>
-
-
-
 
     <select id="getUserName" resultType="java.lang.String">
         select zy_owner.owner_real_name from zy_comment left join zy_owner on zy_owner.owner_id = zy_comment.user_id  where comment_id = #{parentId}
