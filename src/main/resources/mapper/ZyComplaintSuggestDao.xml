@@ -126,11 +126,11 @@
         <collection property="imageUrls" ofType="string">
             <result column="files_url"/>
         </collection>
-
     </resultMap>
 
     <select id="getSuggestions" resultMap="SuggestionDto">
-        SELECT zs.*,zf.files_url from zy_complaint_suggest zs JOIN zy_files zf on zf.parent_id = zs.complaint_suggest_id
+        SELECT zs.*,zf.files_url from zy_complaint_suggest zs
+        JOIN zy_files zf on zf.parent_id = zs.complaint_suggest_id
         where zs.community_id = #{communityId} and zs.user_id = #{userId}
     </select>
     <select id="getZyComplaintSuggest" resultType="com.example.community.entity.ZyComplaintSuggest">

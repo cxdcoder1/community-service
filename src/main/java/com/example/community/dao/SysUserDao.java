@@ -76,6 +76,10 @@ public interface SysUserDao extends BaseMapper<SysUser> {
 
     Integer delById(String id);
 
+    Integer delRoleAndUser(String userId);
+
+    Integer delPostAndUser(String userId);
+
     Set<String> getNames();
 
     Set<String> getPhone();

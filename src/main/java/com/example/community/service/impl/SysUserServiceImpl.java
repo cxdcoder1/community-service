@@ -170,9 +170,13 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserDao, SysUser> impleme
 
     @Override
     public Integer delById(String id) {
-
-
-        return sysUserDao.delById(id);
+        Integer i1 = sysUserDao.delById(id);
+        Integer i2 = sysUserDao.delRoleAndUser(id);
+        Integer i3 = sysUserDao.delPostAndUser(id);
+        if (i1!=0|i2!=0|i3!=0){
+            return 1;
+        }
+        return 0;
     }
 
     @Override

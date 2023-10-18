@@ -112,8 +112,17 @@
         order by zr.create_time desc
         limit #{index},#{size}
     </select>
-    <select id="selectAllRepairs" resultType="com.example.community.mini.dto.RepairDto">
-        SELECT * FROM zy_repair where community_id =  #{communityId} and user_id = #{userId} and del_flag = 0
+
+    <resultMap id="selectRepairDto" type="com.example.community.mini.dto.RepairDto" autoMapping="true">
+        <id property="repairId" column="repair_id"></id>
+        <collection property="imageUrls" ofType="String">
+            <result column="files_url"></result>
+        </collection>
+    </resultMap>
+    <select id="selectAllRepairs" resultMap="selectRepairDto" >
+        SELECT zr.*,zf.files_url FROM zy_repair zr
+		JOIN zy_files zf on zf.parent_id = zr.repair_id
+		where community_id =  #{communityId} and zr.user_id = #{userId} and zr.del_flag = 0
     </select>
     <select id="getUserList" resultType="com.example.community.entity.SysUser">
         SELECT *
