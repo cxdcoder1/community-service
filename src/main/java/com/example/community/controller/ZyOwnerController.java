@@ -14,6 +14,7 @@ import com.example.community.log.Log;
 import com.example.community.service.ZyOwnerRoomRecordService;
 import com.example.community.service.ZyOwnerRoomService;
 import com.example.community.service.ZyOwnerService;
+import com.example.community.service.ZyRoomService;
 import io.swagger.annotations.Api;
 import org.checkerframework.checker.units.qual.A;
 import org.springframework.transaction.annotation.Transactional;
@@ -43,6 +44,8 @@ public class ZyOwnerController extends ApiController {
     private ZyOwnerService zyOwnerService;
     @Resource
     private ZyOwnerRoomRecordService zyOwnerRoomRecordService;
+    @Resource
+    private ZyRoomService  zyRoomService;
     /**
      * 分页查询所有数据
      *
@@ -112,6 +115,11 @@ public class ZyOwnerController extends ApiController {
         Map<String, Object> map = new HashMap<>();
         Integer integer = zyOwnerService.updateStatus(ownerId);
         int i = zyOwnerRoomRecordService.insetRoomRecordAll(zyOwnerRoomRecord);
+
+        if (zyOwnerRoomRecord.getOwnerType().equals("yz")){
+            int i1 = zyRoomService.updRoomStatus(zyOwnerRoomRecord.getRoomId());
+            System.err.println(i1);
+        }
         if (integer==1){
             map.put("msg","解绑成功");
             map.put("status", 200);

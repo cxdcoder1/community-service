@@ -45,6 +45,8 @@ public interface ZyRoomService extends IService<ZyRoom> {
 
     int updRooms(long id);
 
+    int updRoomStatus(long id);
+
     List<RoomStatus>roomList();
 
     List<MonthRoom>monthList();

@@ -175,6 +175,9 @@
         where zy_owner_room.room_status = 1
         and  zy_owner_room.room_id = #{id}
     </update>
+    <update id="updRoomStatus">
+        update zy_room set room_status='none' where room_id=#{id}
+    </update>
 
     <select id="getroomStatus" resultType="com.example.community.entity.SysDictData">
         select * from sys_dict_data where dict_type='zy_room_state'

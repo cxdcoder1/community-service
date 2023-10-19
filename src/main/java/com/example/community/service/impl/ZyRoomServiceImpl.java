@@ -91,10 +91,13 @@ public class ZyRoomServiceImpl extends ServiceImpl<ZyRoomDao, ZyRoom> implements
 
     @Override
     public int updRooms(long id) {
-        System.err.println("1——"+id);
         int i = zyRoomDao.updRooms(id);
-        System.err.println("2——"+zyRoomDao.updRooms(id));
-        System.out.println("3——"+i);
+        return i;
+    }
+
+    @Override
+    public int updRoomStatus(long id) {
+        int i = zyRoomDao.updRoomStatus(id);
         return i;
     }
 
