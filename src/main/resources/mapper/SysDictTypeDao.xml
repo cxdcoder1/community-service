@@ -84,7 +84,6 @@
     </delete>
 
 
-
     <select id="getDeriveList" resultType="com.example.community.entity.SysDictType">
         SELECT * FROM sys_dict_type WHERE 1=1
         <if test="list!=null">
@@ -143,6 +142,8 @@
     </select>
 
 
+
+
     <select id="selDictType" resultType="com.example.community.entity.SysDictType">
         select * from sys_dict_type  where dict_name = #{name};
     </select>
@@ -154,8 +155,11 @@
              </if>
     </select>
 
+    <select id="getDictType" resultType="com.example.community.entity.SysDictType">
+        		select  *  from sys_dict_type where  dict_type=#{type}
+    </select>
 
-    <!-- 批量插入 -->
+
     <insert id="insType" keyProperty="dictId" useGeneratedKeys="true">
         insert into
         sys_dict_type

@@ -41,6 +41,8 @@ int insertBatch(@Param("entities") List<SysDictType> entities);
 
     SysDictType  selectDictTypeName(@Param("name") String name);
 
+    SysDictType  getDictType(@Param("type") String type);
+
     int updDictType(SysDictType sysDictType);
 
     List<SysDictType> selDictType(@Param("name") String name);

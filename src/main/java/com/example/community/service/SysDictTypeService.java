@@ -3,6 +3,7 @@ package com.example.community.service;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.example.community.entity.SysDictType;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -31,5 +32,7 @@ public interface SysDictTypeService extends IService<SysDictType> {
     int deleteDictType(List<Long> id);
 
     List<SysDictType> getDeriveList(List<String> list);
+
+    SysDictType  getDictType( String type);
 }
 

@@ -96,9 +96,10 @@ public class SysDictTypeController extends ApiController {
     public Map<String, Object> updType(@RequestBody SysDictType sysDictType, @RequestParam("type") String type, @RequestParam("type2") String type2) {
 
         List<SysDictType> sysDictTypes = sysDictTypeService.selDictType(sysDictType.getDictName());
+        SysDictType dictType = sysDictTypeService.getDictType(sysDictType.getDictType());
         Map<String, Object> map = new HashMap<>();
 
-        if (sysDictTypes.size() == 0) {
+        if (sysDictTypes.size() == 0 || dictType == null) {
             sysDictDataService.updDictType(type, type2);
             sysDictTypeService.updDictType(sysDictType);
             map.put("msg", "修改成功");
@@ -107,7 +108,7 @@ public class SysDictTypeController extends ApiController {
             return map;
         } else {
             SysDictType sysDictType1 = sysDictTypes.get(0);
-            if (sysDictType1.getDictId().equals(sysDictType.getDictId())) {
+            if (sysDictType1.getDictId().equals(sysDictType.getDictId()) && sysDictType1.getDictType().equals(sysDictType.getDictType())) {
                     sysDictDataService.updDictType(type, type2);
                     sysDictTypeService.updDictType(sysDictType);
                 map.put("msg", "修改成功");
@@ -116,7 +117,7 @@ public class SysDictTypeController extends ApiController {
                 return map;
             }
         }
-        map.put("msg", "该参数已存在");
+        map.put("msg", "重复参数");
         map.put("status", 201);
         map.put("success", false);
         return map;
@@ -166,12 +167,11 @@ public class SysDictTypeController extends ApiController {
 
         Map<String, Object> map = new HashMap<>();
 
-
         SysDictType sysDictType1 = sysDictTypeService.selectName(sysDictType.getDictName());
+        SysDictType dictType = sysDictTypeService.getDictType(sysDictType.getDictType());
 
-        if (sysDictType1 != null) {
-
-            map.put("msg", sysDictType.getDictName() + "已存在");
+        if (sysDictType1 != null || dictType != null) {
+            map.put("msg", "重复参数");
             map.put("status", 201);
             map.put("success", false);
             return map;

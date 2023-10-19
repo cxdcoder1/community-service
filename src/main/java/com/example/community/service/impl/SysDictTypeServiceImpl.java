@@ -95,6 +95,11 @@ public class SysDictTypeServiceImpl extends ServiceImpl<SysDictTypeDao, SysDictT
         return sysDictTypeDao.getDeriveList(list);
     }
 
+    @Override
+    public SysDictType getDictType(String type) {
+        return sysDictTypeDao.getDictType(type);
+    }
+
 
 //    @Override
 //    public List<SysDictType> selectRoleList(SysDictType sysDictType) {

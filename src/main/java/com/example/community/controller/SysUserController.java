@@ -339,12 +339,11 @@ public class SysUserController extends ApiController {
     @CustomAnnotation("system:user:resetPwd")
     @ApiOperation(value = "用户重置密码接口", notes = "用户重置密码接口的说明")
     @PutMapping("resetPwd")
-    public HashMap<String, Object> resetPwd(@RequestParam("id") int id, @RequestParam("pwd") long pwd) {
+    public HashMap<String, Object> resetPwd(@RequestParam("id") int id, @RequestParam("pwd") String pwd) {
         HashMap<String, Object> map = new HashMap<>();
+
         int i = sysUserService.restUserPwd(id, MD5Util.convertMD5(pwd + ""));
-
         map.put("data", i);
-
         return map;
     }
 

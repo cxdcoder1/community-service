@@ -214,7 +214,7 @@ public class SysPostController extends ApiController {
             result.put("status",200);
             result.put("msg","删除成功");
         }else{
-            result.put("status",400);
+            result.put("status",201);
             result.put("msg","删除的岗位中绑定了个人信息,删除失败");
         }
         return result;
