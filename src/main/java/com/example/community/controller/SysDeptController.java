@@ -53,8 +53,7 @@ public class SysDeptController extends ApiController {
 
 
     @GetMapping("getDeptLis")
-    public List<sysUserAndDepts> getDeptLis() {
-        System.out.println("qwe");
+    public R getDeptLis() {
         List<String> byIds = sysDeptService.getByIds();
         List<sysUserAndDepts> list = new ArrayList<>();
         for(String b:byIds){
@@ -62,7 +61,8 @@ public class SysDeptController extends ApiController {
             list.add(deptLis);
         }
         System.err.println(list);
-        return list;
+        return success(list);
+
     }
 
 
