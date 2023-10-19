@@ -121,7 +121,7 @@
     </resultMap>
     <select id="selectAllRepairs" resultMap="selectRepairDto" >
         SELECT zr.*,zf.files_url FROM zy_repair zr
-		JOIN zy_files zf on zf.parent_id = zr.repair_id
+		left JOIN zy_files zf on zf.parent_id = zr.repair_id
 		where community_id =  #{communityId} and zr.user_id = #{userId} and zr.del_flag = 0
     </select>
     <select id="getUserList" resultType="com.example.community.entity.SysUser">

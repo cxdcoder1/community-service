@@ -22,6 +22,8 @@ public interface SysUserService extends IService<SysUser> {
 
     int updateUser(SysUser sysUser);
 
+    int updateUserAvatar(SysUser sysUser);
+
     Page<UserAndDeptAndPostAndRole> selUserlist(Page<UserAndDeptAndPostAndRole> page, UserAndDeptAndPostAndRole userAndDeptAndPostAndRole);
 
     /**

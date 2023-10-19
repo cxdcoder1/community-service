@@ -207,10 +207,15 @@ public class SysUserController extends ApiController {
     @PutMapping("updataUser")
     public R update(@RequestBody SysUser sysUser) {
         System.err.println(sysUser);
-        if (sysUser.getNickName() == null) {
+        if (sysUser.getNickName() == null ) {
             sysUser.setPassword(MD5Util.convertMD5(sysUser.getPassword()));
         }
         return success(this.sysUserService.updateUser(sysUser));
+    }
+
+    @PutMapping("updataUserAvatar")
+    public R updateAvatar(@RequestBody SysUser sysUser) {
+        return success(this.sysUserService.updateUserAvatar(sysUser));
     }
 
     /**

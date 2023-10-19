@@ -39,6 +39,8 @@ public interface SysUserDao extends BaseMapper<SysUser> {
 
     int updataUser(@Param("sysUser") SysUser sysUser);
 
+    int updateUserAvatar(@Param("sysUser") SysUser sysUser);
+
     List<SysPost> getAllPost();
 
     List<SysRole> getAllRole();

@@ -39,9 +39,12 @@ public class MiniBindService {
     @Transactional(isolation = Isolation.READ_UNCOMMITTED)
     public ZyResult<String> bindRoom(BindDto bindDto) {
         String openId = bindDto.getOpenId();
+
+
         if (StringUtils.isEmpty(openId)) return ZyResult.fail("用户未绑定");
         ZyOwner zyOwner = zyOwnerMapper.selectOne(new QueryWrapper<ZyOwner>().eq("owner_open_id", openId));
         if (zyOwner == null) return ZyResult.fail(404, "该用户不存在");
+
         //校验是否绑定过
         ZyOwnerRoom zyOwnerRoom = zyOwnerRoomMapper.selectOne(new QueryWrapper<ZyOwnerRoom>().eq("room_id", bindDto.getRoomId())
                 .eq("owner_id", zyOwner.getOwnerId()).not(wrapper -> wrapper.eq("room_status", 0)));
@@ -56,7 +59,7 @@ public class MiniBindService {
                 ZyOwnerRoom zyOwnerRoom1 = zyOwnerRoomMapper.selectOne(new QueryWrapper<ZyOwnerRoom>()
                         .eq("room_id", bindDto.getRoomId())
                         .eq("owner_type", "yz")
-                        .eq("room_status", 0));
+                        .eq("room_status", 1));
                 if (zyOwnerRoom1 != null) return ZyResult.fail(500, "该房屋业主已经绑定,请绑定其他类型");
                 zyOwnerRoomMapper.insert(bindInfo);
             }

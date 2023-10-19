@@ -40,6 +40,11 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserDao, SysUser> impleme
     }
 
     @Override
+    public int updateUserAvatar(SysUser sysUser) {
+        return sysUserDao.updateUserAvatar(sysUser);
+    }
+
+    @Override
     public Page<UserAndDeptAndPostAndRole> selUserlist(Page<UserAndDeptAndPostAndRole> page, UserAndDeptAndPostAndRole userAndDeptAndPostAndRole) {
         // 获取满足条件的角色列表总数
         System.out.println(page.getCurrent());

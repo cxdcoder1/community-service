@@ -83,4 +83,17 @@ public class InteractionDetailDto implements Serializable {
     public void setImageUrls(List<ImageFileDto> imageUrls) {
         this.imageUrls = imageUrls;
     }
+
+    @Override
+    public String toString() {
+        return "InteractionDetailDto{" +
+                "interactionId=" + interactionId +
+                ", userId=" + userId +
+                ", content='" + content + '\'' +
+                ", nickname='" + nickname + '\'' +
+                ", createTime=" + createTime +
+                ", avatar='" + avatar + '\'' +
+                ", imageUrls=" + imageUrls +
+                '}';
+    }
 }

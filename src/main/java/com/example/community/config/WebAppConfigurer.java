@@ -22,7 +22,7 @@ public class WebAppConfigurer extends WebMvcConfigurerAdapter {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         //添加不拦截的方法（登入）
-        String[] patterns = new String[]{"/*/login", "/mini/community/login", "/upload", "/excel/into", "/error", "/swagger-ui.html/*", "/swagger-resources", "/swagger-resources/configuration/security", "/null/swagger-resources/configuration/ui", "/swagger-resources/configuration/ui"};
+        String[] patterns = new String[]{"/*/login", "/mini/community/login", "/upload","sysUser/updateUserAvatar", "/excel/into", "/error", "/swagger-ui.html/*", "/swagger-resources", "/swagger-resources/configuration/security", "/null/swagger-resources/configuration/ui", "/swagger-resources/configuration/ui"};
         registry.addInterceptor(sysInterceptor)
                 .addPathPatterns("/**")  //先拦截所有方法
                 .excludePathPatterns(patterns);  //在拦截的方法中剔除掉 patterns 中的方法（不拦截）

@@ -245,7 +245,7 @@
     </where>
 </select>
     <select id="getZyCommunityS" resultType="com.example.community.entity.ZyCommunity">
-        select zc.community_name,COUNT(*) as roomNum from zy_community as zc left join zy_room as zr on zc.community_id = zr.community_id where room_status = "has_give" GROUP BY zc.community_name
+        select zc.community_name,COUNT(*) as roomNum from zy_community as zc left join zy_room as zr on zc.community_id = zr.community_id where room_status != "none" GROUP BY zc.community_name
 
     </select>
     <select id="getBulidNameList" resultType="com.example.community.dto.CommunityBuild">

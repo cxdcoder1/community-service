@@ -147,6 +147,45 @@
         </if>
     </update>
 
+    <update id="updateUserAvatar">
+        update sys_user
+        <set>
+            <if test="sysUser.nickName!=null">
+                nick_name = #{sysUser.nickName},
+            </if>
+            <if test="sysUser.userName!=null">
+                user_name = #{sysUser.userName},
+            </if>
+            <if test="sysUser.phonenumber!=null">
+                phonenumber = #{sysUser.phonenumber},
+            </if>
+            <if test="sysUser.email!=null">
+                email = #{sysUser.email},
+            </if>
+            <if test="sysUser.sex!=null">
+                sex = #{sysUser.sex},
+            </if>
+            <if test="sysUser.password!=null and sysUser.password!=''">
+                password = #{sysUser.password},
+            </if>
+            <if test="sysUser.avatar!=null">
+                avatar = #{sysUser.avatar},
+            </if>
+            <if test="sysUser.deptId!=null">
+                dept_id = #{sysUser.deptId},
+            </if>
+            <if test="sysUser.status!=null">
+                status = #{sysUser.status},
+            </if>
+            <if test="sysUser.remark!=null">
+                remark = #{sysUser.remark}
+            </if>
+        </set>
+        <if test="sysUser.userId!=null">
+            where user_id=#{sysUser.userId}
+        </if>
+    </update>
+
     <update id="restUserPwd">
         update sys_user set password = #{pwd} where user_id=#{id}
     </update>

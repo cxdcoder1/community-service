@@ -102,6 +102,7 @@ public class MiniCommunityInteractionService {
         PageHelper.startPage(page,size);
         List<InteractionDetailDto> pageInteractions = zyCommunityInteractionMapper.findPageInteractions(communityId);
         PageInfo<InteractionDetailDto> interactionDtoPageInfo = new PageInfo<>(pageInteractions);
+        System.err.println(interactionDtoPageInfo);
         return ZyResult.data(interactionDtoPageInfo);
     }
 
@@ -112,7 +113,9 @@ public class MiniCommunityInteractionService {
      * @return 交互信息
      */
     public ZyResult<InteractionDetailDto> findById(Long interactionId) {
-        return ZyResult.data(zyCommunityInteractionMapper.findById(interactionId));
+        InteractionDetailDto dto = zyCommunityInteractionMapper.findById(interactionId);
+        // System.err.println(dto.toString()+"xxxxxxxxxxxxxxx");
+        return ZyResult.data(dto);
     }
 
     /**
