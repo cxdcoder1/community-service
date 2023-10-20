@@ -59,7 +59,7 @@ public class MiniBindService {
                 ZyOwnerRoom zyOwnerRoom1 = zyOwnerRoomMapper.selectOne(new QueryWrapper<ZyOwnerRoom>()
                         .eq("room_id", bindDto.getRoomId())
                         .eq("owner_type", "yz")
-                        .eq("room_status", 1));
+                        .eq("room_status", 0));
                 if (zyOwnerRoom1 != null) return ZyResult.fail(500, "该房屋业主已经绑定,请绑定其他类型");
                 zyOwnerRoomMapper.insert(bindInfo);
             }

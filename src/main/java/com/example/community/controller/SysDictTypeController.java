@@ -123,7 +123,7 @@ public class SysDictTypeController extends ApiController {
         return map;
     }
 
-
+    @CustomAnnotation("system:dict:list")
     @GetMapping("selectDictType")
     public R selectDictType(Page<SysDictType> page, SysDictType sysDictType) {
         return success(this.sysDictTypeService.selectDictType(page, sysDictType));
