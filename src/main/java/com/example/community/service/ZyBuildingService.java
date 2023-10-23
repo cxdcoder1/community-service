@@ -52,7 +52,7 @@ public interface ZyBuildingService extends IService<ZyBuilding> {
     List<ZyBuilding> getUBuild(String communityId);
 
 
-
+    int insetS(List<ZyBuilding> list);
 
 
 }

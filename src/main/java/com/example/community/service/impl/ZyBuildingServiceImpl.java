@@ -108,7 +108,21 @@ public class ZyBuildingServiceImpl extends ServiceImpl<ZyBuildingDao, ZyBuilding
         return zyBuildingDao.getUBuild(communityId);
     }
 
+    @Override
+    public int insetS(List<ZyBuilding> list) {
+        int count = 0;
 
+        for (ZyBuilding building : list) {
+            Long existingBuilding = zyBuildingDao.getBuildingName(building.getBuildingName(), building.getCommunityId());
+            if (existingBuilding != null) {
+                // 处理已存在的楼栋逻辑，如更新或忽略等
+            } else {
+                count += zyBuildingDao.insert(building);
+            }
+        }
+
+        return count;
+    }
 
 
 }

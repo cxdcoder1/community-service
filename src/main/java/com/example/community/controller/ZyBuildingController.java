@@ -122,7 +122,6 @@ public class ZyBuildingController extends ApiController {
     public  Map<String, Object> insertBuilding(ZyBuilding zyBuilding){
         Map<String, Object> map = new HashMap<>();
         Boolean aBoolean = zyBuildingService.addBuilding(zyBuilding);
-        System.err.println(zyBuilding);
         if (aBoolean){
             map.put("msg","新增成功");
             map.put("status", 200);

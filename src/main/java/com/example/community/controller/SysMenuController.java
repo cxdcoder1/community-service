@@ -273,7 +273,7 @@ public class SysMenuController extends ApiController {
      * @return 修改结果
      */
     @CustomAnnotation("system:menu:edit")
-    // @Log(title = "菜单管理", businessType = BusinessType.UPDATE)
+//    @Log(title = "菜单管理", businessType = BusinessType.UPDATE)
     @ApiOperation(value = "修改菜单接口",notes = "修改菜单接口的说明")
     @PutMapping("updateMenu")
     public Map<String, Object> update(@RequestBody SysMenu sysMenu) {

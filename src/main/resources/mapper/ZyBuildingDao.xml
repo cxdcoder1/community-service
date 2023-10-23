@@ -74,6 +74,19 @@
             <if test="remark != null">#{remark},</if>
         </trim>
     </insert>
+    <insert id="insetS">
+        insert into zy_building (building_Id, building_code, building_name, building_acreage, community_id)
+        values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (
+            #{item.buildingId},
+            #{item.buildingCode},
+            #{item.buildingName},
+            #{item.buildingAcreage},
+            #{item.communityId}
+            )
+        </foreach>
+    </insert>
     <update id="updateBuilding" parameterType="com.example.community.entity.ZyBuilding">
         UPDATE zy_building
         SET

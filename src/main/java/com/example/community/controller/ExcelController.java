@@ -6,6 +6,7 @@ import com.example.community.config.CustomAnnotation;
 import com.example.community.dao.*;
 import com.example.community.dto.*;
 import com.example.community.entity.*;
+import com.example.community.listener.BuildingList;
 import com.example.community.listener.DemoDataListener;
 import com.example.community.log.BusinessType;
 import com.example.community.log.Log;
@@ -197,6 +198,8 @@ public class ExcelController {
                 .registerWriteHandler(horizontalCellStyleStrategy)
                 .doWrite(dataList);
     }
+
+
 
     /**
      * 导出单元数据
@@ -546,6 +549,64 @@ public class ExcelController {
         result.put("msg","导出成功");
         result.put("status","200");
         result.put("path",path);
+        return result;
+    }
+
+    /**
+     * 用户导入模板
+     * @return
+     */
+
+    @Log(title = "楼栋管理", businessType = BusinessType.IMPORT)
+    @ApiOperation(value = "楼栋导入接口",notes = "楼栋导入接口的说明")
+    @PostMapping("templateS")
+    public Map<String, Object> templateS() {
+        Map<String, Object> result = new HashMap<>();
+
+
+        List<ZyBuilding> userList = new ArrayList<>();
+//        System.err.println(userList);
+        String path = getPath();
+        buildingLists(path,userList);
+        result.put("msg","模板导出成功");
+        result.put("status","200");
+        result.put("path",path);
+        return result;
+    }
+
+//    @CustomAnnotation("system:bulid:import")
+    @PostMapping("intoS")
+    @ApiOperation(value = "楼栋导入接口",notes = "楼栋导入接口的说明")
+    public Map<String,Object> simpleReadS(@RequestParam("file") MultipartFile file) {
+        Map<String,Object> result = new HashMap<>();
+//        String fileName = "F:\\rdtext.xls";
+        List<ZyBuilding> dataList = new ArrayList<>();
+        //每次会读取100条数据然后返回过来，直接调用使用数据就行
+        try {
+            EasyExcel.read(file.getInputStream(), ZyBuilding.class, new BuildingList(dataList))
+                    .sheet(0)//读取第一个sheet
+                    //                .headRowNumber(3) //跳过前三行表头内容，假如是简单表头则这句可省略
+                    .doRead();
+        } catch (IOException e) {
+            //文件类型不对
+            e.printStackTrace();
+        }
+        //验空
+        if (dataList.size()==0){
+            result.put("status",201);
+            result.put("msg","请导入有数据的xls文件");
+            return result;
+        }
+
+        int i = zyBuildingService.insetS(dataList);
+
+        if (i==0){
+            result.put("status",201);
+            result.put("msg","楼栋名重复");
+
+        }
+        result.put("status",200);
+        result.put("msg","导入成功");
         return result;
     }
 

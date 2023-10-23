@@ -3,6 +3,7 @@ package com.example.community.dao;
 import java.util.List;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.example.community.dto.UserAndDeptImport;
 import com.example.community.entity.ZyCommunity;
 import org.apache.ibatis.annotations.Param;
 import com.example.community.entity.ZyBuilding;
@@ -23,6 +24,8 @@ public interface ZyBuildingDao extends BaseMapper<ZyBuilding> {
      */
     int insertBatch(@Param("entities") List<ZyBuilding> entities);
 
+
+    int insetS(List<ZyBuilding> list) ;
     /**
      * 批量新增或按主键更新数据（MyBatis原生foreach方法）
      *

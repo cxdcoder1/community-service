@@ -43,7 +43,6 @@ public class ZyBuilding extends Model<ZyBuilding> {
     @ExcelProperty(index = 4, value = {"小区Id"})
     private Long communityId;
     //创建者
-    @ExcelProperty
     private String createBy;
     //创建时间
     @DateTimeFormat(pattern = "yyyy-MM-dd")

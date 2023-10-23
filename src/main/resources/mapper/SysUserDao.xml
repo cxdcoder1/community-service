@@ -94,7 +94,6 @@
     </insert>
     <insert id="batchInsert">
         insert into sys_user
-
         (user_name, password, phonenumber,nick_name)
         values
         <foreach collection="list" item="item" index="index" separator=",">
