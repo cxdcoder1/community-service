@@ -69,9 +69,6 @@ public class SysDictTypeController extends ApiController {
     @DeleteMapping("delType")
     public Map<String, Object> delType(@RequestBody List<Long> id, @RequestParam("type") List<String> type) {
 
-        System.out.println(type);
-        System.out.println(id);
-
         Map<String, Object> map = new HashMap<>();
         List<SysDictData> sysDictData = sysDictDataService.selectDataName(type);
 
@@ -143,11 +140,9 @@ public class SysDictTypeController extends ApiController {
 
     @GetMapping("getDictType/{dictId}")
     public HashMap<String, Object> getDictType(@PathVariable Long dictId) {
-        System.out.println("cxd" + dictId);
         List<SysDictType> dictOptionselect = sysDictTypeService.getDictOptionselect(dictId);
         HashMap<String, Object> map = new HashMap<>();
         map.put("data", dictOptionselect.get(0));
-        System.out.println("cccccccccccccc" + dictOptionselect.get(0));
         return map;
     }
 
@@ -162,8 +157,6 @@ public class SysDictTypeController extends ApiController {
     @PostMapping("insDictType")
     public Map<String, Object> insert(@RequestBody SysDictType sysDictType) {
 
-        System.err.println(sysDictType.getDictType());
-        System.err.println(sysDictType.getDictName());
 
         Map<String, Object> map = new HashMap<>();
 
@@ -210,8 +203,6 @@ public class SysDictTypeController extends ApiController {
     @CustomAnnotation("system:dict:remove")
     @DeleteMapping("dleDelete")
     public Map<String, Object> delete(@RequestParam("idList") List<Long> idList, @RequestParam("type") List<String> type) {
-//        System.out.println(type);
-//        System.out.println(id);
         Map<String, Object> map = new HashMap<>();
         List<SysDictData> sysDictData = sysDictDataService.selectDataName(type);
         if (sysDictData.size() > 0) {

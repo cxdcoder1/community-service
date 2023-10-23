@@ -52,9 +52,7 @@ public class ZyOwnerRoomController extends ApiController {
 
     @PostMapping("insetRoomRecordList")
     public Map<String,Object> insetAll(@RequestBody ZyOwnerRoomRecord zyOwnerRoomRecord) {
-        System.err.println(zyOwnerRoomRecord);
         Map<String, Object> map = new HashMap<>();
-        System.err.println(zyOwnerRoomRecord.getRoomId());
         zyOwnerRoomRecordService.insetRoomRecordAll(zyOwnerRoomRecord);
         zyOwnerRoomService.updOwnerRoom(zyOwnerRoomRecord.getRoomStatus(), zyOwnerRoomRecord.getOwnerRoomId());
         zyRoomService.updRooms(zyOwnerRoomRecord.getRoomId());
@@ -65,7 +63,6 @@ public class ZyOwnerRoomController extends ApiController {
 
     @GetMapping("getRoomRecordList")
     public R selectAll(String name) {
-        System.err.println(name);
         return success(this.zyOwnerRoomRecordService.getRoomRecordList(name));
     }
 

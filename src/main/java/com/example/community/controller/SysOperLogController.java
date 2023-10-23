@@ -96,26 +96,22 @@ public class SysOperLogController extends ApiController {
     @CustomAnnotation("monitor:operlog:list")
     @GetMapping("operLoglist")
     public R selectPageAll(Page<OperLogDto> page, OperLogDto operLogDto) {
-        System.err.println(operLogDto);
         return success(this.sysOperLogService.operLogList(page,operLogDto));
     }
 
     //状态下拉框
     @GetMapping("/statusOption")
     public R statusOption() {
-        System.err.println();
         return success(this.sysOperLogService.statusOption());
     }
 
     @GetMapping("/operOption")
     public R operOption() {
-        System.err.println();
         return success(this.sysOperLogService.operTypeList());
     }
 
     @GetMapping("getOper")
     public R getOper(int id) {
-        System.err.println();
         return success(this.sysOperLogService.getOperLog(id));
     }
 

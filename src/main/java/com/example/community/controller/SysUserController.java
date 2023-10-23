@@ -109,7 +109,6 @@ public class SysUserController extends ApiController {
     @RequestMapping("login")
     public Map<String, Object> login(@RequestBody SysUser user, HttpServletRequest request) throws Exception {
         Map<String, Object> result = new HashMap<>();
-        System.out.println(user);
 
         //校验用户名和密码
         QueryWrapper queryWrapper = new QueryWrapper<SysUser>();
@@ -206,7 +205,6 @@ public class SysUserController extends ApiController {
     @ApiOperation(value = "修改用户接口", notes = "修改用户接口的说明")
     @PutMapping("updataUser")
     public R update(@RequestBody SysUser sysUser) {
-        System.err.println(sysUser);
         if (sysUser.getNickName() == null ) {
             sysUser.setPassword(MD5Util.convertMD5(sysUser.getPassword()));
         }
@@ -242,7 +240,6 @@ public class SysUserController extends ApiController {
     @GetMapping("sysUserList")
     public R selectPageAll(Page<UserAndDeptAndPostAndRole> page, UserAndDeptAndPostAndRole userAndDeptAndPostAndRole) {
 
-        System.err.println(userAndDeptAndPostAndRole);
         List<String> s = new ArrayList<>();
         s.add(userAndDeptAndPostAndRole.getDeptId() + "");
         //获取部门的子集
@@ -287,7 +284,6 @@ public class SysUserController extends ApiController {
         sysUser.setPhonenumber(userAndPostIdAndRoleId.getPhonenumber());
         //验重
         if (sysUserService.isok(sysUser) == 0) {
-            System.out.println(sysUser);
             //更新user信息
             sysUserService.updateUser(sysUser);
             //更新user职位
@@ -311,7 +307,6 @@ public class SysUserController extends ApiController {
     @PutMapping("addUser")
     public HashMap<String, Object> addUser(@RequestBody UserAndPostIdAndRoleId userAndPostIdAndRoleId) {
         HashMap<String, Object> map = new HashMap<>();
-        System.err.println(userAndPostIdAndRoleId);
         SysUser sysUser = new SysUser();
         sysUser.setPhonenumber(userAndPostIdAndRoleId.getPhonenumber());
         sysUser.setDeptId(userAndPostIdAndRoleId.getDeptId());
@@ -380,7 +375,6 @@ public class SysUserController extends ApiController {
         List<SysDept> sysDepts = deptTree.builTree();
         result.put("menuList", sysDepts);
         result.put("msg", "获取成功");
-        System.err.println(result);
         return result;
     }
 

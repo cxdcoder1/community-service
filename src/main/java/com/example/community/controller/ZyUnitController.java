@@ -174,7 +174,6 @@ public class ZyUnitController extends ApiController {
 
         //验证是否能删除
         List<ZyRoom> byUnit = zyUnitService.getByUnits(list);
-        System.out.println(list);
         if (byUnit.size()!=0){
             map.put("status",201);
             map.put("msg","删除失败,单元下还有房间");

@@ -60,7 +60,6 @@ public class SysDeptController extends ApiController {
             sysUserAndDepts deptLis = sysDeptService.getDeptLis(b);
             list.add(deptLis);
         }
-        System.err.println(list);
         return success(list);
 
     }
@@ -194,11 +193,9 @@ public class SysDeptController extends ApiController {
             }
         }
         DeptTree deptTree = new DeptTree(sysDeptList);
-        System.err.println(deptTree);
         List<SysDept> sysDepts = deptTree.builTree();
         result.put("menuList",sysDepts);
         result.put("msg","获取成功");
-        System.err.println(result);
         return result;
     };
 
@@ -224,7 +221,6 @@ public class SysDeptController extends ApiController {
         List<SysDept> sysDepts = deptTree.builTree();
         result.put("menuList",sysDepts);
         result.put("msg","获取成功");
-        System.err.println(result);
         return result;
     }
 
@@ -250,7 +246,6 @@ public class SysDeptController extends ApiController {
         List<SysDept> sysDepts = deptTree.builTree();
         result.put("menuList",sysDepts);
         result.put("msg","获取成功");
-        System.err.println(result);
         return result;
     }
 
@@ -292,7 +287,6 @@ public class SysDeptController extends ApiController {
     @PutMapping("updateDept")
     public Map<String, Object> update(@RequestBody SysDept sysDept) {
         Map<String, Object> result = new HashMap<>();
-        System.err.println(sysDept);
         Boolean t = sysDeptService.checkName(sysDept.getDeptName(), sysDept.getDeptId() + "", sysDept.getParentId() + "");
         if (!t){
             result.put("status", 201);

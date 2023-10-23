@@ -37,7 +37,6 @@ public class ZyRoomController extends ApiController {
     @GetMapping("getRoomList")
     public HashMap<String, Object> getRoomList(Page<RoomDto> page, RoomDto roomDto) {
         HashMap<String, Object> map = new HashMap<>();
-        System.out.println("当前页" + page.getCurrent() + "" + page.getSize());
         List<RoomDto> roomList = zyRoomService.getRoomList(Math.max((page.getCurrent()-1)*page.getSize(),0),page.getSize(), roomDto);
         int count = zyRoomService.getRoomList(0, 0, roomDto).size();
 
@@ -51,7 +50,6 @@ public class ZyRoomController extends ApiController {
     @GetMapping("getBuilding")
     public HashMap<String, Object> getBuilding(ZyRoom zyRoom) {
         HashMap<String, Object> map = new HashMap<>();
-        System.out.println(zyRoom);
 
         List<ZyBuilding> building = zyRoomService.getBuilding(zyRoom);
 
@@ -92,9 +90,6 @@ public class ZyRoomController extends ApiController {
     @PutMapping("addRoom")
     public HashMap<String, Object> getaddRoom(@RequestBody ZyRoom zyRoom) {
         HashMap<String, Object> map = new HashMap<>();
-
-        System.err.println(zyRoom);
-
         int check = zyRoomService.check(zyRoom);
         if (check == 0) {
             int i = zyRoomService.addRoom(zyRoom);
@@ -117,9 +112,6 @@ public class ZyRoomController extends ApiController {
     @PutMapping("editRoom")
     public HashMap<String, Object> editRoom(@RequestBody ZyRoom zyRoom) {
         HashMap<String, Object> map = new HashMap<>();
-
-        System.err.println(zyRoom);
-
         int check = zyRoomService.check(zyRoom);
         if (check == 0) {
             int i = zyRoomService.editRoom(zyRoom);
@@ -143,7 +135,6 @@ public class ZyRoomController extends ApiController {
     @DeleteMapping("deleteRoom/{roomId}")
     public HashMap<String, Object> deleteRoom(@PathVariable Long roomId) {
         HashMap<String, Object> map = new HashMap<>();
-        // System.err.println(zyRoom);
         int i = zyRoomService.deleteRoom(roomId);
         if (i==1){
             map.put("data", i);

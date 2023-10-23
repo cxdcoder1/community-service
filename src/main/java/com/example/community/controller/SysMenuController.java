@@ -64,9 +64,6 @@ public class SysMenuController extends ApiController {
         if (menuList != null && !menuList.isEmpty()) {
             return R.ok(menuList);
         }
-
-        System.err.println(R.ok(menus));
-
         return R.ok(menus);
     }
 
@@ -106,7 +103,6 @@ public class SysMenuController extends ApiController {
     @RequestMapping("deleteMenu")
     public Map<String, Object> deleteMenu(@RequestBody SysMenu sysMenu) {
         Map<String, Object> map = new HashMap<>();
-        System.err.println(sysMenu.toString());
         String s = sysMenuService.deleteMenu(sysMenu.getMenuId(), null);
         map.put("data", 1);
         map.put("msg", s);
@@ -396,8 +392,6 @@ public class SysMenuController extends ApiController {
      */
     public Map<String, Object> up(SysMenu sysMenu, Map<String, Object> result) {
         Integer i = sysMenuService.updateMenu(sysMenu);
-        System.err.println("ccccccccccc"+sysMenu.getMenuId());
-
         if (i == 1) {
             result.put("status", 200);
             result.put("success", true);

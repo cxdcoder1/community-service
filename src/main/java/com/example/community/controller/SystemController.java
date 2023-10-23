@@ -20,7 +20,6 @@ public class SystemController {
 
     @GetMapping("hardwareInfo")
     public SystemHardwareInfo getHardwareInfo() {
-        System.err.println(111);
         return systemService.getSystemHardwareInfo();
     }
 

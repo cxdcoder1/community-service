@@ -38,7 +38,6 @@ public class SysLogininforController extends ApiController {
     @CustomAnnotation("monitor:logininfor:list")
     public HashMap<String, Object> list(LogDto logDto, Page<LogDto> page) {
         HashMap<String, Object> map = new HashMap<>();
-        System.err.println(logDto);
 
         List<SysLogininfor> list = logininforService.selectLogininforList(logDto, (page.getCurrent() - 1) * page.getSize(), page.getSize());
         int total = logininforService.selectLogininforList(logDto, 0, 0).size();

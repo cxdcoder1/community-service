@@ -49,7 +49,6 @@ public class ZyCommunityInteractionController extends ApiController {
 
     @PutMapping("getCommentParentIds")
     public Map<String,Object> getCommentParentIds(@PathParam("id") String id) {
-        System.err.println(id);
         Map<String, Object> map = new HashMap<>();
         List<String> resultList = new ArrayList<>();
         int i = 0;
@@ -58,7 +57,6 @@ public class ZyCommunityInteractionController extends ApiController {
         resultList.add(id);
         while (true) {
             i++;
-            System.err.println(ids);
             List<String> sel = zyCommunityInteractionService.getRoomParentIds(ids); // 这是我查询的数据
 
             for(String s:sel){
@@ -68,13 +66,10 @@ public class ZyCommunityInteractionController extends ApiController {
             if (sel == null || sel.isEmpty()) {
                 break; // 退出循环（查询结果为空）
             }
-            System.err.println(i + "|" + sel);
             ids = sel;
-            System.err.println(id);
         }
 
         zyCommunityInteractionService.updCommentId(resultList);
-        System.err.println("删除数据" + resultList);
         map.put("msg","删除成功");
         return map;
     }
@@ -85,14 +80,11 @@ public class ZyCommunityInteractionController extends ApiController {
 
         Map<String, Object> map = new HashMap<>();
         List<InterCationAndOwner> parentIds = zyCommentService.getParentIds(id);
-        System.out.println(parentIds);
         List<String> objectsName = new ArrayList<>();
         for(InterCationAndOwner parentId:parentIds){
-            System.err.println(parentId);
             String zyOwnerName = zyCommunityInteractionService.getUserName(parentId.getParentId());
             objectsName.add(zyOwnerName);
         }
-        System.err.println(objectsName);
         map.put("objectsName",objectsName);
         return map;
     }
@@ -103,7 +95,6 @@ public class ZyCommunityInteractionController extends ApiController {
     public Map<String,Object> getFeilsUrl(String id) {
         Map<String, Object> map = new HashMap<>();
         List<FeilsImgs> feilsUrl = zyCommunityInteractionService.getFeilsUrl(id);
-        System.err.println(feilsUrl);
         List<String> ParentId = new ArrayList<>();
         List<String> FilesUrl = new ArrayList<>();
         for(FeilsImgs fls:feilsUrl){
@@ -114,29 +105,6 @@ public class ZyCommunityInteractionController extends ApiController {
         map.put("FilesUrl",FilesUrl);
         return map;
     }
-
-//    @GetMapping("getFeilsUrl")
-//    public Map<String,Object> getFeilsUrl(String id) {
-//        Map<String, Object> map = new HashMap<>();
-//        List<ZyFiles> feilsUrl = zyCommunityInteractionService.getFeilsUrl(id);
-//
-//        List<String> feilsUrlsName = new ArrayList<>();
-//        for(ZyFiles fls:feilsUrl){
-//            feilsUrlsName.add(fls.getFilesUrl());
-//            feilsUrlsName.add(String.valueOf(fls.getParentId()));
-//        }
-//        System.err.println(feilsUrl);
-//        map.put("Urls",feilsUrl);
-//        return map;
-//    }
-
-
-//    @GetMapping("getUserName")
-//    public R getUserName(@PathParam("id") String id) {
-//        System.err.println(id);
-//        return success(this.zyCommunityInteractionService.getUserName(id));
-//    }
-
 
     @PutMapping("updDelFlag")
     @Transactional
@@ -199,7 +167,6 @@ public class ZyCommunityInteractionController extends ApiController {
      */
     @PostMapping
     public R insert(@RequestBody ZyCommunityInteraction zyCommunityInteraction) {
-        System.err.println(zyCommunityInteraction);
         return success(this.zyCommunityInteractionService.save(zyCommunityInteraction));
     }
 

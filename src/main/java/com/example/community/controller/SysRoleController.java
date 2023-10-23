@@ -92,7 +92,6 @@ public class SysRoleController extends ApiController {
         map.put("status", 200);
         map.put("success", true);
         //获取新增角色的主键
-        System.out.println(rolesAndMenuIds.getRoleId());
         return map;
 
     }
@@ -101,11 +100,7 @@ public class SysRoleController extends ApiController {
     @ApiOperation(value = "获取角色列表接口",notes = "获取角色列表接口的说明")
     @GetMapping("list")
     public R selectPageAll(Page<SysRole> page, SysRole sysRole) {
-//        System.err.println("角色类"+sysRole);
-//        System.err.println(page.getCurrent());
-//        System.err.println(page.getSize());
 
-        System.err.println(sysRole);
         return success(this.sysRoleService.roleList(page, sysRole));
     }
 
@@ -203,14 +198,11 @@ public class SysRoleController extends ApiController {
     @RequestMapping("getRoleMenuTreeselect")
     public R getRoleMenuTreeselect(Integer roleId) {
         List<SysMenu> menus = sysRoleService.getRoleMenuTreeselect(roleId);
-//        System.err.println(menus);
         List<SysMenu> menuList = new MenuTree(menus).builTree();
         if (menuList != null && !menuList.isEmpty()) {
-//            System.out.println(menuList);
+
             return R.ok(menuList);
         }
-        System.err.println(R.ok(menus));
-
         return R.ok(menus);
     }
 
@@ -253,9 +245,7 @@ public class SysRoleController extends ApiController {
 
     @RequestMapping("getMenuIds/{roleId}")
     public List getMenuIds(@PathVariable Long roleId){
-//        System.out.println(roleId);
         List<SysRoleMenu> sysRoleMenu = sysRoleService.getMenuIds(roleId);
-        System.err.println("test1111");
         List<Long> menuIds = new ArrayList();
         for (SysRoleMenu menuId : sysRoleMenu) {
             menuIds.add(menuId.getMenuId());

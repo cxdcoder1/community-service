@@ -106,7 +106,6 @@ public class ZyBuildingController extends ApiController {
     @ApiOperation(value = "获取小区列表接口",notes = "获取小区列表接口的说明")
     @GetMapping("getCommunityList")
     public R getCommunityList(){
-        System.err.println(this.zyCommunityService.getCommunityList());
         return success(this.zyCommunityService.getCommunityList());
     }
 
@@ -139,11 +138,8 @@ public class ZyBuildingController extends ApiController {
     @Log(title = "楼栋管理", businessType = BusinessType.UPDATE)
     @PutMapping("updateBuilding/{communityId}")
     public Map<String, Object> updateBuilding(@PathVariable long communityId,@RequestBody ZyBuilding zyBuilding){
-        System.err.println(communityId);
-        System.err.println(zyBuilding);
         Map<String, Object> map = new HashMap<>();
         Long aLong = zyBuildingService.selName(communityId,zyBuilding);
-        System.err.println(zyBuilding.toString());
         if (aLong==0){
             int i=zyBuildingService.updateBuilding(zyBuilding);
             map.put("msg","修改成功");

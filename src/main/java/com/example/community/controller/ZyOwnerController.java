@@ -104,7 +104,6 @@ public class ZyOwnerController extends ApiController {
 
     @GetMapping("zyOwnerList")
     public R zyOwnerRoomList(Page<ZyOwnerRoomDto> page, ZyOwnerRoomDto zyOwnerRoomDto, long communityId) {
-        System.err.println(zyOwnerRoomDto);
         return success(this.zyOwnerService.zyOwnerRoomList(page,zyOwnerRoomDto,communityId));
     }
 
@@ -118,7 +117,6 @@ public class ZyOwnerController extends ApiController {
 
         if (zyOwnerRoomRecord.getOwnerType().equals("yz")){
             int i1 = zyRoomService.updRoomStatus(zyOwnerRoomRecord.getRoomId());
-            System.err.println(i1);
         }
         if (integer==1){
             map.put("msg","解绑成功");

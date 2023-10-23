@@ -37,8 +37,6 @@ public class SysDictDataController extends ApiController {
     //根据条件获取字典数据
     public HashMap<String, Object> listData(Page page, SysDictData sysDictData) {
         HashMap<String, Object> map = new HashMap<>();
-        System.err.println("当前页：" + page.getCurrent() + "" + page.getSize());
-        System.out.println("test sysDictData" + sysDictData);
         //符合条件的列表
         List<SysDictData> data = sysDictDataService.getData(sysDictData, Math.max((page.getCurrent()-1)*page.getSize(),0), page.getSize());
 
@@ -69,7 +67,6 @@ public class SysDictDataController extends ApiController {
         HashMap<String, Object> map = new HashMap<>();
         int isok = sysDictDataService.isok(sysDictData);
         if (isok == 0) {
-            System.out.println(sysDictData.toString());
             int i = sysDictDataService.updateData(sysDictData);
 
             map.put("data", i);
@@ -84,9 +81,7 @@ public class SysDictDataController extends ApiController {
     @RequestMapping("addData")
     public HashMap<String, Object> addData(@RequestBody SysDictData sysDictData) {
         HashMap<String, Object> map = new HashMap<>();
-        System.out.println(sysDictData.toString());
         int isok = sysDictDataService.isok(sysDictData);
-        System.err.println(isok + "ccccccccccccccccccccc");
         if (isok == 0) {
             boolean save = sysDictDataService.save(sysDictData);
             map.put("data", 1);
@@ -101,7 +96,6 @@ public class SysDictDataController extends ApiController {
     @DeleteMapping("delete/{id}")
     public HashMap<String, Object> delete(@PathVariable("id") Long id) {
         HashMap<String, Object> map = new HashMap<>();
-        System.out.println(id);
         int save = sysDictDataService.removeDictById(id);
         map.put("data", save);
         return map;
