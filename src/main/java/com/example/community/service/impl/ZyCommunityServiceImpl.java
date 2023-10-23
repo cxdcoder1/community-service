@@ -10,6 +10,7 @@ import com.example.community.service.ZyCommunityService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -97,6 +98,11 @@ public class ZyCommunityServiceImpl extends ServiceImpl<ZyCommunityDao, ZyCommun
         return zyCommunityDao.selCommunityCity(zyCommunity);
     }
 
+    @Override
+    public List<ZyCommunity> selCommunityCitys(List<ZyCommunity> zyCommunity) {
+        return zyCommunityDao.selCommunityCitys(zyCommunity);
+    }
+
 
     @Override
     public List<ZyCommunity> getUCommunity() {
@@ -115,5 +121,12 @@ public class ZyCommunityServiceImpl extends ServiceImpl<ZyCommunityDao, ZyCommun
         System.err.println(bulidNameList);
         return bulidNameList;
     }
+
+    @Override
+    public int insertBatch(List<ZyCommunity> entities) {
+        return zyCommunityDao.insertBatch(entities);
+    }
+
+
 }
 

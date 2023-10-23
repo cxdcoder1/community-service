@@ -1,10 +1,13 @@
 package com.example.community.entity;
 
 
+import cn.hutool.core.annotation.Alias;
 import com.alibaba.excel.annotation.ExcelProperty;
 import com.alibaba.excel.annotation.write.style.ColumnWidth;
 import com.alibaba.excel.annotation.write.style.ContentRowHeight;
 import com.alibaba.excel.annotation.write.style.HeadRowHeight;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import lombok.Getter;
 import lombok.Setter;
@@ -20,28 +23,36 @@ import java.util.Date;
  * @since 2023-09-14 09:53:03
  */
 @SuppressWarnings("serial")
+@TableName("ZyCommunity")
 public class ZyCommunity extends Model<ZyCommunity> {
 
     //小区id
     @ExcelProperty(index = 0, value = {"小区id"})
+    @Alias("小区id")
     private String communityId;
     //小区名称
     @ExcelProperty(index = 1, value = {"小区名称"})
+    @Alias("小区名称")
     private String communityName;
     //小区编码
     @ExcelProperty(index = 2, value = {"小区编码"})
+    @Alias("小区编码")
     private String communityCode;
     //省区划码
     @ExcelProperty(index = 3,value = {"省区划码"})
+    @Alias("省区划码")
     private String communityProvenceCode;
     //市区划码
     @ExcelProperty(index = 4, value = {"市区划码"})
+    @Alias("市区划码")
     private String communityCityCode;
     //区县区划码
     @ExcelProperty(index = 5, value = {"区县区划码"})
+    @Alias("区县区划码")
     private String communityTownCode;
     //详细地址
     @ExcelProperty(index = 6, value = {"详细地址"})
+    @Alias("详细地址")
     private String communityDetailedAddress;
     //经度
     private String communityLongitude;
@@ -49,16 +60,20 @@ public class ZyCommunity extends Model<ZyCommunity> {
     private String communityLatitude;
     //物业id
     @ExcelProperty(index = 7, value = {"物业id"})
+    @Alias("物业id")
     private Long deptId;
     //排序
     @ExcelProperty(index = 8, value = {"排序"})
+    @Alias("排序")
     private Integer communitySort;
     //创建者
     @ExcelProperty(index = 9, value = {"创建者"})
+    @Alias("创建者")
     private String createBy;
     //创建时间
 //    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @ExcelProperty(index = 10, value = {"创建时间"})
+    @Alias("创建时间")
     private Date createTime;
     //更新者
     private String updateBy;
@@ -71,171 +86,321 @@ public class ZyCommunity extends Model<ZyCommunity> {
     //楼栋数量
     private String buildNum;
 
-    public String getBuildNum() {
-        return buildNum;
-    }
-
-    public void setBuildNum(String buildNum) {
-        this.buildNum = buildNum;
-    }
-
-    public ZyCommunity(String communityId, String communityName, String communityCode, String communityProvenceCode, String communityCityCode, String communityTownCode, String communityDetailedAddress, String communityLongitude, String communityLatitude, Long deptId, Integer communitySort, String createBy, Date createTime, String updateBy, Date updateTime, String remark, String roomNum) {
-        this.communityId = communityId;
-        this.communityName = communityName;
-        this.communityCode = communityCode;
-        this.communityProvenceCode = communityProvenceCode;
-        this.communityCityCode = communityCityCode;
-        this.communityTownCode = communityTownCode;
-        this.communityDetailedAddress = communityDetailedAddress;
-        this.communityLongitude = communityLongitude;
-        this.communityLatitude = communityLatitude;
-        this.deptId = deptId;
-        this.communitySort = communitySort;
-        this.createBy = createBy;
-        this.createTime = createTime;
-        this.updateBy = updateBy;
-        this.updateTime = updateTime;
-        this.remark = remark;
-        this.roomNum = roomNum;
-    }
 
     public ZyCommunity() {
     }
 
+    public ZyCommunity(String communityId, String communityName, String communityCode, String communityProvenceCode, String communityCityCode, String communityTownCode, String communityDetailedAddress, String communityLongitude, String communityLatitude, Long deptId, Integer communitySort, String createBy, Date createTime, String updateBy, Date updateTime, String remark, String roomNum, String buildNum) {
+        this.communityId = communityId;
+        this.communityName = communityName;
+        this.communityCode = communityCode;
+        this.communityProvenceCode = communityProvenceCode;
+        this.communityCityCode = communityCityCode;
+        this.communityTownCode = communityTownCode;
+        this.communityDetailedAddress = communityDetailedAddress;
+        this.communityLongitude = communityLongitude;
+        this.communityLatitude = communityLatitude;
+        this.deptId = deptId;
+        this.communitySort = communitySort;
+        this.createBy = createBy;
+        this.createTime = createTime;
+        this.updateBy = updateBy;
+        this.updateTime = updateTime;
+        this.remark = remark;
+        this.roomNum = roomNum;
+        this.buildNum = buildNum;
+    }
+
+    /**
+     * 获取
+     * @return communityId
+     */
     public String getCommunityId() {
         return communityId;
     }
 
+    /**
+     * 设置
+     * @param communityId
+     */
     public void setCommunityId(String communityId) {
         this.communityId = communityId;
     }
 
+    /**
+     * 获取
+     * @return communityName
+     */
     public String getCommunityName() {
         return communityName;
     }
 
+    /**
+     * 设置
+     * @param communityName
+     */
     public void setCommunityName(String communityName) {
         this.communityName = communityName;
     }
 
+    /**
+     * 获取
+     * @return communityCode
+     */
     public String getCommunityCode() {
         return communityCode;
     }
 
+    /**
+     * 设置
+     * @param communityCode
+     */
     public void setCommunityCode(String communityCode) {
         this.communityCode = communityCode;
     }
 
+    /**
+     * 获取
+     * @return communityProvenceCode
+     */
     public String getCommunityProvenceCode() {
         return communityProvenceCode;
     }
 
+    /**
+     * 设置
+     * @param communityProvenceCode
+     */
     public void setCommunityProvenceCode(String communityProvenceCode) {
         this.communityProvenceCode = communityProvenceCode;
     }
 
+    /**
+     * 获取
+     * @return communityCityCode
+     */
     public String getCommunityCityCode() {
         return communityCityCode;
     }
 
+    /**
+     * 设置
+     * @param communityCityCode
+     */
     public void setCommunityCityCode(String communityCityCode) {
         this.communityCityCode = communityCityCode;
     }
 
+    /**
+     * 获取
+     * @return communityTownCode
+     */
     public String getCommunityTownCode() {
         return communityTownCode;
     }
 
+    /**
+     * 设置
+     * @param communityTownCode
+     */
     public void setCommunityTownCode(String communityTownCode) {
         this.communityTownCode = communityTownCode;
     }
 
+    /**
+     * 获取
+     * @return communityDetailedAddress
+     */
     public String getCommunityDetailedAddress() {
         return communityDetailedAddress;
     }
 
+    /**
+     * 设置
+     * @param communityDetailedAddress
+     */
     public void setCommunityDetailedAddress(String communityDetailedAddress) {
         this.communityDetailedAddress = communityDetailedAddress;
     }
 
+    /**
+     * 获取
+     * @return communityLongitude
+     */
     public String getCommunityLongitude() {
         return communityLongitude;
     }
 
+    /**
+     * 设置
+     * @param communityLongitude
+     */
     public void setCommunityLongitude(String communityLongitude) {
         this.communityLongitude = communityLongitude;
     }
 
+    /**
+     * 获取
+     * @return communityLatitude
+     */
     public String getCommunityLatitude() {
         return communityLatitude;
     }
 
+    /**
+     * 设置
+     * @param communityLatitude
+     */
     public void setCommunityLatitude(String communityLatitude) {
         this.communityLatitude = communityLatitude;
     }
 
+    /**
+     * 获取
+     * @return deptId
+     */
     public Long getDeptId() {
         return deptId;
     }
 
+    /**
+     * 设置
+     * @param deptId
+     */
     public void setDeptId(Long deptId) {
         this.deptId = deptId;
     }
 
+    /**
+     * 获取
+     * @return communitySort
+     */
     public Integer getCommunitySort() {
         return communitySort;
     }
 
+    /**
+     * 设置
+     * @param communitySort
+     */
     public void setCommunitySort(Integer communitySort) {
         this.communitySort = communitySort;
     }
 
+    /**
+     * 获取
+     * @return createBy
+     */
     public String getCreateBy() {
         return createBy;
     }
 
+    /**
+     * 设置
+     * @param createBy
+     */
     public void setCreateBy(String createBy) {
         this.createBy = createBy;
     }
 
+    /**
+     * 获取
+     * @return createTime
+     */
     public Date getCreateTime() {
         return createTime;
     }
 
+    /**
+     * 设置
+     * @param createTime
+     */
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
     }
 
+    /**
+     * 获取
+     * @return updateBy
+     */
     public String getUpdateBy() {
         return updateBy;
     }
 
+    /**
+     * 设置
+     * @param updateBy
+     */
     public void setUpdateBy(String updateBy) {
         this.updateBy = updateBy;
     }
 
+    /**
+     * 获取
+     * @return updateTime
+     */
     public Date getUpdateTime() {
         return updateTime;
     }
 
+    /**
+     * 设置
+     * @param updateTime
+     */
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
     }
 
+    /**
+     * 获取
+     * @return remark
+     */
     public String getRemark() {
         return remark;
     }
 
+    /**
+     * 设置
+     * @param remark
+     */
     public void setRemark(String remark) {
         this.remark = remark;
     }
 
+    /**
+     * 获取
+     * @return roomNum
+     */
     public String getRoomNum() {
         return roomNum;
     }
 
+    /**
+     * 设置
+     * @param roomNum
+     */
     public void setRoomNum(String roomNum) {
         this.roomNum = roomNum;
+    }
+
+    /**
+     * 获取
+     * @return buildNum
+     */
+    public String getBuildNum() {
+        return buildNum;
+    }
+
+    /**
+     * 设置
+     * @param buildNum
+     */
+    public void setBuildNum(String buildNum) {
+        this.buildNum = buildNum;
+    }
+
+    public String toString() {
+        return "ZyCommunity{communityId = " + communityId + ", communityName = " + communityName + ", communityCode = " + communityCode + ", communityProvenceCode = " + communityProvenceCode + ", communityCityCode = " + communityCityCode + ", communityTownCode = " + communityTownCode + ", communityDetailedAddress = " + communityDetailedAddress + ", communityLongitude = " + communityLongitude + ", communityLatitude = " + communityLatitude + ", deptId = " + deptId + ", communitySort = " + communitySort + ", createBy = " + createBy + ", createTime = " + createTime + ", updateBy = " + updateBy + ", updateTime = " + updateTime + ", remark = " + remark + ", roomNum = " + roomNum + ", buildNum = " + buildNum + "}";
     }
 }
 

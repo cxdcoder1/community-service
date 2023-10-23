@@ -5,6 +5,7 @@ import java.util.List;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.example.community.dto.CommunityAndDeptDto;
 import com.example.community.dto.CommunityBuild;
+import com.example.community.dto.UserAndDeptImport;
 import org.apache.ibatis.annotations.Param;
 import com.example.community.entity.ZyCommunity;
 import org.apache.ibatis.annotations.Select;
@@ -54,6 +55,8 @@ public interface ZyCommunityDao extends BaseMapper<ZyCommunity> {
 
     List<ZyCommunity> selCommunityCity(ZyCommunity zyCommunity);
 
+    List<ZyCommunity> selCommunityCitys(List<ZyCommunity> zyCommunity);
+
     /**
      * 小区集合
      * @return
@@ -69,5 +72,10 @@ public interface ZyCommunityDao extends BaseMapper<ZyCommunity> {
 
     List<CommunityBuild>getBulidNameList();
 
+
+//    int insertCommunityFromExcel(@Param("communityArr") ZyCommunity[] communityArr);
+
+
+    int insertCommunityFromExcel(@Param("communityArr") List<ZyCommunity> list) throws Exception;
 }
 

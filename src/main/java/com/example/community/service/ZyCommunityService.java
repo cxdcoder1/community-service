@@ -3,9 +3,12 @@ package com.example.community.service;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.example.community.dto.CommunityBuild;
+import com.example.community.dto.UserAndDeptImport;
 import com.example.community.entity.ZyCommunity;
 import com.example.community.dto.CommunityAndDeptDto;
+import org.apache.ibatis.annotations.Param;
 
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -39,6 +42,7 @@ public interface ZyCommunityService extends IService<ZyCommunity> {
 
     List<ZyCommunity> selCommunityCity(ZyCommunity zyCommunity);
 
+    List<ZyCommunity> selCommunityCitys(List<ZyCommunity> zyCommunity);
     /**
      * 获取小区信息
      * @return
@@ -48,5 +52,7 @@ public interface ZyCommunityService extends IService<ZyCommunity> {
     List<ZyCommunity>getZyCommunityS();
 
     List<CommunityBuild>getBulidNameList();
+
+    int insertBatch(@Param("entities") List<ZyCommunity> entities);
 }
 

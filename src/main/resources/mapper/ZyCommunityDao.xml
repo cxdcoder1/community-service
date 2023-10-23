@@ -23,12 +23,12 @@
 
     <!-- 批量插入 -->
     <insert id="insertBatch" keyProperty="communityId" useGeneratedKeys="true">
-        insert into zy-community.zy_community(community_name, community_code, community_provence_code,
+        insert into zy_community(community_id,community_name, community_code, community_provence_code,
         community_city_code, community_town_code, community_detailed_address, community_longitude, community_latitude,
         dept_id, community_sort, create_by, create_time, update_by, update_time, remark)
         values
         <foreach collection="entities" item="entity" separator=",">
-            (#{entity.communityName}, #{entity.communityCode}, #{entity.communityProvenceCode},
+            ( #{entity.communityId},#{entity.communityName}, #{entity.communityCode}, #{entity.communityProvenceCode},
             #{entity.communityCityCode}, #{entity.communityTownCode}, #{entity.communityDetailedAddress},
             #{entity.communityLongitude}, #{entity.communityLatitude}, #{entity.deptId}, #{entity.communitySort},
             #{entity.createBy}, #{entity.createTime}, #{entity.updateBy}, #{entity.updateTime}, #{entity.remark})
@@ -110,6 +110,20 @@
         #{createTime},
     </trim>
     </insert>
+
+    <insert id="insertCommunityFromExcel">
+        insert into zy_community
+        (community_name,community_code,community_provence_code,community_city_code,community_town_code,community_detailed_address,community_longitude,community_latitude,dept_id,community_sort,create_by,update_by,update_time,remark)
+        values
+        <foreach collection="communityArr" item="entity" separator=",">
+            (#{entity.communityName},#{entity.communityCode},#{entity.communityProvenceCode},#{entity.communityCityCode},#{entity.communityTownCode},
+            #{entity.communityDetailedAddress},#{entity.communityLongitude},#{entity.communityLatitude},#{entity.deptId},#{entity.communitySort},#{entity.createBy},
+            #{entity.updateBy},#{entity.updateTime},#{entity.remark})
+        </foreach>
+    </insert>
+
+
+
     <update id="updCommunityDerive">
         UPDATE zy_community
         <set>
@@ -252,6 +266,27 @@
 
     <select id="getBulidNameList" resultType="com.example.community.dto.CommunityBuild">
         select zc.community_name,COUNT(*) as buildNum from zy_community zc left join zy_building  zb on zc.community_id = zb.community_id GROUP BY zc.community_name
+    </select>
+
+    <select id="selCommunityCitys" resultType="com.example.community.entity.ZyCommunity">
+            select * from zy_community
+            <where>
+                community_provence_code in
+                <foreach item="provenceCode" collection="communityProvenceCodeList" open="(" separator="," close=")">
+                    #{provenceCode}
+                </foreach>
+                and community_city_code in
+                <foreach item="cityCode" collection="communityCityCodeList" open="(" separator="," close=")">
+                    #{cityCode}
+                </foreach>
+                <if test="communityTownCodeList != null and communityTownCodeList.size() > 0">
+                    and community_town_code in
+                    <foreach item="townCode" collection="communityTownCodeList" open="(" separator="," close=")">
+                        #{townCode}
+                    </foreach>
+                </if>
+                and community_name = #{communityName}
+            </where>
     </select>
 
 
