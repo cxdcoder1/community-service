@@ -226,7 +226,8 @@
         </association>
     </resultMap>
     <select id="getUserInfo" resultMap="UserInfo">
-        SELECT u.*,r.role_name,d.dept_name,u.user_id userId,r.role_id roleId,d.dept_id deptId from sys_user u
+        SELECT u.*,r.role_name,d.dept_name,u.user_id userId,r.role_id roleId,d.dept_id deptId
+        from sys_user u
             LEFT JOIN sys_user_role ur on u.user_id = ur.user_id
             LEFT JOIN sys_role r on ur.role_id = r.role_id
             LEFT JOIN sys_dept d  on d.dept_id = u.dept_id
